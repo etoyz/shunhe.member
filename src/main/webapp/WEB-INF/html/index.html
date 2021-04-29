@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>会员系统</title>
+    <link rel="stylesheet" href="plugins/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="plugins/font-awesome/css/font-awesome.min.css" media="all">
+    <link rel="stylesheet" href="menu/common/css/app.css" media="all" />
+    <link rel="stylesheet" href="menu/common/css/default.css" media="all" id="skin" kit-skin />
+    <link rel="stylesheet" href="css/table.css" media="all">
+    <link rel="stylesheet" href="css/form.css" media="all">
+    <link rel="stylesheet" href="plugins/adjust/css/redTheme.css" media="all">
+    <style type="text/css">
+        .layui-btn{
+            height: 32px;
+            line-height: 32px;
+        }
+        .layui-nav .layui-nav-item a{
+            padding: 0 8px;
+        }
+    </style>
+</head>
+
+<body>
+<div class="layui-layout layui-layout-admin kit-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">会员系统</div>
+        <ul class="layui-nav layui-layout-right kit-nav">
+            <li class="layui-nav-item"><a href="javascript:;" class="s-headPortrait">管理员1，欢迎你！</a></li>
+            <li class="layui-nav-item"><a href="javascript:;" class="s-logout" id="changePassword"><i class="fa fa-pencil-square" aria-hidden="true"></i> 修改密码</a></li>
+            <li class="layui-nav-item"><a href="javascript:;" class="s-logout"><i class="fa fa-sign-out" aria-hidden="true"></i> 注销</a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black kit-side">
+        <div class="layui-side-scroll">
+            <div class="kit-side-fold"><i class="fa fa-navicon" aria-hidden="true"></i></div>
+            <!-- 左侧导航区域（可配合layui已有的垂直导航）-->
+            <ul class="layui-nav layui-nav-tree" lay-filter="kitNavbar" kit-navbar>
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="javascript:;"><i class="fa fa-plug" aria-hidden="true"></i><span> 微会员</span></a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <a href="javascript:;" kit-target data-options="{url:'memberArchives.html',icon:'&#xe658;',title:'会员档案',id:'1'}"><i class="layui-icon">&#xe658;</i><span> 会员档案</span></a>
+                        </dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a class="" href="javascript:;"><i class="fa fa-plug" aria-hidden="true"></i><span> 微会员用卡</span></a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <a href="javascript:;" kit-target data-options="{url:'useCard.html',icon:'&#xe658;',title:'用卡',id:'2'}"><i class="layui-icon">&#xe658;</i><span> 用卡</span></a>
+                        </dd>
+                        <dd>
+                            <a href="javascript:;" kit-target data-options="{url:'memberArchives.html',icon:'&#xe658;',title:'反结算',id:'3'}"><i class="layui-icon">&#xe658;</i><span> 反结算</span></a>
+                        </dd>
+                        <dd>
+                            <a href="javascript:;" kit-target data-options="{url:'memberArchives.html',icon:'&#xe658;',title:'待审核',id:'4'}"><i class="layui-icon">&#xe658;</i><span> 待审核</span></a>
+                        </dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="layui-body" id="container">
+        <!-- 内容主体区域 -->
+        <div style="padding: 15px;">主体内容加载中,请稍等...</div>
+        <div><p></p></div>
+    </div>
+
+    <!-- 底部固定区域 -->
+    <div class="layui-footer">© 2018 山东贝格新能源科技有限公司 版权所有</div>
+</div>
+
+<!-- 修改密码弹窗 -->
+<div class="s-details" id="changePasswordWin">
+    <form class="layui-form" action="">
+        <div class="layui-form-item s-formItem4">
+            <label class="layui-form-label">旧密码</label>
+            <div class="layui-input-block">
+                <input type="password" name="oldPassword" lay-verify="required" placeholder="请输入旧密码" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item s-formItem4">
+            <label class="layui-form-label">新密码</label>
+            <div class="layui-input-block">
+                <input type="password" name="password" lay-verify="required|pass" placeholder="请输入6到12位新密码" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item s-formItem4">
+            <label class="layui-form-label">确认密码</label>
+            <div class="layui-input-block">
+                <input type="password" name="confirmPassword" lay-verify="required|repass" placeholder="请输入确认密码" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block s-submitButton5">
+                <button type="button" class="layui-btn" lay-submit lay-filter="save">确认</button>
+                <a class="layui-btn layui-btn-danger" id="cancel">取消</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script src="plugins/layui/layui.js"></script>
+<script>
+    layui.use(['form','layer'], function() {
+        var $ = layui.jquery,
+            form = layui.form,
+            layer = layui.layer;
+
+        // 自定义各种表单验证规则
+        form.verify({
+
+            // 既支持上述函数式的方式，也支持下述数组的形式
+            // 数组的两个值分别代表：[正则匹配、匹配不符时的提示文字]
+            // 密码验证
+            pass: [
+                /^[\S]{6,12}$/,
+                '密码必须6到12位，且不能出现空格'
+            ],
+
+            // 确认密码验证
+            repass: function(value, item){ //value：表单的值、item：表单的DOM对象
+                var passwordValue = $('input[name=password]').val();
+                // 判断条件也可为：!new RegExp(passwordValue).test(value)
+                if(value != passwordValue){
+                    return '两次输入的密码不一致!';
+                }
+            }
+        });
+
+        // 显示“修改密码”弹窗
+        $('body').on('click','#changePassword',function () {
+            var index = layer.open({
+                type: 1,
+                title: '修改密码',
+                content: $('#changePasswordWin'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                area: '300px'
+            });
+            $('#cancel').on('click',function () {
+                // 关闭当前弹出层
+                layer.close(index);
+            });
+            // 确认
+            form.on('submit(save)', function(data){
+                // 提示窗
+                layer.alert('修改成功！', {icon: 1});
+                // 关闭当前弹出层
+                layer.close(index);
+            });
+        });
+    }).config({
+        base: 'menu/common/js/'
+    }).use(['app'], function() {
+        var app = layui.app;
+        //主入口
+        app.set({
+            type: 'iframe'
+        }).init();
+    });
+</script>
+</body>
+
+</html>
