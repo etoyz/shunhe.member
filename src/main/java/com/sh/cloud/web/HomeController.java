@@ -22,6 +22,7 @@ public class HomeController {
     @RequestMapping("/login")
     public String login(HttpServletRequest request, Map<String, Object> map, Model model) throws Exception {
         System.out.println("HomeController.login()");
+        System.out.println("redirect:" + ShiroCasConfiguration.loginUrl);
         return "redirect:" + ShiroCasConfiguration.loginUrl;
     }
 
