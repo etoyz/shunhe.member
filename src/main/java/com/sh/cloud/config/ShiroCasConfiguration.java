@@ -103,7 +103,7 @@ public class ShiroCasConfiguration {
         bean.setEnabled(true);
         bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
 //        bean.setOrder(1);
-        log.info("================================singleSignOutFilterBean执行");
+        //log.info("================================singleSignOutFilterBean执行");
         return bean;
     }
     /**
@@ -117,7 +117,7 @@ public class ShiroCasConfiguration {
 //        bean.setName(""); //默认为bean name
         bean.setEnabled(true);
         bean.setOrder(3); //设置优先级
-        log.info("================================singleSignOutHttpSessionListenerBean执行");
+        //log.info("================================singleSignOutHttpSessionListenerBean执行");
         return bean;
     }
 
