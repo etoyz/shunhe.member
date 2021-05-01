@@ -44,10 +44,10 @@ public class HomeController {
     public String vehicleManagement(){
         return "userweb/vehicleManagement";
     }
-    @RequestMapping("/index")
-    public String indexManagement(){
-        return "userweb/index";
-    }
+//    @RequestMapping("/index")
+//    public String indexManagement(){
+//        return "userweb/index";
+//    }
 
 
 }
