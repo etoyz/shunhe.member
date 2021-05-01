@@ -38,7 +38,10 @@ public class HomeController {
         return "redirect:" + ShiroCasConfiguration.logoutUrl;
     }
 
-
+    @RequestMapping("/testPage")
+    public String testPage() {
+        return "memberArchives";
+    }
 
     @RequestMapping("/vehicleManagement")
     public String vehicleManagement(){

@@ -7,6 +7,7 @@ import com.sh.cloud.utils.UtilValidate;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,6 +25,11 @@ public class DemoController {
 
     @Resource
     private VehicleService vehicleService;
+
+    @GetMapping("/test")
+    public String test() {
+        return "OK";
+    }
 
     @RequestMapping(value = "get", method = RequestMethod.GET)
     public Result get(@ApiParam(value = "id", name = "id", required = true) Long id) {
