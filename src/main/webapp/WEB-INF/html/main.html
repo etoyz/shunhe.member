@@ -1,10 +1,291 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>主入口文件</title>
+    <meta charset="utf-8">
+    <title>首页</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="plugins/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="plugins/font-awesome/css/font-awesome.min.css" media="all">
+    <link rel="stylesheet" href="plugins/adjust/css/adjustLayui.css" media="all">
+    <link rel="stylesheet" href="css/common.css" media="all">
 </head>
 <body>
-<img src="image/echarts.png" style="width: 100%; height: auto">
+<div class="layui-fluid main">
+    <div class="layui-row">
+
+        <div class="s-notice">
+            <P><span>公告：</span>暂无相关公告信息</P>
+        </div>
+
+        <div class="s-consumptionStatistics">
+
+            <div class="s-statisticsModule">
+                <p class="s-statisticsTitle">客户自费维保(本日)</p>
+                <div class="s-statistics">
+                    <div class="s-statisticsItem">
+                        <p class="s-numerical">1000</p>
+                        <p>充值</p>
+                    </div>
+                    <div class="s-statisticsItem s-statisticsItem1">
+                        <p class="s-numerical">1000</p>
+                        <p>消费</p>
+                    </div>
+                </div>
+            </div>
+            <div class="s-statisticsModule s-statisticsModule2">
+                <p class="s-statisticsTitle">客户自费维保(本日)</p>
+                <div class="s-statistics">
+                    <div class="s-statisticsItem">
+                        <p class="s-numerical">1000</p>
+                        <p>充值</p>
+                    </div>
+                    <div class="s-statisticsItem s-statisticsItem1">
+                        <p class="s-numerical">1000</p>
+                        <p>消费</p>
+                    </div>
+                </div>
+            </div>
+            <div class="s-statisticsModule s-statisticsModule3">
+                <p class="s-statisticsTitle">客户自费维保(本日)</p>
+                <div class="s-statistics">
+                    <div class="s-statisticsItem">
+                        <p class="s-numerical">1000</p>
+                        <p>充值</p>
+                    </div>
+                    <div class="s-statisticsItem s-statisticsItem1">
+                        <p class="s-numerical">1000</p>
+                        <p>消费</p>
+                    </div>
+                </div>
+            </div>
+            <div class="s-statisticsModule s-statisticsModule4">
+                <p class="s-statisticsTitle">客户自费维保(本日)</p>
+                <div class="s-statistics">
+                    <div class="s-statisticsItem">
+                        <p class="s-numerical">1000</p>
+                        <p>充值</p>
+                    </div>
+                    <div class="s-statisticsItem s-statisticsItem1">
+                        <p class="s-numerical">1000</p>
+                        <p>消费</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="layui-col-space15">
+            <div class="layui-col-md6">
+                <!-- 4S店客户统计 -->
+                <div class="s-statisticalAmount">
+                    <!-- 统计图表 -->
+                    <div id="chart1" class="s-statisticalAmountChart"></div>
+                </div>
+            </div>
+            <div class="layui-col-md6">
+                <!-- 4S店客户统计 -->
+                <div class="s-statisticalAmount">
+                    <!-- 统计图表 -->
+                    <div id="chart2" class="s-statisticalAmountChart"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- 引入 echarts.js -->
+<script src="build/js/echarts.min.js"></script>
+<script type="text/javascript">
+
+    // 统计图表1
+    // 基于准备好的dom，初始化echarts实例
+    var chartDom1 = document.getElementById('chart1');
+    var myChart1 = echarts.init(chartDom1);
+
+    // 指定图表的配置项和数据
+    var option1 = {
+        title: {
+            text: '客户金额充值趋势'
+        },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross',
+                label: {
+                    backgroundColor: '#6a7985'
+                }
+            }
+        },
+        legend: {
+            data: ['客户自费维保', '销售赠送维保', '售后赠送维保', '金融保险基金']
+        },
+        toolbox: {
+            feature: {
+                saveAsImage: {}
+            }
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis: [
+            {
+                type: 'category',
+                boundaryGap: false,
+                data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value'
+            }
+        ],
+        series: [
+            {
+                name: '客户自费维保',
+                type: 'line',
+                stack: '总量',
+                areaStyle: {},
+                emphasis: {
+                    focus: 'series'
+                },
+                data: [120, 132, 101, 134, 90, 230, 210, 120, 132, 101, 134, 90]
+            },
+            {
+                name: '销售赠送维保',
+                type: 'line',
+                stack: '总量',
+                areaStyle: {},
+                emphasis: {
+                    focus: 'series'
+                },
+                data: [220, 182, 191, 234, 290, 330, 310, 220, 182, 191, 234, 290]
+            },
+            {
+                name: '售后赠送维保',
+                type: 'line',
+                stack: '总量',
+                areaStyle: {},
+                emphasis: {
+                    focus: 'series'
+                },
+                data: [150, 232, 201, 154, 190, 330, 410, 150, 232, 201, 154, 190]
+            },
+            {
+                name: '金融保险基金',
+                type: 'line',
+                stack: '总量',
+                areaStyle: {},
+                emphasis: {
+                    focus: 'series'
+                },
+                data: [320, 332, 301, 334, 390, 330, 320, 320, 332, 301, 334, 1210]
+            }
+        ]
+    };
+    // 使用刚指定的配置项和数据显示图表。
+    if (option1 && typeof option1 === 'object') {
+        myChart1.setOption(option1);
+    }
+
+    // 统计图表2
+    // 基于准备好的dom，初始化echarts实例
+    var chartDom2 = document.getElementById('chart2');
+    var myChart2 = echarts.init(chartDom2);
+
+    // 指定图表的配置项和数据
+    var option2 = {
+        title: {
+            text: '客户金额消费趋势'
+        },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross',
+                label: {
+                    backgroundColor: '#6a7985'
+                }
+            }
+        },
+        legend: {
+            data: ['客户自费维保', '销售赠送维保', '售后赠送维保', '金融保险基金']
+        },
+        toolbox: {
+            feature: {
+                saveAsImage: {}
+            }
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis: [
+            {
+                type: 'category',
+                boundaryGap: false,
+                data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value'
+            }
+        ],
+        series: [
+            {
+                name: '客户自费维保',
+                type: 'line',
+                stack: '总量',
+                areaStyle: {},
+                emphasis: {
+                    focus: 'series'
+                },
+                data: [120, 132, 101, 134, 90, 230, 210, 120, 132, 101, 134, 90]
+            },
+            {
+                name: '销售赠送维保',
+                type: 'line',
+                stack: '总量',
+                areaStyle: {},
+                emphasis: {
+                    focus: 'series'
+                },
+                data: [220, 182, 191, 234, 290, 330, 310, 220, 182, 191, 234, 290]
+            },
+            {
+                name: '售后赠送维保',
+                type: 'line',
+                stack: '总量',
+                areaStyle: {},
+                emphasis: {
+                    focus: 'series'
+                },
+                data: [150, 232, 201, 154, 190, 330, 410, 150, 232, 201, 154, 190]
+            },
+            {
+                name: '金融保险基金',
+                type: 'line',
+                stack: '总量',
+                areaStyle: {},
+                emphasis: {
+                    focus: 'series'
+                },
+                data: [320, 332, 301, 334, 390, 330, 320, 320, 332, 301, 334, 1210]
+            }
+        ]
+    };
+    // 使用刚指定的配置项和数据显示图表。
+    if (option2 && typeof option2 === 'object') {
+        myChart2.setOption(option2);
+    }
+</script>
 </body>
 </html>
