@@ -21,11 +21,14 @@
 <body>
 <div class="layui-layout layui-layout-admin kit-layout-admin">
     <div class="layui-header">
-        <div class="layui-logo s-layuiLogo"><img src="${fns:getConfig('forwarding.url')}images/kb.png"></div>
+        <div class="layui-logo s-layuiLogo">
+<%--            <img src="${fns:getConfig('forwarding.url')}images/kb.png">--%>
+            <div class="layui-logo">会员系统</div>
+        </div>
         <div class="s-systematicName">车辆管理平台</div>
         <ul class="layui-nav layui-layout-right kit-nav">
-            <li class="layui-nav-item"><a href="javascript:;" class="s-headPortrait"><img
-                    src="${fns:getConfig('forwarding.url')}images/icon.png" class="layui-nav-img"> </a></li>
+<%--            <li class="layui-nav-item"><a href="javascript:;" class="s-headPortrait"><img--%>
+<%--                    src="${fns:getConfig('forwarding.url')}images/icon.png" class="layui-nav-img"> </a></li>--%>
             <li class="layui-nav-item"><a href="${fns:getConfig('forwarding.url')}logout" class="s-logout"><i class="fa fa-sign-out"
                                                                             aria-hidden="true"></i> 注销</a></li>
         </ul>
