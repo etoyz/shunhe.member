@@ -32,9 +32,9 @@ spring:
 #         host: 10.30.11.11
          port: 27001
     mvc:
-       view:
-           prefix: /WEB-INF/jsp/
-           suffix: .jsp
+         view:
+             prefix: /templates/
+             suffix: .html
     dubbo:
         application:
             id: live-dubbo-provider
