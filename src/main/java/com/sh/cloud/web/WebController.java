@@ -14,4 +14,14 @@ public class WebController {
     public String card() {
         return "card";
     }
+
+    @RequestMapping("/useCard")
+    public String useCard() {
+        return "useCard";
+    }
+
+    @RequestMapping("/main")
+    public String main() {
+        return "main";
+    }
 }
