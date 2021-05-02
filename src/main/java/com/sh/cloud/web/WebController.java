@@ -9,4 +9,9 @@ public class WebController {
     public String testPage() {
         return "testPage";
     }
+
+    @RequestMapping("/card")
+    public String card() {
+        return "card";
+    }
 }
