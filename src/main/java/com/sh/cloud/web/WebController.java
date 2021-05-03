@@ -24,4 +24,14 @@ public class WebController {
     public String main() {
         return "main";
     }
+
+    @RequestMapping("/memberArchives")
+    public String memberArchives() {
+        return "memberArchives";
+    }
+
+    @RequestMapping("/memberArchives1")
+    public String memberArchives1() {
+        return "memberArchives1";
+    }
 }
