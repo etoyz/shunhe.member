@@ -1,6 +1,7 @@
 package com.sh.cloud.web;
 
 import org.springframework.web.bind.annotation.*;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,11 +22,11 @@ public class CardController {
     public String addCard(@RequestBody Map<String, Object> cardMp) {
         // 通过他们的接口将map数据插入后端
 
-        return "Deny" + cardMp.get("cardName");
+        return "Deny" + cardMp.toString();
     }
 
     @PostMapping("getCardTypes")
-    public Map<String, Object> getCardTypes() {
+    public Map<String, Object> getCardTypes() throws InterruptedException {
         //获取他们给的卡券类型
         Map<String, Object> res = new HashMap<>();
         res.put("status", "ok");
@@ -35,6 +36,26 @@ public class CardController {
         li.add("类型2");
         li.add("类型666");
         res.put("types", li);
+//        Thread.sleep(900);
+        return res;
+    }
+
+    @PostMapping("modCard")
+    public String modCard(@RequestBody Map<String, Object> cardMp) {
+
+        return "Deny" + cardMp.toString();
+    }
+
+    @PostMapping("getCardInfo")
+    public Map<String, Object> getCardInfo(@RequestParam String cardName) {
+        Map<String, Object> res = new HashMap<>();
+        res.put("status", "ok");
+        Map<String, String> info = new HashMap<>();
+        info.put("cardName", cardName);
+
+        info.put("cardType", "类型666");
+
+        res.put("info", info);
         return res;
     }
 }

@@ -49,106 +49,114 @@
     </div>
 </div>
 
-<!-- 删除弹窗 -->
-<div class="s-details" id="delWindow">
-    <form class="layui-form" action="">
-        <div class="layui-form-item s-formItem5">
-            <button type="button" class="layui-btn layui-btn-fluid layui-btn-danger" id="confirmDel">确认删除</button>
-        </div>
-        <div class="layui-form-item s-formItem5">
-            <button type="button" class="layui-btn layui-btn-fluid" id="cancelDel">取消</button>
-        </div>
-    </form>
-</div>
-
 <!-- 添加卡券弹窗 -->
 <div class="s-details" id="addWindow">
-    <form class="layui-form" action="">
-        <div class="layui-form-item s-formItem5">
-            <div class="layui-inline">
-                <label class="layui-form-label">卡券名称</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="date" id="cardName"
-                           autocomplete="off" class="layui-input">
+    <div>
+        <form class="layui-form" action="">
+            <div class="layui-form-item s-formItem5">
+                <div class="layui-inline">
+                    <label class="layui-form-label">卡券名称</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="cardName" id="cardName"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">卡券类型</label>
+                    <div class="layui-input-inline">
+                        <select type="text" id="cardType" name="cardType" autocomplete="off" class="layui-input">
+                            <option id="selectHead">正在拉取...</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">备注</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="remark" id="remark" autocomplete="off" class="layui-input">
+                    </div>
                 </div>
             </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">卡券类型</label>
-                <div class="layui-input-inline">
-                    <select type="text" id="cardType" name="cardType" autocomplete="off" class="layui-input">
-                        <option id="selectHead">正在拉取...</option>
-                    </select>
+            <div class="layui-form-item s-formItem5">
+                <div class="layui-inline">
+                    <label class="layui-form-label">单价</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="price" id="price" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">成本价</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="costPrice" id="costPrice" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">顺序号</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="orderID" id="orderID" autocomplete="off" class="layui-input">
+                    </div>
                 </div>
             </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">备注</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="remark" autocomplete="off" class="layui-input">
-                </div>
-            </div>
-        </div>
-        <div class="layui-form-item s-formItem5">
-            <div class="layui-inline">
-                <label class="layui-form-label">单价</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="price" autocomplete="off" class="layui-input">
-                </div>
-            </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">成本价</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="costPrice" autocomplete="off" class="layui-input">
-                </div>
-            </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">顺序号</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="orderID" autocomplete="off" class="layui-input">
-                </div>
-            </div>
-        </div>
-        <div class="layui-form-item s-formItem5">
-            <button type="button" class="layui-btn layui-btn-fluid layui-btn-danger" id="confirmAdd">添加</button>
-        </div>
-        <div class="layui-form-item s-formItem5">
-            <button type="button" class="layui-btn layui-btn-fluid" id="cancelAdd">取消</button>
-        </div>
-    </form>
+        </form>
+    </div>
+    <div class="s-tabBottomButton">
+        <button type="button" class="layui-btn layui-btn-danger" id="confirmAdd">添加</button>
+        <button type="button" class="layui-btn" id="cancelAdd">取消</button>
+    </div>
 </div>
 
 <!-- 修改卡券弹窗 -->
 <div class="s-details" id="modWindow">
-    <form class="layui-form" action="">
-        <div class="layui-form-item s-formItem5">
-            <div class="layui-inline">
-                <label class="layui-form-label">卡券名称</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="date" id="date" lay-verify="date" placeholder="yyyy-MM-dd"
-                           autocomplete="off" class="layui-input">
+    <div>
+        <form class="layui-form" action="">
+            <div class="layui-form-item s-formItem5">
+                <div class="layui-inline">
+                    <label class="layui-form-label">卡券名称</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="cardNameM" id="cardNameM"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">卡券类型</label>
+                    <div class="layui-input-inline">
+                        <select type="text" id="cardTypeM" name="cardTypeM" autocomplete="off" class="layui-input">
+                            <option>正在拉取...</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">备注</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="remarkM" id="remarkM" autocomplete="off" class="layui-input">
+                    </div>
                 </div>
             </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">车牌号</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="carNumber" autocomplete="off" class="layui-input">
+            <div class="layui-form-item s-formItem5">
+                <div class="layui-inline">
+                    <label class="layui-form-label">单价</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="priceM" id="priceM" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">成本价</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="costPriceM" id="costPriceM" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">顺序号</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="orderIDM" id="orderIDM" autocomplete="off" class="layui-input">
+                    </div>
                 </div>
             </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">车架号</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="chassisNumber" autocomplete="off" class="layui-input">
-                </div>
-            </div>
-        </div>
-        <div class="layui-form-item s-formItem5">
-            <div class="layui-inline">
-                <label class="layui-form-label">客户姓名</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="customerName" autocomplete="off" class="layui-input">
-                </div>
-            </div>
-        </div>
-    </form>
+        </form>
+    </div>
+    <div class="s-tabBottomButton">
+        <button type="button" class="layui-btn layui-btn-danger" id="confirmMod">添加</button>
+        <button type="button" class="layui-btn" id="cancelMod">取消</button>
+    </div>
 </div>
 
 <script src="plugins/layui/layui.js"></script>
@@ -196,28 +204,48 @@
             ]],
             size: 'sm'
         });
+
+        //从服务端拉取全部卡券类型
+        function pullCardTypes(selector, callback) {
+            var selectE = $(selector);
+
+            function errorAction() {
+                selectE.empty();
+                selectE.append("<option>拉取失败，请刷新！</option>");
+                form.render();
+            }
+
+            $.post({
+                url: "service/card/getCardTypes",
+                timeout: 1000,
+                dataType: "json",
+                success: function (res) {
+                    if (res.status !== "ok") {
+                        errorAction();
+                    } else {
+                        selectE.empty();
+                        for (var s of res.types) {
+                            selectE.append("<option value='" + s + "'>" + s + "</option>");
+                        }
+                        callback();
+                        form.render(); //layui的form重新渲染
+                    }
+                },
+                error: function () {
+                    errorAction();
+                }
+            })
+        }
+
         //监听“卡券表格”工具条
         table.on('tool(cardTabel)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
             var data = obj.data; //获得当前行数据
             // var page = data.page;
             // var limit = data.limit;
+            var cardN = data.cardName; //data是当前行的数据，其中cardName是卡券名称
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值f）
             if (layEvent === 'delete') { // 用卡
-                var index1 = layer.open({
-                    type: 1,
-                    title: '确认删除？',
-                    content: $('#delWindow'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
-                    area: '400px'
-                });
-                $('#exit1').on('click', function () {
-                    // 关闭当前弹出层
-                    layer.close(index1);
-                });
-                $('#cancelDel').click(function () {
-                    layer.close(index1);
-                });
-                $('#confirmDel').click(function () {
-                    var cardN = data.cardName; //data是当前行的数据，其中cardName是卡券名称
+                layer.confirm("确认删除？", function () {
                     $.post({
                         url: "/service/card/deleteCard",
                         data: {
@@ -225,13 +253,10 @@
                         },
                         success: function (res) {
                             if (res !== "ok") {
-                                layer.close(index1);
                                 layer.open({
-                                    type: 1,
                                     offset: "auto",//具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
-                                    id: 'layerDemo' + "auto",//防止重复弹出
-                                    content: '<div style="padding: 20px 100px;">' + '删除失败:' + res + '</div>',
-                                    btn: '关闭全部',
+                                    content: '<div style="padding: 20px 70px;">' + '删除失败:' + res + '</div>',
+                                    btn: '关闭',
                                     btnAlign: 'c',//按钮居中
                                     shade: 0, //不显示遮罩
                                     yes: function () {
@@ -246,10 +271,25 @@
             if (layEvent === 'modify') {
                 var index2 = layer.open({
                     type: 1,
-                    title: '修改信息',
+                    title: '修改卡券信息',
                     content: $('#modWindow'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
-                    area: '1022px'
+                    area: ['1022px', '225px']
                 });
+                pullCardTypes("#cardTypeM", function () {
+                    $.post({
+                        url: "service/card/getCardInfo",
+                        timeout: 1000,
+                        data: {
+                            'cardName': cardN
+                        },
+                        dataType: "json",
+                        success: function (res) {
+                            $('#cardTypeM').val(res.info.cardType);
+                            $('#cardNameM').val(res.info.cardName);
+                            form.render();
+                        }
+                    })
+                })
             }
             if (layEvent === 'relate') {
                 var index3 = layer.open({
@@ -267,32 +307,16 @@
                 type: 1,
                 title: '添加卡券',
                 content: $('#addWindow'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
-                area: '1022px'
+                area: ['1022px', '225px']
             });
-            $.post({
-                url: "service/card/getCardTypes",
-                timeout: 100,
-                dataType: "json",
-                success: function (res) {
-                    var selectE = $("#cardType");
-                    if (res.status !== "ok") {
-                        selectE.empty();
-                        selectE.append("<option>拉取失败，请刷新！</option>");
-                    } else {
-                        selectE.empty();
-                        for (var s of res.types) {
-                            selectE.append("<option value='+" + s + "+'>" + s + "</option>");
-                        }
-                    }
-                    form.render(); //layui的form重新渲染
-                },
+            pullCardTypes("#cardType", () => {
             })
             return false;
         })
 
-        $("#cancelAdd").click(function () {
-            console.log("cancle")
-            layer.close(addWind)
+        $("#cancelAdd, #cancelMod").click(function () {
+            console.log("cancel")
+            layer.closeAll()
         })
 
         $("#confirmAdd").click(function () {
@@ -305,6 +329,25 @@
                     price: $("#price").val(),
                     costPrice: $("#costPrice").val(),
                     orderID: $("#orderID").val()
+                }),
+                contentType: "application/json",
+                success: function (res) {
+                    console.log(res)
+                }
+            })
+        })
+
+        var modWind;
+        $("#confirmMod").click(function () {
+            $.post({
+                url: "service/card/modCard",
+                data: JSON.stringify({
+                    cardName: $("#cardNameM").val(),
+                    cardType: $("#cardTypeM").val(),
+                    remark: $("#remarkM").val(),
+                    price: $("#priceM").val(),
+                    costPrice: $("#costPriceM").val(),
+                    orderID: $("#orderIDM").val()
                 }),
                 contentType: "application/json",
                 success: function (res) {
