@@ -1,0 +1,25 @@
+{
+  "code": 0,
+  "msg": "",
+  "count": 2,
+  "data": [
+    {
+      "consumeTypeID": "?",
+      "consumeTypeName": "储值",
+      "indexID": 1001,
+      "creater": "管理员1",
+      "createTime": "2021-04-26 14:56:24",
+      "editor": "管理员1",
+      "editTime": "2021-04-26 14:56:25"
+    },
+    {
+      "consumeTypeID": "?",
+      "consumeTypeName": "核销储值",
+      "indexID": 2001,
+      "creater": "管理员1",
+      "createTime": "2021-04-26 14:57:34",
+      "editor": "管理员2",
+      "editTime": "2021-04-26 14:57:45"
+    }
+  ]
+}
