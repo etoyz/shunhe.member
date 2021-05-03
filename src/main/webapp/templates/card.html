@@ -18,44 +18,20 @@
     <div class="layui-row">
         <div class="layui-col-md12">
 
-            <div class="s-headerSearch">
+            <div class="s-headerSearch" id="headArea">
                 <form class="layui-form" action="">
-
                     <div class="layui-form-item">
-
                         <div class="layui-inline s-layuiInline">
-                            <label class="layui-form-label">车牌号</label>
+                            <label class="layui-form-label">卡券名称</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="carNumber" autocomplete="off" class="layui-input"
-                                       placeholder="请输入车牌号">
+                                <input type="text" name="cardNameInput" autocomplete="off" class="layui-input"
+                                       placeholder="请输入卡券名称">
                             </div>
                         </div>
-                        <div class="layui-inline s-layuiInline">
-                            <label class="layui-form-label">车架号</label>
-                            <div class="layui-input-inline">
-                                <input type="text" name="chassisNumber" autocomplete="off" class="layui-input"
-                                       placeholder="请输入车架号">
-                            </div>
-                        </div>
-                        <div class="layui-inline s-layuiInline">
-                            <label class="layui-form-label">客户名称</label>
-                            <div class="layui-input-inline">
-                                <input type="text" name="customerName" autocomplete="off" class="layui-input"
-                                       placeholder="请输入客户名称">
-                            </div>
-                        </div>
-                        <div class="layui-inline s-layuiInline">
-                            <label class="layui-form-label">会员卡号</label>
-                            <div class="layui-input-inline">
-                                <input type="text" name="membership" autocomplete="off" class="layui-input"
-                                       placeholder="请输入会员卡号">
-                            </div>
-                        </div>
-
                         <div class="layui-inline s-layuiInline">
                             <button class="layui-btn layui-btn-warm">查询</button>
+                            <button id="addBtn" class="layui-btn layui-btn-normal">添加卡券</button>
                         </div>
-
                     </div>
                 </form>
             </div>
@@ -77,14 +53,103 @@
 <div class="s-details" id="delWindow">
     <form class="layui-form" action="">
         <div class="layui-form-item s-formItem5">
-            <button type="button" class="layui-btn layui-btn-fluid layui-btn-danger" id="confirm">确认删除</button>
+            <button type="button" class="layui-btn layui-btn-fluid layui-btn-danger" id="confirmDel">确认删除</button>
         </div>
         <div class="layui-form-item s-formItem5">
-            <button type="button" class="layui-btn layui-btn-fluid" id="cancel">取消</button>
+            <button type="button" class="layui-btn layui-btn-fluid" id="cancelDel">取消</button>
         </div>
     </form>
 </div>
 
+<!-- 添加卡券弹窗 -->
+<div class="s-details" id="addWindow">
+    <form class="layui-form" action="">
+        <div class="layui-form-item s-formItem5">
+            <div class="layui-inline">
+                <label class="layui-form-label">卡券名称</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="date" id="cardName"
+                           autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">卡券类型</label>
+                <div class="layui-input-inline">
+                    <select type="text" id="cardType" name="cardType" autocomplete="off" class="layui-input">
+                        <option id="selectHead">正在拉取...</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">备注</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="remark" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item s-formItem5">
+            <div class="layui-inline">
+                <label class="layui-form-label">单价</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="price" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">成本价</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="costPrice" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">顺序号</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="orderID" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item s-formItem5">
+            <button type="button" class="layui-btn layui-btn-fluid layui-btn-danger" id="confirmAdd">添加</button>
+        </div>
+        <div class="layui-form-item s-formItem5">
+            <button type="button" class="layui-btn layui-btn-fluid" id="cancelAdd">取消</button>
+        </div>
+    </form>
+</div>
+
+<!-- 修改卡券弹窗 -->
+<div class="s-details" id="modWindow">
+    <form class="layui-form" action="">
+        <div class="layui-form-item s-formItem5">
+            <div class="layui-inline">
+                <label class="layui-form-label">卡券名称</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="date" id="date" lay-verify="date" placeholder="yyyy-MM-dd"
+                           autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">车牌号</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="carNumber" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">车架号</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="chassisNumber" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item s-formItem5">
+            <div class="layui-inline">
+                <label class="layui-form-label">客户姓名</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="customerName" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
 
 <script src="plugins/layui/layui.js"></script>
 <script>
@@ -148,24 +213,105 @@
                     // 关闭当前弹出层
                     layer.close(index1);
                 });
-                $('#cancel').click(function () {
+                $('#cancelDel').click(function () {
                     layer.close(index1);
                 });
-                $('#confirm').click(function () {
+                $('#confirmDel').click(function () {
                     var cardN = data.cardName; //data是当前行的数据，其中cardName是卡券名称
                     $.post({
                         url: "/service/card/deleteCard",
                         data: {
                             cardName: cardN
                         },
-                        success: function (res){
-                            console.log(res)
+                        success: function (res) {
+                            if (res !== "ok") {
+                                layer.close(index1);
+                                layer.open({
+                                    type: 1,
+                                    offset: "auto",//具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
+                                    id: 'layerDemo' + "auto",//防止重复弹出
+                                    content: '<div style="padding: 20px 100px;">' + '删除失败:' + res + '</div>',
+                                    btn: '关闭全部',
+                                    btnAlign: 'c',//按钮居中
+                                    shade: 0, //不显示遮罩
+                                    yes: function () {
+                                        layer.closeAll();
+                                    }
+                                });
+                            }
                         }
                     });
                 })
             }
+            if (layEvent === 'modify') {
+                var index2 = layer.open({
+                    type: 1,
+                    title: '修改信息',
+                    content: $('#modWindow'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                    area: '1022px'
+                });
+            }
+            if (layEvent === 'relate') {
+                var index3 = layer.open({
+                    type: 1,
+                    title: '修改信息',
+                    content: $('#modWindow'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                    area: '1022px'
+                });
+            }
         });
 
+        var addWind;
+        $("#addBtn").click(function () {
+            addWind = layer.open({
+                type: 1,
+                title: '添加卡券',
+                content: $('#addWindow'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                area: '1022px'
+            });
+            $.post({
+                url: "service/card/getCardTypes",
+                timeout: 100,
+                dataType: "json",
+                success: function (res) {
+                    var selectE = $("#cardType");
+                    if (res.status !== "ok") {
+                        selectE.empty();
+                        selectE.append("<option>拉取失败，请刷新！</option>");
+                    } else {
+                        selectE.empty();
+                        for (var s of res.types) {
+                            selectE.append("<option value='+" + s + "+'>" + s + "</option>");
+                        }
+                    }
+                    form.render(); //layui的form重新渲染
+                },
+            })
+            return false;
+        })
+
+        $("#cancelAdd").click(function () {
+            console.log("cancle")
+            layer.close(addWind)
+        })
+
+        $("#confirmAdd").click(function () {
+            $.post({
+                url: "/service/card/addCard",
+                data: JSON.stringify({
+                    cardName: $("#cardName").val(),
+                    cardType: $("#cardType").val(),
+                    remark: $("#remark").val(),
+                    price: $("#price").val(),
+                    costPrice: $("#costPrice").val(),
+                    orderID: $("#orderID").val()
+                }),
+                contentType: "application/json",
+                success: function (res) {
+                    console.log(res)
+                }
+            })
+        })
     });
 </script>
 </body>

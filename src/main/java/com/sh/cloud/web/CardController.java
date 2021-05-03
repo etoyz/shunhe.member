@@ -1,21 +1,40 @@
 package com.sh.cloud.web;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-@Controller
+@RestController
 @RequestMapping("service/card")
 public class CardController {
 
     @PostMapping("deleteCard")
-    @ResponseBody
-    public String deleteCard(@RequestParam("cardName") String cardName){
+    public String deleteCard(@RequestParam("cardName") String cardName) {
         //此处获取他们给的原始数据，然后处理业务逻辑，然后返回结果
 
-        return "Deny" + cardName;
+        return "Access Deny!";
     }
 
+    @PostMapping("addCard")
+    public String addCard(@RequestBody Map<String, Object> cardMp) {
+        // 通过他们的接口将map数据插入后端
+
+        return "Deny" + cardMp.get("cardName");
+    }
+
+    @PostMapping("getCardTypes")
+    public Map<String, Object> getCardTypes() {
+        //获取他们给的卡券类型
+        Map<String, Object> res = new HashMap<>();
+        res.put("status", "ok");
+
+        List<String> li = new ArrayList<>();
+        li.add("类型1");
+        li.add("类型2");
+        li.add("类型666");
+        res.put("types", li);
+        return res;
+    }
 }
