@@ -2,14 +2,15 @@
   "code": 0,
   "msg": "",
   "count": 20,
-  "data": [{
-    "customer": "测试",
-    "vin": "ASDZXC12345678912",
-    "licensePlate": "鲁FCS000",
-    "membershipCard": "YTSHHY202008240001",
-    "membershipGrade": "1",
-    "remark": "机场路197号"
-  },
+  "data": [
+    {
+      "customer": "测试",
+      "vin": "ASDZXC12345678912",
+      "licensePlate": "鲁FCS000",
+      "membershipCard": "YTSHHY202008240001",
+      "membershipGrade": "1",
+      "remark": "机场路197号"
+    },
     {
       "customer": "测试",
       "vin": "ASDZXC12345678912",
