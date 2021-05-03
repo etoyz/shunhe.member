@@ -5,33 +5,58 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class WebController {
-    @RequestMapping("/testPage")
-    public String testPage() {
-        return "testPage";
+    // ----------- Main controller ------------
+    @RequestMapping("/main")
+    public String main() {
+        return "main";
     }
+    // ----------------------------------------
 
-    @RequestMapping("/card")
-    public String card() {
-        return "card";
+    // ------------- Menu: Member -------------
+    @RequestMapping("/memberArchives")
+    public String memberArchives() {
+        return "memberArchives";
     }
+    // ----------------------------------------
 
+    // ----------- Menu: Use card -------------
     @RequestMapping("/useCard")
     public String useCard() {
         return "useCard";
     }
 
-    @RequestMapping("/main")
-    public String main() {
-        return "main";
+    @RequestMapping("/cancelConsume")
+    public String cancelConsume() {
+        return "cancelConsume";
     }
 
-    @RequestMapping("/memberArchives")
-    public String memberArchives() {
-        return "memberArchives";
+    @RequestMapping("/pendingReview")
+    public String pendingReview() {
+        return "pendingReview";
+    }
+    // ----------------------------------------
+
+    // ------ Meun: Customize parameter -------
+    @RequestMapping("/card")
+    public String card() {
+        return "card";
     }
 
-    @RequestMapping("/memberArchives1")
-    public String memberArchives1() {
-        return "memberArchives1";
+    @RequestMapping("/consumeType")
+    public String consumeType() {
+        return "consumeType";
     }
+
+    @RequestMapping("/consumeItem")
+    public String consumeItem() {
+        return "consumeItem";
+    }
+    // ----------------------------------------
+
+    // ------------ For debugging ------------
+    @RequestMapping("/testPage")
+    public String testPage() {
+        return "testPage";
+    }
+    // ----------------------------------------
 }
