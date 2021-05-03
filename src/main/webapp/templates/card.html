@@ -269,23 +269,33 @@
                 content: $('#addWindow'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
                 area: '1022px'
             });
+            var selectE = $("#cardType");
+
+            function errorAction() {
+                selectE.empty();
+                selectE.append("<option>拉取失败，请刷新！</option>");
+                form.render();
+            }
+
             $.post({
                 url: "service/card/getCardTypes",
-                timeout: 100,
+                timeout: 1000,
                 dataType: "json",
                 success: function (res) {
-                    var selectE = $("#cardType");
                     if (res.status !== "ok") {
-                        selectE.empty();
-                        selectE.append("<option>拉取失败，请刷新！</option>");
+                        errorAction();
                     } else {
                         selectE.empty();
                         for (var s of res.types) {
                             selectE.append("<option value='+" + s + "+'>" + s + "</option>");
                         }
+                        form.render(); //layui的form重新渲染
                     }
-                    form.render(); //layui的form重新渲染
                 },
+                error: function () {
+                    console.log(123)
+                    errorAction();
+                }
             })
             return false;
         })

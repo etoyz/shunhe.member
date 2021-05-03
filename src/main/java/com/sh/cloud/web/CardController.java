@@ -1,6 +1,7 @@
 package com.sh.cloud.web;
 
 import org.springframework.web.bind.annotation.*;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,7 +26,7 @@ public class CardController {
     }
 
     @PostMapping("getCardTypes")
-    public Map<String, Object> getCardTypes() {
+    public Map<String, Object> getCardTypes() throws InterruptedException {
         //获取他们给的卡券类型
         Map<String, Object> res = new HashMap<>();
         res.put("status", "ok");
