@@ -58,4 +58,12 @@ public class CardController {
         res.put("info", info);
         return res;
     }
+
+    @PostMapping("relateConsumeItem")
+    public String relateConsumeItem(@RequestBody Map<String, Object> items) {
+        String card = (String) items.get("selectedCard");
+        List itemsList = (List) items.get("selectedItems");
+
+        return items.toString();
+    }
 }
