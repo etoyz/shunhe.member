@@ -154,8 +154,19 @@
         </form>
     </div>
     <div class="s-tabBottomButton">
-        <button type="button" class="layui-btn layui-btn-danger" id="confirmMod">添加</button>
+        <button type="button" class="layui-btn layui-btn-danger" id="confirmMod">修改</button>
         <button type="button" class="layui-btn" id="cancelMod">取消</button>
+    </div>
+</div>
+
+<!-- 关联卡券弹窗 -->
+<div class="s-details" id="relWindow">
+    <div class="s-commonTable">
+        <table id="relTable"></table>
+    </div>
+    <div class="s-tabBottomButton">
+        <button type="button" class="layui-btn layui-btn-danger" id="confirmRel">添加</button>
+        <button type="button" class="layui-btn" id="cancelRel">取消</button>
     </div>
 </div>
 
@@ -294,9 +305,9 @@
             if (layEvent === 'relate') {
                 var index3 = layer.open({
                     type: 1,
-                    title: '修改信息',
-                    content: $('#modWindow'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
-                    area: '1022px'
+                    title: '关联消费项目',
+                    content: $('#relWindow'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                    area: ['530px', '600px']
                 });
             }
         });
@@ -314,7 +325,7 @@
             return false;
         })
 
-        $("#cancelAdd, #cancelMod").click(function () {
+        $("#cancelAdd, #cancelMod, #cancelRel").click(function () {
             console.log("cancel")
             layer.closeAll()
         })
@@ -354,6 +365,18 @@
                     console.log(res)
                 }
             })
+        })
+
+        table.render({
+            elem: "#relTable",
+            height: 450,
+            width: 500,
+            page: true,
+            url: "./datas/consumeItem.json",
+            cols: [[
+                {type: 'checkbox', width: 70},
+                {field: 'consumeItem', width: 430, title: '消费项目'},
+            ]],
         })
     });
 </script>
