@@ -51,7 +51,6 @@
 <!-- 新增弹窗 -->
 <div class="s-details" id="addWindow">
     <div>
-        <!--  -->
         <form class="layui-form" action="">
             <div class="layui-form-item s-formItem5">
                 <div class="layui-inline">
@@ -82,7 +81,28 @@
 
 <!-- 编辑弹窗 -->
 <div class="s-details" id="editWindow">
-    编辑信息
+    <div>
+        <form class="layui-form" action="">
+            <div class="layui-form-item s-formItem5">
+                <div class="layui-inline">
+                    <label class="layui-form-label"><i>*</i>消费类型</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="consumeTypeName" lay-verify="required" autocomplete="off"
+                                class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item s-formItem5">
+                <div class="layui-inline">
+                    <label class="layui-form-label"><i>*</i>顺序号</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="indexID" lay-verify="required" autocomplete="off"
+                                class="layui-input">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
     <div class="s-tabBottomButton">
         <button class="layui-btn" id="confirm">确认</button>
         <button class="layui-btn layui-btn-warm" id="exit1">取消</button>
@@ -105,7 +125,6 @@
                 title: '新增消费类型',
                 content: $('#addWindow'),
                 area: ['400px', '225px'],
-                //offset: '100px'
             });
             $('#exit').on('click', function () {
                 // 关闭当前弹出层
@@ -117,7 +136,6 @@
         var tableIns = table.render({
             elem: '#consumeTypes',
             url: './datas/consumeType.json',
-            //height: 'full-291',
             page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                 layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
                 limit: 15,
@@ -146,7 +164,7 @@
             // var limit = data.limit;
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
             var tr = obj.tr; //获得当前行 tr 的DOM对象
-            var customer = data.customer;
+            var consumeTypeName = data.consumeTypeName;
             if (layEvent === 'edit') {
                 var index1 = layer.open({
                     type: 1,
@@ -159,7 +177,7 @@
                     layer.close(index1);
                 });
             } else if (layEvent === 'delete') {
-                layer.confirm('确定要删除[' + customer + ']吗？', {icon: 3, title: '提示'}, function (index) {
+                layer.confirm('确定要删除 [' + consumeTypeName + '] 吗？', {icon: 3, title: '提示'}, function (index) {
                     // 删除对应行（tr）的DOM结构，并更新缓存
                     obj.del();
                     layer.close(index);
