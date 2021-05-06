@@ -51,30 +51,32 @@ public class WebController {
     public String consumeItem() {
         return "consumeItem";
     }
-    // Brand
+
     @RequestMapping("/brand")
-    public String brand() { return "brand"; }
-    // Car series
+    public String brand() {
+        return "brand";
+    }
+
     @RequestMapping("/carSeries")
     public String carSeries() {
         return "carSeries";
     }
-    // Model
+
     @RequestMapping("/model")
     public String model() {
         return "model";
     }
-    // Insurance company
+
     @RequestMapping("/insuranceCompany")
     public String insuranceCompany() {
         return "insuranceCompany";
     }
-    // Type of insurance
+
     @RequestMapping("/typeOfInsurance")
     public String typeOfInsurance() {
         return "typeOfInsurance";
     }
-    // Membership level
+
     @RequestMapping("/membershipLevel")
     public String membershipLevel() {
         return "membershipLevel";
