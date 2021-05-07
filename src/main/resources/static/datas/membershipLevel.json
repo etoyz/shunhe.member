@@ -1,0 +1,19 @@
+{
+  "code": 0,
+  "msg": "",
+  "count": 2,
+  "data": [
+    {
+      "membershipLevel": "1",
+      "cardName": "安心无忧会员",
+      "cardLevel": "0",
+      "upLock": "否"
+    },
+    {
+      "membershipLevel": "1",
+      "cardName": "安心无忧会员",
+      "cardLevel": "0",
+      "upLock": "是"
+    }
+  ]
+}
