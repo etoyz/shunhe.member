@@ -1,69 +1,71 @@
 package com.sh.cloud.web;
 
+import com.sft.member.bean.Coupon;
+import com.sft.member.obtain.coupon.CouponService;
+import com.sh.cloud.utils.PlatUserUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("service/card")
+@RequestMapping("service/coupon")
 public class CardController {
 
-    @PostMapping("deleteCard")
-    public String deleteCard(@RequestParam("cardName") String cardName) {
-        //此处获取他们给的原始数据，然后处理业务逻辑，然后返回结果
+    @Resource
+    CouponService couponService;
 
-        return "Access Deny!";
+    @PostMapping("deleteCoupon")
+    public String deleteCoupon(@RequestBody Coupon coupon) {
+        if (couponService.deleteCoupon(PlatUserUtils.getCurrentLoginPlatUser(), coupon))
+            return "删除成功！";
+        else
+            return "删除失败！";
     }
 
-    @PostMapping("addCard")
-    public String addCard(@RequestBody Map<String, Object> cardMp) {
-        // 通过他们的接口将map数据插入后端
-
-        return "Deny" + cardMp.toString();
+    @PostMapping(value = "addCoupon")
+    public String addCoupon(@RequestBody Coupon coupon) throws InterruptedException {
+        return couponService.addCoupon(PlatUserUtils.getCurrentLoginPlatUser(), coupon);
     }
 
-    @PostMapping("getCardTypes")
-    public Map<String, Object> getCardTypes() throws InterruptedException {
+    @PostMapping("getCouponTypes")
+    public Map<String, Object> getCouponTypes() throws InterruptedException {
         //获取他们给的卡券类型
         Map<String, Object> res = new HashMap<>();
         res.put("status", "ok");
 
         List<String> li = new ArrayList<>();
-        li.add("类型1");
-        li.add("类型2");
-        li.add("类型666");
+        li.add("代金券");
+        li.add("储值");
         res.put("types", li);
 //        Thread.sleep(900);
         return res;
     }
 
-    @PostMapping("modCard")
-    public String modCard(@RequestBody Map<String, Object> cardMp) {
-
-        return "Deny" + cardMp.toString();
-    }
-
-    @PostMapping("getCardInfo")
-    public Map<String, Object> getCardInfo(@RequestParam String cardName) {
-        Map<String, Object> res = new HashMap<>();
-        res.put("status", "ok");
-        Map<String, String> info = new HashMap<>();
-        info.put("cardName", cardName);
-
-        info.put("cardType", "类型666");
-
-        res.put("info", info);
-        return res;
+    @PostMapping("modCoupon")
+    public String modCoupon(@RequestBody Coupon coupon) {
+        couponService.editCoupon(PlatUserUtils.getCurrentLoginPlatUser(), coupon);
+        return "ok";
     }
 
     @PostMapping("relateConsumeItem")
     public String relateConsumeItem(@RequestBody Map<String, Object> items) {
-        String card = (String) items.get("selectedCard");
+        String Coupon = (String) items.get("selectedCoupon");
         List itemsList = (List) items.get("selectedItems");
 
         return items.toString();
+    }
+
+    @PostMapping("getCouponList")
+    public Map<String, Object> getCouponList() {
+        Map<String, Object> ret = new HashMap<>();
+        ret.put("code", 0);
+        ret.put("msg", "");
+        ret.put("count", 2);
+        ret.put("data", couponService.getCouponNameList());
+        return ret;
     }
 }

@@ -27,6 +27,6 @@
     <dubbo:reference id="vehicleService"
                      interface="com.dubbo.user.service.VehicleService" />
     <dubbo:reference id="couponService"
-                     interface="com.sft.member.obtain.coupon.CouponService" async="true"/>
+                     interface="com.sft.member.obtain.coupon.CouponService" async="false"/>
 
 </beans>

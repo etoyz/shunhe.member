@@ -37,9 +37,9 @@ public class WebController {
     // ----------------------------------------
 
     // ------ Meun: Customize parameter -------
-    @RequestMapping("/card")
+    @RequestMapping("/coupon")
     public String card() {
-        return "card";
+        return "coupon";
     }
 
     @RequestMapping("/consumeType")
