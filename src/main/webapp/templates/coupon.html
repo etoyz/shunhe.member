@@ -391,6 +391,7 @@
         })
 
         $("#confirmRel").click(function () {
+            activeLine.type = activeLine.type === "储值" ? 1 : 0;
             $.post({
                 url: "service/coupon/relateConsumeItem",
                 data: JSON.stringify({
@@ -407,8 +408,9 @@
         $("#queryBtn").click(function () {
             couponTable.reload({
                 url: 'service/coupon/getCouponList?query=' + $("#couponNameInput").val(),
-                page: 1,
-                limit: 15
+                page: {
+                    curr: 1
+                }
             })
             return false;
         })

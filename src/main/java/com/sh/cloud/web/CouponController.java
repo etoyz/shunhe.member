@@ -4,6 +4,7 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.sft.member.bean.ConsumeProject;
 import com.sft.member.bean.Coupon;
 import com.sft.member.obtain.coupon.CouponService;
+import com.sh.cloud.entity.CouponAndConsumeProjects;
 import com.sh.cloud.utils.PlatUserUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +16,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("service/coupon")
-public class CardController {
+public class CouponController {
 
     @Resource
     CouponService couponService;
@@ -59,11 +60,17 @@ public class CardController {
     }
 
     @PostMapping("relateConsumeItem")
-    public String relateConsumeItem(@RequestBody List<ConsumeProject> projects, @RequestBody Coupon c) {
+    public String relateConsumeItem(@RequestBody CouponAndConsumeProjects couponAndConsumeProjects) {
 //        Coupon c = (Coupon) items.get("selectedCoupon");
 //        List<ConsumeProject> itemsList = (List<ConsumeProject>) items.get("selectedItems");
 //        couponService.updateCouponListByConsumeProject();
-        return c.toString();
+//        List
+        for (ConsumeProject consumeProject : couponAndConsumeProjects.getProjects()) {
+            List<Coupon> li = new ArrayList<>();
+            li.add(couponAndConsumeProjects.getCoupon());
+            couponService.updateCouponListByConsumeProject(PlatUserUtils.getCurrentLoginPlatUser(), consumeProject, li);
+        }
+        return "ok";
     }
 
     @GetMapping("getCouponList")
@@ -76,7 +83,7 @@ public class CardController {
         c.name = query;
         c.type = 666;
         List<Coupon> data = couponService.getCouponList(c, page, limit);
-        ret.put("count", 999);
+        ret.put("count", couponService.getCouponListCount(c));
         ret.put("data", data);
 
         return ret;
