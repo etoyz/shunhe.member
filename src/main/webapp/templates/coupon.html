@@ -24,12 +24,12 @@
                         <div class="layui-inline s-layuiInline">
                             <label class="layui-form-label">卡券名称</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="couponNameInput" autocomplete="off" class="layui-input"
+                                <input type="text" id="couponNameInput" autocomplete="off" class="layui-input"
                                        placeholder="请输入卡券名称">
                             </div>
                         </div>
                         <div class="layui-inline s-layuiInline">
-                            <button class="layui-btn layui-btn-warm">查询</button>
+                            <button id="queryBtn" class="layui-btn layui-btn-warm">查询</button>
                             <button id="addBtn" class="layui-btn layui-btn-normal">添加卡券</button>
                         </div>
                     </div>
@@ -186,10 +186,9 @@
         });
 
         // “卡券表格”渲染
-        table.render({
+        var couponTable = table.render({
             elem: '#coupon',
-            url: 'service/coupon/getCouponList',
-            method: "POST",
+            url: 'service/coupon/getCouponList?query=',
             height: 'full-120',
             page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                 layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
@@ -396,8 +395,8 @@
             $.post({
                 url: "service/coupon/relateConsumeItem",
                 data: JSON.stringify({
-                    "selectedItems": table.checkStatus('relTable').data,
-                    "selectedCoupon": activeLine
+                    "projects": table.checkStatus('relTable').data,
+                    "coupon": activeLine
                 }),
                 contentType: "application/json",
                 success: function (res) {
@@ -406,13 +405,20 @@
             })
         })
 
-        $(document).ready(function () {
-            $.post({
-                url: "service/coupon/getCouponList",
-                success: function (res) {
-                    console.log(res)
-                }
+        $("#queryBtn").click(function () {
+            couponTable.reload({
+                url: 'service/coupon/getCouponList?query=' + $("#couponNameInput").val(),
             })
+            return false;
+        })
+
+        $(document).ready(function () {
+            // $.post({
+            //     url: "service/coupon/getCouponList",
+            //     success: function (res) {
+            //         console.log(res)
+            //     }
+            // })
         })
     });
 </script>

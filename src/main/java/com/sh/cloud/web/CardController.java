@@ -55,20 +55,25 @@ public class CardController {
     }
 
     @PostMapping("relateConsumeItem")
-    public String relateConsumeItem(@RequestBody Map<String, Object> items) {
-        Coupon c = (Coupon) items.get("selectedCoupon");
-        List<ConsumeProject> itemsList = (List<ConsumeProject>) items.get("selectedItems");
-
-        return items.toString();
+    public String relateConsumeItem(@RequestBody List<ConsumeProject> projects, @RequestBody Coupon c) {
+//        Coupon c = (Coupon) items.get("selectedCoupon");
+//        List<ConsumeProject> itemsList = (List<ConsumeProject>) items.get("selectedItems");
+//        couponService.updateCouponListByConsumeProject();
+        return c.toString();
     }
 
-    @PostMapping("getCouponList")
-    public Map<String, Object> getCouponList() {
+    @GetMapping("getCouponList")
+    public Map<String, Object> getCouponList(@RequestParam String query, @RequestParam int page, @RequestParam int limit) {
         Map<String, Object> ret = new HashMap<>();
         ret.put("code", 0);
         ret.put("msg", "");
         ret.put("count", 2);
-        ret.put("data", couponService.getCouponNameList());
+
+        Coupon c = new Coupon();
+        c.name = query;
+        c.type = 666;
+        ret.put("data", couponService.getCouponList(c, 1, 10));
+
         return ret;
     }
 }
