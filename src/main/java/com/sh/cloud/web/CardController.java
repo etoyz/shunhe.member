@@ -1,5 +1,7 @@
 package com.sh.cloud.web;
 
+import com.alibaba.dubbo.config.annotation.Reference;
+import com.sft.member.bean.ConsumeProject;
 import com.sft.member.bean.Coupon;
 import com.sft.member.obtain.coupon.CouponService;
 import com.sh.cloud.utils.PlatUserUtils;
@@ -27,16 +29,16 @@ public class CardController {
     }
 
     @PostMapping(value = "addCoupon")
-    public String addCoupon(@RequestBody Coupon coupon) throws InterruptedException {
+    public String addCoupon(@RequestBody Coupon coupon) {
         return couponService.addCoupon(PlatUserUtils.getCurrentLoginPlatUser(), coupon);
     }
 
+    @Deprecated
     @PostMapping("getCouponTypes")
-    public Map<String, Object> getCouponTypes() throws InterruptedException {
-        //获取他们给的卡券类型
+    public Map<String, Object> getCouponTypes() {
+        //获取后台给的卡券类型
         Map<String, Object> res = new HashMap<>();
         res.put("status", "ok");
-
         List<String> li = new ArrayList<>();
         li.add("代金券");
         li.add("储值");
@@ -46,6 +48,7 @@ public class CardController {
     }
 
     @PostMapping("modCoupon")
+    @ResponseBody
     public String modCoupon(@RequestBody Coupon coupon) {
         couponService.editCoupon(PlatUserUtils.getCurrentLoginPlatUser(), coupon);
         return "ok";
@@ -53,8 +56,8 @@ public class CardController {
 
     @PostMapping("relateConsumeItem")
     public String relateConsumeItem(@RequestBody Map<String, Object> items) {
-        String Coupon = (String) items.get("selectedCoupon");
-        List itemsList = (List) items.get("selectedItems");
+        Coupon c = (Coupon) items.get("selectedCoupon");
+        List<ConsumeProject> itemsList = (List<ConsumeProject>) items.get("selectedItems");
 
         return items.toString();
     }
