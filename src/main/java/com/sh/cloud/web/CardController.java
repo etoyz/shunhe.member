@@ -30,7 +30,11 @@ public class CardController {
 
     @PostMapping(value = "addCoupon")
     public String addCoupon(@RequestBody Coupon coupon) {
-        return couponService.addCoupon(PlatUserUtils.getCurrentLoginPlatUser(), coupon);
+        String ret = couponService.addCoupon(PlatUserUtils.getCurrentLoginPlatUser(), coupon);
+        if (ret == null || ret.equals(""))
+            return "添加成功";
+        else
+            return ret;
     }
 
     @Deprecated
@@ -67,12 +71,13 @@ public class CardController {
         Map<String, Object> ret = new HashMap<>();
         ret.put("code", 0);
         ret.put("msg", "");
-        ret.put("count", 2);
 
         Coupon c = new Coupon();
         c.name = query;
         c.type = 666;
-        ret.put("data", couponService.getCouponList(c, 1, 10));
+        List<Coupon> data = couponService.getCouponList(c, page, limit);
+        ret.put("count", 999);
+        ret.put("data", data);
 
         return ret;
     }

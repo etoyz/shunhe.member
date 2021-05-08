@@ -189,7 +189,7 @@
         var couponTable = table.render({
             elem: '#coupon',
             url: 'service/coupon/getCouponList?query=',
-            height: 'full-120',
+            height: 'full-230',
             page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                 layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
                 limit: 15,
@@ -197,21 +197,20 @@
                 groups: 3, //只显示 1 个连续页码
                 first: false, //不显示首页
                 last: false //不显示尾页
-
             },
             cols: [[
-                {type: 'checkbox'},
-                {field: 'name', width: '8%', title: '卡券名称'},
+                // {type: 'checkbox'},
+                {field: 'name', width: '10%', title: '卡券名称'},
                 {field: 'type', width: '8%', title: '卡券类型'},
                 {field: 'unitPrice', width: '8%', title: '单价'},
                 {field: 'costPrice', width: '8%', title: '成本价'},
-                {field: 'remark', width: '5%', title: '备注'},
+                {field: 'remark', width: '8%', title: '备注'},
                 {field: 'orderID', width: '8%', title: '顺序号'},
                 {field: 'createName', width: '8%', title: '创建人'},
                 {field: 'createTime', width: '10%', title: '创建时间'},
                 {field: 'lastEditName', width: '8%', title: '最后编辑人'},
                 {field: 'lastEditTime', width: '10%', title: '最后编辑时间'},
-                {field: 'operation', width: '14%', title: '操作', toolbar: '#operation', fixed: 'right'}
+                {field: 'operation', width: '14%', title: '操作', toolbar: '#operation'}
             ]],
             size: 'sm',
             parseData: function (res) {
@@ -278,7 +277,7 @@
             // var limit = data.limit;
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值f）
             if (layEvent === 'delete') { // 用卡
-                layer.confirm("确认删除？", function () {
+                layer.confirm("确认删除卡券“" + activeLine.name + "”?", function () {
                     activeLine.type = activeLine.type === "储值" ? 1 : 0;
                     $.post({
                         url: "/service/coupon/deleteCoupon",
@@ -348,10 +347,10 @@
                 }),
                 contentType: "application/json",
                 success: function (res) {
-                    layuiAlert("成功:" + res)
+                    layuiAlert("信息:" + res)
                 },
-                error: function () {
-                    layuiAlert("添加失败")
+                error: function (res) {
+                    layuiAlert("添加失败" + res)
                 }
             })
         })
@@ -408,6 +407,8 @@
         $("#queryBtn").click(function () {
             couponTable.reload({
                 url: 'service/coupon/getCouponList?query=' + $("#couponNameInput").val(),
+                page: 1,
+                limit: 15
             })
             return false;
         })
