@@ -31,7 +31,7 @@
                         </div>
                         <div class="layui-inline s-layuiInline">
                             <button class="layui-btn layui-btn-warm">查询</button>
-                            <span class="layui-btn" id="add">新增</span>
+                            <button class="layui-btn layui-btn-normal" id="add">新增消费类型</button>
                         </div>
                     </div>
                 </form>
@@ -56,8 +56,8 @@
                 <div class="layui-inline">
                     <label class="layui-form-label"><i>*</i>消费类型</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="consumeTypeName" lay-verify="required" autocomplete="off"
-                                class="layui-input">
+                        <input type="text" id="consumeTypeName" lay-verify="required" autocomplete="off"
+                               class="layui-input">
                     </div>
                 </div>
             </div>
@@ -65,16 +65,16 @@
                 <div class="layui-inline">
                     <label class="layui-form-label"><i>*</i>顺序号</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="indexID" lay-verify="required" autocomplete="off"
-                                class="layui-input">
+                        <input type="text" id="indexID" lay-verify="required" autocomplete="off"
+                               class="layui-input">
                     </div>
                 </div>
             </div>
         </form>
     </div>
     <div class="s-tabBottomButton">
-        <button class="layui-btn" id="confirm">确认</button>
-        <button class="layui-btn layui-btn-warm" id="exit">取消</button>
+        <button class="layui-btn" id="confirmAdd">确认</button>
+        <button class="layui-btn layui-btn-warm" id="cancelAdd">取消</button>
     </div>
 
 </div>
@@ -88,7 +88,7 @@
                     <label class="layui-form-label"><i>*</i>消费类型</label>
                     <div class="layui-input-inline">
                         <input type="text" name="consumeTypeName" lay-verify="required" autocomplete="off"
-                                class="layui-input">
+                               class="layui-input">
                     </div>
                 </div>
             </div>
@@ -97,7 +97,7 @@
                     <label class="layui-form-label"><i>*</i>顺序号</label>
                     <div class="layui-input-inline">
                         <input type="text" name="indexID" lay-verify="required" autocomplete="off"
-                                class="layui-input">
+                               class="layui-input">
                     </div>
                 </div>
             </div>
@@ -118,6 +118,21 @@
             table = layui.table,
             element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
 
+        function layuiAlert(msg) {
+            layer.open({
+                offset: "auto",//具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
+                content: '<div style="padding: 20px 70px;">' + msg + '</div>',
+                btn: '关闭',
+                btnAlign: 'c',//按钮居中
+                shade: 0, //不显示遮罩
+                closeBtn: false,
+                yes: function () {
+                    layer.closeAll();
+                    location.reload();
+                }
+            });
+        }
+
         // 显示“新增弹窗”
         $('body').on('click', '#add', function () {
             var index = layer.open({
@@ -126,10 +141,22 @@
                 content: $('#addWindow'),
                 area: ['400px', '225px'],
             });
-            $('#exit').on('click', function () {
+            $('#cancelAdd').on('click', function () {
                 // 关闭当前弹出层
                 layer.close(index);
             });
+            $("#confirmAdd").click(function () {
+                $.post({
+                    url: "service/consumeType/addConsumeType",
+                    data: JSON.stringify({
+                        name: $("#consumeTypeName").val()
+                    }),
+                    contentType: "application/json",
+                    success: function (res) {
+                        layuiAlert(res)
+                    }
+                })
+            })
         });
 
         // “会员档案表格”渲染
