@@ -49,7 +49,7 @@
     </div>
 </div>
 
-<!-- 添加卡券弹窗 -->
+<!-- 新增卡券弹窗 -->
 <div class="s-details" id="addWindow">
     <div>
         <form class="layui-form" action="">
@@ -99,8 +99,8 @@
         </form>
     </div>
     <div class="s-tabBottomButton">
-        <button type="button" class="layui-btn layui-btn-danger" id="confirmAdd">添加</button>
-        <button type="button" class="layui-btn" id="cancelAdd">取消</button>
+        <button type="button" class="layui-btn" id="confirmAdd">新增</button>
+        <button type="button" class="layui-btn layui-btn-warm" id="cancelAdd">取消</button>
     </div>
 </div>
 
@@ -320,7 +320,7 @@
         $("#addBtn").click(function () {
             layer.open({
                 type: 1,
-                title: '添加卡券',
+                title: '新增卡券',
                 content: $('#addWindow'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
                 area: ['1022px', '225px']
             });
@@ -350,7 +350,7 @@
                     layuiAlert("信息:" + res)
                 },
                 error: function (res) {
-                    layuiAlert("添加失败" + res)
+                    layuiAlert("新增失败" + res)
                 }
             })
         })
