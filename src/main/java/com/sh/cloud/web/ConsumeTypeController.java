@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("service/consumeType")
@@ -17,11 +19,24 @@ public class ConsumeTypeController {
     @Resource
     ConsumeTypeService consumeTypeService;
 
-//    @RequestMapping("getConsumeType")
-//    @ResponseBody
-//    public List<ConsumeType> getConsumeType() {
-//        return consumeTypeService.getConsumeTypeList();
-//    }
+    @RequestMapping("getConsumeType")
+    @ResponseBody
+    public List<ConsumeType> getConsumeType() {
+        return consumeTypeService.getConsumeTypeList();
+    }
+
+    @RequestMapping("getConsumeTypeList")
+    @ResponseBody
+    public Map<String, Object> getConsumeTypeList(){
+        Map<String, Object> ret = new HashMap<>();
+        ret.put("code", 0);
+        ret.put("msg", "");
+
+        List<ConsumeType> data = consumeTypeService.getConsumeTypeList();
+//        ret.put("count", consumeTypeService.get);
+        ret.put("data", data);
+        return ret;
+    }
 
     @RequestMapping("addConsumeType")
     @ResponseBody

@@ -134,7 +134,7 @@
         }
 
         // 显示“新增弹窗”
-        $('body').on('click', '#add', function () {
+        $('#add').click(function () {
             var index = layer.open({
                 type: 1,
                 title: '新增消费类型',
@@ -157,12 +157,13 @@
                     }
                 })
             })
+            return false;
         });
 
         // “会员档案表格”渲染
         var tableIns = table.render({
             elem: '#consumeTypes',
-            url: './datas/consumeType.json',
+            url: 'service/consumeType/getConsumeTypeList',
             page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                 layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
                 limit: 15,
@@ -174,12 +175,12 @@
             defaultToolbar: ['exports'], //头部工具栏右侧图标
             cols: [[
                 {type: 'checkbox'},
-                {field: 'consumeTypeName', width: 140, title: '消费类型'},
+                {field: 'name', width: 140, title: '消费类型'},
                 {field: 'indexID', width: 80, title: '顺序号'},
-                {field: 'creater', width: 100, title: '创建人'},
+                {field: 'createId', width: 100, title: '创建人'},
                 {field: 'createTime', width: 150, title: '创建时间'},
-                {field: 'editor', width: 100, title: '最后编辑人'},
-                {field: 'editTime', width: 150, title: '最后编辑时间'},
+                {field: 'lastEditId', width: 100, title: '最后编辑人'},
+                {field: 'lastEditTime', width: 150, title: '最后编辑时间'},
                 {field: 'operation', width: 110, title: '操作', toolbar: '#operation', fixed: 'right'}
             ]],
             size: 'sm'
