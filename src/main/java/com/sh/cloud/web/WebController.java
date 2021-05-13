@@ -49,7 +49,7 @@ public class WebController {
 
     @RequestMapping("/consumeItem")
     public String consumeItem() {
-        return "consumeItem";
+        return "consumeProject";
     }
 
     @RequestMapping("/brand")
