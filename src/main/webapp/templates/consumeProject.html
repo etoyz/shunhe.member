@@ -25,12 +25,12 @@
                         <div class="layui-inline s-layuiInline">
                             <label class="layui-form-label">消费项目</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="consumeType" autocomplete="off" class="layui-input"
+                                <input type="text" id="consumeTypeInput" autocomplete="off" class="layui-input"
                                        placeholder="请输入消费项目">
                             </div>
                         </div>
                         <div class="layui-inline s-layuiInline">
-                            <button class="layui-btn layui-btn-warm">查询</button>
+                            <button class="layui-btn layui-btn-warm" id="queryBtn">查询</button>
                             <span class="layui-btn layui-btn-normal" id="add">新增消费项目</span>
                         </div>
                     </div>
@@ -56,8 +56,8 @@
                 <div class="layui-inline">
                     <label class="layui-form-label"><i>*</i>消费项目</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="consumeTypeName" lay-verify="required" autocomplete="off"
-                                class="layui-input">
+                        <input type="text" id="consumeProjectName" lay-verify="required" autocomplete="off"
+                               class="layui-input">
                     </div>
                 </div>
             </div>
@@ -65,8 +65,8 @@
                 <div class="layui-inline">
                     <label class="layui-form-label"><i>*</i>顺序号</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="indexID" lay-verify="required" autocomplete="off"
-                                class="layui-input">
+                        <input type="text" id="indexID" lay-verify="required" autocomplete="off"
+                               class="layui-input">
                     </div>
                 </div>
             </div>
@@ -87,8 +87,8 @@
                 <div class="layui-inline">
                     <label class="layui-form-label"><i>*</i>消费项目</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="consumeTypeName" lay-verify="required" autocomplete="off"
-                                class="layui-input">
+                        <input type="text" name="consumeProjectName" lay-verify="required" autocomplete="off"
+                               class="layui-input">
                     </div>
                 </div>
             </div>
@@ -97,7 +97,7 @@
                     <label class="layui-form-label"><i>*</i>顺序号</label>
                     <div class="layui-input-inline">
                         <input type="text" name="indexID" lay-verify="required" autocomplete="off"
-                                class="layui-input">
+                               class="layui-input">
                     </div>
                 </div>
             </div>
@@ -118,6 +118,21 @@
             table = layui.table,
             element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
 
+        function layuiAlert(msg) {
+            layer.open({
+                offset: "auto",//具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
+                content: '<div style="padding: 20px 70px;">' + msg + '</div>',
+                btn: '关闭',
+                btnAlign: 'c',//按钮居中
+                shade: 0, //不显示遮罩
+                closeBtn: false,
+                yes: function () {
+                    layer.closeAll();
+                    location.reload();
+                }
+            });
+        }
+
         // 显示“新增弹窗”
         $('body').on('click', '#add', function () {
             var index = layer.open({
@@ -130,12 +145,24 @@
                 // 关闭当前弹出层
                 layer.close(index);
             });
+            $("#confirmAdd").click(function () {
+                $.post({
+                    url: "service/consumeProject/addConsumeProject",
+                    data: JSON.stringify({
+                        name: $("#consumeProjectName").val()
+                    }),
+                    contentType: "application/json",
+                    success: function (res) {
+                        layuiAlert("结果" + res)
+                    }
+                })
+            })
         });
 
         // “会员档案表格”渲染
         var tableIns = table.render({
             elem: '#consumeTypes',
-            url: './datas/consumeType.json',
+            url: 'service/consumeProject/getConsumeProjectList?query=',
             page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                 layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
                 limit: 15,
@@ -146,17 +173,26 @@
             toolbar: true, //仅开启工具栏，不显示左侧模板
             defaultToolbar: ['exports'], //头部工具栏右侧图标
             cols: [[
-                {type: 'checkbox'},
-                {field: 'consumeTypeName', width: 140, title: '消费类型'},
-                {field: 'indexID', width: 80, title: '顺序号'},
-                {field: 'creater', width: 100, title: '创建人'},
+                // {type: 'checkbox'},
+                {field: 'name', width: 140, title: '消费类型'},
+                // {field: 'indexID', width: 80, title: '顺序号'},
+                {field: 'createId', width: 100, title: '创建人'},
                 {field: 'createTime', width: 150, title: '创建时间'},
-                {field: 'editor', width: 100, title: '最后编辑人'},
-                {field: 'editTime', width: 150, title: '最后编辑时间'},
+                {field: 'lastEditId', width: 100, title: '最后编辑人'},
+                {field: 'lastEditTime', width: 150, title: '最后编辑时间'},
                 {field: 'operation', width: 110, title: '操作', toolbar: '#operation', fixed: 'right'}
             ]],
             size: 'sm'
         });
+        $("#queryBtn").click(function () {
+            tableIns.reload({
+                url: 'service/consumeProject/getConsumeProjectList?query=' + $("#consumeTypeInput").val(),
+                page: {
+                    curr: 1
+                }
+            })
+            return false;
+        })
         //监听“会员档案表格”工具条
         table.on('tool(consumeTypeTabel)', function (obj) {
             var data = obj.data; //获得当前行数据
@@ -164,7 +200,7 @@
             // var limit = data.limit;
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
             var tr = obj.tr; //获得当前行 tr 的DOM对象
-            var consumeTypeName = data.consumeTypeName;
+            var consumeProjectName = data.name;
             if (layEvent === 'edit') {
                 var index1 = layer.open({
                     type: 1,
@@ -177,14 +213,16 @@
                     layer.close(index1);
                 });
             } else if (layEvent === 'delete') {
-                layer.confirm('确定要删除 [' + consumeTypeName + '] 吗？', {icon: 3, title: '提示'}, function (index) {
-                    // 删除对应行（tr）的DOM结构，并更新缓存
-                    obj.del();
-                    layer.close(index);
-                    // 向服务端发送删除指令
-                    // TODO
-                    // 提示窗
-                    layer.alert('删除成功！', {icon: 1});
+                layer.confirm('确认删除消费项目【' + consumeProjectName + '】？', {icon: 3, title: '提示'}, function (index) {
+                    $.post({
+                        url: "service/consumeProject/deleteConsumeProject",
+                        data: {
+                            id: data.consumeProjectId
+                        },
+                        success: function (res) {
+                            layuiAlert(res)
+                        },
+                    });
                 });
             }
         });
