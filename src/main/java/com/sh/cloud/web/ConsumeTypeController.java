@@ -6,6 +6,7 @@ import com.sh.cloud.utils.PlatUserUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -27,13 +28,15 @@ public class ConsumeTypeController {
 
     @RequestMapping("getConsumeTypeList")
     @ResponseBody
-    public Map<String, Object> getConsumeTypeList(){
+    public Map<String, Object> getConsumeTypeList(@RequestParam String query, @RequestParam int page, @RequestParam int limit) {
         Map<String, Object> ret = new HashMap<>();
         ret.put("code", 0);
         ret.put("msg", "");
 
-        List<ConsumeType> data = consumeTypeService.getConsumeTypeList();
-//        ret.put("count", consumeTypeService.get);
+        ConsumeType consumeType = new ConsumeType();
+        consumeType.name = query;
+        List<ConsumeType> data = consumeTypeService.getConsumeTypeList(consumeType, page, limit);
+        ret.put("count", consumeTypeService.getConsumeTypeListCount(consumeType));
         ret.put("data", data);
         return ret;
     }
@@ -41,6 +44,17 @@ public class ConsumeTypeController {
     @RequestMapping("addConsumeType")
     @ResponseBody
     public String addConsumeType(@RequestBody ConsumeType consumeType) {
-        return consumeTypeService.addConsumeType(PlatUserUtils.getCurrentLoginPlatUser(),consumeType);
+        return consumeTypeService.addConsumeType(PlatUserUtils.getCurrentLoginPlatUser(), consumeType);
+    }
+
+    @RequestMapping("deleteConsumeType")
+    @ResponseBody
+    public String deleteConsumeType(@RequestParam String id) {
+        ConsumeType consumeType = new ConsumeType();
+        consumeType.consumeTypeId = Integer.parseInt(id);
+        if (consumeTypeService.deleteConsumeType(PlatUserUtils.getCurrentLoginPlatUser(), consumeType))
+            return "删除成功！";
+        else
+            return "删除失败！";
     }
 }

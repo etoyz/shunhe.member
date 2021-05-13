@@ -25,12 +25,12 @@
                         <div class="layui-inline s-layuiInline">
                             <label class="layui-form-label">消费类型</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="consumeType" autocomplete="off" class="layui-input"
+                                <input type="text" id="consumeTypeInput" autocomplete="off" class="layui-input"
                                        placeholder="请输入消费类型">
                             </div>
                         </div>
                         <div class="layui-inline s-layuiInline">
-                            <button class="layui-btn layui-btn-warm">查询</button>
+                            <button class="layui-btn layui-btn-warm" id="queryBtn">查询</button>
                             <button class="layui-btn layui-btn-normal" id="add">新增消费类型</button>
                         </div>
                     </div>
@@ -163,7 +163,7 @@
         // “会员档案表格”渲染
         var tableIns = table.render({
             elem: '#consumeTypes',
-            url: 'service/consumeType/getConsumeTypeList',
+            url: 'service/consumeType/getConsumeTypeList?query=',
             page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                 layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
                 limit: 15,
@@ -174,9 +174,9 @@
             toolbar: true, //仅开启工具栏，不显示左侧模板
             defaultToolbar: ['exports'], //头部工具栏右侧图标
             cols: [[
-                {type: 'checkbox'},
+                // {type: 'checkbox'},
                 {field: 'name', width: 140, title: '消费类型'},
-                {field: 'indexID', width: 80, title: '顺序号'},
+                // {field: 'indexID', width: 80, title: '顺序号'},
                 {field: 'createId', width: 100, title: '创建人'},
                 {field: 'createTime', width: 150, title: '创建时间'},
                 {field: 'lastEditId', width: 100, title: '最后编辑人'},
@@ -188,11 +188,8 @@
         //监听“会员档案表格”工具条
         table.on('tool(consumeTypeTabel)', function (obj) {
             var data = obj.data; //获得当前行数据
-            // var page = data.page;
-            // var limit = data.limit;
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
-            var tr = obj.tr; //获得当前行 tr 的DOM对象
-            var consumeTypeName = data.consumeTypeName;
+            var consumeTypeName = data.name;
             if (layEvent === 'edit') {
                 var index1 = layer.open({
                     type: 1,
@@ -205,17 +202,30 @@
                     layer.close(index1);
                 });
             } else if (layEvent === 'delete') {
-                layer.confirm('确定要删除 [' + consumeTypeName + '] 吗？', {icon: 3, title: '提示'}, function (index) {
-                    // 删除对应行（tr）的DOM结构，并更新缓存
-                    obj.del();
-                    layer.close(index);
-                    // 向服务端发送删除指令
-                    // TODO
-                    // 提示窗
-                    layer.alert('删除成功！', {icon: 1});
+                console.log(data)
+                layer.confirm('确认删除消费类型【' + consumeTypeName + '】？', {icon: 3, title: '提示'}, function (index) {
+                    $.post({
+                        url: "service/consumeType/deleteConsumeType",
+                        data: {
+                            id: data.consumeTypeId
+                        },
+                        success: function (res) {
+                            layuiAlert(res)
+                        }
+                    })
                 });
             }
         });
+
+        $("#queryBtn").click(function () {
+            tableIns.reload({
+                url: 'service/consumeType/getConsumeTypeList?query=' + $("#consumeTypeInput").val(),
+                page: {
+                    curr: 1
+                }
+            })
+            return false;
+        })
     });
 </script>
 </body>
