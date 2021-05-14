@@ -38,7 +38,7 @@
             </div>
             <!-- 展示表格 -->
             <div class="s-commonTable">
-                <table class="layui-hide" id="consumeTypes" lay-filter="consumeTypeTabel"></table>
+                <table class="layui-hide" id="consumeProj" lay-filter="consumeTypeTabel"></table>
                 <script type="text/html" id="operation">
                     <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="edit">修改</a>
                     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
@@ -50,33 +50,146 @@
 
 <!-- 新增弹窗 -->
 <div class="s-details" id="addWindow">
-    <div>
-        <form class="layui-form" action="">
-            <div class="layui-form-item s-formItem5">
-                <div class="layui-inline">
-                    <label class="layui-form-label"><i>*</i>消费项目</label>
-                    <div class="layui-input-inline">
-                        <input type="text" id="consumeProjectName" lay-verify="required" autocomplete="off"
-                               class="layui-input">
+    <div class="layui-tab layui-tab-brief">
+        <ul class="layui-tab-title">
+            <li class="layui-this">基本信息</li>
+            <li>具体项目</li>
+            <li>关联消费卡券</li>
+        </ul>
+        <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+                <form class="layui-form" action="">
+                    <div class="layui-form-item s-formItem6">
+                        <div class="layui-inline">
+                            <label class="layui-form-label"><i>*</i>项目名称</label>
+                            <div class="layui-input-inline">
+                                <input type="text" id="consumeProjectName" lay-verify="required" autocomplete="off"
+                                       class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label"><i>*</i>项目类型</label>
+                            <div class="layui-input-inline">
+                                <select type="text" id="indexID" lay-verify="required" autocomplete="off"
+                                        class="layui-input"></select>
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label"><i>*</i>开票金额</label>
+                            <div class="layui-input-inline">
+                                <input type="text" id="invoice" lay-verify="required" autocomplete="off"
+                                       class="layui-input">
+                            </div>
+                        </div>
                     </div>
+                    <div class="layui-form-item s-formItem6">
+                        <div class="layui-inline">
+                            <label class="layui-form-label"><i>*</i>备注</label>
+                            <div class="layui-input-inline">
+                                <input type="text" id="remark" lay-verify="required" autocomplete="off"
+                                       class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label"><i>*</i>是否消费</label>
+                            <div class="layui-input-inline">
+                                <select type="text" id="isConsume" lay-verify="required" autocomplete="off"
+                                        class="layui-input">
+                                    <option value="yes">是</option>
+                                    <option value="no">否</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label"><i>*</i>购买优惠项</label>
+                            <div class="layui-input-inline">
+                                <select type="text" id="buyReduce" lay-verify="required" autocomplete="off"
+                                        class="layui-input">
+                                    <option value="yes">是</option>
+                                    <option value="no">否</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-form-item s-formItem6">
+                        <div class="layui-inline">
+                            <label class="layui-form-label"><i>*</i>使用积分</label>
+                            <div class="layui-input-inline">
+                                <select type="text" id="useInt" lay-verify="required" autocomplete="off"
+                                        class="layui-input">
+                                    <option value="yes">是</option>
+                                    <option value="no">否</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label"><i>*</i>是否保养</label>
+                            <div class="layui-input-inline">
+                                <select type="text" id="maintain" lay-verify="required" autocomplete="off"
+                                        class="layui-input">
+                                    <option value="yes">是</option>
+                                    <option value="no">否</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label"><i>*</i>是否维修</label>
+                            <div class="layui-input-inline">
+                                <select type="text" id="repair" lay-verify="required" autocomplete="off"
+                                        class="layui-input">
+                                    <option value="yes">是</option>
+                                    <option value="no">否</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-form-item s-formItem6">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">计入可用积分</label>
+                            <div class="layui-input-inline">
+                                <select type="text" id="canUseInt" lay-verify="required" autocomplete="off"
+                                        class="layui-input">
+                                    <option value="yes">是</option>
+                                    <option value="no">否</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">计入累计积分</label>
+                            <div class="layui-input-inline">
+                                <select type="text" id="cantUseInt" lay-verify="required" autocomplete="off"
+                                        class="layui-input">
+                                    <option value="yes">是</option>
+                                    <option value="no">否</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label"><i>*</i>积分比例</label>
+                            <div class="layui-input-inline">
+                                <input type="text" id="intRatio" lay-verify="required" autocomplete="off"
+                                       class="layui-input">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="layui-tab-item">
+                <form class="layui-form" action="">
+                    asd
+                </form>
+            </div>
+            <div class="layui-tab-item">
+                <div class="s-commonTable">
+                    <table id="consumeCoupon"></table>
                 </div>
             </div>
-            <div class="layui-form-item s-formItem5">
-                <div class="layui-inline">
-                    <label class="layui-form-label"><i>*</i>顺序号</label>
-                    <div class="layui-input-inline">
-                        <input type="text" id="indexID" lay-verify="required" autocomplete="off"
-                               class="layui-input">
-                    </div>
-                </div>
-            </div>
-        </form>
+        </div>
     </div>
     <div class="s-tabBottomButton">
         <button class="layui-btn" id="confirmAdd">新增</button>
         <button class="layui-btn layui-btn-warm" id="exit">取消</button>
     </div>
-
 </div>
 
 <!-- 编辑弹窗 -->
@@ -139,7 +252,7 @@
                 type: 1,
                 title: '新增消费项目',
                 content: $('#addWindow'),
-                area: ['400px', '225px'],
+                area: ['1000px', '370px'],
             });
             $('#exit').on('click', function () {
                 // 关闭当前弹出层
@@ -161,7 +274,7 @@
 
         // “会员档案表格”渲染
         var tableIns = table.render({
-            elem: '#consumeTypes',
+            elem: '#consumeProj',
             url: 'service/consumeProject/getConsumeProjectList?query=',
             page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                 layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
