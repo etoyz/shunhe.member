@@ -25,8 +25,16 @@
                         <div class="layui-inline s-layuiInline">
                             <label class="layui-form-label">消费项目</label>
                             <div class="layui-input-inline">
-                                <input type="text" id="consumeTypeInput" autocomplete="off" class="layui-input"
+                                <input type="text" id="consumeProjInput" autocomplete="off" class="layui-input"
                                        placeholder="请输入消费项目">
+                            </div>
+                        </div>
+                        <div class="layui-inline s-layuiInline">
+                            <label class="layui-form-label">所属消费类型</label>
+                            <div class="layui-input-inline">
+                                <select type="text" id="consumeTypeInput" autocomplete="off" class="layui-input">
+                                    <option id="selectHead">正在拉取...</option>
+                                </select>
                             </div>
                         </div>
                         <div class="layui-inline s-layuiInline">
@@ -246,6 +254,33 @@
             });
         }
 
+        function pullConsumeTypes(selector, callback) {
+            var selectE = $(selector);
+            $.post({
+                url: "service/consumeType/getConsumeTypeList?query=&page=1&limit=9999",
+                timeout: 1000,
+                dataType: "json",
+                success: function (res) {
+                    res = res.data;
+                    console.log(res)
+                    selectE.empty();
+                    for (var s of res) {
+                        selectE.append("<option value='" + s.name + "'>" + s.name + "</option>");
+                    }
+                    callback();
+                    form.render(); //layui的form重新渲染
+                },
+                error: function () {
+                    selectE.empty();
+                    selectE.append("<option>拉取失败，请刷新！</option>");
+                    form.render();
+                }
+            })
+        }
+
+        pullConsumeTypes("#consumeTypeInput", () => {
+        });
+
         // 显示“新增弹窗”
         $('body').on('click', '#add', function () {
             var index = layer.open({
@@ -299,7 +334,7 @@
         });
         $("#queryBtn").click(function () {
             tableIns.reload({
-                url: 'service/consumeProject/getConsumeProjectList?query=' + $("#consumeTypeInput").val(),
+                url: 'service/consumeProject/getConsumeProjectList?query=' + $("#consumeProjInput").val(),
                 page: {
                     curr: 1
                 }

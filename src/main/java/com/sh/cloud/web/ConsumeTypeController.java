@@ -20,12 +20,6 @@ public class ConsumeTypeController {
     @Resource
     ConsumeTypeService consumeTypeService;
 
-    @RequestMapping("getConsumeType")
-    @ResponseBody
-    public List<ConsumeType> getConsumeType() {
-        return consumeTypeService.getConsumeTypeList();
-    }
-
     @RequestMapping("getConsumeTypeList")
     @ResponseBody
     public Map<String, Object> getConsumeTypeList(@RequestParam String query, @RequestParam int page, @RequestParam int limit) {
