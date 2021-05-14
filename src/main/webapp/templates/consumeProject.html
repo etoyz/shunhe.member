@@ -313,7 +313,7 @@
         // “会员档案表格”渲染
         var tableIns = table.render({
             elem: '#consumeProj',
-            url: 'service/consumeProject/getConsumeProjectList?query=',
+            url: 'service/consumeProject/getConsumeProjectList?query=&consumeType=',
             page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                 layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
                 limit: 15,
