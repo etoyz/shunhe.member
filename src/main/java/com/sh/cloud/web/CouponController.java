@@ -1,6 +1,5 @@
 package com.sh.cloud.web;
 
-import com.alibaba.dubbo.config.annotation.Reference;
 import com.sft.member.bean.ConsumeProject;
 import com.sft.member.bean.Coupon;
 import com.sft.member.obtain.coupon.CouponService;
@@ -59,7 +58,7 @@ public class CouponController {
         return "ok";
     }
 
-    @PostMapping("relateConsumeItem")
+    @PostMapping("relateConsumeProject")
     public String relateConsumeItem(@RequestBody CouponAndConsumeProjects couponAndConsumeProjects) {
 //        Coupon c = (Coupon) items.get("selectedCoupon");
 //        List<ConsumeProject> itemsList = (List<ConsumeProject>) items.get("selectedItems");

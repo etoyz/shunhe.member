@@ -277,7 +277,7 @@
             // var limit = data.limit;
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值f）
             if (layEvent === 'delete') { // 用卡
-                layer.confirm("确认删除卡券【" + activeLine.name + "】?",{icon: 3, title: '提示'}, function () {
+                layer.confirm("确认删除卡券【" + activeLine.name + "】?", {icon: 3, title: '提示'}, function () {
                     activeLine.type = activeLine.type === "储值" ? 1 : 0;
                     $.post({
                         url: "/service/coupon/deleteCoupon",
@@ -377,30 +377,30 @@
             })
         })
 
-        table.render({
+        var projectsTable = table.render({
             id: "relTable",
             elem: "#relTable",
             height: 450,
             width: 500,
             page: false,
-            url: "./datas/consumeItem.json",
+            url: "service/consumeProject/getConsumeProjectList?query=",
             cols: [[
                 {type: 'checkbox', width: 70},
-                {field: 'consumeItem', width: 420, title: '消费项目'},
+                {field: 'name', width: 420, title: '消费项目'},
             ]],
         })
 
         $("#confirmRel").click(function () {
             activeLine.type = activeLine.type === "储值" ? 1 : 0;
             $.post({
-                url: "service/coupon/relateConsumeItem",
+                url: "service/coupon/relateConsumeProject",
                 data: JSON.stringify({
                     "projects": table.checkStatus('relTable').data,
                     "coupon": activeLine
                 }),
                 contentType: "application/json",
                 success: function (res) {
-                    console.log(res)
+                    layuiAlert(res)
                 }
             })
         })
