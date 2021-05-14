@@ -19,13 +19,14 @@ public class ConsumeProjectController {
 
     @RequestMapping("getConsumeProjectList")
     @ResponseBody
-    public Map<String, Object> getProjectList(@RequestParam String query, @RequestParam int page, @RequestParam int limit) {
+    public Map<String, Object> getProjectList(@RequestParam String query, @RequestParam String consumeType, @RequestParam int page, @RequestParam int limit) {
         Map<String, Object> ret = new HashMap<>();
         ret.put("code", 0);
         ret.put("msg", "");
 
         ConsumeProject consumeProject = new ConsumeProject();
         consumeProject.name = query;
+        consumeProject.consumeTypeName = consumeType;
         List<ConsumeProject> data = consumeProjectService.getConsumeProjectList(consumeProject, page, limit);
         ret.put("data", data);
         ret.put("count", consumeProjectService.getConsumeProjectListCount(consumeProject));

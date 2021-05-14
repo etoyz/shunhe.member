@@ -33,7 +33,7 @@
                             <label class="layui-form-label">所属消费类型</label>
                             <div class="layui-input-inline">
                                 <select type="text" id="consumeTypeInput" autocomplete="off" class="layui-input">
-                                    <option id="selectHead">正在拉取...</option>
+                                    <option>正在拉取...</option>
                                 </select>
                             </div>
                         </div>
@@ -78,8 +78,10 @@
                         <div class="layui-inline">
                             <label class="layui-form-label"><i>*</i>项目类型</label>
                             <div class="layui-input-inline">
-                                <select type="text" id="indexID" lay-verify="required" autocomplete="off"
-                                        class="layui-input"></select>
+                                <select type="text" id="consumeTypeInputAdd" lay-verify="required" autocomplete="off"
+                                        class="layui-input">
+                                    <option>正在拉取...</option>
+                                </select>
                             </div>
                         </div>
                         <div class="layui-inline">
@@ -262,7 +264,6 @@
                 dataType: "json",
                 success: function (res) {
                     res = res.data;
-                    console.log(res)
                     selectE.empty();
                     for (var s of res) {
                         selectE.append("<option value='" + s.name + "'>" + s.name + "</option>");
@@ -280,6 +281,8 @@
 
         pullConsumeTypes("#consumeTypeInput", () => {
         });
+        pullConsumeTypes("#consumeTypeInputAdd", () => {
+        })
 
         // 显示“新增弹窗”
         $('body').on('click', '#add', function () {
@@ -287,7 +290,7 @@
                 type: 1,
                 title: '新增消费项目',
                 content: $('#addWindow'),
-                area: ['1000px', '370px'],
+                area: ['1020px', '370px'],
             });
             $('#exit').on('click', function () {
                 // 关闭当前弹出层
@@ -334,7 +337,7 @@
         });
         $("#queryBtn").click(function () {
             tableIns.reload({
-                url: 'service/consumeProject/getConsumeProjectList?query=' + $("#consumeProjInput").val(),
+                url: 'service/consumeProject/getConsumeProjectList?query=' + $("#consumeProjInput").val() + '&consumeType=' + $("#consumeTypeInput").val(),
                 page: {
                     curr: 1
                 }
