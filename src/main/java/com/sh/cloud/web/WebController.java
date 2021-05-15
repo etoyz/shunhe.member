@@ -83,6 +83,11 @@ public class WebController {
     }
     // ----------------------------------------
 
+    // ------------- Menu: System management -------------
+    @RequestMapping("/userManagement")
+    public String userManagement() { return "userManagement"; }
+    // ----------------------------------------
+
     // ------------ For debugging ------------
     @RequestMapping("/testPage")
     public String testPage() {
