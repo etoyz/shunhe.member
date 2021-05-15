@@ -1,61 +1,49 @@
 spring:
-    datasource:
-#      url: jdbc:mysql://localhost:3306/test
-#      url: jdbc:mysql://192.168.100.105:3306/devicemanagement
-#      username: root
-#      password: root
-      url: jdbc:mysql://10.30.2.1:3306/devicemanagement
-#      url: jdbc:mysql://10.30.11.11:3306/devicemanagement
-      username: fanhua
-      password: fs21Ffds*&e0qkm
-      driver-class-name: com.mysql.jdbc.Driver
+  datasource:
+    url: jdbc:mysql://10.30.2.1:3306/test
+    username: chao
+    password: wuyongdezhanghao
+    driver-class-name: com.mysql.jdbc.Driver
 
-    jpa:
-      database: mysql
-      show-sql: true
+  jpa:
+    database: mysql
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      naming:
+        strategy: org.hibernate.cfg.DefaultComponentSafeNamingStrategy
+    properties:
       hibernate:
-        ddl-auto: update
-        naming:
-          strategy: org.hibernate.cfg.DefaultComponentSafeNamingStrategy
-      properties:
-         hibernate:
-            dialect: org.hibernate.dialect.MySQL5Dialect
+        dialect: org.hibernate.dialect.MySQL5Dialect
 
-#    thymeleaf:
-#       cache: false
-#       mode: LEGACYHTML5
-
-    data:
-       mongodb:
-         database: user
-         host: 10.30.2.1
-#         host: 10.30.11.11
-         port: 27001
-    mvc:
-         view:
-             prefix: /templates/
-             suffix: .html
-    dubbo:
-        application:
-            id: live-dubbo-provider
-            name: live-dubbo-provider
-        registry:
-            address: zookeeper://10.30.2.3:2181?backup=10.30.2.2:2181,10.30.2.1:2181
-#            address: zookeeper://10.30.11.13:2181?backup=10.30.11.12:2181,10.30.11.11:2181
-#            address: zookeeper://122.5.51.134:2181?backup=10.100.15.107:2081,192.168.100.105:2281
-        server: true
-        protocol:
-            name: dubbo
-            port: 20880
+  data:
+    mongodb:
+      database: user
+      host: 10.30.2.1
+      port: 27001
+  mvc:
+    view:
+      prefix: /templates/
+      suffix: .html
+  dubbo:
+    application:
+      id: live-dubbo-provider
+      name: live-dubbo-provider
+    registry:
+      address: zookeeper://10.30.2.3:2181?backup=10.30.2.2:2181,10.30.2.1:2181
+    server: true
+    protocol:
+      name: dubbo
+      port: 20880
 swagger:
-    enable: true
+  enable: true
 
 springfox:
-    documentation:
-        swagger:
-            v2:
-                path: /api-docs
+  documentation:
+    swagger:
+      v2:
+        path: /api-docs
 
 mybatis:
-    mapper-locations: classpath*:/mapper/*.xml
-    type-aliases-package: com.xh.springbootshiro.entity
+  mapper-locations: classpath*:/mapper/*.xml
+  type-aliases-package: com.xh.springbootshiro.entity

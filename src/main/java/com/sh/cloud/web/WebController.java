@@ -37,9 +37,9 @@ public class WebController {
     // ----------------------------------------
 
     // ------ Meun: Customize parameter -------
-    @RequestMapping("/card")
+    @RequestMapping("/coupon")
     public String card() {
-        return "card";
+        return "coupon";
     }
 
     @RequestMapping("/consumeType")
@@ -49,32 +49,34 @@ public class WebController {
 
     @RequestMapping("/consumeItem")
     public String consumeItem() {
-        return "consumeItem";
+        return "consumeProject";
     }
-    // Brand
+
     @RequestMapping("/brand")
-    public String brand() { return "brand"; }
-    // Car series
+    public String brand() {
+        return "brand";
+    }
+
     @RequestMapping("/carSeries")
     public String carSeries() {
         return "carSeries";
     }
-    // Model
+
     @RequestMapping("/model")
     public String model() {
         return "model";
     }
-    // Insurance company
+
     @RequestMapping("/insuranceCompany")
     public String insuranceCompany() {
         return "insuranceCompany";
     }
-    // Type of insurance
+
     @RequestMapping("/typeOfInsurance")
     public String typeOfInsurance() {
         return "typeOfInsurance";
     }
-    // Membership level
+
     @RequestMapping("/membershipLevel")
     public String membershipLevel() {
         return "membershipLevel";

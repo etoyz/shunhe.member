@@ -24,13 +24,13 @@
                         <div class="layui-inline s-layuiInline">
                             <label class="layui-form-label">卡券名称</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="cardNameInput" autocomplete="off" class="layui-input"
+                                <input type="text" id="couponNameInput" autocomplete="off" class="layui-input"
                                        placeholder="请输入卡券名称">
                             </div>
                         </div>
                         <div class="layui-inline s-layuiInline">
-                            <button class="layui-btn layui-btn-warm">查询</button>
-                            <button id="addBtn" class="layui-btn layui-btn-normal">添加卡券</button>
+                            <button id="queryBtn" class="layui-btn layui-btn-warm">查询</button>
+                            <button id="addBtn" class="layui-btn layui-btn-normal">新增卡券</button>
                         </div>
                     </div>
                 </form>
@@ -38,7 +38,7 @@
 
             <!-- 展示表格 -->
             <div class="s-commonTable">
-                <table class="layui-hide" id="card" lay-filter="cardTabel"></table>
+                <table class="layui-hide" id="coupon" lay-filter="couponTabel"></table>
                 <script type="text/html" id="operation">
                     <a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="modify">修改</a>
                     <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delete">删除</a>
@@ -49,7 +49,7 @@
     </div>
 </div>
 
-<!-- 添加卡券弹窗 -->
+<!-- 新增卡券弹窗 -->
 <div class="s-details" id="addWindow">
     <div>
         <form class="layui-form" action="">
@@ -57,14 +57,14 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">卡券名称</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="cardName" id="cardName"
+                        <input type="text" name="couponName" id="couponName"
                                autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">卡券类型</label>
                     <div class="layui-input-inline">
-                        <select type="text" id="cardType" name="cardType" autocomplete="off" class="layui-input">
+                        <select type="text" id="couponType" name="couponType" autocomplete="off" class="layui-input">
                             <option id="selectHead">正在拉取...</option>
                         </select>
                     </div>
@@ -99,8 +99,8 @@
         </form>
     </div>
     <div class="s-tabBottomButton">
-        <button type="button" class="layui-btn layui-btn-danger" id="confirmAdd">添加</button>
-        <button type="button" class="layui-btn" id="cancelAdd">取消</button>
+        <button type="button" class="layui-btn" id="confirmAdd">新增</button>
+        <button type="button" class="layui-btn layui-btn-warm" id="cancelAdd">取消</button>
     </div>
 </div>
 
@@ -112,14 +112,14 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">卡券名称</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="cardNameM" id="cardNameM"
+                        <input type="text" name="couponNameM" id="couponNameM"
                                autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">卡券类型</label>
                     <div class="layui-input-inline">
-                        <select type="text" id="cardTypeM" name="cardTypeM" autocomplete="off" class="layui-input">
+                        <select type="text" id="couponTypeM" name="couponTypeM" autocomplete="off" class="layui-input">
                             <option>正在拉取...</option>
                         </select>
                     </div>
@@ -165,7 +165,7 @@
         <table id="relTable"></table>
     </div>
     <div class="s-tabBottomButton">
-        <button type="button" class="layui-btn layui-btn-danger" id="confirmRel">添加</button>
+        <button type="button" class="layui-btn layui-btn-danger" id="confirmRel">关联</button>
         <button type="button" class="layui-btn" id="cancelRel">取消</button>
     </div>
 </div>
@@ -185,11 +185,11 @@
             elem: '#date'
         });
 
-        // “用卡表格”渲染
-        var tableIns = table.render({
-            elem: '#card',
-            url: './datas/card.json',
-            height: 'full-120',
+        // “卡券表格”渲染
+        var couponTable = table.render({
+            elem: '#coupon',
+            url: 'service/coupon/getCouponList?query=',
+            // height: 'full-230',
             page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                 layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
                 limit: 15,
@@ -197,27 +197,33 @@
                 groups: 3, //只显示 1 个连续页码
                 first: false, //不显示首页
                 last: false //不显示尾页
-
             },
             cols: [[
-                {type: 'checkbox'},
-                {field: 'cardName', width: '8%', title: '卡券名称'},
-                {field: 'cardType', width: '8%', title: '卡券类型'},
-                {field: 'price', width: '8%', title: '单价'},
-                {field: 'costPrice', width: '8%', title: '成本价'},
-                {field: 'remark', width: '10%', title: '备注'},
-                {field: 'orderID', width: '8%', title: '顺序号'},
-                {field: 'creator', width: '8%', title: '创建人'},
-                {field: 'creatTime', width: '10%', title: '创建时间'},
-                {field: 'lastEditor', width: '8%', title: '最后编辑人'},
-                {field: 'lastEditTime', width: '10%', title: '最后编辑时间'},
-                {field: 'operation', width: '14%', title: '操作', toolbar: '#operation', fixed: 'right'}
+                // {type: 'checkbox'},
+                {field: 'name', width: '8%', title: '卡券名称'},
+                {field: 'type', width: '8%', title: '卡券类型'},
+                {field: 'unitPrice', width: '6%', title: '单价'},
+                {field: 'costPrice', width: '7%', title: '成本价'},
+                {field: 'remark', width: '6%', title: '备注'},
+                // {field: 'orderID', width: '7%', title: '顺序号'},
+                {field: 'createId', width: '7%', title: '创建人'},
+                {field: 'createTime', width: '14%', title: '创建时间'},
+                {field: 'lastEditId', width: '7%', title: '最后编辑人'},
+                {field: 'lastEditTime', width: '14%', title: '最后编辑时间'},
+                {field: 'operation', width: '14%', title: '操作', toolbar: '#operation'}
             ]],
-            size: 'sm'
+            size: 'sm',
+            parseData: function (res) {
+                var cTypes = ["代金券", "储值"]
+                for (var i = 0; i < res.data.length; i++) {
+                    res.data[i].type = cTypes[res.data[i].type];
+                }
+                return res
+            }
         });
 
         //从服务端拉取全部卡券类型
-        function pullCardTypes(selector, callback) {
+        function pullCouponTypes(selector, callback) {
             var selectE = $(selector);
 
             function errorAction() {
@@ -227,7 +233,7 @@
             }
 
             $.post({
-                url: "service/card/getCardTypes",
+                url: "service/coupon/getCouponTypes",
                 timeout: 1000,
                 dataType: "json",
                 success: function (res) {
@@ -248,65 +254,61 @@
             })
         }
 
-        //执行操作的卡券
-        var activeCard
+        function layuiAlert(msg) {
+            layer.open({
+                offset: "auto",//具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
+                content: '<div style="padding: 20px 70px;">' + msg + '</div>',
+                btn: '关闭',
+                btnAlign: 'c',//按钮居中
+                shade: 0, //不显示遮罩
+                closeBtn: false,
+                yes: function () {
+                    layer.closeAll();
+                    location.reload();
+                }
+            });
+        }
+
         //监听“卡券表格”工具条
-        table.on('tool(cardTabel)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
-            var data = obj.data; //获得当前行数据
+        var activeLine
+        table.on('tool(couponTabel)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+            activeLine = obj.data; //获得当前行数据
             // var page = data.page;
             // var limit = data.limit;
-            activeCard = data.cardName; //data是当前行的数据，其中cardName是卡券名称
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值f）
             if (layEvent === 'delete') { // 用卡
-                layer.confirm("确认删除？", function () {
+                layer.confirm("确认删除卡券【" + activeLine.name + "】?", {icon: 3, title: '提示'}, function () {
+                    activeLine.type = activeLine.type === "储值" ? 1 : 0;
                     $.post({
-                        url: "/service/card/deleteCard",
-                        data: {
-                            cardName: activeCard
-                        },
+                        url: "/service/coupon/deleteCoupon",
+                        data: JSON.stringify(activeLine),
+                        contentType: "application/json",
                         success: function (res) {
-                            if (res !== "ok") {
-                                layer.open({
-                                    offset: "auto",//具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
-                                    content: '<div style="padding: 20px 70px;">' + '删除失败:' + res + '</div>',
-                                    btn: '关闭',
-                                    btnAlign: 'c',//按钮居中
-                                    shade: 0, //不显示遮罩
-                                    yes: function () {
-                                        layer.closeAll();
-                                    }
-                                });
-                            }
+                            layuiAlert(res)
+                        },
+                        error: function () {
+                            layuiAlert("删除失败")
                         }
                     });
                 })
             }
             if (layEvent === 'modify') {
-                var index2 = layer.open({
+                layer.open({
                     type: 1,
                     title: '修改卡券信息',
                     content: $('#modWindow'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
                     area: ['1022px', '225px']
                 });
-                pullCardTypes("#cardTypeM", function () {
+                pullCouponTypes("#couponTypeM", function () {
                     //拉取卡券列表成功后，执行此回调函数填充原数据以供修改
-                    $.post({
-                        url: "service/card/getCardInfo",
-                        timeout: 1000,
-                        data: {
-                            'cardName': activeCard
-                        },
-                        dataType: "json",
-                        success: function (res) {
-                            $('#cardTypeM').val(res.info.cardType);
-                            $('#cardNameM').val(res.info.cardName);
-                            form.render();
-                        }
-                    })
+                    $('#couponTypeM').val(activeLine.type);
+                    $('#couponNameM').val(activeLine.name);
+                    $('#priceM').val(activeLine.unitPrice);
+                    $('#costPriceM').val(activeLine.costPrice);
                 })
             }
             if (layEvent === 'relate') {
-                var index3 = layer.open({
+                layer.open({
                     type: 1,
                     title: '关联消费项目',
                     content: $('#relWindow'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
@@ -315,86 +317,111 @@
             }
         });
 
-        var addWind;
         $("#addBtn").click(function () {
-            addWind = layer.open({
+            layer.open({
                 type: 1,
-                title: '添加卡券',
+                title: '新增卡券',
                 content: $('#addWindow'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
                 area: ['1022px', '225px']
             });
-            pullCardTypes("#cardType", () => {
+            pullCouponTypes("#couponType", () => {
             })
             return false;
         })
 
         $("#cancelAdd, #cancelMod, #cancelRel").click(function () {
-            console.log("cancel")
             layer.closeAll()
         })
 
         $("#confirmAdd").click(function () {
+            var typeId = $("#couponType").val() === "代金券" ? 0 : 1;
             $.post({
-                url: "/service/card/addCard",
+                url: "/service/coupon/addCoupon",
                 data: JSON.stringify({
-                    cardName: $("#cardName").val(),
-                    cardType: $("#cardType").val(),
+                    name: $("#couponName").val(),
+                    type: typeId,
                     remark: $("#remark").val(),
-                    price: $("#price").val(),
+                    unitPrice: $("#price").val(),
                     costPrice: $("#costPrice").val(),
                     orderID: $("#orderID").val()
                 }),
                 contentType: "application/json",
                 success: function (res) {
-                    console.log(res)
+                    layuiAlert("信息:" + res)
+                },
+                error: function (res) {
+                    layuiAlert("新增失败" + res)
                 }
             })
         })
 
-        var modWind;
         $("#confirmMod").click(function () {
+            var typeId = $("#couponTypeM").val() === "代金券" ? 0 : 1;
             $.post({
-                url: "service/card/modCard",
+                url: "service/coupon/modCoupon",
                 data: JSON.stringify({
-                    cardName: $("#cardNameM").val(),
-                    cardType: $("#cardTypeM").val(),
+                    name: $("#couponNameM").val(),
+                    type: typeId,
                     remark: $("#remarkM").val(),
-                    price: $("#priceM").val(),
+                    unitPrice: $("#priceM").val(),
                     costPrice: $("#costPriceM").val(),
                     orderID: $("#orderIDM").val()
                 }),
                 contentType: "application/json",
                 success: function (res) {
-                    console.log(res)
+                    layuiAlert("修改结果：" + res)
+                },
+                error: function () {
+                    layuiAlert("修改失败")
                 }
             })
         })
 
-        table.render({
+        var projectsTable = table.render({
             id: "relTable",
             elem: "#relTable",
             height: 450,
             width: 500,
             page: false,
-            url: "./datas/consumeItem.json",
+            url: "service/consumeProject/getConsumeProjectList?query=&consumeType=",
             cols: [[
                 {type: 'checkbox', width: 70},
-                {field: 'consumeItem', width: 420, title: '消费项目'},
+                {field: 'name', width: 420, title: '消费项目'},
             ]],
         })
 
         $("#confirmRel").click(function () {
+            activeLine.type = activeLine.type === "储值" ? 1 : 0;
             $.post({
-                url: "service/card/relateConsumeItem",
+                url: "service/coupon/relateConsumeProject",
                 data: JSON.stringify({
-                    "selectedItems": table.checkStatus('relTable').data,
-                    "selectedCard": activeCard
+                    "projects": table.checkStatus('relTable').data,
+                    "coupon": activeLine
                 }),
                 contentType: "application/json",
                 success: function (res) {
-                    console.log(res)
+                    layuiAlert(res)
                 }
             })
+        })
+
+        $("#queryBtn").click(function () {
+            couponTable.reload({
+                url: 'service/coupon/getCouponList?query=' + $("#couponNameInput").val(),
+                page: {
+                    curr: 1
+                }
+            })
+            return false;
+        })
+
+        $(document).ready(function () {
+            // $.post({
+            //     url: "service/coupon/getCouponList",
+            //     success: function (res) {
+            //         console.log(res)
+            //     }
+            // })
         })
     });
 </script>
