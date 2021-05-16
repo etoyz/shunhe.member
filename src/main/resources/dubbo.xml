@@ -34,4 +34,6 @@
                      interface="com.sft.member.obtain.consume.ConsumeTypeService" async="false"/>
     <dubbo:reference id="platUserService"
                      interface="com.sft.member.obtain.user.PlatUserService" async="false"/>
+    <dubbo:reference id="userService2"
+                     interface="com.sft.member.obtain.user.UserService" async="false"/>
 </beans>
