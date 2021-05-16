@@ -39,8 +39,16 @@ public class PlatUserManagementController {
     }
 
     @RequestMapping("addUser")
-    @ResponseBody
     public String addUser(@RequestBody PlatUser user) {
         return platUserService.addUser(PlatUserUtils.getCurrentLoginPlatUser(), user);
+    }
+
+    @RequestMapping("resetPassword")
+    public String resetPassword(@RequestBody PlatUser platUser) {
+        String ret = platUserService.resetPassword(PlatUserUtils.getCurrentLoginPlatUser(), platUser, "111111");
+        if (ret == null)
+            return "";
+        else
+            return ret;
     }
 }

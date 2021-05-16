@@ -49,9 +49,8 @@
             <div class="s-commonTable">
                 <table class="layui-hide" id="user" lay-filter="userTabel"></table>
                 <script type="text/html" id="operation">
-                    <a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="modify">修改</a>
                     <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delete">删除</a>
-                    <a class="layui-btn layui-btn-xs" lay-event="relate">关联</a>
+                    <a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="modify">修改密码</a>
                 </script>
             </div>
         </div>
@@ -159,44 +158,9 @@
         <form class="layui-form" action="">
             <div class="layui-form-item s-formItem5">
                 <div class="layui-inline">
-                    <label class="layui-form-label">卡券名称</label>
+                    <label class="layui-form-label">新密码</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="couponNameM" id="couponNameM"
-                               autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">卡券类型</label>
-                    <div class="layui-input-inline">
-                        <select type="text" id="couponTypeM" name="couponTypeM" autocomplete="off" class="layui-input">
-                            <option>正在拉取...</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">备注</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="remarkM" id="remarkM" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-            </div>
-            <div class="layui-form-item s-formItem5">
-                <div class="layui-inline">
-                    <label class="layui-form-label">单价</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="priceM" id="priceM" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">成本价</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="costPriceM" id="costPriceM" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">顺序号</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="orderIDM" id="orderIDM" autocomplete="off" class="layui-input">
+                        <input type="text" id="newPassword" autocomplete="off" class="layui-input">
                     </div>
                 </div>
             </div>
@@ -311,24 +275,9 @@
             if (layEvent === 'modify') {
                 layer.open({
                     type: 1,
-                    title: '修改卡券信息',
+                    title: '修改密码',
                     content: $('#modWindow'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
-                    area: ['1022px', '225px']
-                });
-                pullCouponTypes("#couponTypeM", function () {
-                    //拉取卡券列表成功后，执行此回调函数填充原数据以供修改
-                    $('#couponTypeM').val(activeLine.type);
-                    $('#couponNameM').val(activeLine.name);
-                    $('#priceM').val(activeLine.unitPrice);
-                    $('#costPriceM').val(activeLine.costPrice);
-                })
-            }
-            if (layEvent === 'relate') {
-                layer.open({
-                    type: 1,
-                    title: '关联消费项目',
-                    content: $('#relWindow'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
-                    area: ['530px', '620px']
+                    area: ['450px', '170px']
                 });
             }
         });
@@ -374,16 +323,15 @@
         })
 
         $("#confirmMod").click(function () {
-            var typeId = $("#couponTypeM").val() === "代金券" ? 0 : 1;
             $.post({
-                url: "service/coupon/modCoupon",
+                url: "service/platUserManage/resetPassword",
                 data: JSON.stringify({
-                    name: $("#couponNameM").val(),
-                    type: typeId,
-                    remark: $("#remarkM").val(),
-                    unitPrice: $("#priceM").val(),
-                    costPrice: $("#costPriceM").val(),
-                    orderID: $("#orderIDM").val()
+                    name: $("#userName").val(),
+                    dealerId: $("#dealer").get(0).selectedIndex,
+                    operateType: $("#operations").val(),
+                    post: $("#duty").val(),
+                    username: $("#loginUserName").val(),
+                    password: $("#loginPassword").val()
                 }),
                 contentType: "application/json",
                 success: function (res) {
