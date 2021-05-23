@@ -69,7 +69,7 @@ public class CouponController {
             li.add(couponAndConsumeProjects.getCoupon());
             couponService.updateCouponListByConsumeProject(PlatUserUtils.getCurrentLoginPlatUser(), consumeProject, li);
         }
-        return "ok";
+        return "关联成功！";
     }
 
     @GetMapping("getCouponList")

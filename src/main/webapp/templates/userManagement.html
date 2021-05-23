@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>卡券</title>
+    <title>用户管理</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -17,20 +17,29 @@
 <div class="layui-fluid main">
     <div class="layui-row">
         <div class="layui-col-md12">
-
             <div class="s-headerSearch" id="headArea">
                 <form class="layui-form" action="">
                     <div class="layui-form-item">
                         <div class="layui-inline s-layuiInline">
-                            <label class="layui-form-label">卡券名称</label>
+                            <label class="layui-form-label">用户名称</label>
                             <div class="layui-input-inline">
-                                <input type="text" id="couponNameInput" autocomplete="off" class="layui-input"
-                                       placeholder="请输入卡券名称">
+                                <input type="text" id="userNameSearch" autocomplete="off" class="layui-input"
+                                       placeholder="请输入用户名称">
+                            </div>
+                        </div>
+                        <div class="layui-inline s-layuiInline">
+                            <label class="layui-form-label">所属店面</label>
+                            <div class="layui-input-inline">
+                                <select type="text" id="dealerSearch" autocomplete="off" class="layui-input"
+                                        placeholder="请输入卡券名称">
+                                    <option>---</option>
+                                    <option>烟台顺和广汽本田</option>
+                                </select>
                             </div>
                         </div>
                         <div class="layui-inline s-layuiInline">
                             <button id="queryBtn" class="layui-btn layui-btn-warm">查询</button>
-                            <button id="addBtn" class="layui-btn layui-btn-normal">新增卡券</button>
+                            <button id="addBtn" class="layui-btn layui-btn-normal">新增用户</button>
                         </div>
                     </div>
                 </form>
@@ -38,61 +47,100 @@
 
             <!-- 展示表格 -->
             <div class="s-commonTable">
-                <table class="layui-hide" id="coupon" lay-filter="couponTabel"></table>
+                <table class="layui-hide" id="user" lay-filter="userTabel"></table>
                 <script type="text/html" id="operation">
-                    <a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="modify">修改</a>
                     <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delete">删除</a>
-                    <a class="layui-btn layui-btn-xs" lay-event="relate">关联</a>
+                    <a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="modify">修改密码</a>
                 </script>
             </div>
         </div>
     </div>
 </div>
 
-<!-- 新增卡券弹窗 -->
+<!-- 新增用户弹窗 -->
 <div class="s-details" id="addWindow">
     <div>
         <form class="layui-form" action="">
             <div class="layui-form-item s-formItem5">
                 <div class="layui-inline">
-                    <label class="layui-form-label">卡券名称</label>
+                    <label class="layui-form-label">用户编号</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="couponName" id="couponName"
+                        <input type="text" id="userId"
                                autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <label class="layui-form-label">卡券类型</label>
+                    <label class="layui-form-label">用户名称</label>
                     <div class="layui-input-inline">
-                        <select type="text" id="couponType" name="couponType" autocomplete="off" class="layui-input">
-                            <option id="selectHead">正在拉取...</option>
-                        </select>
+                        <input type="text" id="userName"
+                               autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <label class="layui-form-label">备注</label>
+                    <label class="layui-form-label">联系电话</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="remark" id="remark" autocomplete="off" class="layui-input">
+                        <input type="text" id="phoneNum"
+                               autocomplete="off" class="layui-input">
                     </div>
                 </div>
             </div>
             <div class="layui-form-item s-formItem5">
                 <div class="layui-inline">
-                    <label class="layui-form-label">单价</label>
+                    <label class="layui-form-label">登录用户名</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="price" id="price" autocomplete="off" class="layui-input">
+                        <input type="text" id="loginUserName"
+                               autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <label class="layui-form-label">成本价</label>
+                    <label class="layui-form-label">登录密码</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="costPrice" id="costPrice" autocomplete="off" class="layui-input">
+                        <input type="text" id="loginPassword"
+                               autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <label class="layui-form-label">顺序号</label>
+                    <label class="layui-form-label">所属职位</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="orderID" id="orderID" autocomplete="off" class="layui-input">
+                        <select type="text" id="duty" autocomplete="off" class="layui-input">
+                            <option>---</option>
+                            <option>销售顾问</option>
+                            <option>服务顾问</option>
+                            <option>业务员</option>
+                            <option>管理员</option>
+                            <option>招揽专员</option>
+                            <option>保客主管</option>
+                            <option>保客专员</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item s-formItem5">
+                <div class="layui-inline">
+                    <label class="layui-form-label">操作类型</label>
+                    <div class="layui-input-inline">
+                        <select type="text" id="operations" autocomplete="off" class="layui-input">
+                            <option>---</option>
+                            <option>本店</option>
+                            <option>个人</option>
+                            <option>全部</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">所属门店</label>
+                    <div class="layui-input-inline">
+                        <select type="text" id="dealer" autocomplete="off" class="layui-input">
+                            <option>---</option>
+                            <option>烟台顺合广汽本田店</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">指定IP登入</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="ipLimit"
+                               class="layui-input">
                     </div>
                 </div>
             </div>
@@ -110,44 +158,9 @@
         <form class="layui-form" action="">
             <div class="layui-form-item s-formItem5">
                 <div class="layui-inline">
-                    <label class="layui-form-label">卡券名称</label>
+                    <label class="layui-form-label">新密码</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="couponNameM" id="couponNameM"
-                               autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">卡券类型</label>
-                    <div class="layui-input-inline">
-                        <select type="text" id="couponTypeM" name="couponTypeM" autocomplete="off" class="layui-input">
-                            <option>正在拉取...</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">备注</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="remarkM" id="remarkM" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-            </div>
-            <div class="layui-form-item s-formItem5">
-                <div class="layui-inline">
-                    <label class="layui-form-label">单价</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="priceM" id="priceM" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">成本价</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="costPriceM" id="costPriceM" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">顺序号</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="orderIDM" id="orderIDM" autocomplete="off" class="layui-input">
+                        <input type="text" id="newPassword" autocomplete="off" class="layui-input">
                     </div>
                 </div>
             </div>
@@ -186,10 +199,9 @@
         });
 
         // “卡券表格”渲染
-        var couponTable = table.render({
-            elem: '#coupon',
-            url: 'service/coupon/getCouponList?query=',
-            // height: 'full-230',
+        var userTable = table.render({
+            elem: '#user',
+            url: 'service/platUserManage/getUserList?query=',
             page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                 layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
                 limit: 15,
@@ -200,59 +212,27 @@
             },
             cols: [[
                 // {type: 'checkbox'},
-                {field: 'name', width: '8%', title: '卡券名称'},
-                {field: 'type', width: '8%', title: '卡券类型'},
-                {field: 'unitPrice', width: '6%', title: '单价'},
-                {field: 'costPrice', width: '7%', title: '成本价'},
-                {field: 'remark', width: '6%', title: '备注'},
+                {field: 'platUserId', width: '10%', title: '用户编号'},
+                {field: 'name', width: '8%', title: '用户名称'},
+                {field: 'phone', width: '8%', title: '联系电话'},
+                // {field: '-', width: '7%', title: '所属角色'},
+                {field: 'post', width: '10%', title: '所属职位'},
                 // {field: 'orderID', width: '7%', title: '顺序号'},
-                {field: 'createId', width: '7%', title: '创建人'},
-                {field: 'createTime', width: '14%', title: '创建时间'},
-                {field: 'lastEditId', width: '7%', title: '最后编辑人'},
-                {field: 'lastEditTime', width: '14%', title: '最后编辑时间'},
+                {field: 'operateType', width: '8%', title: '操作类型'},
+                {field: 'dealerId', width: '14%', title: '所属门店'},
+                {field: '-', width: '10%', title: '指定IP登入'},
+                // {field: 'lastEditTime', width: '14%', title: '最后编辑时间'},
                 {field: 'operation', width: '14%', title: '操作', toolbar: '#operation'}
             ]],
             size: 'sm',
             parseData: function (res) {
-                var cTypes = ["代金券", "储值"]
+                console.log(res)
                 for (var i = 0; i < res.data.length; i++) {
-                    res.data[i].type = cTypes[res.data[i].type];
+                    res.data[i].dealerId = res.data[i].dealerId === 1 ? "烟台顺合广汽本田店" : "-";
                 }
                 return res
             }
         });
-
-        //从服务端拉取全部卡券类型
-        function pullCouponTypes(selector, callback) {
-            var selectE = $(selector);
-
-            function errorAction() {
-                selectE.empty();
-                selectE.append("<option>拉取失败，请刷新！</option>");
-                form.render();
-            }
-
-            $.post({
-                url: "service/coupon/getCouponTypes",
-                timeout: 1000,
-                dataType: "json",
-                success: function (res) {
-                    if (res.status !== "ok") {
-                        errorAction();
-                    } else {
-                        selectE.empty();
-                        for (var s of res.types) {
-                            selectE.append("<option value='" + s + "'>" + s + "</option>");
-                        }
-                        callback();
-                        form.render(); //layui的form重新渲染
-                    }
-                },
-                error: function () {
-                    errorAction();
-                }
-            })
-        }
 
         function layuiAlert(msg) {
             layer.open({
@@ -271,7 +251,7 @@
 
         //监听“卡券表格”工具条
         var activeLine
-        table.on('tool(couponTabel)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+        table.on('tool(userTabel)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
             activeLine = obj.data; //获得当前行数据
             // var page = data.page;
             // var limit = data.limit;
@@ -295,24 +275,9 @@
             if (layEvent === 'modify') {
                 layer.open({
                     type: 1,
-                    title: '修改卡券信息',
+                    title: '修改密码',
                     content: $('#modWindow'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
-                    area: ['1022px', '225px']
-                });
-                pullCouponTypes("#couponTypeM", function () {
-                    //拉取卡券列表成功后，执行此回调函数填充原数据以供修改
-                    $('#couponTypeM').val(activeLine.type);
-                    $('#couponNameM').val(activeLine.name);
-                    $('#priceM').val(activeLine.unitPrice);
-                    $('#costPriceM').val(activeLine.costPrice);
-                })
-            }
-            if (layEvent === 'relate') {
-                layer.open({
-                    type: 1,
-                    title: '关联消费项目',
-                    content: $('#relWindow'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
-                    area: ['530px', '620px']
+                    area: ['450px', '170px']
                 });
             }
         });
@@ -320,12 +285,12 @@
         $("#addBtn").click(function () {
             layer.open({
                 type: 1,
-                title: '新增卡券',
+                title: '新增用户',
                 content: $('#addWindow'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
-                area: ['1022px', '225px']
+                area: ['1022px', '500px']
             });
-            pullCouponTypes("#couponType", () => {
-            })
+            // pullCouponTypes("#couponType", () => {
+            // })
             return false;
         })
 
@@ -334,19 +299,21 @@
         })
 
         $("#confirmAdd").click(function () {
-            var typeId = $("#couponType").val() === "代金券" ? 0 : 1;
+            // console.log($("#dealer").get(0).selectedIndex);
             $.post({
-                url: "/service/coupon/addCoupon",
+                url: "service/platUserManage/addUser",
                 data: JSON.stringify({
-                    name: $("#couponName").val(),
-                    type: typeId,
-                    remark: $("#remark").val(),
-                    unitPrice: $("#price").val(),
-                    costPrice: $("#costPrice").val(),
-                    orderID: $("#orderID").val()
+                    name: $("#userName").val(),
+                    dealerId: $("#dealer").get(0).selectedIndex,
+                    operateType: $("#operations").val(),
+                    post: $("#duty").val(),
+                    username: $("#loginUserName").val(),
+                    password: $("#loginPassword").val()
+                    // operateType: $("#role").val()
                 }),
                 contentType: "application/json",
                 success: function (res) {
+                    console.log(res)
                     layuiAlert("信息:" + res)
                 },
                 error: function (res) {
@@ -356,16 +323,15 @@
         })
 
         $("#confirmMod").click(function () {
-            var typeId = $("#couponTypeM").val() === "代金券" ? 0 : 1;
             $.post({
-                url: "service/coupon/modCoupon",
+                url: "service/platUserManage/resetPassword",
                 data: JSON.stringify({
-                    name: $("#couponNameM").val(),
-                    type: typeId,
-                    remark: $("#remarkM").val(),
-                    unitPrice: $("#priceM").val(),
-                    costPrice: $("#costPriceM").val(),
-                    orderID: $("#orderIDM").val()
+                    name: $("#userName").val(),
+                    dealerId: $("#dealer").get(0).selectedIndex,
+                    operateType: $("#operations").val(),
+                    post: $("#duty").val(),
+                    username: $("#loginUserName").val(),
+                    password: $("#loginPassword").val()
                 }),
                 contentType: "application/json",
                 success: function (res) {
@@ -377,37 +343,22 @@
             })
         })
 
-        var projectsTable = table.render({
-            id: "relTable",
-            elem: "#relTable",
-            height: 450,
-            width: 500,
-            page: false,
-            url: "service/consumeProject/getConsumeProjectList?query=&consumeType=",
-            cols: [[
-                {type: 'checkbox', width: 70},
-                {field: 'name', width: 420, title: '消费项目'},
-            ]],
-        })
-
-        $("#confirmRel").click(function () {
-            activeLine.type = activeLine.type === "储值" ? 1 : 0;
-            $.post({
-                url: "service/coupon/relateConsumeProject",
-                data: JSON.stringify({
-                    "projects": table.checkStatus('relTable').data,
-                    "coupon": activeLine
-                }),
-                contentType: "application/json",
-                success: function (res) {
-                    layuiAlert(res)
-                }
-            })
-        })
+        // var projectsTable = table.render({
+        //     id: "relTable",
+        //     elem: "#relTable",
+        //     height: 450,
+        //     width: 500,
+        //     page: false,
+        //     url: "service/consumeProject/getConsumeProjectList?query=&consumeType=",
+        //     cols: [[
+        //         {type: 'checkbox', width: 70},
+        //         {field: 'name', width: 420, title: '消费项目'},
+        //     ]],
+        // })
 
         $("#queryBtn").click(function () {
-            couponTable.reload({
-                url: 'service/coupon/getCouponList?query=' + $("#couponNameInput").val(),
+            userTable.reload({
+                url: 'service/platUserManage/getUserList?query=' + $("#userNameSearch").val(),
                 page: {
                     curr: 1
                 }

@@ -77,7 +77,6 @@
 
 <!-- 新增弹窗 -->
 <div class="s-details" id="addWindow">
-
     <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
         <ul class="layui-tab-title">
             <li class="layui-this">车主信息</li>
@@ -95,14 +94,14 @@
                         <div class="layui-inline">
                             <label class="layui-form-label"><i>*</i>客户姓名</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="customerName" lay-verify="required" autocomplete="off"
+                                <input type="text" name="customername" id="customername" lay-verify="required" autocomplete="off"
                                        class="layui-input">
                             </div>
                         </div>
                         <div class="layui-inline">
                             <label class="layui-form-label">性别</label>
                             <div class="layui-input-inline">
-                                <select name="gender" lay-filter="gender">
+                                <select name="cGender" id="cGender" lay-filter="gender">
                                     <option value="">请选择性别</option>
                                     <option value="1">男</option>
                                     <option value="2">女</option>
@@ -113,12 +112,27 @@
                         <div class="layui-inline">
                             <label class="layui-form-label">生日</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="date" id="date" lay-verify="date" placeholder="yyyy-MM-dd"
+                                <input type="text" name="cBirthday" id="cBirthday" lay-verify="date" placeholder="yyyy-MM-dd"
                                        autocomplete="off" class="layui-input">
                             </div>
                         </div>
                     </div>
-
+                    <div class="layui-form-item s-formItem5">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">手机</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="phone" id="phone" lay-verify="required" autocomplete="off"
+                                       class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">证件号</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="cCard" id="cCard" lay-verify="required" autocomplete="off"
+                                       class="layui-input">
+                            </div>
+                        </div>
+                    </div>
                     <div class="layui-form-item s-formItem5">
                         <label class="layui-form-label">省市区</label>
                         <div class="layui-input-inline">
@@ -145,22 +159,338 @@
                                    class="layui-input">
                         </div>
                     </div>
-
                     <div class="layui-form-item s-formItem5">
+                        <div class="layui-inline">
+                        <label class="layui-form-label">微信昵称</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="name" placeholder="请输入" autocomplete="off"
+                                   class="layui-input">
+                        </div>
+                        </div>
+                        <div class="layui-inline">
+                        <label class="layui-form-label">微信号</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="code" placeholder="请输入" autocomplete="off"
+                                   class="layui-input">
+                        </div>
+                        </div>
+                    </div>
+                    <div class="layui-form-item s-formItem5">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">微信关注日期</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="focusTime" id="focusTime" lay-verify="date" placeholder="yyyy-MM-dd"
+                                       autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
                         <div class="layui-inline">
                             <label class="layui-form-label">微信解除关注日期</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="date1" id="date1" lay-verify="date" placeholder="yyyy-MM-dd"
+                                <input type="text" name="unFocusTime" id="unFocusTime" lay-verify="date" placeholder="yyyy-MM-dd"
                                        autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-form-item s-formItem5">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">微信绑定日期</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="bindTime" id="bindTime" lay-verify="date" placeholder="yyyy-MM-dd"
+                                       autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">微信解除关注日期</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="unbindTime" id="unbindTime" lay-verify="date" placeholder="yyyy-MM-dd"
+                                       autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-form-item s-formItem5">
+                        <label class="layui-form-label">备注</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="remark" placeholder="请输入" autocomplete="off"
+                                   class="layui-input">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="layui-tab-item ">
+                <form class="layui-form" action="">
+                    <div class="layui-form-item s-formItem5">
+                        <div class="layui-inline">
+                            <label class="layui-form-label"><i>*</i>车架号</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="vin" id="vin" lay-verify="required" autocomplete="off"
+                                       class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label"><i>*</i>车牌号</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="platenumber" id="platenumber" lay-verify="required" autocomplete="off"
+                                       class="layui-input">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-form-item s-formItem5">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">品牌</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="vehiclelabel" id="vehiclelabel" lay-verify="required" autocomplete="off"
+                                       class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">车系</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="vehiclestyle" id="vehiclestyle" lay-verify="required" autocomplete="off"
+                                       class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label"><i>*</i>车型</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="vehiclebrand" id="vehiclebrand" lay-verify="required"
+                                       autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-form-item s-formItem5">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">年款</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="mjCar" id="mjCar" lay-verify="required" autocomplete="off"
+                                       class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">购车日期</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="buyDate" id="buyDate" lay-verify="date" placeholder="yyyy-MM-dd"
+                                       autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">最后用卡日期</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="lastUseCardTime" id="lastUseCardTime"  lay-verify="date" placeholder="yyyy-MM-dd"
+                                       autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-form-item s-formItem5">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">车龄天数</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="useCarDay" id="useCarDay" lay-verify="required" autocomplete="off"
+                                       class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">预估最大里程数</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="estimateMile" id="estimateMile" lay-verify="required"
+                                       autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">最大里程数来源</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="sourceOfMMiles" id="sourceOfMMiles"  lay-verify="required"
+                                       autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-form-item s-formItem5">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">日均行驶里程</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="averageDailyMile" id="averageDailyMile" lay-verify="required" autocomplete="off"
+                                       class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">最后进店里程</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="finalMiles" id="finalMiles" lay-verify="required"
+                                       autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">最后进店时间</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="lastEnterTime" id="lastEnterTime"  lay-verify="date" placeholder="yyyy-MM-dd"
+                                       autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-form-item s-formItem5">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">交强险购买日期</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="strongInsurancePurchaseDate" id="strongInsurancePurchaseDate" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off"
+                                       class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">交强险投保公司</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="CompletionInsuranceCompany" id="CompletionInsuranceCompany" lay-verify="required"
+                                       autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">交强险保单号</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="CompulsoryInsurancePolicyNumber" id="CompulsoryInsurancePolicyNumber"  lay-verify="required"
+                                       autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-form-item s-formItem5">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">商业险购买日期</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="dateOfPurchaseOfCommercialInsurance" id="dateOfPurchaseOfCommercialInsurance" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off"
+                                       class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">商业险投保公司</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="commercialInsuranceCompany" id="commercialInsuranceCompany" lay-verify="required"
+                                       autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">商业险保单号</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="CommercialInsurancePolicyNumber" id="CommercialInsurancePolicyNumber"  lay-verify="required"
+                                       autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-form-item s-formItem5">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">险种</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="typeOfInsurance" id="typeOfInsurance" lay-verify="required" autocomplete="off"
+                                       class="layui-input">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-form-item s-formItem5">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">保客主管</label>
+                            <div class="layui-input-inline">
+                                <select name="director" lay-filter="director">
+                                    <option value="1">男</option>
+                                    <option value="2">女</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">保客专员</label>
+                            <div class="layui-input-inline">
+                                <select name="attache" lay-filter="customerCommissioner">
+                                    <option value="1">男</option>
+                                    <option value="2">女</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-form-item s-formItem5">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">服务顾问</label>
+                            <div class="layui-input-inline">
+                                <select name="serviceConsultant" lay-filter="theServiceAdvisor">
+                                    <option value="1">男</option>
+                                    <option value="2">女</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">销售顾问</label>
+                            <div class="layui-input-inline">
+                                <select name="saleConsultant" lay-filter="customerCommissioner">
+                                    <option value="1">男</option>
+                                    <option value="2">女</option>
+                                </select>
                             </div>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="layui-tab-item">
-                <table class="layui-hide" id="memberInfo" lay-filter="memberInfoTabel"></table>
+                <form class="layui-form" action="">
+                    <div class="layui-form-item s-formItem5">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">会员卡号:</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="memberNumber" id="memberNumber" lay-verify="required" autocomplete="off"
+                                       class="layui-input layui-disabled">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">会员级别:</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="memberLevel" id="memberLevel" lay-verify="required" autocomplete="off"
+                                       class="layui-input layui-disabled">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-form-item s-formItem5">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">使用卡券价值</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="useCouponValue" id="useCouponValue" lay-verify="required" autocomplete="off"
+                                       class="layui-input layui-disabled">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">剩余卡券价值:</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="remainCouponValue" id="remainCouponValue" lay-verify="required" autocomplete="off"
+                                       class="layui-input layui-disabled">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-form-item s-formItem5">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">过期卡券价值:</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="expiredCouponValue" id="expiredCouponValue" lay-verify="required" autocomplete="off"
+                                       class="layui-input layui-disabled">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">卡券总价值:</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="totalCouponValue" id="totalCouponValue" lay-verify="required" autocomplete="off"
+                                       class="layui-input layui-disabled">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-form-item s-formItem5">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">可用积分:</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="availableIntegral" id="availableIntegral" lay-verify="required" autocomplete="off"
+                                       class="layui-input layui-disabled">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">累计积分:</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="accumulativeIntegral" id="accumulativeIntegral" lay-verify="required" autocomplete="off"
+                                       class="layui-input layui-disabled">
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
-            <div class="layui-tab-item">内容3</div>
             <div class="layui-tab-item">内容4</div>
             <div class="layui-tab-item">内容5</div>
             <div class="layui-tab-item">内容6</div>
@@ -169,7 +499,7 @@
     </div>
 
     <div class="s-tabBottomButton">
-        <button class="layui-btn" id="confirm">确认</button>
+        <button class="layui-btn" id="confirmAdd">确认</button>
         <button class="layui-btn layui-btn-warm">取消</button>
     </div>
 
@@ -220,20 +550,28 @@
 
         //日期
         laydate.render({
-            elem: '#date'
+            elem: '#cBirthday'
         });
         laydate.render({
-            elem: '#date1'
+            elem: '#focusTime'
         });
-
+        laydate.render({
+            elem: '#unFocusTime'
+        });
+        laydate.render({
+            elem: '#bindTime'
+        });
+        laydate.render({
+            elem: '#unbindTime'
+        });
         // 显示“新增弹窗”
         $('body').on('click', '#add', function () {
             var index = layer.open({
                 type: 1,
                 title: '新增弹窗',
                 content: $('#addWindow'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
-                area: ['1022px', '600px'],
-                offset: '100px'
+                area: ['1050px', '650px'],
+                offset: '20px'
             });
             $('#exit').on('click', function () {
                 // 关闭当前弹出层
@@ -244,7 +582,7 @@
         // “会员档案表格”渲染
         var tableIns = table.render({
             elem: '#memberArchives',
-            url: './datas/user.json',
+            url: 'service/Archives/getArchivesList?query=',
             height: 'full-291',
             page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                 layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
@@ -256,12 +594,13 @@
 
             },
             toolbar: true, //仅开启工具栏，不显示左侧模板
-            defaultToolbar: ['exports'], //头部工具栏右侧图标
+            // defaultToolbar: ['exports'], //头部工具栏右侧图标
+            defaultToolbar: ['filter', 'print', 'exports'],
             cols: [[
                 {type: 'checkbox'},
-                {field: 'customer', width: 80, title: '客户名称'},
-                {field: 'gender', width: 56, title: '性别'},
-                {field: 'birthday', width: 96, title: '生日'},
+                {field: 'customername', width: 80, title: '客户名称'},
+                {field: 'cGender', width: 56, title: '性别'},
+                {field: 'cBirthday', width: 96, title: '生日'},
                 {field: 'idNo', width: 156, title: '证件号'}, //单元格内容水平居中
                 {field: 'membershipCard', width: 160, title: '会员卡号'},
                 {field: 'membershipGrade', width: 80, title: '会员级别'},
@@ -337,7 +676,20 @@
                 });
             }
         });
-
+        function layuiAlert(msg) {
+            layer.open({
+                offset: "auto",//具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
+                content: '<div style="padding: 20px 70px;">' + msg + '</div>',
+                btn: '关闭',
+                btnAlign: 'c',//按钮居中
+                shade: 0, //不显示遮罩
+                closeBtn: false,
+                yes: function () {
+                    layer.closeAll();
+                    location.reload();
+                }
+            });
+        }
         // "会员信息表格"渲染
         var tableIns1 = table.render({
             elem: '#memberInfo',
@@ -365,6 +717,44 @@
             ]],
             size: 'sm'
         });
+        const customerName1 = $("#customerName").val();
+        $("#confirmAdd").click(function () {
+            $.post({
+                url: "/service/Archives/addArchives",
+                data: JSON.stringify({
+                    customername: $("#customername").val(),
+                    cGender: $("#cGender").val(),
+                    phone:$("#phone").val(),
+                    vehicle: {
+                        platenumber:$("#platenumber").val(),
+                        vin: "p1921137",
+                        vehiclelabel:"广汽本田",
+                        vehiclebrand:"1",
+                        vehiclestyle:"1",
+                        customername:$("#customerName").val()
+                    },
+                    // WXInfo:{
+                    //     name:$("#name").val(),
+                    //     code:$("#code").val(),
+                    //     focusTime:$("#focusTime").val(),
+                    //     unFocusTime:$("#unFocusTime").val(),
+                    //     bindTime:$("#bindTime").val(),
+                    //     unbindTime:$("#unbindTime").val()
+                    // },
+                    cBirthday: $("#date").val()
+                }),
+                contentType: "application/json",
+                success: function (res) {
+                    console.log(customerName1)
+                    console.log(res)
+                    layuiAlert("信息:" + res)
+                },
+                error: function (res) {
+                    console.log(res)
+                    layuiAlert("新增失败" + res)
+                }
+            })
+        })
     }).config({  // 省市区联动选择
         base: './build/js/'
     }).use(['jquery', 'areaThreeLevel'], function () {

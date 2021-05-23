@@ -189,6 +189,9 @@
         var couponTable = table.render({
             elem: '#coupon',
             url: 'service/coupon/getCouponList?query=',
+            toolbar: true, //仅开启工具栏，不显示左侧模板
+            // defaultToolbar: ['exports'], //头部工具栏右侧图标
+            defaultToolbar: ['filter', 'print', 'exports'],
             // height: 'full-230',
             page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                 layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
@@ -269,6 +272,19 @@
             });
         }
 
+        var projectsTable = table.render({
+            id: "relTable",
+            elem: "#relTable",
+            height: 450,
+            width: 500,
+            page: false,
+            url: "service/consumeProject/getConsumeProjectList?query=&consumeType=",
+            cols: [[
+                {type: 'checkbox', width: 70},
+                {field: 'name', width: 420, title: '消费项目'},
+            ]]
+        })
+
         //监听“卡券表格”工具条
         var activeLine
         table.on('tool(couponTabel)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
@@ -314,6 +330,37 @@
                     content: $('#relWindow'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
                     area: ['530px', '620px']
                 });
+                var progressNotice = layer.msg('正在加载...')
+                projectsTable.reload({
+                    done: function (resAll, page, count) {
+                        activeLine.type = activeLine.type === "储值" ? 1 : 0;
+                        $.post({
+                            url: "service/consumeProject/getConsumeProjectListByCoupon",
+                            data: JSON.stringify(activeLine),
+                            contentType: "application/json",
+                            success: function (resRel) {
+                                var i = 0;
+                                for (var resA of resAll.data) {
+                                    for (var resR of resRel) {
+                                        if (resA.consumeProjectId === resR.consumeProjectId) {
+                                            console.log(resA.consumeProjectId)
+                                            resAll.data[i]["LAY_CHECKED"] = 'true';
+                                            var index = resAll.data[i]['LAY_TABLE_INDEX'];
+                                            $('tr[data-index=' + index + '] input[type="checkbox"]').prop('checked', true);
+                                            $('tr[data-index=' + index + '] input[type="checkbox"]').next().addClass('layui-form-checked');
+                                        }
+                                    }
+                                    i++;
+                                }
+                                // layer.close(progressNotice);
+                                layer.msg('加载完成', {time: 1000})
+                            },
+                            error: function () {
+                                layer.msg('加载失败！请刷新!', {time: 10000})
+                            }
+                        });
+                    }
+                })
             }
         });
 
@@ -375,19 +422,6 @@
                     layuiAlert("修改失败")
                 }
             })
-        })
-
-        var projectsTable = table.render({
-            id: "relTable",
-            elem: "#relTable",
-            height: 450,
-            width: 500,
-            page: false,
-            url: "service/consumeProject/getConsumeProjectList?query=&consumeType=",
-            cols: [[
-                {type: 'checkbox', width: 70},
-                {field: 'name', width: 420, title: '消费项目'},
-            ]],
         })
 
         $("#confirmRel").click(function () {
