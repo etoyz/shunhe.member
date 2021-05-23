@@ -400,6 +400,7 @@
 
         //$("#confirmMod").click(function () {
         form.on('submit(confirmMod)', function(data) {
+            console.log(data)
             $.post({
                 url: "service/coupon/modCoupon",
                 data: JSON.stringify(data.field),
