@@ -1,6 +1,7 @@
 package com.sh.cloud.web;
 
 import com.sft.member.bean.ConsumeProject;
+import com.sft.member.bean.Coupon;
 import com.sft.member.obtain.consume.ConsumeProjectService;
 import com.sh.cloud.utils.PlatUserUtils;
 import org.springframework.stereotype.Controller;
@@ -39,7 +40,7 @@ public class ConsumeProjectController {
         return consumeProjectService.addConsumeProject(PlatUserUtils.getCurrentLoginPlatUser(), consumeProject);
     }
 
-    @RequestMapping("deleteConsumeProject")
+    @PostMapping("deleteConsumeProject")
     @ResponseBody
     public String deleteConsumeProject(@RequestParam String id) {
         ConsumeProject consumeProject = new ConsumeProject();
@@ -48,5 +49,11 @@ public class ConsumeProjectController {
             return "删除成功！";
         else
             return "删除失败！";
+    }
+
+    @RequestMapping("getConsumeProjectListByCoupon")
+    @ResponseBody
+    public List<ConsumeProject> getConsumeProjectListByCoupon(@RequestBody Coupon coupon) {
+        return consumeProjectService.getConsumeProjectByCoupon(coupon);
     }
 }
