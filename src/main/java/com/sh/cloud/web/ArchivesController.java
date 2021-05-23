@@ -41,8 +41,7 @@ public class ArchivesController {
     }
 
     @PostMapping(value = "editArchivesList")
-    public Map<String, Object> editArchivesList(@RequestBody String userId) {
-    //public Map<String, Object> editArchivesList(@RequestParam String userId) {
+    public Map<String, Object> editArchivesList(@RequestParam String userId) {
         Map<String, Object> ret1 = new HashMap<>();
         ret1.put("code", 0);
         ret1.put("msg", "");
