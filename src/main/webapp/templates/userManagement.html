@@ -167,7 +167,7 @@
             elem: '#date'
         });
 
-        // “卡券表格”渲染
+        // “用户表格”渲染
         var userTable = table.render({
             elem: '#user',
             url: 'service/platUserManage/getUserList?query=',
@@ -218,7 +218,7 @@
             });
         }
 
-        //监听“卡券表格”工具条
+        //监听“用户表格”工具条
         var activeLine
         table.on('tool(userTabel)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
             activeLine = obj.data; //获得当前行数据
@@ -226,7 +226,7 @@
             // var limit = data.limit;
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值f）
             if (layEvent === 'delete') { // 用卡
-                layer.confirm("确认删除卡券【" + activeLine.name + "】?", {icon: 3, title: '提示'}, function () {
+                layer.confirm("确认删除用户【" + activeLine.name + "】?", {icon: 3, title: '提示'}, function () {
                     activeLine.type = activeLine.type === "储值" ? 1 : 0;
                     $.post({
                         url: "/service/coupon/deleteCoupon",
