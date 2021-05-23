@@ -189,6 +189,9 @@
         var couponTable = table.render({
             elem: '#coupon',
             url: 'service/coupon/getCouponList?query=',
+            toolbar: true, //仅开启工具栏，不显示左侧模板
+            // defaultToolbar: ['exports'], //头部工具栏右侧图标
+            defaultToolbar: ['filter', 'print', 'exports'],
             // height: 'full-230',
             page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                 layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
