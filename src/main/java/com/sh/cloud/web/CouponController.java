@@ -52,7 +52,6 @@ public class CouponController {
     }
 
     @PostMapping("modCoupon")
-    @ResponseBody
     public String modCoupon(@RequestBody Coupon coupon) {
         couponService.editCoupon(PlatUserUtils.getCurrentLoginPlatUser(), coupon);
         return "修改成功！";
