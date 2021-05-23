@@ -58,7 +58,7 @@
                     <label class="layui-form-label">卡券名称</label>
                     <div class="layui-input-inline">
                         <input type="text" name="couponName" id="couponName"
-                               autocomplete="off" class="layui-input">
+                               autocomplete="off" class="layui-input" lay-verify="required">
                     </div>
                 </div>
                 <div class="layui-inline">
@@ -80,25 +80,28 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">单价</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="price" id="price" autocomplete="off" class="layui-input">
+                        <input type="text" name="price" id="price"
+                               autocomplete="off" class="layui-input" lay-verify="required|number">
                     </div>
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">成本价</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="costPrice" id="costPrice" autocomplete="off" class="layui-input">
+                        <input type="text" name="costPrice" id="costPrice"
+                               autocomplete="off" class="layui-input" lay-verify="required|number">
                     </div>
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">顺序号</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="orderID" id="orderID" autocomplete="off" class="layui-input">
+                        <input type="text" name="orderID" id="orderID"
+                               autocomplete="off" class="layui-input" lay-verify="number">
                     </div>
                 </div>
             </div>
         </div>
         <div class="s-tabBottomButton">
-            <button type="button" class="layui-btn" id="confirmAdd">新增</button>
+            <button type="button" class="layui-btn" id="confirmAdd" lay-filter="confirmMod" lay-submit>新增</button>
             <button type="button" class="layui-btn layui-btn-warm" id="cancelAdd">取消</button>
         </div>
     </form>
@@ -380,18 +383,11 @@
             layer.closeAll()
         })
 
-        $("#confirmAdd").click(function () {
-            var typeId = $("#couponType").val() === "代金券" ? 0 : 1;
+        // $("#confirmAdd").click(function () {
+        form.on('submit(confirmAdd)', function(data) {
             $.post({
                 url: "/service/coupon/addCoupon",
-                data: JSON.stringify({
-                    name: $("#couponName").val(),
-                    type: typeId,
-                    remark: $("#remark").val(),
-                    unitPrice: $("#price").val(),
-                    costPrice: $("#costPrice").val(),
-                    orderID: $("#orderID").val()
-                }),
+                data: JSON.stringify(data.field),
                 contentType: "application/json",
                 success: function (res) {
                     layuiAlert("信息:" + res)
