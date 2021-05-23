@@ -39,5 +39,21 @@ public class ArchivesController {
 
         return ret;
     }
+
+    @PostMapping(value = "editArchivesList")
+    public Map<String, Object> editArchivesList(@RequestBody String userId) {
+    //public Map<String, Object> editArchivesList(@RequestParam String userId) {
+        Map<String, Object> ret1 = new HashMap<>();
+        ret1.put("code", 0);
+        ret1.put("msg", "");
+
+        User c = new User();
+        c.userId = userId;
+        User data = shUserService.getUser(c);
+        ret1.put("count", shUserService.getUserList(c));
+        ret1.put("data", data);
+
+        return ret1;
+    }
 }
 
