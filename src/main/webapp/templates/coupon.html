@@ -17,7 +17,6 @@
 <div class="layui-fluid main">
     <div class="layui-row">
         <div class="layui-col-md12">
-
             <div class="s-headerSearch" id="headArea">
                 <form class="layui-form" action="">
                     <div class="layui-form-item">
@@ -95,13 +94,13 @@
                     <label class="layui-form-label">顺序号</label>
                     <div class="layui-input-inline">
                         <input type="text" name="orderID" id="orderID"
-                               autocomplete="off" class="layui-input" lay-verify="number">
+                               autocomplete="off" class="layui-input">
                     </div>
                 </div>
             </div>
         </div>
         <div class="s-tabBottomButton">
-            <button type="button" class="layui-btn" id="confirmAdd" lay-filter="confirmMod" lay-submit>新增</button>
+            <button type="button" class="layui-btn" id="confirmAdd" lay-filter="confirmAdd" lay-submit>新增</button>
             <button type="button" class="layui-btn layui-btn-warm" id="cancelAdd">取消</button>
         </div>
     </form>
@@ -149,7 +148,7 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">顺序号</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="orderIDM" id="orderIDM" autocomplete="off" class="layui-input" lay-verify="number">
+                        <input type="text" name="orderIDM" id="orderIDM" autocomplete="off" class="layui-input">
                     </div>
                 </div>
             </div>
