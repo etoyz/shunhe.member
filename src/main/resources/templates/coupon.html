@@ -17,7 +17,6 @@
 <div class="layui-fluid main">
     <div class="layui-row">
         <div class="layui-col-md12">
-
             <div class="s-headerSearch" id="headArea">
                 <form class="layui-form" action="">
                     <div class="layui-form-item">
@@ -55,16 +54,16 @@
         <div>
             <div class="layui-form-item s-formItem5">
                 <div class="layui-inline">
-                    <label class="layui-form-label">卡券名称</label>
+                    <label class="layui-form-label"><i>*</i>卡券名称</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="couponName" id="couponName"
+                        <input type="text" name="name" id="couponName"
                                autocomplete="off" class="layui-input" lay-verify="required">
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <label class="layui-form-label">卡券类型</label>
+                    <label class="layui-form-label"><i>*</i>卡券类型</label>
                     <div class="layui-input-inline">
-                        <select type="text" id="couponType" name="couponType" autocomplete="off" class="layui-input">
+                        <select type="text" id="couponType" name="type"autocomplete="off" class="layui-input">
                             <option id="selectHead">正在拉取...</option>
                         </select>
                     </div>
@@ -72,20 +71,21 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">备注</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="remark" id="remark" autocomplete="off" class="layui-input">
+                        <input type="text" name="remark" id="remark"
+                               autocomplete="off" class="layui-input">
                     </div>
                 </div>
             </div>
             <div class="layui-form-item s-formItem5">
                 <div class="layui-inline">
-                    <label class="layui-form-label">单价</label>
+                    <label class="layui-form-label"><i>*</i>单价</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="price" id="price"
+                        <input type="text" name="unitPrice" id="price"
                                autocomplete="off" class="layui-input" lay-verify="required|number">
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <label class="layui-form-label">成本价</label>
+                    <label class="layui-form-label"><i>*</i>成本价</label>
                     <div class="layui-input-inline">
                         <input type="text" name="costPrice" id="costPrice"
                                autocomplete="off" class="layui-input" lay-verify="required|number">
@@ -95,13 +95,13 @@
                     <label class="layui-form-label">顺序号</label>
                     <div class="layui-input-inline">
                         <input type="text" name="orderID" id="orderID"
-                               autocomplete="off" class="layui-input" lay-verify="number">
+                               autocomplete="off" class="layui-input">
                     </div>
                 </div>
             </div>
         </div>
         <div class="s-tabBottomButton">
-            <button type="button" class="layui-btn" id="confirmAdd" lay-filter="confirmMod" lay-submit>新增</button>
+            <button type="button" class="layui-btn" id="confirmAdd" lay-filter="confirmAdd" lay-submit>新增</button>
             <button type="button" class="layui-btn layui-btn-warm" id="cancelAdd">取消</button>
         </div>
     </form>
@@ -113,15 +113,16 @@
         <div>
             <div class="layui-form-item s-formItem5">
                 <div class="layui-inline">
-                    <label class="layui-form-label">卡券名称</label>
+                    <label class="layui-form-label"><i>*</i>卡券名称</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="couponNameM" id="couponNameM" autocomplete="off" class="layui-input" lay-verify="required">
+                        <input type="text" name="name" id="couponNameM"
+                               autocomplete="off" class="layui-input" lay-verify="required">
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <label class="layui-form-label">卡券类型</label>
+                    <label class="layui-form-label"><i>*</i>卡券类型</label>
                     <div class="layui-input-inline">
-                        <select type="text" id="couponTypeM" name="couponTypeM" autocomplete="off" class="layui-input">
+                        <select type="text" id="couponTypeM" name="type" autocomplete="off" class="layui-input">
                             <option>正在拉取...</option>
                         </select>
                     </div>
@@ -129,27 +130,31 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">备注</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="remarkM" id="remarkM" autocomplete="off" class="layui-input">
+                        <input type="text" name="remark" id="remarkM"
+                               autocomplete="off" class="layui-input">
                     </div>
                 </div>
             </div>
             <div class="layui-form-item s-formItem5">
                 <div class="layui-inline">
-                    <label class="layui-form-label">单价</label>
+                    <label class="layui-form-label"><i>*</i>单价</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="priceM" id="priceM" autocomplete="off" class="layui-input" lay-verify="required|number">
+                        <input type="text" name="unitPrice" id="priceM"
+                               autocomplete="off" class="layui-input" lay-verify="required|number">
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <label class="layui-form-label">成本价</label>
+                    <label class="layui-form-label"><i>*</i>成本价</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="costPriceM" id="costPriceM" autocomplete="off" class="layui-input" lay-verify="required|number">
+                        <input type="text" name="costPrice" id="costPriceM"
+                               autocomplete="off" class="layui-input" lay-verify="required|number">
                     </div>
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">顺序号</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="orderIDM" id="orderIDM" autocomplete="off" class="layui-input" lay-verify="number">
+                        <input type="text" name="orderIDM" id="orderIDM"
+                               autocomplete="off" class="layui-input">
                     </div>
                 </div>
             </div>
