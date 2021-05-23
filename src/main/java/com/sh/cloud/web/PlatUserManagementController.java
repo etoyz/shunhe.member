@@ -44,6 +44,7 @@ public class PlatUserManagementController {
     }
 
     @RequestMapping("resetPassword")
+    @ResponseBody
     public String resetPassword(@RequestBody PlatUser platUser) {
         String ret = platUserService.resetPassword(PlatUserUtils.getCurrentLoginPlatUser(), platUser, "111111");
         if (ret == null)

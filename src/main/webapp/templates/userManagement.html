@@ -50,7 +50,7 @@
                 <table class="layui-hide" id="user" lay-filter="userTabel"></table>
                 <script type="text/html" id="operation">
                     <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delete">删除</a>
-                    <a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="modify">修改密码</a>
+<!--                    <a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="modify">重置密码</a>-->
                 </script>
             </div>
         </div>
@@ -152,37 +152,6 @@
     </div>
 </div>
 
-<!-- 修改卡券弹窗 -->
-<div class="s-details" id="modWindow">
-    <div>
-        <form class="layui-form" action="">
-            <div class="layui-form-item s-formItem5">
-                <div class="layui-inline">
-                    <label class="layui-form-label">新密码</label>
-                    <div class="layui-input-inline">
-                        <input type="text" id="newPassword" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
-    <div class="s-tabBottomButton">
-        <button type="button" class="layui-btn layui-btn-danger" id="confirmMod">修改</button>
-        <button type="button" class="layui-btn" id="cancelMod">取消</button>
-    </div>
-</div>
-
-<!-- 关联卡券弹窗 -->
-<div class="s-details" id="relWindow">
-    <div class="s-commonTable">
-        <table id="relTable"></table>
-    </div>
-    <div class="s-tabBottomButton">
-        <button type="button" class="layui-btn layui-btn-danger" id="confirmRel">关联</button>
-        <button type="button" class="layui-btn" id="cancelRel">取消</button>
-    </div>
-</div>
-
 <script src="plugins/layui/layui.js"></script>
 <script>
     layui.use(['form', 'laydate', 'table', 'layer', 'element'], function () {
@@ -273,11 +242,19 @@
                 })
             }
             if (layEvent === 'modify') {
-                layer.open({
-                    type: 1,
-                    title: '修改密码',
-                    content: $('#modWindow'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
-                    area: ['450px', '170px']
+                layer.confirm("是否重置密码？", function () {
+                    delete activeLine.roleset
+                    delete activeLine.relateUserId
+                    delete activeLine.platUserId
+                    console.log(activeLine)
+                    $.post({
+                        url: "service/platUserManage/resetPassword",
+                        data: JSON.stringify(activeLine),
+                        contentType: "application/json",
+                        success: function (res) {
+                            layuiAlert("修改结果：" + res)
+                        }
+                    })
                 });
             }
         });
@@ -318,27 +295,6 @@
                 },
                 error: function (res) {
                     layuiAlert("新增失败" + res)
-                }
-            })
-        })
-
-        $("#confirmMod").click(function () {
-            $.post({
-                url: "service/platUserManage/resetPassword",
-                data: JSON.stringify({
-                    name: $("#userName").val(),
-                    dealerId: $("#dealer").get(0).selectedIndex,
-                    operateType: $("#operations").val(),
-                    post: $("#duty").val(),
-                    username: $("#loginUserName").val(),
-                    password: $("#loginPassword").val()
-                }),
-                contentType: "application/json",
-                success: function (res) {
-                    layuiAlert("修改结果：" + res)
-                },
-                error: function () {
-                    layuiAlert("修改失败")
                 }
             })
         })

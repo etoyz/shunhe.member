@@ -289,12 +289,12 @@
         var activeLine
         table.on('tool(couponTabel)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
             activeLine = obj.data; //获得当前行数据
+            activeLine.type = activeLine.type === "储值" ? 1 : 0;
             // var page = data.page;
             // var limit = data.limit;
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值f）
             if (layEvent === 'delete') { // 用卡
                 layer.confirm("确认删除卡券【" + activeLine.name + "】?", {icon: 3, title: '提示'}, function () {
-                    activeLine.type = activeLine.type === "储值" ? 1 : 0;
                     $.post({
                         url: "/service/coupon/deleteCoupon",
                         data: JSON.stringify(activeLine),
@@ -317,7 +317,7 @@
                 });
                 pullCouponTypes("#couponTypeM", function () {
                     //拉取卡券列表成功后，执行此回调函数填充原数据以供修改
-                    $('#couponTypeM').val(activeLine.type);
+                    $('#couponTypeM').val(activeLine.type === 0 ? "代金券" : "储值");
                     $('#couponNameM').val(activeLine.name);
                     $('#priceM').val(activeLine.unitPrice);
                     $('#costPriceM').val(activeLine.costPrice);
@@ -333,7 +333,6 @@
                 var progressNotice = layer.msg('正在加载...')
                 projectsTable.reload({
                     done: function (resAll, page, count) {
-                        activeLine.type = activeLine.type === "储值" ? 1 : 0;
                         $.post({
                             url: "service/consumeProject/getConsumeProjectListByCoupon",
                             data: JSON.stringify(activeLine),
@@ -406,14 +405,7 @@
             var typeId = $("#couponTypeM").val() === "代金券" ? 0 : 1;
             $.post({
                 url: "service/coupon/modCoupon",
-                data: JSON.stringify({
-                    name: $("#couponNameM").val(),
-                    type: typeId,
-                    remark: $("#remarkM").val(),
-                    unitPrice: $("#priceM").val(),
-                    costPrice: $("#costPriceM").val(),
-                    orderID: $("#orderIDM").val()
-                }),
+                data: JSON.stringify(activeLine),
                 contentType: "application/json",
                 success: function (res) {
                     layuiAlert("修改结果：" + res)
@@ -425,7 +417,6 @@
         })
 
         $("#confirmRel").click(function () {
-            activeLine.type = activeLine.type === "储值" ? 1 : 0;
             $.post({
                 url: "service/coupon/relateConsumeProject",
                 data: JSON.stringify({
