@@ -54,6 +54,14 @@
 .s-formItem5 .layui-input-block{
     margin-left: 120px;
 }
-.s-formItem5 .layui-inline{
-    display: block;
+/*.s-formItem5 .layui-inline{*/
+/*    display: block;*/
+/*}*/
+
+.s-formItem6 .layui-form-label{
+    width: 60px;
+    padding-left: 0;
+}
+.s-formItem5 .layui-input-block{
+    margin-left: 68px;
 }

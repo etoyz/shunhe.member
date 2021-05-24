@@ -17,42 +17,41 @@
 <div class="layui-fluid main">
     <div class="layui-row">
         <div class="layui-col-md12">
-            <!-- Search box -->
+
             <div class="s-headerSearch">
                 <form class="layui-form" action="">
+
                     <div class="layui-form-item">
+
                         <div class="layui-inline s-layuiInline">
                             <label class="layui-form-label">车牌号</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="licensePlate" autocomplete="off" class="layui-input"
-                                       placeholder="请输入车牌号">
+                                <input type="text" name="carNumber" autocomplete="off" class="layui-input" placeholder="请输入车牌号">
                             </div>
                         </div>
                         <div class="layui-inline s-layuiInline">
                             <label class="layui-form-label">车架号</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="vin" autocomplete="off" class="layui-input"
-                                       placeholder="请输入车架号">
+                                <input type="text" name="chassisNumber" autocomplete="off" class="layui-input" placeholder="请输入车架号">
                             </div>
                         </div>
                         <div class="layui-inline s-layuiInline">
                             <label class="layui-form-label">客户名称</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="customerName" autocomplete="off" class="layui-input"
-                                       placeholder="请输入客户名称">
+                                <input type="text" name="customerName" autocomplete="off" class="layui-input" placeholder="请输入客户名称">
                             </div>
                         </div>
                         <div class="layui-inline s-layuiInline">
                             <label class="layui-form-label">会员卡号</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="membership" autocomplete="off" class="layui-input"
-                                       placeholder="请输入会员卡号">
+                                <input type="text" name="membership" autocomplete="off" class="layui-input" placeholder="请输入会员卡号">
                             </div>
                         </div>
 
                         <div class="layui-inline s-layuiInline">
-                            <button id="queryBtn" class="layui-btn layui-btn-warm">查询</button>
+                            <button class="layui-btn layui-btn-warm">查询</button>
                         </div>
+
                     </div>
                 </form>
             </div>
@@ -71,288 +70,182 @@
 <!-- 用卡弹窗 -->
 <div class="s-details" id="useWindow">
     <form class="layui-form" action="">
-        <div class="layui-form-item s-formItem5">
+        <div class="layui-form-item s-formItem6">
             <div class="layui-inline">
                 <label class="layui-form-label">消费日期</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="date" id="date" lay-verify="date" autocomplete="off"
-                            class="layui-input">
+                    <input type="text" name="date" id="date" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">车牌号</label>
                 <div class="layui-input-inline">
-                    <input disabled type="text" name="licensePlate" id="licensePlate" autocomplete="off"
-                            class="layui-input">
+                    <input type="text" name="carNumber" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">车架号</label>
                 <div class="layui-input-inline">
-                    <input disabled type="text" name="vin" id="vin" autocomplete="off"
-                            class="layui-input">
+                    <input type="text" name="chassisNumber" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">车架号</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="chassisNumber" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">车架号</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="chassisNumber" autocomplete="off" class="layui-input">
                 </div>
             </div>
         </div>
-        <div class="layui-form-item s-formItem5">
+        <div class="layui-form-item s-formItem6">
             <div class="layui-inline">
                 <label class="layui-form-label">客户姓名</label>
                 <div class="layui-input-inline">
-                    <input disabled type="text" name="customerName" autocomplete="off"
-                            class="layui-input">
-                </div>
-            </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">会员卡号</label>
-                <div class="layui-input-inline">
-                    <input disabled type="text" name="customerCardID" autocomplete="off"
-                            class="layui-input">
-                </div>
-            </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">会员级别</label>
-                <div class="layui-input-inline">
-                    <input disabled type="text" name="customerLevel" autocomplete="off"
-                            class="layui-input">
+                    <input type="text" name="customerName" autocomplete="off" class="layui-input">
                 </div>
             </div>
         </div>
-        <div class="layui-form-item s-formItem5">
+        <div class="layui-form-item s-formItem6">
             <div class="layui-inline">
-                <label class="layui-form-label">消费类型</label>
+                <label class="layui-form-label">客户姓名</label>
                 <div class="layui-input-inline">
-                    <select name="consumeType" id="consumeType" autocomplete="off">
-                    </select>
-                </div>
-            </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">消费项目</label>
-                <div class="layui-input-inline">
-                    <select name="consumeProject" id="consumeProject" autocomplete="off">
-                    </select>
-                </div>
-            </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">具体项目</label>
-                <div class="layui-input-inline">
-                    <select name="consumeDetail" id="consumeDetail" autocomplete="off">
-                    </select>
+                    <input type="text" name="customerName" autocomplete="off" class="layui-input">
                 </div>
             </div>
         </div>
-        <div class="layui-form-item s-formItem5">
-            <div class="layui-bl">
-                <label class="layui-form-label">项目备注</label>
-                <div class="layui-input-inline" style="width: 800px">
-                    <input type="text" name="billRemark" id="billRemark" autocomplete="off"
-                            class="layui-input">
+        <div class="layui-form-item s-formItem6">
+            <div class="layui-inline">
+                <label class="layui-form-label">客户姓名</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="customerName" autocomplete="off" class="layui-input">
                 </div>
             </div>
         </div>
-        <div class="layui-form-item s-formItem5">
+        <div class="layui-form-item s-formItem6">
             <div class="layui-inline">
-                <label class="layui-form-label">工时费</label>
+                <label class="layui-form-label">客户姓名</label>
                 <div class="layui-input-inline">
-                    <input disabled type="text" name="timeCost" id="timeCost" autocomplete="off"
-                            class="layui-input">
-                </div>
-            </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">材料费</label>
-                <div class="layui-input-inline">
-                    <input disabled type="text" name="matCost" id="matCost" autocomplete="off"
-                            class="layui-input">
-                </div>
-            </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">总金额</label>
-                <div class="layui-input-inline">
-                    <input disabled type="text" name="billSum" id="billSum" autocomplete="off"
-                            class="layui-input">
+                    <input type="text" name="customerName" autocomplete="off" class="layui-input">
                 </div>
             </div>
         </div>
-        <div class="layui-form-item s-formItem5">
+        <div class="layui-form-item s-formItem6">
             <div class="layui-inline">
-                <label class="layui-form-label">行驶里程</label>
+                <label class="layui-form-label">客户姓名</label>
                 <div class="layui-input-inline">
-                    <input disabled type="text" name="mileage" id="mileage" autocomplete="off"
-                            class="layui-input">
-                </div>
-            </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">工单号</label>
-                <div class="layui-input-inline">
-                    <input disabled type="text" name="ticketID" id="ticketID" autocomplete="off"
-                            class="layui-input">
-                </div>
-            </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">增加发票</label>
-                <div class="layui-input-inline">
-                    <input disabled type="text" name="addInvoice" id="addInvoice" autocomplete="off"
-                           class="layui-input">
+                    <input type="text" name="customerName" autocomplete="off" class="layui-input">
                 </div>
             </div>
         </div>
-        <div class="layui-form-item s-formItem5">
+        <div class="layui-form-item s-formItem6">
             <div class="layui-inline">
-                <label class="layui-form-label">是否开票</label>
+                <label class="layui-form-label">客户姓名</label>
                 <div class="layui-input-inline">
-                    <select name="invoiceFlag" id="invoiceFlag" autocomplete="off">
-                        <option value="1">是</option>
-                        <option value="0" selected>否</option>
-                    </select>
-                </div>
-            </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">开票金额</label>
-                <div class="layui-input-inline">
-                    <input disabled type="text" name="invoiceNum" id="invoiceNum" autocomplete="off"
-                           class="layui-input">
-                </div>
-            </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">发票号</label>
-                <div class="layui-input-inline">
-                    <input disabled type="text" name="invoiceID" id="invoiceID" autocomplete="off"
-                            class="layui-input">
+                    <input type="text" name="customerName" autocomplete="off" class="layui-input">
                 </div>
             </div>
         </div>
-        <div class="layui-form-item s-formItem5">
+        <div class="layui-form-item s-formItem6">
             <div class="layui-inline">
-                <label class="layui-form-label">本次开票</label>
+                <label class="layui-form-label">客户姓名</label>
                 <div class="layui-input-inline">
-                    <input disabled type="text" name="currentInvoice" id="currentInvoice" autocomplete="off"
-                           class="layui-input">
-                </div>
-            </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">剩余开票</label>
-                <div class="layui-input-inline">
-                    <input disabled type="text" name="resInvoice" id="resInvoice" autocomplete="off"
-                           class="layui-input">
-                </div>
-            </div>
-        </div>
-        <div class="layui-form-item s-formItem5">
-            <div class="layui-inline">
-                <label class="layui-form-label">支付方式</label>
-                <div class="layui-input-inline">
-                    <select name="paymentMethod" id="paymentMethod" autocomplete="off">
-                        <option value="crash">现金</option>
-                        <option value="transfer">转账</option>
-                    </select>
-                </div>
-            </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">充入数量</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="buyNum" id="buyNum" autocomplete="off"
-                           class="layui-input">
-                </div>
-            </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">成本价</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="costPrice" id="costPrice" autocomplete="off"
-                           class="layui-input">
+                    <input type="text" name="customerName" autocomplete="off" class="layui-input">
                 </div>
             </div>
         </div>
     </form>
-    <div class="s-tabBottomButton">
-        <button type="button" class="layui-btn layui-btn-danger" id="confirmUsage">添加</button>
-        <button type="button" class="layui-btn" id="cancelUsage">取消</button>
-    </div>
+
+    <table class="layui-hide" id="memberInfo" lay-filter="memberInfoTabel"></table>
 </div>
 
 
 <script src="plugins/layui/layui.js"></script>
 <script>
-    layui.use(['form', 'laydate', 'table', 'layer', 'element'], function () {
+    layui.use(['form','laydate','table','layer','element'], function() {
         var $ = layui.jquery,
             form = layui.form,
             laydate = layui.laydate,
             layer = layui.layer,
             table = layui.table,
-            element = layui.element;
+            element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
 
-        // Render Date plugin
+        //日期
         laydate.render({
             elem: '#date'
         });
 
         // “用卡表格”渲染
-        var tableUse = table.render({
+        var tableIns = table.render({
             elem: '#useCard',
-            url: './datas/useCard.json',
-            height: 'full-200',
-            page: { // laypage
-                layout: ['prev', 'page', 'next', 'skip', 'count'],
+            url:'./datas/useCard.json',
+            height: 'full-291',
+            page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                layout: [ 'prev', 'page', 'next', 'skip','count'], //自定义分页布局
                 limit: 15,
-                groups: 3, // 只显示 1 个连续页码
-                first: false, // 不显示首页
-                last: false // 不显示尾页
+                //,curr: 5 //设定初始在第 5 页
+                groups: 3, //只显示 1 个连续页码
+                first: false, //不显示首页
+                last: false //不显示尾页
+
             },
             cols: [[
                 {type: 'checkbox'},
-                {field: 'customer', width: '9%', title: '客户名称'},
-                {field: 'vin', width: '16%', title: '车架号'},
-                {field: 'licensePlate', width: '9%', title: '车牌号'},
-                {field: 'membershipCard', width: '17%', title: '会员卡号'},
-                {field: 'membershipGrade', width: '9%', title: '会员级别'},
-                {field: 'remark', width: '24%', title: '备注'},
-                {field: 'operation', width: '7%', title: '操作', toolbar: '#operation', fixed: 'right'}
+                {field:'customer', width:'8%', title: '客户名称'},
+                {field:'vin', width:'15%', title: '车架号'},
+                {field:'licensePlate', width:'10%', title: '车牌号'},
+                {field:'membershipCard', width:'20%', title: '会员卡号'},
+                {field:'membershipGrade', width:'10%', title: '会员级别'},
+                {field:'remark', width:'20%', title: '备注'},
+                {field:'operation', width:'12%', title: '操作', toolbar: '#operation', fixed: 'right'}
+            ]],
+            size: 'sm'
+        });
+        //监听“会员档案表格”工具条
+        table.on('tool(useCardTabel)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+            var data = obj.data; //获得当前行数据
+            // var page = data.page;
+            // var limit = data.limit;
+            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+            var tr = obj.tr; //获得当前行 tr 的DOM对象
+            var customer = data.customer;
+            if(layEvent === 'use'){ // 用卡
+                var index1 = layer.open({
+                    type: 1,
+                    title: '用卡',
+                    content: $('#useWindow'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                    area: ['100%', '100%']
+                });
+                $('#exit1').on('click',function () {
+                    // 关闭当前弹出层
+                    layer.close(index1);
+                });
+            }
+        });
+
+        // "会员信息表格"渲染
+        var tableIns1 = table.render({
+            elem: '#memberInfo',
+            url:'./datas/memberInfo.json',
+            height: 288,
+            cols: [[
+                {type:'numbers'},
+                {field:'cardName', width:124, title: '卡券名称'},
+                {field:'cardType', width:82, title: '卡券类型'},
+                {field:'quantity', width:80, title: '购买数量'},
+                {field:'usageQuantity', width:80, title: '使用数量'}, //单元格内容水平居中
+                {field:'remainingQuantity', width:80, title: '剩余数量'},
+                {field:'effectiveDate', width:146, title: '生效日期'},
+                {field:'expiryDate', width:146, title: '失效日期'},
+                {field:'projectName', width:88, title: '项目名称'}
             ]],
             size: 'sm'
         });
 
-        // Query for items
-        $("#queryBtn").click(function () {
-            // TODO: waitibg for API...
-            tableIns.reload({
-                url: 'service/TODO',
-                page: {
-                    curr: 1
-                }
-            })
-            return false;
-        });
-
-        // Confirm usage
-        $("#confirmUsage").click(function () {
-            // TODO: waitibg for API...
-            alert('TODO');
-            $.post('');
-            return false;
-        });
-        
-        // TODO: cascade consume type, project and detail
-
-        // Use Card table toolbar
-        table.on('tool(useCardTabel)', function (obj) {
-            var data = obj.data; // 获得当前行数据
-            var layEvent = obj.event;
-            var customer = data.customer;
-            
-            if (layEvent === 'use') { // 用卡
-                var indexUsage = layer.open({
-                    type: 1,
-                    title: '消费结账',
-                    content: $('#useWindow'),
-                    area: ['1022px', '550px']
-                });
-                
-                // TODO: Load user info
-                // TODO: Load consume type, project, detail
-                
-                $('#cancelUsage').on('click', function () {
-                    layer.close(indexUsage);
-                });
-            }
-        });
     });
 </script>
 </body>

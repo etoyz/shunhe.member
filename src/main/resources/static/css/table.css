@@ -21,7 +21,7 @@
 /* 弹窗样式 */
 .s-details{
     width: 100%;
-    height: auto;
+    height: 100%;
     padding: 16px;
     box-sizing: border-box;
     display: none;
