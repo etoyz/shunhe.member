@@ -70,91 +70,193 @@
 <!-- 用卡弹窗 -->
 <div class="s-details" id="useWindow">
     <form class="layui-form" action="">
-        <div class="layui-form-item s-formItem6">
+        <div class="layui-form-item s-formItem5">
             <div class="layui-inline">
                 <label class="layui-form-label">消费日期</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="date" id="date" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+                    <input type="text" name="date" id="date" lay-verify="date" autocomplete="off"
+                           class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">车牌号</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="carNumber" autocomplete="off" class="layui-input">
+                    <input disabled type="text" name="licensePlate" id="licensePlate" autocomplete="off"
+                           class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">车架号</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="chassisNumber" autocomplete="off" class="layui-input">
-                </div>
-            </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">车架号</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="chassisNumber" autocomplete="off" class="layui-input">
-                </div>
-            </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">车架号</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="chassisNumber" autocomplete="off" class="layui-input">
+                    <input disabled type="text" name="vin" id="vin" autocomplete="off"
+                           class="layui-input">
                 </div>
             </div>
         </div>
-        <div class="layui-form-item s-formItem6">
+        <div class="layui-form-item s-formItem5">
             <div class="layui-inline">
                 <label class="layui-form-label">客户姓名</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="customerName" autocomplete="off" class="layui-input">
+                    <input disabled type="text" name="customerName" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">会员卡号</label>
+                <div class="layui-input-inline">
+                    <input disabled type="text" name="customerCardID" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">会员级别</label>
+                <div class="layui-input-inline">
+                    <input disabled type="text" name="customerLevel" autocomplete="off"
+                           class="layui-input">
                 </div>
             </div>
         </div>
-        <div class="layui-form-item s-formItem6">
+        <div class="layui-form-item s-formItem5">
             <div class="layui-inline">
-                <label class="layui-form-label">客户姓名</label>
+                <label class="layui-form-label">消费类型</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="customerName" autocomplete="off" class="layui-input">
+                    <select name="consumeType" id="consumeType" autocomplete="off">
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">消费项目</label>
+                <div class="layui-input-inline">
+                    <select name="consumeProject" id="consumeProject" autocomplete="off">
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">具体项目</label>
+                <div class="layui-input-inline">
+                    <select name="consumeDetail" id="consumeDetail" autocomplete="off">
+                    </select>
                 </div>
             </div>
         </div>
-        <div class="layui-form-item s-formItem6">
-            <div class="layui-inline">
-                <label class="layui-form-label">客户姓名</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="customerName" autocomplete="off" class="layui-input">
+        <div class="layui-form-item s-formItem5">
+            <div class="layui-bl">
+                <label class="layui-form-label">项目备注</label>
+                <div class="layui-input-inline" style="width: 800px">
+                    <input type="text" name="billRemark" id="billRemark" autocomplete="off"
+                           class="layui-input">
                 </div>
             </div>
         </div>
-        <div class="layui-form-item s-formItem6">
+        <div class="layui-form-item s-formItem5">
             <div class="layui-inline">
-                <label class="layui-form-label">客户姓名</label>
+                <label class="layui-form-label">工时费</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="customerName" autocomplete="off" class="layui-input">
+                    <input disabled type="text" name="timeCost" id="timeCost" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">材料费</label>
+                <div class="layui-input-inline">
+                    <input disabled type="text" name="matCost" id="matCost" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">总金额</label>
+                <div class="layui-input-inline">
+                    <input disabled type="text" name="billSum" id="billSum" autocomplete="off"
+                           class="layui-input">
                 </div>
             </div>
         </div>
-        <div class="layui-form-item s-formItem6">
+        <div class="layui-form-item s-formItem5">
             <div class="layui-inline">
-                <label class="layui-form-label">客户姓名</label>
+                <label class="layui-form-label">行驶里程</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="customerName" autocomplete="off" class="layui-input">
+                    <input disabled type="text" name="mileage" id="mileage" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">工单号</label>
+                <div class="layui-input-inline">
+                    <input disabled type="text" name="ticketID" id="ticketID" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">增加发票</label>
+                <div class="layui-input-inline">
+                    <input disabled type="text" name="addInvoice" id="addInvoice" autocomplete="off"
+                           class="layui-input">
                 </div>
             </div>
         </div>
-        <div class="layui-form-item s-formItem6">
+        <div class="layui-form-item s-formItem5">
             <div class="layui-inline">
-                <label class="layui-form-label">客户姓名</label>
+                <label class="layui-form-label">是否开票</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="customerName" autocomplete="off" class="layui-input">
+                    <select name="invoiceFlag" id="invoiceFlag" autocomplete="off">
+                        <option value="1">是</option>
+                        <option value="0" selected>否</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">开票金额</label>
+                <div class="layui-input-inline">
+                    <input disabled type="text" name="invoiceNum" id="invoiceNum" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">发票号</label>
+                <div class="layui-input-inline">
+                    <input disabled type="text" name="invoiceID" id="invoiceID" autocomplete="off"
+                           class="layui-input">
                 </div>
             </div>
         </div>
-        <div class="layui-form-item s-formItem6">
+        <div class="layui-form-item s-formItem5">
             <div class="layui-inline">
-                <label class="layui-form-label">客户姓名</label>
+                <label class="layui-form-label">本次开票</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="customerName" autocomplete="off" class="layui-input">
+                    <input disabled type="text" name="currentInvoice" id="currentInvoice" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">剩余开票</label>
+                <div class="layui-input-inline">
+                    <input disabled type="text" name="resInvoice" id="resInvoice" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item s-formItem5">
+            <div class="layui-inline">
+                <label class="layui-form-label">支付方式</label>
+                <div class="layui-input-inline">
+                    <select name="paymentMethod" id="paymentMethod" autocomplete="off">
+                        <option value="crash">现金</option>
+                        <option value="transfer">转账</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">充入数量</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="buyNum" id="buyNum" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">成本价</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="costPrice" id="costPrice" autocomplete="off"
+                           class="layui-input">
                 </div>
             </div>
         </div>
@@ -194,7 +296,6 @@
 
             },
             cols: [[
-                {type: 'checkbox'},
                 {field:'customer', width:'8%', title: '客户名称'},
                 {field:'vin', width:'15%', title: '车架号'},
                 {field:'licensePlate', width:'10%', title: '车牌号'},
