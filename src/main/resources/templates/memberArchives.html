@@ -138,18 +138,18 @@
                     </div>
                     <div class="layui-form-item s-formItem5">
                         <div class="layui-inline">
-                        <label class="layui-form-label">微信昵称</label>
-                        <div class="layui-input-inline">
-                            <input disabled type="text" name="name" placeholder="请输入" autocomplete="off"
-                                   class="layui-input">
-                        </div>
+                            <label class="layui-form-label">微信昵称</label>
+                            <div class="layui-input-inline">
+                                <input disabled type="text" name="name" placeholder="请输入" autocomplete="off"
+                                       class="layui-input">
+                            </div>
                         </div>
                         <div class="layui-inline">
-                        <label class="layui-form-label">微信号</label>
-                        <div class="layui-input-inline">
-                            <input disabled type="text" name="code" placeholder="请输入" autocomplete="off"
-                                   class="layui-input">
-                        </div>
+                            <label class="layui-form-label">微信号</label>
+                            <div class="layui-input-inline">
+                                <input disabled type="text" name="code" placeholder="请输入" autocomplete="off"
+                                       class="layui-input">
+                            </div>
                         </div>
                     </div>
                     <div class="layui-form-item s-formItem5">
@@ -472,13 +472,13 @@
             <div class="layui-tab-item">内容5</div>
             <div class="layui-tab-item">内容6</div>
             <div class="layui-tab-item">内容7</div>
+            <div class="s-tabBottomButton">
+                <button class="layui-btn" id="confirmAdd">确认</button>
+                <button class="layui-btn layui-btn-warm">取消</button>
+            </div>
         </div>
     </div>
 
-    <div class="s-tabBottomButton">
-        <button class="layui-btn" id="confirmAdd">确认</button>
-        <button class="layui-btn layui-btn-warm">取消</button>
-    </div>
 
 </div>
 
@@ -844,7 +844,7 @@
                             <label class="layui-form-label">会员级别:</label>
                             <div class="layui-input-inline">
                                 <input  type="text" name="memberLevelM" id="memberLevelM"  autocomplete="off"
-                                       class="layui-input">
+                                        class="layui-input">
                             </div>
                         </div>
                     </div>
@@ -860,7 +860,7 @@
                             <label class="layui-form-label">剩余卡券价值:</label>
                             <div class="layui-input-inline">
                                 <input  type="text" name="remainCouponValueM" id="remainCouponValueM"  autocomplete="off"
-                                       class="layui-input">
+                                        class="layui-input">
                             </div>
                         </div>
                     </div>
@@ -869,14 +869,14 @@
                             <label class="layui-form-label">过期卡券价值:</label>
                             <div class="layui-input-inline">
                                 <input  type="text" name="expiredCouponValueM" id="expiredCouponValueM"  autocomplete="off"
-                                       class="layui-input">
+                                        class="layui-input">
                             </div>
                         </div>
                         <div class="layui-inline">
                             <label class="layui-form-label">卡券总价值:</label>
                             <div class="layui-input-inline">
-                                <input disabled type="text" name="totalCouponValueM" id="totalCouponValueM" autocomplete="off"
-                                       class="layui-input">
+                                <input  type="text" name="totalCouponValueM" id="totalCouponValueM" autocomplete="off"
+                                        class="layui-input">
                             </div>
                         </div>
                     </div>
@@ -884,15 +884,15 @@
                         <div class="layui-inline">
                             <label class="layui-form-label">可用积分:</label>
                             <div class="layui-input-inline">
-                                <input disabled type="text" name="availableIntegralM" id="availableIntegralM"  autocomplete="off"
-                                       class="layui-input">
+                                <input  type="text" name="availableIntegralM" id="availableIntegralM"  autocomplete="off"
+                                        class="layui-input">
                             </div>
                         </div>
                         <div class="layui-inline">
                             <label class="layui-form-label">累计积分:</label>
                             <div class="layui-input-inline">
-                                <input disabled type="text" name="accumulativeIntegralM" id="accumulativeIntegralM"  autocomplete="off"
-                                       class="layui-input">
+                                <input  type="text" name="accumulativeIntegralM" id="accumulativeIntegralM"  autocomplete="off"
+                                        class="layui-input">
                             </div>
                         </div>
                     </div>
@@ -902,11 +902,11 @@
             <div class="layui-tab-item">内容5</div>
             <div class="layui-tab-item">内容6</div>
             <div class="layui-tab-item">内容7</div>
+            <div class="s-tabBottomButton">
+                <button class="layui-btn" id="confirmAddM">确认</button>
+                <button class="layui-btn layui-btn-warm">取消</button>
+            </div>
         </div>
-    </div>
-    <div class="s-tabBottomButton">
-        <button class="layui-btn" id="confirmAddM">确认</button>
-        <button class="layui-btn layui-btn-warm">取消</button>
     </div>
 </div>
 
@@ -1032,8 +1032,9 @@
             }
         });
         //监听“会员档案表格”工具条
+        var data;
         table.on('tool(memberArchivesTabel)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
-            var data = obj.data; //获得当前行数据
+            data = obj.data; //获得当前行数据
             // var page = data.page;
             // var limit = data.limit;
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
@@ -1052,31 +1053,32 @@
             } else if (layEvent === 'edit') { // 编辑
                 var index1 = layer.open({
                     type: 1,
-                    title: '修改弹窗',
+                    title: '修改',
                     content: $('#editWindow'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
-                    area: '1022px'
+                    area: ['1050px', '650px'],
+                    offset: '20px'
                 });
                 console.log(data.userId);
                 $.post({
-                    url: "/service/Archives/editArchivesList",
+                    url: "/service/Archives/requireUser",
                     data: {
                         userId: data.userId
                     },
                     success: function (res) {
+                        console.log(res)
+                        // for (var resR of res.data.vehicle) {
+                        //   if
+                        // }
                         $('#customernameM').val(res.data.customername);
                         $('#phoneM').val(res.data.phone);
                         $('#cBirthdayM').val(res.data.cBirthday);
-                    //    $('#platenumberM').val(res.data.vehicle.platenumber);
-                    //    $('#vinM').val(res.data.vehicle.vin);
-                     //   $('#vehiclelabelM').val(res.data.vehicle.vehiclelabel);
-                     //   $('#vehiclebrandM').val(res.data.vehicle.vehiclebrand);
-                     //   $('#vehiclestyleM').val(res.data.vehicle.vehiclestyle);
-                       var gender=res.data.cGender;
-                        console.log(gender);
-                        $('#cGenderM').val(gender);
-                        //  var gender=res.data.cGender;
-                       // $('#cGenderM').find("option[value='1']").attr("selected",true);
-                 //       layuiAlert(res)
+                        // $('#platenumberM').val(res.data.vehicle.platenumber);
+                        // $('#vinM').val(res.data.vehicle.vin);
+                        // $('#vehiclelabelM').val(res.data.vehicle.vehiclelabel);
+                        // $('#vehiclebrandM').val(res.data.vehicle.vehiclebrand);
+                        // $('#vehiclestyleM').val(res.data.vehicle.vehiclestyle);
+                        $('#cGenderM').val(res.data.cGender);
+                        form.render()
                     },
                     error: function () {
                         layuiAlert("删除失败")
@@ -1107,12 +1109,23 @@
             } else if (layEvent === 'delete') { // 删除
                 layer.confirm('确定要删除[' + customer + ']吗？', {icon: 3, title: '提示'}, function (index) {
                     // 删除对应行（tr）的DOM结构，并更新缓存
-                    obj.del();
+
                     layer.close(index);
                     // 向服务端发送删除指令
-
+                    $.post({
+                        url: "/service/Archives/deleteArchives",
+                        data: {
+                            userId: data.userId
+                        },
+                        success: function (res) {
+                            form.render()
+                        },
+                        error: function () {
+                            layuiAlert("删除失败")
+                        }
+                    });
                     // 提示窗
-                    layer.alert('删除成功！', {icon: 1});
+                    //     layer.alert('删除成功！', {icon: 1});
                 });
             }
         });
@@ -1183,6 +1196,45 @@
                     //     unbindTime:$("#unbindTime").val()
                     // },
                     cBirthday: $("#cBirthday").val()
+                }),
+                contentType: "application/json",
+                success: function (res) {
+                    console.log(res)
+                    layuiAlert("信息:" + res)
+                },
+                error: function (res) {
+                    console.log(res)
+                    layuiAlert("新增失败" + res)
+                }
+            })
+        })
+        $("#confirmAddM").click(function () {
+            $.post({
+                url: "/service/Archives/editArchives",
+                data: JSON.stringify({
+                    customername: $("#customernameM").val(),
+                    cGender: $("#cGenderM").val(),
+                    phone:$("#phoneM").val(),
+                    cCard:$("#cCardM").val(),
+                    userId:data.userId,
+
+                    // vehicle: {
+                    //     platenumber:$("#platenumber").val(),
+                    //     vin: $("#vin").val(),
+                    //     vehiclelabel:$("#vehiclelabel").val(),
+                    //     vehiclebrand:$("#vehiclebrand").val(),
+                    //     vehiclestyle:$("#vehiclestyle").val(),
+                    //     customername:$("#customername").val()
+                    // },
+                    // WXInfo:{
+                    //     name:$("#name").val(),
+                    //     code:$("#code").val(),
+                    //     focusTime:$("#focusTime").val(),
+                    //     unFocusTime:$("#unFocusTime").val(),
+                    //     bindTime:$("#bindTime").val(),
+                    //     unbindTime:$("#unbindTime").val()
+                    // },
+                    cBirthday: $("#cBirthdayM").val()
                 }),
                 contentType: "application/json",
                 success: function (res) {

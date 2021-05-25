@@ -39,9 +39,22 @@ public class ArchivesController {
 
         return ret;
     }
-
-    @PostMapping(value = "editArchivesList")
-    public Map<String, Object> editArchivesList(@RequestParam String userId) {
+    @PostMapping("deleteArchives")
+    public String deleteArchives(@RequestParam String userId) {
+        User c = new User();
+        c.userId = userId;
+        if (shUserService.deleteUser(PlatUserUtils.getCurrentLoginPlatUser(), c).equals("true"))
+            return "删除成功！";
+        else
+            return "删除失败！";
+    }
+    @PostMapping(value = "editArchives")
+    public String editArchives(@RequestBody User user) {
+     shUserService.editUser(PlatUserUtils.getCurrentLoginPlatUser(), user);
+        return "修改成功！";
+    }
+    @PostMapping(value = "requireUser")
+    public Map<String, Object> requireUser(@RequestParam String userId) {
         Map<String, Object> ret1 = new HashMap<>();
         User c = new User();
         c.userId = userId;
