@@ -208,7 +208,7 @@
                 first: false, //不显示首页
                 last: false //不显示尾页
             },
-            cols: [[
+            cols: [ [
                 // {type: 'checkbox'},
                 {field: 'name', width: '8%', title: '卡券名称'},
                 {field: 'type', width: '8%', title: '卡券类型'},
@@ -221,7 +221,7 @@
                 {field: 'lastEditId', width: '7%', title: '最后编辑人'},
                 {field: 'lastEditTime', width: '14%', title: '最后编辑时间'},
                 {field: 'operation', width: '14%', title: '操作', toolbar: '#operation'}
-            ]],
+            ] ],
             size: 'sm',
             parseData: function (res) {
                 let cTypes = [ "代金券", "储值" ]
@@ -288,10 +288,10 @@
             width: 500,
             page: false,
             url: "service/consumeProject/getConsumeProjectList?query=&consumeType=",
-            cols: [[
+            cols: [ [
                 {type: 'checkbox', width: 70},
                 {field: 'name', width: 420, title: '消费项目'},
-            ]]
+            ] ]
         })
 
         //监听“卡券表格”工具条

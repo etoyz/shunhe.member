@@ -295,7 +295,7 @@
                 last: false //不显示尾页
 
             },
-            cols: [[
+            cols: [ [
                 {field:'customer', width:'8%', title: '客户名称'},
                 {field:'vin', width:'15%', title: '车架号'},
                 {field:'licensePlate', width:'10%', title: '车牌号'},
@@ -303,7 +303,7 @@
                 {field:'membershipGrade', width:'10%', title: '会员级别'},
                 {field:'remark', width:'20%', title: '备注'},
                 {field:'operation', width:'12%', title: '操作', toolbar: '#operation', fixed: 'right'}
-            ]],
+            ] ],
             size: 'sm'
         });
         //监听“会员档案表格”工具条
@@ -333,7 +333,7 @@
             elem: '#memberInfo',
             url:'./datas/memberInfo.json',
             height: 288,
-            cols: [[
+            cols: [ [
                 {type:'numbers'},
                 {field:'cardName', width:124, title: '卡券名称'},
                 {field:'cardType', width:82, title: '卡券类型'},
@@ -343,7 +343,7 @@
                 {field:'effectiveDate', width:146, title: '生效日期'},
                 {field:'expiryDate', width:146, title: '失效日期'},
                 {field:'projectName', width:88, title: '项目名称'}
-            ]],
+            ] ],
             size: 'sm'
         });
 

@@ -996,7 +996,7 @@
             toolbar: true, //仅开启工具栏，不显示左侧模板
             // defaultToolbar: ['exports'], //头部工具栏右侧图标
             defaultToolbar: ['filter', 'print', 'exports'],
-            cols: [[
+            cols: [ [
                 {type: 'checkbox'},
                 {field: 'customername', width: 80, title: '客户名称'},
                 {field: 'cGender', width: 56, title: '性别'},
@@ -1015,7 +1015,7 @@
                 {field: 'vehiclebrand', width: 210, title: '车型'},
                 {field: 'userId', width: 210, title: 'id',hide:true},
                 {field: 'operation', width: 210, title: '操作', toolbar: '#operation', fixed: 'right'}
-            ]],
+            ] ],
             size: 'sm',
             parseData: function (res) {
                 var cGender = ["","男","女"]
@@ -1144,7 +1144,7 @@
                 last: false //不显示尾页
 
             },
-            cols: [[
+            cols: [ [
                 {type: 'numbers'},
                 {field: 'cardName', width: 124, title: '卡券名称'},
                 {field: 'cardType', width: 82, title: '卡券类型'},
@@ -1154,7 +1154,7 @@
                 {field: 'effectiveDate', width: 146, title: '生效日期'},
                 {field: 'expiryDate', width: 146, title: '失效日期'},
                 {field: 'projectName', width: 88, title: '项目名称'}
-            ]],
+            ] ],
             size: 'sm'
         });
         $("#confirmAdd").click(function () {
