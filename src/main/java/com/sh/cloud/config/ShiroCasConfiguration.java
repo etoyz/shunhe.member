@@ -1,6 +1,7 @@
 package com.sh.cloud.config;
 //
 
+import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import com.sh.cloud.utils.Global;
 import lombok.extern.log4j.Log4j2;
 import org.apache.shiro.cache.Cache;
@@ -83,6 +84,15 @@ public class ShiroCasConfiguration {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", buildConfig()); // 对接口配置跨域设置
         return new CorsFilter(source);
+    }
+
+    /**
+     * 页面上使用shiro标签
+     * @return
+     */
+    @Bean(name = "shiroDialect")
+    public ShiroDialect shiroDialect(){
+        return new ShiroDialect();
     }
 
     @Bean
