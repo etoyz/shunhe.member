@@ -50,39 +50,38 @@
 
 <!-- 新增弹窗 -->
 <div class="s-details" id="addWindow">
-    <div>
         <form class="layui-form" action="">
-            <div class="layui-form-item s-formItem5">
-                <div class="layui-inline">
-                    <label class="layui-form-label"><i>*</i>消费类型</label>
-                    <div class="layui-input-inline">
-                        <input type="text" id="consumeTypeName" lay-verify="required" autocomplete="off"
-                               class="layui-input">
+            <div>
+                <div class="layui-form-item s-formItem5">
+                    <div class="layui-inline">
+                        <label class="layui-form-label"><i>*</i>消费类型</label>
+                        <div class="layui-input-inline">
+                            <input type="text" id="consumeTypeName" lay-verify="required" autocomplete="off"
+                                   class="layui-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item s-formItem5">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">顺序号</label>
+                        <div class="layui-input-inline">
+                            <input type="text" id="indexID" autocomplete="off"
+                                   class="layui-input">
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="layui-form-item s-formItem5">
-                <div class="layui-inline">
-                    <label class="layui-form-label"><i>*</i>顺序号</label>
-                    <div class="layui-input-inline">
-                        <input type="text" id="indexID" lay-verify="required" autocomplete="off"
-                               class="layui-input">
-                    </div>
-                </div>
+            <div class="s-tabBottomButton">
+                <button class="layui-btn" id="confirmAdd" lay-filter="confirmAdd" lay-submit>新增</button>
+                <button class="layui-btn layui-btn-warm" id="cancelAdd">取消</button>
             </div>
         </form>
-    </div>
-    <div class="s-tabBottomButton">
-        <button class="layui-btn" id="confirmAdd">新增</button>
-        <button class="layui-btn layui-btn-warm" id="cancelAdd">取消</button>
-    </div>
-
 </div>
 
-<!-- 编辑弹窗 -->
+<!-- 修改弹窗 -->
 <div class="s-details" id="editWindow">
-    <div>
-        <form class="layui-form" action="">
+    <form class="layui-form" action="">
+        <div>
             <div class="layui-form-item s-formItem5">
                 <div class="layui-inline">
                     <label class="layui-form-label"><i>*</i>消费类型</label>
@@ -94,19 +93,19 @@
             </div>
             <div class="layui-form-item s-formItem5">
                 <div class="layui-inline">
-                    <label class="layui-form-label"><i>*</i>顺序号</label>
+                    <label class="layui-form-label">顺序号</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="indexID" lay-verify="required" autocomplete="off"
+                        <input type="text" name="indexID" autocomplete="off"
                                class="layui-input">
                     </div>
                 </div>
             </div>
-        </form>
-    </div>
-    <div class="s-tabBottomButton">
-        <button class="layui-btn" id="confirm">确认</button>
-        <button class="layui-btn layui-btn-warm" id="exit1">取消</button>
-    </div>
+        </div>
+        <div class="s-tabBottomButton">
+            <button class="layui-btn" id="confirm" lay-filter="confirmMod" lay-submit>确认</button>
+            <button class="layui-btn layui-btn-warm" id="exit1">取消</button>
+        </div>
+    </form>
 </div>
 
 <script src="plugins/layui/layui.js"></script>
@@ -135,6 +134,7 @@
 
         // 显示“新增弹窗”
         $('#add').click(function () {
+
             var index = layer.open({
                 type: 1,
                 title: '新增消费类型',
@@ -145,7 +145,8 @@
                 // 关闭当前弹出层
                 layer.close(index);
             });
-            $("#confirmAdd").click(function () {
+            form.on('submit(confirmAdd)', function(data) {
+            //$("#confirmAdd").click(function () {
                 $.post({
                     url: "service/consumeType/addConsumeType",
                     data: JSON.stringify({
