@@ -285,10 +285,10 @@
         // “用卡表格”渲染
         var tableIns = table.render({
             elem: '#useCard',
-            url:'./datas/useCard.json',
+            url: 'service/Archives/getArchivesList?query=',
             height: 'full-291',
             page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
-                layout: [ 'prev', 'page', 'next', 'skip','count'], //自定义分页布局
+                layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
                 limit: 15,
                 //,curr: 5 //设定初始在第 5 页
                 groups: 3, //只显示 1 个连续页码
@@ -296,16 +296,43 @@
                 last: false //不显示尾页
 
             },
+            toolbar: true, //仅开启工具栏，不显示左侧模板
+            // defaultToolbar: ['exports'], //头部工具栏右侧图标
+            defaultToolbar: ['filter', 'print', 'exports'],
             cols: [ [
-                {field:'customer', width:'8%', title: '客户名称'},
-                {field:'vin', width:'15%', title: '车架号'},
-                {field:'licensePlate', width:'10%', title: '车牌号'},
-                {field:'membershipCard', width:'20%', title: '会员卡号'},
-                {field:'membershipGrade', width:'10%', title: '会员级别'},
-                {field:'remark', width:'20%', title: '备注'},
-                {field:'operation', width:'12%', title: '操作', toolbar: '#operation', fixed: 'right'}
+                // {type: 'checkbox'},
+                {field: 'customername', width: 80, title: '客户名称'},
+                {field: 'cGender', width: 56, title: '性别'},
+                {field: 'cBirthday', width: 96, title: '生日'},
+                {field: 'cCard', width: 156, title: '证件号'}, //单元格内容水平居中
+                {field: 'memberNumber', width: 160, title: '会员卡号'},
+                {field: 'membershipGrade', width: 80, title: '会员级别'},
+                {field: 'province', width: 152, title: '省'},
+                {field: 'city', width: 152, title: '市'},
+                {field: 'district', width: 152, title: '区'},
+                {field: 'detailedAddress', width: 302, title: '详细地址'},
+                {field: 'vin', width: 156, title: '车架号'},
+                {field: 'platenumber', width: 88, title: '车牌号'},
+                {field: 'vehiclelabel', width: 82, title: '品牌'},
+                {field: 'vehiclestyle', width: 54, title: '车系'},
+                {field: 'vehiclebrand', width: 210, title: '车型'},
+                {field: 'userId', width: 210, title: 'id',hide:true},
+                {field: 'operation', width: 210, title: '操作', toolbar: '#operation', fixed: 'right'}
             ] ],
-            size: 'sm'
+            size: 'sm',
+            parseData: function (res) {
+                var cGender = ["","男","女"]
+                for (var i = 0; i < res.data.length; i++) {
+                    res.data[i].cGender = cGender[res.data[i].cGender];
+                    if(res.data[i].cBirthday==null)
+                        res.data[i].cBirthday="";
+                    if(res.data[i].cCard==null)
+                        res.data[i].cCard="";
+                    if(res.data[i].phone==null)
+                        res.data[i].phone="";
+                }
+                return res
+            }
         });
         //监听“会员档案表格”工具条
         table.on('tool(useCardTabel)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
