@@ -42,7 +42,7 @@ public class WebController {
         return "coupon";
     }
 
-    @RequestMapping("/ç")
+    @RequestMapping("/consumeType")
     public String consumeType() {
         return "consumeType";
     }
