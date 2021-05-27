@@ -40,29 +40,33 @@
             <div class="kit-side-fold"><i class="fa fa-navicon" aria-hidden="true"></i></div>
             <!-- 左侧导航区域（可配合layui已有的垂直导航）-->
             <ul class="layui-nav layui-nav-tree" lay-filter="kitNavbar" kit-navbar>
+                <dd shiro:hasPermission="microMembership:view">
                 <li class="layui-nav-item layui-nav-itemed">
                     <a class="" href="javascript:;"><i class="fa fa-plug" aria-hidden="true"></i><span> 微会员</span></a>
                     <dl class="layui-nav-child">
-                        <dd>
+                        <dd shiro:hasPermission="microMembership:memberProfile:view">
                             <a href="javascript:;" kit-target data-options="{url:'memberArchives.html',icon:'&#xe658;',title:'会员档案',id:'1'}"><i class="layui-icon">&#xe658;</i><span> 会员档案</span></a>
                         </dd>
                     </dl>
                 </li>
+                </dd>
+                <dd shiro:hasPermission="microMembershipCard:view">
                 <li class="layui-nav-item">
                     <a class="" href="javascript:;"><i class="fa fa-plug" aria-hidden="true"></i><span> 微会员用卡</span></a>
                     <dl class="layui-nav-child">
-                        <dd>
+                        <dd shiro:hasPermission="microMembershipCard:useCard:view">
                             <a href="javascript:;" kit-target data-options="{url:'useCard.html',icon:'&#xe658;',title:'用卡',id:'2'}"><i class="layui-icon">&#xe658;</i><span> 用卡</span></a>
                         </dd>
-                        <dd>
+                        <dd shiro:hasPermission="microMembershipCard:cancelConsume:view">
                             <a href="javascript:;" kit-target data-options="{url:'cancelConsume.html',icon:'&#xe658;',title:'反结算',id:'3'}"><i class="layui-icon">&#xe658;</i><span> 反结算</span></a>
                         </dd>
-                        <dd>
+                        <dd shiro:hasPermission="microMembershipCard:pendingReview:view">
                             <a href="javascript:;" kit-target data-options="{url:'pendingReview.html',icon:'&#xe658;',title:'待审核',id:'4'}"><i class="layui-icon">&#xe658;</i><span> 待审核</span></a>
                         </dd>
                     </dl>
                 </li>
-                <dd shiro:hasPermission="member:customParameters:view">
+                </dd>
+                <dd shiro:hasPermission="member:view">
                 <li class="layui-nav-item">
                     <a class="" href="javascript:;"><i class="fa fa-plug" aria-hidden="true"></i><span> 自定义参数</span></a>
                     <dl class="layui-nav-child">
@@ -96,6 +100,7 @@
                     </dl>
                 </li>
                 </dd>
+                <dd shiro:hasPermission="wechatBackground:view">
                 <li class="layui-nav-item">
                     <a class="" href="javascript:;"><i class="fa fa-plug" aria-hidden="true"></i><span> 微信后台</span></a>
                     <dl class="layui-nav-child">
@@ -113,6 +118,8 @@
                         </dd>
                     </dl>
                 </li>
+                </dd>
+                <dd shiro:hasPermission="mallManagement:view">
                 <li class="layui-nav-item">
                     <a class="" href="javascript:;"><i class="fa fa-plug" aria-hidden="true"></i><span> 商城管理</span></a>
                     <dl class="layui-nav-child">
@@ -133,6 +140,8 @@
                         </dd>
                     </dl>
                 </li>
+                </dd>
+                <dd shiro:hasPermission="reportCenter:view">
                 <li class="layui-nav-item">
                     <a class="" href="javascript:;"><i class="fa fa-plug" aria-hidden="true"></i><span> 报表中心</span></a>
                     <dl class="layui-nav-child">
@@ -156,23 +165,26 @@
                         </dd>
                     </dl>
                 </li>
+                </dd>
+                <dd shiro:hasPermission="systemManagement:view">
                 <li class="layui-nav-item">
                     <a class="" href="javascript:;"><i class="fa fa-plug" aria-hidden="true"></i><span> 系统管理</span></a>
                     <dl class="layui-nav-child">
-                        <dd>
+                        <dd shiro:hasPermission="systemManagement:definitionOfDistributor:view">
                             <a href="javascript:;" kit-target data-options="{url:'card.html',icon:'&#xe658;',title:'经销商定义',id:'29'}"><i class="layui-icon">&#xe658;</i><span> 经销商定义</span></a>
                         </dd>
-                        <dd>
+                        <dd shiro:hasPermission="systemManagement:systemLog:view">
                             <a href="javascript:;" kit-target data-options="{url:'memberArchives1.html',icon:'&#xe658;',title:'系统日志',id:'30'}"><i class="layui-icon">&#xe658;</i><span> 系统日志</span></a>
                         </dd>
-                        <dd>
+                        <dd shiro:hasPermission="systemManagement:authorityManagement:view">
                             <a href="javascript:;" kit-target data-options="{url:'memberArchives1.html',icon:'&#xe658;',title:'权限管理',id:'31'}"><i class="layui-icon">&#xe658;</i><span> 权限管理</span></a>
                         </dd>
-                        <dd>
+                        <dd shiro:hasPermission="systemManagement:userManagement:view">
                             <a href="javascript:;" kit-target data-options="{url:'userManagement.html',icon:'&#xe658;',title:'用户管理',id:'32'}"><i class="layui-icon">&#xe658;</i><span> 用户管理</span></a>
                         </dd>
                     </dl>
                 </li>
+                </dd>
             </ul>
         </div>
     </div>
@@ -183,7 +195,7 @@
     </div>
 
     <!-- 底部固定区域 -->
-    <div class="layui-footer">© 2018 山东贝格新能源科技有限公司 版权所有</div>
+    <div class="layui-footer">© 2021 山东顺合汽车销售有限公司 版权所有</div>
 </div>
 
 <!-- 修改密码弹窗 -->
