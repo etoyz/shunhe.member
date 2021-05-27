@@ -1,8 +1,6 @@
 package com.sh.cloud.web;
 
-import com.sft.member.bean.Coupon;
 import com.sft.member.bean.User;
-import com.sft.member.obtain.coupon.CouponService;
 import com.sft.member.obtain.user.UserService;
 import com.sh.cloud.utils.PlatUserUtils;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +15,7 @@ import java.util.Map;
 public class ArchivesController {
     @Resource
     UserService shUserService;
+
     @PostMapping(value = "addArchives")
     public String addUser(@RequestBody User user) {
         String ret = shUserService.addUser(PlatUserUtils.getCurrentLoginPlatUser(), user);
@@ -25,6 +24,7 @@ public class ArchivesController {
         else
             return ret;
     }
+
     @GetMapping("getArchivesList")
     public Map<String, Object> getArchivesList(@RequestParam String query, @RequestParam int page, @RequestParam int limit) {
         Map<String, Object> ret = new HashMap<>();
@@ -39,6 +39,7 @@ public class ArchivesController {
 
         return ret;
     }
+
     @PostMapping("deleteArchives")
     public String deleteArchives(@RequestParam String userId) {
         User c = new User();
@@ -48,19 +49,18 @@ public class ArchivesController {
         else
             return "删除失败！";
     }
+
     @PostMapping(value = "editArchives")
     public String editArchives(@RequestBody User user) {
-     shUserService.editUser(PlatUserUtils.getCurrentLoginPlatUser(), user);
+        shUserService.editUser(PlatUserUtils.getCurrentLoginPlatUser(), user);
         return "修改成功！";
     }
-    @PostMapping(value = "requireUser")
-    public Map<String, Object> requireUser(@RequestParam String userId) {
-        Map<String, Object> ret1 = new HashMap<>();
+
+    @PostMapping(value = "getUserInfo")
+    public User requireUser(@RequestParam String userId) {
         User c = new User();
         c.userId = userId;
-        User data = shUserService.getUser(c);
-        ret1.put("data", data);
-        return ret1;
+        return shUserService.getUser(c);
     }
 }
 

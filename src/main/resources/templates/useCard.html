@@ -27,25 +27,29 @@
                         <div class="layui-inline s-layuiInline">
                             <label class="layui-form-label">车牌号</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="carNumber" autocomplete="off" class="layui-input" placeholder="请输入车牌号">
+                                <input type="text" name="carNumber" autocomplete="off" class="layui-input"
+                                       placeholder="请输入车牌号">
                             </div>
                         </div>
                         <div class="layui-inline s-layuiInline">
                             <label class="layui-form-label">车架号</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="chassisNumber" autocomplete="off" class="layui-input" placeholder="请输入车架号">
+                                <input type="text" name="chassisNumber" autocomplete="off" class="layui-input"
+                                       placeholder="请输入车架号">
                             </div>
                         </div>
                         <div class="layui-inline s-layuiInline">
                             <label class="layui-form-label">客户名称</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="customerName" autocomplete="off" class="layui-input" placeholder="请输入客户名称">
+                                <input type="text" name="customerName" autocomplete="off" class="layui-input"
+                                       placeholder="请输入客户名称">
                             </div>
                         </div>
                         <div class="layui-inline s-layuiInline">
                             <label class="layui-form-label">会员卡号</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="membership" autocomplete="off" class="layui-input" placeholder="请输入会员卡号">
+                                <input type="text" name="membership" autocomplete="off" class="layui-input"
+                                       placeholder="请输入会员卡号">
                             </div>
                         </div>
 
@@ -82,7 +86,7 @@
             <div class="layui-inline">
                 <label class="layui-form-label">车牌号</label>
                 <div class="layui-input-inline">
-                    <input disabled type="text" name="licensePlate" id="licensePlate" autocomplete="off"
+                    <input disabled type="text" id="licensePlate" autocomplete="off"
                            class="layui-input">
                 </div>
             </div>
@@ -98,21 +102,21 @@
             <div class="layui-inline">
                 <label class="layui-form-label">客户姓名</label>
                 <div class="layui-input-inline">
-                    <input disabled type="text" name="customerName" autocomplete="off"
+                    <input disabled type="text" id="customerName" autocomplete="off"
                            class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">会员卡号</label>
                 <div class="layui-input-inline">
-                    <input disabled type="text" name="customerCardID" autocomplete="off"
+                    <input disabled type="text" id="memberNumber" autocomplete="off"
                            class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">会员级别</label>
                 <div class="layui-input-inline">
-                    <input disabled type="text" name="customerLevel" autocomplete="off"
+                    <input disabled type="text" id="customerLevel" autocomplete="off"
                            class="layui-input">
                 </div>
             </div>
@@ -269,7 +273,7 @@
 
 <script src="plugins/layui/layui.js"></script>
 <script>
-    layui.use(['form','laydate','table','layer','element'], function() {
+    layui.use(['form', 'laydate', 'table', 'layer', 'element'], function () {
         var $ = layui.jquery,
             form = layui.form,
             laydate = layui.laydate,
@@ -316,40 +320,57 @@
                 {field: 'vehiclelabel', width: 82, title: '品牌'},
                 {field: 'vehiclestyle', width: 54, title: '车系'},
                 {field: 'vehiclebrand', width: 210, title: '车型'},
-                {field: 'userId', width: 210, title: 'id',hide:true},
+                {field: 'userId', width: 210, title: 'id', hide: true},
                 {field: 'operation', width: 210, title: '操作', toolbar: '#operation', fixed: 'right'}
             ] ],
             size: 'sm',
             parseData: function (res) {
-                var cGender = ["","男","女"]
+                console.log(res)
+                var cGender = ["", "男", "女"]
                 for (var i = 0; i < res.data.length; i++) {
                     res.data[i].cGender = cGender[res.data[i].cGender];
-                    if(res.data[i].cBirthday==null)
-                        res.data[i].cBirthday="";
-                    if(res.data[i].cCard==null)
-                        res.data[i].cCard="";
-                    if(res.data[i].phone==null)
-                        res.data[i].phone="";
+                    if (res.data[i].cBirthday == null)
+                        res.data[i].cBirthday = "";
+                    if (res.data[i].cCard == null)
+                        res.data[i].cCard = "";
+                    if (res.data[i].phone == null)
+                        res.data[i].phone = "";
+                    res.data[i]['vin'] = res.data[i].vehicle.vin;
                 }
+                console.log(res)
                 return res
             }
         });
         //监听“会员档案表格”工具条
-        table.on('tool(useCardTabel)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+        table.on('tool(useCardTabel)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
             var data = obj.data; //获得当前行数据
             // var page = data.page;
             // var limit = data.limit;
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
             var tr = obj.tr; //获得当前行 tr 的DOM对象
             var customer = data.customer;
-            if(layEvent === 'use'){ // 用卡
+            if (layEvent === 'use') { // 用卡
+                $.post({
+                    url: "service/Archives/getUserInfo",
+                    data: {
+                        userId: data.userId
+                    },
+                    success: function (res) {
+                        console.log(res)
+                        $("#licensePlate").val(res.vehicle.platenumber);
+                        $("#vin").val(res.vehicle.vin);
+                        $("#customerName").val(res.customername);
+                        $("#memberNumber").val(res.memberNumber);
+                        $("#customerLevel").val(res.member.level);
+                    }
+                })
                 var index1 = layer.open({
                     type: 1,
                     title: '用卡',
                     content: $('#useWindow'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
                     area: ['100%', '100%']
                 });
-                $('#exit1').on('click',function () {
+                $('#exit1').on('click', function () {
                     // 关闭当前弹出层
                     layer.close(index1);
                 });
@@ -359,18 +380,18 @@
         // "会员信息表格"渲染
         var tableIns1 = table.render({
             elem: '#memberInfo',
-            url:'./datas/memberInfo.json',
+            url: './datas/memberInfo.json',
             height: 288,
             cols: [ [
-                {type:'numbers'},
-                {field:'cardName', width:124, title: '卡券名称'},
-                {field:'cardType', width:82, title: '卡券类型'},
-                {field:'quantity', width:80, title: '购买数量'},
-                {field:'usageQuantity', width:80, title: '使用数量'}, //单元格内容水平居中
-                {field:'remainingQuantity', width:80, title: '剩余数量'},
-                {field:'effectiveDate', width:146, title: '生效日期'},
-                {field:'expiryDate', width:146, title: '失效日期'},
-                {field:'projectName', width:88, title: '项目名称'}
+                {type: 'numbers'},
+                {field: 'cardName', width: 124, title: '卡券名称'},
+                {field: 'cardType', width: 82, title: '卡券类型'},
+                {field: 'quantity', width: 80, title: '购买数量'},
+                {field: 'usageQuantity', width: 80, title: '使用数量'}, //单元格内容水平居中
+                {field: 'remainingQuantity', width: 80, title: '剩余数量'},
+                {field: 'effectiveDate', width: 146, title: '生效日期'},
+                {field: 'expiryDate', width: 146, title: '失效日期'},
+                {field: 'projectName', width: 88, title: '项目名称'}
             ] ],
             size: 'sm'
         });
