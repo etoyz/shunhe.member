@@ -1,6 +1,7 @@
 package com.sh.cloud.web;
 
 import com.sft.member.bean.ConsumeProject;
+import com.sft.member.bean.ConsumeType;
 import com.sft.member.bean.Coupon;
 import com.sft.member.obtain.consume.ConsumeProjectService;
 import com.sh.cloud.utils.PlatUserUtils;
@@ -27,9 +28,11 @@ public class ConsumeProjectController {
 
         ConsumeProject consumeProject = new ConsumeProject();
         consumeProject.name = query;
-        consumeProject.consumeTypeName = consumeType;
-        List<ConsumeProject> data = consumeProjectService.getConsumeProjectList(consumeProject, page, limit);
-        ret.put("data", data);
+        ConsumeType consumeType1 = new ConsumeType();
+        consumeType1.name = consumeType;
+        List<ConsumeProject> dataByConsumeType = consumeProjectService.getConsumeProjectByConsumeType(consumeType1);
+        List<ConsumeProject> dataByQuery = consumeProjectService.getConsumeProjectList(consumeProject, page, limit);
+        ret.put("data", dataByQuery);
         ret.put("count", consumeProjectService.getConsumeProjectListCount(consumeProject));
         return ret;
     }
