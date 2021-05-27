@@ -32,7 +32,7 @@
                         </div>
                         <div class="layui-inline s-layuiInline">
                             <button id="queryBtn" class="layui-btn layui-btn-warm">查询</button>
-                            <span class="layui-btn layui-btn-normal" id="add">新增</span>
+                            <span class="layui-btn layui-btn-normal" id="add">新增会员</span>
                         </div>
 
                     </div>
@@ -954,10 +954,7 @@
             elem: '#cBirthday'
         });
         laydate.render({
-            elem: '#focusTime'
-        });
-        laydate.render({
-            elem: '#unFocusTime'
+            elem: '#cBirthdayM'
         });
         laydate.render({
             elem: '#bindTime'
@@ -1022,12 +1019,13 @@
                 var cGender = ["","男","女"]
                 for (var i = 0; i < res.data.length; i++) {
                     res.data[i].cGender = cGender[res.data[i].cGender];
-                    if(res.data[i].cBirthday==null)
-                        res.data[i].cBirthday="";
-                    if(res.data[i].cCard==null)
-                        res.data[i].cCard="";
-                    if(res.data[i].phone==null)
-                        res.data[i].phone="";
+                    res.data[i].vin=res.data[i].vehicle.vin;
+                    // if(res.data[i].cBirthday==null)
+                    //     res.data[i].cBirthday="";
+                    // if(res.data[i].cCard==null)
+                    //     res.data[i].cCard="";
+                    // if(res.data[i].phone==null)
+                    //     res.data[i].phone="";
                 }
                 return res
             }
@@ -1108,7 +1106,7 @@
                     layer.close(index2);
                 });
             } else if (layEvent === 'delete') { // 删除
-                layer.confirm('确定要删除[' + customer + ']吗？', {icon: 3, title: '提示'}, function (index) {
+                layer.confirm('确定要删除吗？', {icon: 3, title: '提示'}, function (index) {
                     // 删除对应行（tr）的DOM结构，并更新缓存
 
                     layer.close(index);
