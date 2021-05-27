@@ -125,14 +125,16 @@
             <div class="layui-inline">
                 <label class="layui-form-label">消费类型</label>
                 <div class="layui-input-inline">
-                    <select name="consumeType" id="consumeType" autocomplete="off">
+                    <select type="text" id="consumeTypeInput" lay-filter="consumeTypeInput" autocomplete="off" class="layui-input">
+                        <option>正在拉取...</option>
                     </select>
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">消费项目</label>
                 <div class="layui-input-inline">
-                    <select name="consumeProject" id="consumeProject" autocomplete="off">
+                    <select type="text" id="consumeProjectInput" autocomplete="off" class="layui-input">
+                        <option>正在拉取...</option>
                     </select>
                 </div>
             </div>
@@ -286,6 +288,53 @@
             elem: '#date'
         });
 
+        function pullConsumeTypes(selector, callback) {
+            var selectE = $(selector);
+            $.post({
+                url: "service/consumeType/getConsumeTypeList?query=&page=1&limit=9999",
+                timeout: 1000,
+                dataType: "json",
+                success: function (res) {
+                    res = res.data;
+                    selectE.empty();
+                    for (var s of res) {
+                        selectE.append("<option value='" + s.name + "'>" + s.name + "</option>");
+                    }
+                    callback();
+                    form.render(); //layui的form重新渲染
+                },
+                error: function () {
+                    selectE.empty();
+                    selectE.append("<option>拉取失败，请刷新！</option>");
+                    form.render();
+                }
+            })
+        }
+
+        function pullConsumeItems(selector, consumeType, callback) {
+            var selectE2 = $(selector);
+            $.post({
+                url: "service/consumeProject/getConsumeProjectList?query=&consumeType=" + consumeType + "&page=1&limit=9999",
+                timeout: 1000,
+                dataType: "json",
+                success: function (res) {
+                    res = res.data;
+                    selectE2.empty();
+                    for (var s of res) {
+                        selectE2.append("<option value='" + s.name + "'>" + s.name + "</option>");
+                        console.log(s.name)
+                    }
+                    callback();
+                    form.render(); //layui的form重新渲染
+                },
+                error: function () {
+                    selectE2.empty();
+                    selectE2.append("<option>拉取失败，请刷新！</option>");
+                    form.render();
+                }
+            })
+        }
+
         // “用卡表格”渲染
         var tableIns = table.render({
             elem: '#useCard',
@@ -362,6 +411,11 @@
                         $("#customerName").val(res.customername);
                         $("#memberNumber").val(res.memberNumber);
                         $("#customerLevel").val(res.member.level);
+
+                        pullConsumeTypes("#consumeTypeInput", () => {
+                            pullConsumeItems("#consumeProjectInput", $("#consumeTypeInput").val(), () => {
+                            })
+                        })
                     }
                 })
                 var index1 = layer.open({
@@ -369,6 +423,11 @@
                     title: '用卡',
                     content: $('#useWindow'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
                     area: ['100%', '100%']
+                });
+                form.on('select(consumeTypeInput)', function (data) {
+                    //要触发的事件
+                    pullConsumeItems("#consumeProjectInput", $("#consumeTypeInput").val(), () => {
+                    })
                 });
                 $('#exit1').on('click', function () {
                     // 关闭当前弹出层

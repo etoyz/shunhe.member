@@ -186,9 +186,7 @@
                 </form>
             </div>
             <div class="layui-tab-item">
-                <form class="layui-form" action="">
-                    asd
-                </form>
+                <table class="layui-hide" id="speProj"></table>
             </div>
             <div class="layui-tab-item">
                 <div class="s-commonTable">
@@ -337,6 +335,33 @@
             ] ],
             size: 'sm'
         });
+
+        var tableSpe = table.render({
+            elem: '#speProj',
+            url: 'service/consumeProject/getConsumeProjectList?query=&consumeType=',
+            page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
+                limit: 15,
+                groups: 3, //只显示 1 个连续页码
+                first: false, //不显示首页
+                last: false //不显示尾页
+            },
+            toolbar: true, //仅开启工具栏，不显示左侧模板
+            // defaultToolbar: ['exports'], //头部工具栏右侧图标
+            defaultToolbar: ['filter', 'print', 'exports'],
+            cols: [ [
+                // {type: 'checkbox'},
+                {field: 'name', width: 140, title: '消费类型'},
+                // {field: 'indexID', width: 80, title: '顺序号'},
+                {field: 'createId', width: 100, title: '创建人'},
+                {field: 'createTime', width: 150, title: '创建时间'},
+                {field: 'lastEditId', width: 100, title: '最后编辑人'},
+                {field: 'lastEditTime', width: 150, title: '最后编辑时间'},
+                {field: 'operation', width: 110, title: '操作', toolbar: '#operation', fixed: 'right'}
+            ] ],
+            size: 'sm'
+        });
+
         $("#queryBtn").click(function () {
             tableIns.reload({
                 url: 'service/consumeProject/getConsumeProjectList?query=' + $("#consumeProjInput").val() + '&consumeType=' + $("#consumeTypeInput").val(),
