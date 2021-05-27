@@ -16,6 +16,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("service/coupon")
+@RequiresPermissions("member:coupon:view")
 public class CouponController {
 
     @Resource
@@ -73,7 +74,7 @@ public class CouponController {
     }
 
     @GetMapping("getCouponList")
-    @RequiresPermissions("member:coupon:view")
+    //@RequiresPermissions("member:coupon:view")
     public Map<String, Object> getCouponList(@RequestParam String query, @RequestParam int page, @RequestParam int limit) {
         Map<String, Object> ret = new HashMap<>();
         ret.put("code", 0);

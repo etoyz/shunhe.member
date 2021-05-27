@@ -3,6 +3,7 @@ package com.sh.cloud.web;
 import com.sft.member.bean.ConsumeType;
 import com.sft.member.obtain.consume.ConsumeTypeService;
 import com.sh.cloud.utils.PlatUserUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("service/consumeType")
+@RequiresPermissions("member:consumeType:view")
 public class ConsumeTypeController {
     @Resource
     ConsumeTypeService consumeTypeService;

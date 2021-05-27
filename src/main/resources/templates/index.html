@@ -62,38 +62,40 @@
                         </dd>
                     </dl>
                 </li>
+                <dd shiro:hasPermission="member:customParameters:view">
                 <li class="layui-nav-item">
                     <a class="" href="javascript:;"><i class="fa fa-plug" aria-hidden="true"></i><span> 自定义参数</span></a>
                     <dl class="layui-nav-child">
                         <dd shiro:hasPermission="member:coupon:view">
                             <a href="javascript:;" kit-target data-options="{url:'coupon.html',icon:'&#xe658;',title:'卡券',id:'5'}"><i class="layui-icon">&#xe658;</i><span> 卡券</span></a>
                         </dd>
-                        <dd>
+                        <dd shiro:hasPermission="member:consumeType:view">
                             <a href="javascript:;" kit-target data-options="{url:'consumeType.html',icon:'&#xe658;',title:'消费类型',id:'6'}"><i class="layui-icon">&#xe658;</i><span> 消费类型</span></a>
                         </dd>
-                        <dd>
+                        <dd shiro:hasPermission="member:consumeItem:view">
                             <a href="javascript:;" kit-target data-options="{url:'consumeItem.html',icon:'&#xe658;',title:'消费项目',id:'7'}"><i class="layui-icon">&#xe658;</i><span> 消费项目</span></a>
                         </dd>
-                        <dd>
+                        <dd shiro:hasPermission="member:brand:view">
                             <a href="javascript:;" kit-target data-options="{url:'brand.html',icon:'&#xe658;',title:'品牌',id:'8'}"><i class="layui-icon">&#xe658;</i><span> 品牌</span></a>
                         </dd>
-                        <dd>
+                        <dd shiro:hasPermission="member:carSeries:view">
                             <a href="javascript:;" kit-target data-options="{url:'carSeries.html',icon:'&#xe658;',title:'车系',id:'9'}"><i class="layui-icon">&#xe658;</i><span> 车系</span></a>
                         </dd>
-                        <dd>
+                        <dd shiro:hasPermission="member:model:view">
                             <a href="javascript:;" kit-target data-options="{url:'model.html',icon:'&#xe658;',title:'车型',id:'10'}"><i class="layui-icon">&#xe658;</i><span> 车型</span></a>
                         </dd>
-                        <dd>
+                        <dd shiro:hasPermission="member:insuranceCompany:view">
                             <a href="javascript:;" kit-target data-options="{url:'insuranceCompany.html',icon:'&#xe658;',title:'保险公司',id:'11'}"><i class="layui-icon">&#xe658;</i><span> 保险公司</span></a>
                         </dd>
-                        <dd>
+                        <dd shiro:hasPermission="member:typeOfInsurance:view">
                             <a href="javascript:;" kit-target data-options="{url:'typeOfInsurance.html',icon:'&#xe658;',title:'险种',id:'12'}"><i class="layui-icon">&#xe658;</i><span> 险种</span></a>
                         </dd>
-                        <dd>
+                        <dd shiro:hasPermission="member:membershipLevel:view">
                             <a href="javascript:;" kit-target data-options="{url:'membershipLevel.html',icon:'&#xe658;',title:'会员级别',id:'13'}"><i class="layui-icon">&#xe658;</i><span> 会员级别</span></a>
                         </dd>
                     </dl>
                 </li>
+                </dd>
                 <li class="layui-nav-item">
                     <a class="" href="javascript:;"><i class="fa fa-plug" aria-hidden="true"></i><span> 微信后台</span></a>
                     <dl class="layui-nav-child">

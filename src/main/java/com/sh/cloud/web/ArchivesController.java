@@ -5,6 +5,7 @@ import com.sft.member.bean.User;
 import com.sft.member.obtain.coupon.CouponService;
 import com.sft.member.obtain.user.UserService;
 import com.sh.cloud.utils.PlatUserUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -14,6 +15,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("service/Archives")
+//@RequiresPermissions("member:Archives:view")
 public class ArchivesController {
     @Resource
     UserService shUserService;

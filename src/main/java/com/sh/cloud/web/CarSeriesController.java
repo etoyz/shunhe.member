@@ -1,12 +1,14 @@
 package com.sh.cloud.web;
 
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
 @RestController
 @RequestMapping("service/carSeries")
+@RequiresPermissions("member:carSeries:view")
 public class CarSeriesController {
 
     @RequestMapping("deleteCarSeries")
