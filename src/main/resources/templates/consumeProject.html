@@ -186,6 +186,9 @@
                 </form>
             </div>
             <div class="layui-tab-item">
+                <div class="layui-inline s-layuiInline">
+                    <span class="layui-btn layui-btn-normal" id="addSpeProj">新增具体项目</span>
+                </div>
                 <table class="layui-hide" id="speProj"></table>
             </div>
             <div class="layui-tab-item">
@@ -197,8 +200,75 @@
     </div>
     <div class="s-tabBottomButton">
         <button class="layui-btn" id="confirmAdd">新增</button>
-        <button class="layui-btn layui-btn-warm" id="exit">取消</button>
+        <button class="layui-btn layui-btn-warm" id="cancelAdd">取消</button>
     </div>
+</div>
+
+<!-- 新增具体项目弹窗 -->
+<div class="s-details" id="addSpeWindow">
+    <form class="layui-form" action="">
+        <div>
+            <div class="layui-form-item s-formItem1">
+                <div class="layui-inline">
+                    <label class="layui-form-label">项目名称</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="speProjName"
+                               autocomplete="off" class="layui-input" lay-verify="required">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item s-formItem1">
+                <div class="layui-inline">
+                    <label class="layui-form-label">备注</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="speProjRemark"
+                               autocomplete="off" class="layui-input" lay-verify="required">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item s-formItem1">
+                <div class="layui-inline">
+                    <label class="layui-form-label">对应卡券</label>
+                    <div class="layui-input-inline">
+                        <select type="text" id="speProjCoupon" name="type" autocomplete="off" class="layui-input">
+                            <option id="selectHead">正在拉取...</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item s-formItem1">
+                <div class="layui-inline">
+                    <label class="layui-form-label">数量</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="speProjCount"
+                               autocomplete="off" class="layui-input" lay-verify="required|number">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item s-formItem1">
+                <div class="layui-inline">
+                    <label class="layui-form-label">有效期(天)</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="speProjExpire" id="costPrice"
+                               autocomplete="off" class="layui-input" lay-verify="required|number">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item s-formItem1">
+                <div class="layui-inline">
+                    <label class="layui-form-label">多少天后开始</label>
+                    <div class="layui-input-inline">
+                        <input type="number" name="orderID" id="orderID"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="s-tabBottomButton">
+            <button type="button" class="layui-btn" id="confirmAddSpe" lay-submit>新增</button>
+            <button type="button" class="layui-btn layui-btn-warm" id="cancelAddSpe">取消</button>
+        </div>
+    </form>
 </div>
 
 <!-- 编辑弹窗 -->
@@ -227,7 +297,7 @@
     </div>
     <div class="s-tabBottomButton">
         <button class="layui-btn" id="confirm">确认</button>
-        <button class="layui-btn layui-btn-warm" id="exit1">取消</button>
+        <button class="layui-btn layui-btn-warm" id="cancelEdit">取消</button>
     </div>
 </div>
 
@@ -258,7 +328,7 @@
         function pullConsumeTypes(selector, callback) {
             var selectE = $(selector);
             $.post({
-                url: "service/consumeType/getConsumeTypeList?query=&page=1&limit=9999",
+                url: "service/consumeType/getConsumeTypeList?query=&page=1&limit=2147483640",
                 timeout: 1000,
                 dataType: "json",
                 success: function (res) {
@@ -291,8 +361,53 @@
                 content: $('#addWindow'),
                 area: ['1020px', '370px'],
             });
-            $('#exit').on('click', function () {
-                // 关闭当前弹出层
+            var speProjData = [];
+            var tableSpe = table.render({
+                elem: '#speProj',
+                data: speProjData,
+                page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                    layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
+                    limit: 15,
+                    groups: 3, //只显示 1 个连续页码
+                    first: false, //不显示首页
+                    last: false //不显示尾页
+                },
+                cols: [ [
+                    // {type: 'checkbox'},
+                    {field: 'name', width: 140, title: '项目名称'},
+                    {field: 'couponName', width: 100, title: '对应卡券'},
+                    {field: 'count', width: 150, title: '数量'},
+                    {field: 'indateValue', width: 100, title: '有效天数'},
+                    {field: 'startIntervalDateValue', width: 150, title: '多少天后开始'},
+                    {field: 'remark', width: 150, title: '备注'},
+                    {field: 'operation', width: 110, title: '操作', toolbar: '#operation', fixed: 'right'}
+                ] ],
+                size: 'sm'
+            });
+            function pullCoupon(selector, callback) {
+                var selectE = $(selector);
+                $.get({
+                    url: "service/coupon/getCouponList?query=&page=0&limit=2147483640",
+                    timeout: 1000,
+                    dataType: "json",
+                    success: function (res) {
+                        res = res.data;
+                        selectE.empty();
+                        for (var s of res) {
+                            selectE.append("<option value='" + s.name + "'>" + s.name + "</option>");
+                        }
+                        callback();
+                        form.render(); //layui的form重新渲染
+                    },
+                    error: function () {
+                        selectE.empty();
+                        selectE.append("<option>拉取失败，请刷新！</option>");
+                        form.render();
+                    }
+                })
+            }
+            pullCoupon("#speProjCoupon",() => {})
+            $('#cancelAdd').on('click', function () {
                 layer.close(index);
             });
             $("#confirmAdd").click(function () {
@@ -309,35 +424,22 @@
             })
         });
 
-        // “会员档案表格”渲染
+        $('body').on('click', '#addSpeProj', function () {
+            var addSpeWind = layer.open({
+                type: 1,
+                title: '新增具体项目',
+                content: $('#addSpeWindow'),
+                area: ['400px', '500px'],
+            });
+            $('#cancelAddSpe').on('click', function () {
+                // 关闭当前弹出层
+                layer.close(addSpeWind);
+            });
+        })
+
+        // “消费项目表格”渲染
         var tableIns = table.render({
             elem: '#consumeProj',
-            url: 'service/consumeProject/getConsumeProjectList?query=&consumeType=',
-            page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
-                layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
-                limit: 15,
-                groups: 3, //只显示 1 个连续页码
-                first: false, //不显示首页
-                last: false //不显示尾页
-            },
-            toolbar: true, //仅开启工具栏，不显示左侧模板
-            // defaultToolbar: ['exports'], //头部工具栏右侧图标
-            defaultToolbar: ['filter', 'print', 'exports'],
-            cols: [ [
-                // {type: 'checkbox'},
-                {field: 'name', width: 140, title: '消费类型'},
-                // {field: 'indexID', width: 80, title: '顺序号'},
-                {field: 'createId', width: 100, title: '创建人'},
-                {field: 'createTime', width: 150, title: '创建时间'},
-                {field: 'lastEditId', width: 100, title: '最后编辑人'},
-                {field: 'lastEditTime', width: 150, title: '最后编辑时间'},
-                {field: 'operation', width: 110, title: '操作', toolbar: '#operation', fixed: 'right'}
-            ] ],
-            size: 'sm'
-        });
-
-        var tableSpe = table.render({
-            elem: '#speProj',
             url: 'service/consumeProject/getConsumeProjectList?query=&consumeType=',
             page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                 layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局

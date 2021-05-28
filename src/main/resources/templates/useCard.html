@@ -291,7 +291,7 @@
         function pullConsumeTypes(selector, callback) {
             var selectE = $(selector);
             $.post({
-                url: "service/consumeType/getConsumeTypeList?query=&page=1&limit=9999",
+                url: "service/consumeType/getConsumeTypeList?query=&page=1&limit=2147483640",
                 timeout: 1000,
                 dataType: "json",
                 success: function (res) {
@@ -314,7 +314,7 @@
         function pullConsumeItems(selector, consumeType, callback) {
             var selectE2 = $(selector);
             $.post({
-                url: "service/consumeProject/getConsumeProjectList?query=&consumeType=" + consumeType + "&page=1&limit=9999",
+                url: "service/consumeProject/getConsumeProjectList?query=&consumeType=" + consumeType + "&page=1&limit=2147483640",
                 timeout: 1000,
                 dataType: "json",
                 success: function (res) {
