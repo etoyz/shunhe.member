@@ -77,7 +77,7 @@
                             </div>
                         </div>
                         <div class="layui-inline">
-                            <label class="layui-form-label"><i>*</i>项目类型</label>
+                            <label class="layui-form-label"><i>*</i>消费类型</label>
                             <div class="layui-input-inline">
                                 <select type="text" id="consumeTypeInputAdd" lay-verify="required" autocomplete="off"
                                         class="layui-input">
@@ -193,7 +193,7 @@
             </div>
             <div class="layui-tab-item">
                 <div class="s-commonTable">
-                    <table id="consumeCoupon"></table>
+                    <table id="relTable"></table>
                 </div>
             </div>
         </div>
@@ -249,7 +249,7 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">有效期(天)</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="speProjExpire" id="costPrice"
+                        <input type="text" id="speProjExpire"
                                autocomplete="off" class="layui-input" lay-verify="required|number">
                     </div>
                 </div>
@@ -258,7 +258,7 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">多少天后开始</label>
                     <div class="layui-input-inline">
-                        <input type="number" name="orderID" id="orderID"
+                        <input type="number" id="speProjStartIntervalDateValue"
                                autocomplete="off" class="layui-input">
                     </div>
                 </div>
@@ -350,92 +350,129 @@
 
         pullConsumeTypes("#consumeTypeInput", () => {
         });
-        pullConsumeTypes("#consumeTypeInputAdd", () => {
-        })
 
         // 显示“新增弹窗”
         $('body').on('click', '#add', function () {
-            var index = layer.open({
-                type: 1,
-                title: '新增消费项目',
-                content: $('#addWindow'),
-                area: ['1020px', '370px'],
-            });
-            var speProjData = [];
-            var tableSpe = table.render({
-                elem: '#speProj',
-                data: speProjData,
-                page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
-                    layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
-                    limit: 15,
-                    groups: 3, //只显示 1 个连续页码
-                    first: false, //不显示首页
-                    last: false //不显示尾页
-                },
-                cols: [ [
-                    // {type: 'checkbox'},
-                    {field: 'name', width: 140, title: '项目名称'},
-                    {field: 'couponName', width: 100, title: '对应卡券'},
-                    {field: 'count', width: 150, title: '数量'},
-                    {field: 'indateValue', width: 100, title: '有效天数'},
-                    {field: 'startIntervalDateValue', width: 150, title: '多少天后开始'},
-                    {field: 'remark', width: 150, title: '备注'},
-                    {field: 'operation', width: 110, title: '操作', toolbar: '#operation', fixed: 'right'}
-                ] ],
-                size: 'sm'
-            });
-            function pullCoupon(selector, callback) {
-                var selectE = $(selector);
-                $.get({
-                    url: "service/coupon/getCouponList?query=&page=0&limit=2147483640",
-                    timeout: 1000,
-                    dataType: "json",
-                    success: function (res) {
-                        res = res.data;
-                        selectE.empty();
-                        for (var s of res) {
-                            selectE.append("<option value='" + s.name + "'>" + s.name + "</option>");
+            {
+                var index = layer.open({
+                    type: 1,
+                    title: '新增消费项目',
+                    content: $('#addWindow'),
+                    area: ['1020px', '700px'],
+                });
+                $('#cancelAdd').on('click', function () {
+                    layer.close(index);
+                });
+                $("#confirmAdd").click(function () {
+                    $.post({
+                        url: "service/consumeProject/addConsumeProject",
+                        data: JSON.stringify({
+                            name: $("#consumeProjectName").val()
+                        }),
+                        contentType: "application/json",
+                        success: function (res) {
+                            layuiAlert("结果" + res)
                         }
-                        callback();
-                        form.render(); //layui的form重新渲染
-                    },
-                    error: function () {
-                        selectE.empty();
-                        selectE.append("<option>拉取失败，请刷新！</option>");
-                        form.render();
-                    }
+                    })
                 })
             }
-            pullCoupon("#speProjCoupon",() => {})
-            $('#cancelAdd').on('click', function () {
-                layer.close(index);
-            });
-            $("#confirmAdd").click(function () {
-                $.post({
-                    url: "service/consumeProject/addConsumeProject",
-                    data: JSON.stringify({
-                        name: $("#consumeProjectName").val()
-                    }),
-                    contentType: "application/json",
-                    success: function (res) {
-                        layuiAlert("结果" + res)
-                    }
+            {
+                pullConsumeTypes("#consumeTypeInputAdd", () => {
                 })
-            })
-        });
+            }
+            {
+                var speProjData = [];
+                var tableSpe = table.render({
+                    elem: '#speProj',
+                    data: speProjData,
+                    page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                        layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
+                        limit: 15,
+                        groups: 3, //只显示 1 个连续页码
+                        first: false, //不显示首页
+                        last: false //不显示尾页
+                    },
+                    cols: [ [
+                        // {type: 'checkbox'},
+                        {field: 'name', width: 140, title: '项目名称'},
+                        {field: 'couponName', width: 100, title: '对应卡券'},
+                        {field: 'count', width: 150, title: '数量'},
+                        {field: 'indateValue', width: 100, title: '有效天数'},
+                        {field: 'startIntervalDateValue', width: 150, title: '多少天后开始'},
+                        {field: 'remark', width: 150, title: '备注'},
+                        {field: 'operation', width: 110, title: '操作', toolbar: '#operation', fixed: 'right'}
+                    ] ],
+                    size: 'sm'
+                });
+                // 显示“新增具体项目弹窗”
+                $('body').on('click', '#addSpeProj', function () {
+                    var addSpeWind = layer.open({
+                        type: 1,
+                        title: '新增具体项目',
+                        content: $('#addSpeWindow'),
+                        area: ['400px', '500px'],
+                    });
+                    $('#cancelAddSpe').on('click', function () {
+                        // 关闭当前弹出层
+                        layer.close(addSpeWind);
+                    });
+                    $('#confirmAddSpe').click(function () {
+                        speProjData.push({
+                            'name': $('#speProjName').val(),
+                            'couponName': $("#speProjCoupon").val(),
+                            'count': $("#speProjCount").val(),
+                            'remark': $("#speProjRemark").val(),
+                            'startIntervalDateValue': $("#speProjStartIntervalDateValue").val(),
+                            'indateValue': $("#speProjExpire").val()
+                        })
+                        tableSpe.reload({
+                            data: speProjData
+                        })
+                        layer.close(addSpeWind);
+                    })
+                })
 
-        $('body').on('click', '#addSpeProj', function () {
-            var addSpeWind = layer.open({
-                type: 1,
-                title: '新增具体项目',
-                content: $('#addSpeWindow'),
-                area: ['400px', '500px'],
-            });
-            $('#cancelAddSpe').on('click', function () {
-                // 关闭当前弹出层
-                layer.close(addSpeWind);
-            });
-        })
+                function pullCoupon(selector, callback) {
+                    var selectE = $(selector);
+                    $.get({
+                        url: "service/coupon/getCouponList?query=&page=0&limit=2147483640",
+                        timeout: 1000,
+                        dataType: "json",
+                        success: function (res) {
+                            res = res.data;
+                            selectE.empty();
+                            for (var s of res) {
+                                selectE.append("<option value='" + s.name + "'>" + s.name + "</option>");
+                            }
+                            callback();
+                            form.render(); //layui的form重新渲染
+                        },
+                        error: function () {
+                            selectE.empty();
+                            selectE.append("<option>拉取失败，请刷新！</option>");
+                            form.render();
+                        }
+                    })
+                }
+
+                pullCoupon("#speProjCoupon", () => {
+                })
+            }
+            {
+                var relTable = table.render({
+                    id: "relTable",
+                    elem: "#relTable",
+                    height: 450,
+                    width: 500,
+                    page: false,
+                    url: "service/coupon/getCouponList?query=",
+                    cols: [ [
+                        {type: 'checkbox', width: 70},
+                        {field: 'name', width: 420, title: '消费卡券'},
+                    ] ]
+                })
+            }
+        });
 
         // “消费项目表格”渲染
         var tableIns = table.render({
