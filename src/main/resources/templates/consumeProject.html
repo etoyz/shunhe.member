@@ -71,16 +71,18 @@
                     <div>
                         <div class="layui-form-item s-formItem1">
                             <div class="layui-inline">
-                                <label class="layui-form-label"><i>*</i>项目名称</label>
+                                <label class="layui-form-label">项目名称</label>
                                 <div class="layui-input-inline">
-                                    <input type="text" name="consumeProjectName" id="consumeProjectName" lay-verify="required" autocomplete="off"
+                                    <input type="text" name="name" id="consumeProjectName" lay-verify="required"
+                                           autocomplete="off"
                                            class="layui-input">
                                 </div>
                             </div>
                             <div class="layui-inline">
                                 <label class="layui-form-label"><i>*</i>消费类型</label>
                                 <div class="layui-input-inline">
-                                    <select type="text" name="consumeTypeInputAdd" id="consumeTypeInputAdd" lay-verify="required" autocomplete="off"
+                                    <select type="text" name="consumeTypeName" id="consumeTypeInputAdd"
+                                            lay-verify="required" autocomplete="off"
                                             class="layui-input">
                                         <option>正在拉取...</option>
                                     </select>
@@ -89,7 +91,8 @@
                             <div class="layui-inline">
                                 <label class="layui-form-label"><i>*</i>开票金额</label>
                                 <div class="layui-input-inline">
-                                    <input type="text" name="invoice" id="invoice" lay-verify="required" autocomplete="off"
+                                    <input type="text" name="invoice" id="invoice" lay-verify="required"
+                                           autocomplete="off"
                                            class="layui-input">
                                 </div>
                             </div>
@@ -98,27 +101,30 @@
                             <div class="layui-inline">
                                 <label class="layui-form-label"><i>*</i>备注</label>
                                 <div class="layui-input-inline">
-                                    <input type="text" name="remark" id="remark" lay-verify="required" autocomplete="off"
+                                    <input type="text" name="remark" id="remark" lay-verify="required"
+                                           autocomplete="off"
                                            class="layui-input">
                                 </div>
                             </div>
                             <div class="layui-inline">
                                 <label class="layui-form-label"><i>*</i>是否消费</label>
                                 <div class="layui-input-inline">
-                                    <select type="text" name="isConsume" id="isConsume" lay-verify="required" autocomplete="off"
+                                    <select type="text" name="isConsume" id="isConsume" lay-verify="required"
+                                            autocomplete="off"
                                             class="layui-input">
-                                        <option value="yes">是</option>
-                                        <option value="no">否</option>
+                                        <option value="1">是</option>
+                                        <option value="0">否</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="layui-inline">
                                 <label class="layui-form-label"><i>*</i>购买优惠项</label>
                                 <div class="layui-input-inline">
-                                    <select type="text" name="buyReduce" id="buyReduce" lay-verify="required" autocomplete="off"
+                                    <select type="text" name="buyReduce" id="buyReduce" lay-verify="required"
+                                            autocomplete="off"
                                             class="layui-input">
-                                        <option value="yes">是</option>
-                                        <option value="no">否</option>
+                                        <option value="1">是</option>
+                                        <option value="0">否</option>
                                     </select>
                                 </div>
                             </div>
@@ -127,30 +133,33 @@
                             <div class="layui-inline">
                                 <label class="layui-form-label"><i>*</i>使用积分</label>
                                 <div class="layui-input-inline">
-                                    <select type="text" name="useInt" id="useInt" lay-verify="required" autocomplete="off"
+                                    <select type="text" name="useInt" id="useInt" lay-verify="required"
+                                            autocomplete="off"
                                             class="layui-input">
-                                        <option value="yes">是</option>
-                                        <option value="no">否</option>
+                                        <option value="1">是</option>
+                                        <option value="0">否</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="layui-inline">
                                 <label class="layui-form-label"><i>*</i>是否保养</label>
                                 <div class="layui-input-inline">
-                                    <select type="text" name="maintain" id="maintain" lay-verify="required" autocomplete="off"
+                                    <select type="text" name="maintain" id="maintain" lay-verify="required"
+                                            autocomplete="off"
                                             class="layui-input">
-                                        <option value="yes">是</option>
-                                        <option value="no">否</option>
+                                        <option value="1">是</option>
+                                        <option value="0">否</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="layui-inline">
                                 <label class="layui-form-label"><i>*</i>是否维修</label>
                                 <div class="layui-input-inline">
-                                    <select type="text" name="repair" id="repair" lay-verify="required" autocomplete="off"
+                                    <select type="text" name="repair" id="repair" lay-verify="required"
+                                            autocomplete="off"
                                             class="layui-input">
-                                        <option value="yes">是</option>
-                                        <option value="no">否</option>
+                                        <option value="1">是</option>
+                                        <option value="0">否</option>
                                     </select>
                                 </div>
                             </div>
@@ -159,27 +168,30 @@
                             <div class="layui-inline">
                                 <label class="layui-form-label">计入可用积分</label>
                                 <div class="layui-input-inline">
-                                    <select type="text" name="canUseInt" id="canUseInt" lay-verify="required" autocomplete="off"
+                                    <select type="text" name="isAvailableScore" id="canUseInt" lay-verify="required"
+                                            autocomplete="off"
                                             class="layui-input">
-                                        <option value="yes">是</option>
-                                        <option value="no">否</option>
+                                        <option value="1">是</option>
+                                        <option value="0">否</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="layui-inline">
                                 <label class="layui-form-label">计入累计积分</label>
                                 <div class="layui-input-inline">
-                                    <select type="text" name="cantUseInt" id="cantUseInt" lay-verify="required" autocomplete="off"
+                                    <select type="text" name="isAccumulativeScore" id="cantUseInt" lay-verify="required"
+                                            autocomplete="off"
                                             class="layui-input">
-                                        <option value="yes">是</option>
-                                        <option value="no">否</option>
+                                        <option value="1">是</option>
+                                        <option value="0">否</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="layui-inline">
                                 <label class="layui-form-label"><i>*</i>积分比例</label>
                                 <div class="layui-input-inline">
-                                    <input type="text" name="intRatio" id="intRatio" lay-verify="required" autocomplete="off"
+                                    <input type="text" name="scoreRatio" id="intRatio" lay-verify="required"
+                                           autocomplete="off"
                                            class="layui-input">
                                 </div>
                             </div>
@@ -187,10 +199,10 @@
                     </div>
                 </div>
                 <div class="layui-tab-item">
+                    <table class="layui-hnamee" id="speProj"></table>
                     <div class="layui-inline s-layuiInline">
                         <span class="layui-btn layui-btn-normal" id="addSpeProj">新增具体项目</span>
                     </div>
-                    <table class="layui-hnamee" id="speProj"></table>
                 </div>
                 <div class="layui-tab-item">
                     <div class="s-commonTable">
@@ -203,8 +215,8 @@
             <button class="layui-btn" id="confirmAdd" lay-filter="confirmAdd" lay-submit>新增</button>
             <button class="layui-btn layui-btn-warm" id="cancelAdd">取消</button>
         </div>
-    </form>
-</div>
+        </form>
+    </div>
 </div>
 
 <!-- 新增具体项目弹窗 -->
@@ -327,38 +339,14 @@
         // 显示“新增弹窗”
         $('body').on('click', '#add', function () {
             {
-                var index = layer.open({
-                    type: 1,
-                    title: '新增消费项目',
-                    content: $('#addWindow'),
-                    area: ['1020px', '700px'],
-                });
-                $('#cancelAdd').on('click', function () {
-                    layer.close(index);
-                });
-                form.on('submit(confirmAdd)', function(data) {
-                    console.log(data)
-                    // $.post({
-                    //     url: "service/consumeProject/addConsumeProject",
-                    //     data: JSON.stringify({
-                    //         name: $("#consumeProjectName").val()
-                    //     }),
-                    //     contentType: "application/json",
-                    //     success: function (res) {
-                    //         layuiAlert("结果" + res)
-                    //     }
-                    // })
-                })
-            }
-            {
                 pullConsumeTypes("#consumeTypeInputAdd", () => {
                 })
             }
             {
-                var speProjData = [];
+                var practicalItems = [];
                 var tableSpe = table.render({
                     elem: '#speProj',
-                    data: speProjData,
+                    data: practicalItems,
                     page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                         layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
                         limit: 15,
@@ -390,14 +378,13 @@
                         // 关闭当前弹出层
                         layer.close(addSpeWind);
                     });
-                    form.on('submit(confirmAddSpe)',function (data) {
-                        speProjData.push(data.field)
+                    form.on('submit(confirmAddSpe)', function (data) {
+                        practicalItems.push(data.field)
                         tableSpe.reload({
-                            data: speProjData
+                            data: practicalItems
                         })
                         layer.close(addSpeWind);
                     })
-                    console.log(12)
                 })
 
                 function pullCoupon(selector, callback) {
@@ -438,6 +425,34 @@
                         {type: 'checkbox', width: 70},
                         {field: 'name', width: 420, title: '消费卡券'},
                     ] ]
+                })
+            }
+            {
+                var index = layer.open({
+                    type: 1,
+                    title: '新增消费项目',
+                    content: $('#addWindow'),
+                    area: ['1020px', '700px'],
+                });
+                $('#cancelAdd').on('click', function () {
+                    layer.close(index);
+                });
+                form.on('submit(confirmAdd)', function (formData) {
+                    console.log({baseInfo: formData.field,
+                        practicalItems: practicalItems,
+                        relateCoupons: table.checkStatus('relTable').data})
+                    $.post({
+                        url: "service/consumeProject/addConsumeProject",
+                        data: JSON.stringify({
+                            baseInfo: formData.field,
+                            practicalItems: practicalItems,
+                            relateCoupons: table.checkStatus('relTable').data
+                        }),
+                        contentType: "application/json",
+                        success: function (res) {
+                            layuiAlert("结果" + res)
+                        }
+                    })
                 })
             }
         });

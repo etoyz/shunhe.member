@@ -3,7 +3,11 @@ package com.sh.cloud.web;
 import com.sft.member.bean.ConsumeProject;
 import com.sft.member.bean.ConsumeType;
 import com.sft.member.bean.Coupon;
+import com.sft.member.bean.PracticalProject;
 import com.sft.member.obtain.consume.ConsumeProjectService;
+import com.sft.member.obtain.consume.PracticalProjectService;
+import com.sft.member.obtain.coupon.CouponService;
+import com.sh.cloud.entity.ConsumeProjectMetaInfo;
 import com.sh.cloud.utils.PlatUserUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +22,10 @@ import java.util.Map;
 public class ConsumeProjectController {
     @Resource
     ConsumeProjectService consumeProjectService;
+    @Resource
+    PracticalProjectService practicalProjectService;
+    @Resource
+    CouponService couponService;
 
     @RequestMapping("getConsumeProjectList")
     @ResponseBody
@@ -39,8 +47,18 @@ public class ConsumeProjectController {
 
     @PostMapping("addConsumeProject")
     @ResponseBody
-    public String addConsumeProject(@RequestBody ConsumeProject consumeProject) {
-        return consumeProjectService.addConsumeProject(PlatUserUtils.getCurrentLoginPlatUser(), consumeProject);
+    public String addConsumeProject(@RequestBody ConsumeProjectMetaInfo consumeProjectMetaInfo) {
+//        StringBuilder ret = new StringBuilder(consumeProjectService.addConsumeProject(PlatUserUtils.getCurrentLoginPlatUser(), consumeProjectMetaInfo.getBaseInfo()));
+        consumeProjectService.addConsumeProject(PlatUserUtils.getCurrentLoginPlatUser(), consumeProjectMetaInfo.getBaseInfo());
+        for (PracticalProject practicalProject : consumeProjectMetaInfo.getPracticalItems()) {
+            practicalProject.consumeProjectId = consumeProjectMetaInfo.getBaseInfo().consumeProjectId;
+//            ret.append(practicalProjectService.addPracticalProject(PlatUserUtils.getCurrentLoginPlatUser(), practicalProject));
+            practicalProjectService.addPracticalProject(PlatUserUtils.getCurrentLoginPlatUser(), practicalProject);
+        }
+//        ret.append(consumeProjectService.addConsumeProject(PlatUserUtils.getCurrentLoginPlatUser(), consumeProjectMetaInfo.getBaseInfo()));
+        couponService.updateCouponListByConsumeProject(PlatUserUtils.getCurrentLoginPlatUser(), consumeProjectMetaInfo.getBaseInfo(), consumeProjectMetaInfo.getRelateCoupons());
+//        return String.valueOf(ret);
+        return "完成！";
     }
 
     @PostMapping("deleteConsumeProject")
