@@ -200,7 +200,7 @@
                 </div>
                 <div class="layui-tab-item">
                     <table class="layui-hnamee" id="speProj"></table>
-                    <div class="layui-inline s-layuiInline">
+                    <div class="layui-btn-container s-tabBottomButton">
                         <span class="layui-btn layui-btn-normal" id="addSpeProj">新增具体项目</span>
                     </div>
                 </div>
@@ -349,20 +349,20 @@
                     data: practicalItems,
                     page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                         layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
-                        limit: 15,
+                        limit: 10,
                         groups: 3, //只显示 1 个连续页码
                         first: false, //不显示首页
                         last: false //不显示尾页
                     },
                     cols: [ [
                         // {type: 'checkbox'},
-                        {field: 'name', width: 140, title: '项目名称'},
-                        {field: 'couponName', width: 100, title: '对应卡券'},
+                        {field: 'name', width: 150, title: '项目名称'},
+                        {field: 'couponName', width: 150, title: '对应卡券'},
                         {field: 'count', width: 150, title: '数量'},
                         {field: 'indateValue', width: 100, title: '有效天数'},
                         {field: 'startIntervalDateValue', width: 150, title: '多少天后开始'},
-                        {field: 'remark', width: 150, title: '备注'},
-                        {field: 'operation', width: 110, title: '操作', toolbar: '#operation', fixed: 'right'}
+                        {field: 'remark', width: 150, title: '备注'}
+                        // {field: 'operation', width: 110, title: '操作', toolbar: '#operation', fixed: 'right'}
                     ] ],
                     size: 'sm'
                 });

@@ -268,6 +268,9 @@
                 </div>
             </div>
         </div>
+        <div class="layui-btn-container s-tabBottomButton">
+            <span class="layui-btn layui-btn-normal" lay-filter="addUseCard" lay-submit>新增用卡</span>
+        </div>
     </form>
 
     <table class="layui-hide" id="useCoupons" lay-filter="useCouponsTable"></table>
@@ -277,6 +280,7 @@
 <script src="plugins/layui/layui.js"></script>
 <script>
     layui.use(['form', 'laydate', 'table', 'layer', 'element'], function () {
+        //utils
         {
             var $ = layui.jquery,
                 form = layui.form,
@@ -338,6 +342,7 @@
             }
         }
 
+        //primary
         {// “用卡表格”渲染
             var tableIns = table.render({
                 elem: '#memberList',
@@ -374,7 +379,7 @@
                     {field: 'vehiclebrand', width: 210, title: '车型'},
                     {field: 'userId', width: 210, title: 'id', hide: true},
                     {field: 'operation', width: 210, title: '操作', toolbar: '#operation', fixed: 'right'}
-                ]],
+                ] ],
                 size: 'sm',
                 parseData: function (res) {
                     console.log(res)
@@ -440,16 +445,23 @@
             });
         }
 
+        //popup
         {
             var useCoupons = [];
 
             // "会员信息表格"渲染
-            var tableIns1 = table.render({
+            var tableUseCoupons = table.render({
                 elem: '#useCoupons',
                 data: useCoupons,
                 height: 288,
+                page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                    layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
+                    limit: 10,
+                    groups: 3, //只显示 1 个连续页码
+                    first: false, //不显示首页
+                    last: false //不显示尾页
+                },
                 cols: [ [
-
                     {type: 'numbers'},
                     {field: 'cardName', width: 124, title: '卡券名称'},
                     {field: 'cardType', width: 82, title: '卡券类型'},
@@ -459,9 +471,16 @@
                     {field: 'effectiveDate', width: 146, title: '生效日期'},
                     {field: 'expiryDate', width: 146, title: '失效日期'},
                     {field: 'projectName', width: 88, title: '项目名称'}
-                ]],
+                ] ],
                 size: 'sm'
             });
+
+            form.on('submit(addUseCard)', function (data) {
+                useCoupons.push(data.field)
+                tableUseCoupons.reload({
+                    data: useCoupons
+                })
+            })
         }
     });
 </script>
