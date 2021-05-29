@@ -60,28 +60,28 @@
 
 <!-- 新增用户弹窗 -->
 <div class="s-details" id="addWindow">
-    <div>
-        <form class="layui-form" action="">
+    <form class="layui-form" action="">
+        <div>
             <div class="layui-form-item s-formItem1">
                 <div class="layui-inline">
                     <label class="layui-form-label">用户编号</label>
                     <div class="layui-input-inline">
                         <input type="text" id="userId"
-                               autocomplete="off" class="layui-input">
+                               autocomplete="off" class="layui-input" lay-verify="required|number">
                     </div>
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">用户名称</label>
                     <div class="layui-input-inline">
                         <input type="text" id="userName"
-                               autocomplete="off" class="layui-input">
+                               autocomplete="off" class="layui-input" lay-verify="required">
                     </div>
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">联系电话</label>
                     <div class="layui-input-inline">
                         <input type="text" id="phoneNum"
-                               autocomplete="off" class="layui-input">
+                               autocomplete="off" class="layui-input" lay-verify="required|number">
                     </div>
                 </div>
             </div>
@@ -90,14 +90,14 @@
                     <label class="layui-form-label">登录用户名</label>
                     <div class="layui-input-inline">
                         <input type="text" id="loginUserName"
-                               autocomplete="off" class="layui-input">
+                               autocomplete="off" class="layui-input" lay-verify="required">
                     </div>
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">登录密码</label>
                     <div class="layui-input-inline">
                         <input type="text" id="loginPassword"
-                               autocomplete="off" class="layui-input">
+                               autocomplete="off" class="layui-input" lay-verify="required">
                     </div>
                 </div>
                 <div class="layui-inline">
@@ -137,20 +137,20 @@
                         </select>
                     </div>
                 </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">指定IP登入</label>
-                    <div class="layui-input-inline">
-                        <input type="text" id="ipLimit"
-                               class="layui-input">
-                    </div>
-                </div>
+<!--                <div class="layui-inline">-->
+<!--                    <label class="layui-form-label">指定IP登入</label>-->
+<!--                    <div class="layui-input-inline">-->
+<!--                        <input type="text" id="ipLimit"-->
+<!--                               class="layui-input">-->
+<!--                    </div>-->
+<!--                </div>-->
             </div>
-        </form>
     </div>
-    <div class="s-tabBottomButton">
-        <button type="button" class="layui-btn" id="confirmAdd">新增</button>
-        <button type="button" class="layui-btn layui-btn-warm" id="cancelAdd">取消</button>
-    </div>
+        <div class="s-tabBottomButton">
+            <button type="button" class="layui-btn" id="confirmAdd" lay-filter="confirmAdd" lay-submit>新增</button>
+            <button type="button" class="layui-btn layui-btn-warm" id="cancelAdd">取消</button>
+        </div>
+    </form>
 </div>
 
 <script src="plugins/layui/layui.js"></script>
@@ -276,19 +276,11 @@
             layer.closeAll()
         })
 
-        $("#confirmAdd").click(function () {
-            // console.log($("#dealer").get(0).selectedIndex);
+
+        form.on('submit(confirmAdd)', function(data) {
             $.post({
                 url: "service/platUserManage/addUser",
-                data: JSON.stringify({
-                    name: $("#userName").val(),
-                    dealerId: $("#dealer").get(0).selectedIndex,
-                    operateType: $("#operations").val(),
-                    post: $("#duty").val(),
-                    username: $("#loginUserName").val(),
-                    password: $("#loginPassword").val()
-                    // operateType: $("#role").val()
-                }),
+                data: JSON.stringify(data.field),
                 contentType: "application/json",
                 success: function (res) {
                     console.log(res)
