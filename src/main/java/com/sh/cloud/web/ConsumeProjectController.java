@@ -58,7 +58,7 @@ public class ConsumeProjectController {
 //        ret.append(consumeProjectService.addConsumeProject(PlatUserUtils.getCurrentLoginPlatUser(), consumeProjectMetaInfo.getBaseInfo()));
         couponService.updateCouponListByConsumeProject(PlatUserUtils.getCurrentLoginPlatUser(), consumeProjectMetaInfo.getBaseInfo(), consumeProjectMetaInfo.getRelateCoupons());
 //        return String.valueOf(ret);
-        return "完成！";
+        return "成功！";
     }
 
     @PostMapping("deleteConsumeProject")
