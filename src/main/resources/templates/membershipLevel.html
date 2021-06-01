@@ -58,24 +58,33 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">会员级别</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="membershipLevel" id="membershipLevel"
+                        <input type="text" name="level" id="level"
                                autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">卡片名称</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="cardName" id="cardName"
+                        <input type="text" name="name" id="name"
                                autocomplete="off" class="layui-input">
 <!--                        <select type="text" id="cardType" name="cardType" autocomplete="off" class="layui-input">-->
 <!--                            <option id="selectHead">正在拉取...</option>-->
 <!--                        </select>-->
                     </div>
                 </div>
+<!--                <div class="layui-inline">-->
+<!--                    <label class="layui-form-label">卡片等级</label>-->
+<!--                    <div class="layui-input-inline">-->
+<!--                        <input type="text" name="type" id="type" autocomplete="off" class="layui-input">-->
+<!--                    </div>-->
+<!--                </div>-->
                 <div class="layui-inline">
-                    <label class="layui-form-label">卡片等级</label>
+                    <label class="layui-form-label">卡片类型</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="cardLevel" id="cardLevel" autocomplete="off" class="layui-input">
+                        <select name="cardType" lay-filter="customerCommissioner">
+                            <option value="0">可升级</option>
+                            <option value="1">不可升级</option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -83,7 +92,7 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">升级锁定</label>
                     <div class="layui-input-inline">
-                         <select type="text" id="upLock" name="upLock" autocomplete="off" class="layui-input">
+                         <select type="text" id="lock" name="lock" autocomplete="off" class="layui-input">
                              <option>是</option>
                              <option>否</option>
                          </select>
@@ -118,21 +127,30 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">会员级别</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="membershipLevelM" id="membershipLevelM"
+                        <input type="text" name="levelM" id="levelM"
                                autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">卡片名称</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="cardNameM" id="cardNameM"
+                        <input type="text" name="nameM" id="nameM"
                                autocomplete="off" class="layui-input">
                     </div>
                 </div>
+<!--                <div class="layui-inline">-->
+<!--                    <label class="layui-form-label">卡片等级</label>-->
+<!--                    <div class="layui-input-inline">-->
+<!--                        <input type="text" name="typeM" id="typeM" autocomplete="off" class="layui-input">-->
+<!--                    </div>-->
+<!--                </div>-->
                 <div class="layui-inline">
-                    <label class="layui-form-label">卡片等级</label>
+                    <label class="layui-form-label">卡片类型</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="cardLevelM" id="cardLevelM" autocomplete="off" class="layui-input">
+                        <select name="cardTypeM" lay-filter="customerCommissioner">
+                            <option value="0">可升级</option>
+                            <option value="1">不可升级</option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -140,7 +158,7 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">升级锁定</label>
                     <div class="layui-input-inline">
-                        <select type="text" id="upLockM" name="upLockM" autocomplete="off" class="layui-input">
+                        <select type="text" id="lockM" name="lockM" autocomplete="off" class="layui-input">
                             <option>是</option>
                             <option>否</option>
                         </select>
@@ -186,7 +204,7 @@
         // “主体表格”渲染
         var tableIns = table.render({
             elem: '#card',
-            url: './datas/membershipLevel.json',
+            url: 'service/membershipLevel/getMemberList?query=',
             height: 'full-120',
             page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                 layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
@@ -199,16 +217,17 @@
             },
             cols: [ [
                 {type: 'checkbox'},
-                {field: 'membershipLevel', width: '7%', title: '会员级别'},
-                {field: 'cardName', width: '10%', title: '卡片名称'},
-                {field: 'cardLevel', width: '7%', title: '卡片等级'},
-                {field: 'upLock', width: '8%', title: '升级锁定'},
+                {field: 'level', width: '7%', title: '会员级别'},
+                {field: 'name', width: '10%', title: '卡片名称'},
+                {field: 'type', width: '7%', title: '卡片类型'},
+                {field: 'lock', width: '8%', title: '升级锁定'},
                 {field: 'pointToUpdate', width: '10%', title: '升级所需积分'},
                 {field: 'remark', width: '8%', title: '备注'},
                 {field: 'creator', width: '8%', title: '创建人'},
                 {field: 'creatTime', width: '10%', title: '创建时间'},
                 {field: 'lastEditor', width: '8%', title: '最后编辑人'},
                 {field: 'lastEditTime', width: '11%', title: '最后编辑时间'},
+                {field: 'id', width: '7%', title: 'id',hide:true},
                 {field: 'operation', width: '13%', title: '操作', toolbar: '#operation', fixed: 'right'}
             ] ],
             size: 'sm'
@@ -216,20 +235,20 @@
 
 
         //执行操作的卡片
-        var activeCard
+        var activeCardid
         //监听“卡片表格”工具条
         table.on('tool(cardTabel)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
             var data = obj.data; //获得当前行数据
             // var page = data.page;
             // var limit = data.limit;
-            activeCard = data.cardName; //data是当前行的数据，其中cardName是卡片名称
+            activeCardid = data.id; //data是当前行的数据，其中activeCardid是卡片id
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值f）
             if (layEvent === 'delete') {
                 layer.confirm("确认删除？", function () {
                     $.post({
                         url: "/service/membershipLevel/deleteCard",
                         data: {
-                            cardName: activeCard
+                            id: activeCardid
                         },
                         success: function (res) {
                             if (res !== "ok") {
@@ -255,10 +274,10 @@
                     content: $('#modWindow'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
                     area: ['1022px', '225px']
                 });
-                            $('#membershipLevelM').val(data.membershipLevel);
-                            $('#cardNameM').val(data.cardName);
-                            $('#cardLevelM').val(data.cardLevel);
-                            $('#upLockM').val(data.upLock);             //获取修改行的数据
+                            $('#levelM').val(data.level);
+                            $('#nameM').val(data.name);
+                            $('#typeM').val(data.type);
+                            $('#lockM').val(data.lock);             //获取修改行的数据
                              form.render();
             }
         });
@@ -281,18 +300,22 @@
 
         $("#confirmAdd").click(function () {
             $.post({
-                url: "/service/membershipLevel/addCard",
+                url: "/service/membershipLevel/addMember",
                 data: JSON.stringify({
-                    membershipLevel: $("#membershipLevel").val(),
-                    cardName: $("#cardName").val(),
-                    cardLevel: $("#cardLevel").val(),
-                    upLock: $("#upLock").val(),
+                    level: $("#level").val(),
+                    name: $("#name").val(),
+                    type: $("#type").val(),
+                    lock: $("#lock").val(),
                     pointToUpdate: $("#pointToUpdate").val(),
                     remark: $("#remark").val()
                 }),
                 contentType: "application/json",
                 success: function (res) {
                     console.log(res)
+                },
+                error: function (res) {
+                    console.log(res)
+                    layuiAlert("新增失败" + res)
                 }
             })
         })
@@ -300,14 +323,15 @@
         var modWind;
         $("#confirmMod").click(function () {
             $.post({
-                url: "service/membershipLevel/modCard",
+                url: "service/membershipLevel/editMember",
                 data: JSON.stringify({
-                    membershipLevel: $("#membershipLevelM").val(),
-                    cardName: $("#cardNameM").val(),
-                    cardLevel: $("#cardLevelM").val(),
-                    upLock: $("#upLockM").val(),
+                    membershipLevel: $("#levelM").val(),
+                    cardName: $("#nameM").val(),
+                    cardLevel: $("#typeM").val(),
+                    upLock: $("#lockM").val(),
                     pointToUpdate: $("#pointToUpdateM").val(),
-                    remark: $("#remarkM").val()
+                    remark: $("#remarkM").val(),
+                    id:activeCardid,
                 }),
                 contentType: "application/json",
                 success: function (res) {

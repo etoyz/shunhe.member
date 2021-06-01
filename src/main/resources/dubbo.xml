@@ -36,6 +36,8 @@
                      interface="com.sft.member.obtain.user.PlatUserService" async="false"/>
     <dubbo:reference id="shUserService"
                      interface="com.sft.member.obtain.user.UserService" async="false"/>
+    <dubbo:reference id="memberService"
+                     interface="com.sft.member.obtain.member.MemberService" async="false"/>
     <dubbo:reference id="practicalProject"
                      interface="com.sft.member.obtain.consume.PracticalProjectService" async="false"/>
     <dubbo:reference id="payService"
