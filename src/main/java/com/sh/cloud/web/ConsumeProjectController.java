@@ -36,6 +36,7 @@ public class ConsumeProjectController {
 
         ConsumeProject consumeProject = new ConsumeProject();
         consumeProject.name = query;
+        consumeProject.consumeProjectId = -1;
         ConsumeType consumeType1 = new ConsumeType();
         consumeType1.name = consumeType;
         List<ConsumeProject> dataByConsumeType = consumeProjectService.getConsumeProjectByConsumeType(consumeType1);

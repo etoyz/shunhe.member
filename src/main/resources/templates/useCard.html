@@ -339,6 +339,29 @@
                     }
                 })
             }
+
+            function pullPay(selector, consumeType, callback) {
+                var selectE2 = $(selector);
+                $.post({
+                    url: "service/consumeProject/getConsumeProjectList?query=&consumeType=" + consumeType + "&page=1&limit=2147483640",
+                    timeout: 1000,
+                    dataType: "json",
+                    success: function (res) {
+                        res = res.data;
+                        selectE2.empty();
+                        for (var s of res) {
+                            selectE2.append("<option value='" + s.consumeProjectId + "'>" + s.name + "</option>");
+                        }
+                        callback();
+                        form.render(); //layui的form重新渲染
+                    },
+                    error: function () {
+                        selectE2.empty();
+                        selectE2.append("<option>拉取失败，请刷新！</option>");
+                        form.render();
+                    }
+                })
+            }
         }
 
         //primary

@@ -38,4 +38,6 @@
                      interface="com.sft.member.obtain.user.UserService" async="false"/>
     <dubbo:reference id="practicalProject"
                      interface="com.sft.member.obtain.consume.PracticalProjectService" async="false"/>
+    <dubbo:reference id="payService"
+                     interface="com.sft.member.obtain.pay.PayService" async="false"/>
 </beans>

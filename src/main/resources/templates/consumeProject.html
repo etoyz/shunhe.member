@@ -438,10 +438,6 @@
                     layer.close(index);
                 });
                 form.on('submit(confirmAdd)', function (formData) {
-                    formData.field.consumeTypeName = $("#consumeTypeInputAdd").val();
-                    console.log({baseInfo: formData.field,
-                        practicalItems: practicalItems,
-                        relateCoupons: table.checkStatus('relTable').data})
                     $.post({
                         url: "service/consumeProject/addConsumeProject",
                         data: JSON.stringify({
