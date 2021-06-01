@@ -305,7 +305,6 @@
                 closeBtn: false,
                 yes: function () {
                     layer.closeAll();
-                    location.reload();
                 }
             });
         }
@@ -448,6 +447,11 @@
                         contentType: "application/json",
                         success: function (res) {
                             layuiAlert("结果" + res)
+                            tableIns.reload({
+                                page: {
+                                    curr: 1
+                                }
+                            });
                         }
                     })
                 })
@@ -518,6 +522,11 @@
                         },
                         success: function (res) {
                             layuiAlert(res)
+                            tableIns.reload({
+                                page: {
+                                    curr: 1
+                                }
+                            });
                         },
                     });
                 });

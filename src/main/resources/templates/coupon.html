@@ -277,7 +277,6 @@
                 closeBtn: false,
                 yes: function () {
                     layer.closeAll();
-                    location.reload();
                 }
             });
         }
@@ -311,9 +310,11 @@
                         contentType: "application/json",
                         success: function (res) {
                             layuiAlert(res)
-                        },
-                        error: function () {
-                            layuiAlert("删除失败")
+                            couponTable.reload({
+                                page: {
+                                    curr: 1
+                                }
+                            });
                         }
                     });
                 })
