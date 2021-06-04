@@ -66,35 +66,35 @@
                     </dl>
                 </li>
                 </dd>
-                <dd shiro:hasPermission="member:view">
+                <dd shiro:hasPermission="customParameters:view">
                 <li class="layui-nav-item">
                     <a class="" href="javascript:;"><i class="fa fa-plug" aria-hidden="true"></i><span> 自定义参数</span></a>
                     <dl class="layui-nav-child">
-                        <dd shiro:hasPermission="member:coupon:view">
+                        <dd shiro:hasPermission="customParameters:coupon:view">
                             <a href="javascript:;" kit-target data-options="{url:'coupon.html',icon:'&#xe658;',title:'卡券',id:'5'}"><i class="layui-icon">&#xe658;</i><span> 卡券</span></a>
                         </dd>
-                        <dd shiro:hasPermission="member:consumeType:view">
+                        <dd shiro:hasPermission="customParameters:consumeType:view">
                             <a href="javascript:;" kit-target data-options="{url:'consumeType.html',icon:'&#xe658;',title:'消费类型',id:'6'}"><i class="layui-icon">&#xe658;</i><span> 消费类型</span></a>
                         </dd>
-                        <dd shiro:hasPermission="member:consumeItem:view">
+                        <dd shiro:hasPermission="customParameters:consumeItem:view">
                             <a href="javascript:;" kit-target data-options="{url:'consumeItem.html',icon:'&#xe658;',title:'消费项目',id:'7'}"><i class="layui-icon">&#xe658;</i><span> 消费项目</span></a>
                         </dd>
-                        <dd shiro:hasPermission="member:brand:view">
+                        <dd shiro:hasPermission="customParameters:brand:view">
                             <a href="javascript:;" kit-target data-options="{url:'brand.html',icon:'&#xe658;',title:'品牌',id:'8'}"><i class="layui-icon">&#xe658;</i><span> 品牌</span></a>
                         </dd>
-                        <dd shiro:hasPermission="member:carSeries:view">
+                        <dd shiro:hasPermission="customParameters:carSeries:view">
                             <a href="javascript:;" kit-target data-options="{url:'carSeries.html',icon:'&#xe658;',title:'车系',id:'9'}"><i class="layui-icon">&#xe658;</i><span> 车系</span></a>
                         </dd>
-                        <dd shiro:hasPermission="member:model:view">
+                        <dd shiro:hasPermission="customParameters:model:view">
                             <a href="javascript:;" kit-target data-options="{url:'model.html',icon:'&#xe658;',title:'车型',id:'10'}"><i class="layui-icon">&#xe658;</i><span> 车型</span></a>
                         </dd>
-                        <dd shiro:hasPermission="member:insuranceCompany:view">
+                        <dd shiro:hasPermission="customParameters:insuranceCompany:view">
                             <a href="javascript:;" kit-target data-options="{url:'insuranceCompany.html',icon:'&#xe658;',title:'保险公司',id:'11'}"><i class="layui-icon">&#xe658;</i><span> 保险公司</span></a>
                         </dd>
-                        <dd shiro:hasPermission="member:typeOfInsurance:view">
+                        <dd shiro:hasPermission="customParameters:typeOfInsurance:view">
                             <a href="javascript:;" kit-target data-options="{url:'typeOfInsurance.html',icon:'&#xe658;',title:'险种',id:'12'}"><i class="layui-icon">&#xe658;</i><span> 险种</span></a>
                         </dd>
-                        <dd shiro:hasPermission="member:membershipLevel:view">
+                        <dd shiro:hasPermission="customParameters:membershipLevel:view">
                             <a href="javascript:;" kit-target data-options="{url:'membershipLevel.html',icon:'&#xe658;',title:'会员级别',id:'13'}"><i class="layui-icon">&#xe658;</i><span> 会员级别</span></a>
                         </dd>
                     </dl>
@@ -104,16 +104,16 @@
                 <li class="layui-nav-item">
                     <a class="" href="javascript:;"><i class="fa fa-plug" aria-hidden="true"></i><span> 微信后台</span></a>
                     <dl class="layui-nav-child">
-                        <dd>
+                        <dd shiro:hasPermission="wechatBackground:followReply:view">
                             <a href="javascript:;" kit-target data-options="{url:'card.html',icon:'&#xe658;',title:'关注回复',id:'14'}"><i class="layui-icon">&#xe658;</i><span> 关注回复</span></a>
                         </dd>
-                        <dd>
+                        <dd shiro:hasPermission="wechatBackground:wechatFans:view">
                             <a href="javascript:;" kit-target data-options="{url:'memberArchives1.html',icon:'&#xe658;',title:'微信粉丝',id:'15'}"><i class="layui-icon">&#xe658;</i><span> 微信粉丝</span></a>
                         </dd>
-                        <dd>
+                        <dd shiro:hasPermission="wechatBackground:definitionOfGraphicMessage:view">
                             <a href="javascript:;" kit-target data-options="{url:'memberArchives1.html',icon:'&#xe658;',title:'图文消息定义',id:'16'}"><i class="layui-icon">&#xe658;</i><span> 图文消息定义</span></a>
                         </dd>
-                        <dd>
+                        <dd shiro:hasPermission="wechatBackground:definitionOfMicroTurntable:view">
                             <a href="javascript:;" kit-target data-options="{url:'memberArchives1.html',icon:'&#xe658;',title:'微转盘定义',id:'17'}"><i class="layui-icon">&#xe658;</i><span> 微转盘定义</span></a>
                         </dd>
                     </dl>
@@ -123,19 +123,19 @@
                 <li class="layui-nav-item">
                     <a class="" href="javascript:;"><i class="fa fa-plug" aria-hidden="true"></i><span> 商城管理</span></a>
                     <dl class="layui-nav-child">
-                        <dd>
+                        <dd shiro:hasPermission="mallManagement:shoppingMall:view">
                             <a href="javascript:;" kit-target data-options="{url:'card.html',icon:'&#xe658;',title:'商城板块',id:'18'}"><i class="layui-icon">&#xe658;</i><span> 商城板块</span></a>
                         </dd>
-                        <dd>
+                        <dd shiro:hasPermission="mallManagement:commodityDefinition:view">
                             <a href="javascript:;" kit-target data-options="{url:'memberArchives1.html',icon:'&#xe658;',title:'商品定义',id:'19'}"><i class="layui-icon">&#xe658;</i><span> 商品定义</span></a>
                         </dd>
-                        <dd>
+                        <dd shiro:hasPermission="mallManagement:orderManagement:view">
                             <a href="javascript:;" kit-target data-options="{url:'memberArchives1.html',icon:'&#xe658;',title:'订单管理',id:'20'}"><i class="layui-icon">&#xe658;</i><span> 订单管理</span></a>
                         </dd>
-                        <dd>
+                        <dd shiro:hasPermission="mallManagement:warehousingManagement:view">
                             <a href="javascript:;" kit-target data-options="{url:'memberArchives1.html',icon:'&#xe658;',title:'入库管理',id:'21'}"><i class="layui-icon">&#xe658;</i><span> 入库管理</span></a>
                         </dd>
-                        <dd>
+                        <dd shiro:hasPermission="mallManagement:outboundManagement:view">
                             <a href="javascript:;" kit-target data-options="{url:'memberArchives1.html',icon:'&#xe658;',title:'出库管理',id:'22'}"><i class="layui-icon">&#xe658;</i><span> 出库管理</span></a>
                         </dd>
                     </dl>
@@ -145,22 +145,22 @@
                 <li class="layui-nav-item">
                     <a class="" href="javascript:;"><i class="fa fa-plug" aria-hidden="true"></i><span> 报表中心</span></a>
                     <dl class="layui-nav-child">
-                        <dd>
+                        <dd shiro:hasPermission="reportCenter:cardHistory:view">
                             <a href="javascript:;" kit-target data-options="{url:'card.html',icon:'&#xe658;',title:'用卡历史',id:'23'}"><i class="layui-icon">&#xe658;</i><span> 用卡历史</span></a>
                         </dd>
-                        <dd>
+                        <dd shiro:hasPermission="reportCenter:antiSettlementHistory:view">
                             <a href="javascript:;" kit-target data-options="{url:'memberArchives1.html',icon:'&#xe658;',title:'反结算历史',id:'24'}"><i class="layui-icon">&#xe658;</i><span> 反结算历史</span></a>
                         </dd>
-                        <dd>
+                        <dd shiro:hasPermission="reportCenter:couponStatistics:view">
                             <a href="javascript:;" kit-target data-options="{url:'memberArchives1.html',icon:'&#xe658;',title:'卡券统计',id:'25'}"><i class="layui-icon">&#xe658;</i><span> 卡券统计</span></a>
                         </dd>
-                        <dd>
+                        <dd shiro:hasPermission="reportCenter:StoredValueStatistics:view">
                             <a href="javascript:;" kit-target data-options="{url:'memberArchives1.html',icon:'&#xe658;',title:'储值统计',id:'26'}"><i class="layui-icon">&#xe658;</i><span> 储值统计</span></a>
                         </dd>
-                        <dd>
+                        <dd shiro:hasPermission="reportCenter:groupStatistics:view">
                             <a href="javascript:;" kit-target data-options="{url:'memberArchives1.html',icon:'&#xe658;',title:'群发统计',id:'27'}"><i class="layui-icon">&#xe658;</i><span> 群发统计</span></a>
                         </dd>
-                        <dd>
+                        <dd shiro:hasPermission="reportCenter:lotteryStatistics:view">
                             <a href="javascript:;" kit-target data-options="{url:'memberArchives1.html',icon:'&#xe658;',title:'抽奖统计',id:'28'}"><i class="layui-icon">&#xe658;</i><span> 抽奖统计</span></a>
                         </dd>
                     </dl>
