@@ -31,7 +31,9 @@
                         </div>
                         <div class="layui-inline s-layuiInline">
                             <button class="layui-btn layui-btn-warm">查询</button>
-                            <button id="addBtn" class="layui-btn layui-btn-normal">添加品牌</button>
+                            <dd shiro:hasPermission="brand:add:view">
+                                <button id="addBtn" class="layui-btn layui-btn-normal">添加品牌</button>
+                            </dd>
                         </div>
                     </div>
                 </form>
@@ -41,8 +43,12 @@
             <div class="s-commonTable">
                 <table class="layui-hide" id="brand" lay-filter="brandTabel"></table>
                 <script type="text/html" id="operation">
-                    <a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="modify">修改</a>
-                    <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delete">删除</a>
+                    <dd shiro:hasPermission="brand:modify:view">
+                        <a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="modify">修改</a>
+                    </dd>
+                    <dd shiro:hasPermission="brand:delete:view">
+                        <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delete">删除</a>
+                    </dd>
                     <!--                    <a class="layui-btn layui-btn-xs" lay-event="relate">关联</a>-->
                 </script>
             </div>
