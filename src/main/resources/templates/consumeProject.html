@@ -296,11 +296,8 @@
 
 <!-- 关联卡券弹窗 -->
 <div class="s-details" id="relWindow">
-    <div class="layui-form">
+    <form class="layui-form">
         <div class="layui-tab layui-tab-brief">
-            <ul class="layui-tab-title">
-                <li>关联消费卡券</li>
-            </ul>
             <div class="layui-tab-content">
                 <div class="layui-tab-item layui-show">
                     <div class="s-commonTable">
@@ -309,7 +306,11 @@
                 </div>
             </div>
         </div>
-    </div>
+        <div class="s-tabBottomButton">
+            <button type="button" class="layui-btn" lay-filter="confirmRel" id="confirmRel" lay-submit>确认关联</button>
+            <button type="button" class="layui-btn layui-btn-warm" id="cancelRel">取消</button>
+        </div>
+    </form>
 </div>
 
 <script src="plugins/layui/layui.js"></script>
@@ -366,32 +367,30 @@
         $('body').on('click', '#add', function () {
             pullConsumeTypes("#consumeTypeInputAdd", () => {
             })
-            {
-                var index = layer.open({
-                    type: 1,
-                    title: '新增消费项目',
-                    content: $('#addWindow'),
-                    area: ['1020px', '700px'],
-                });
-                $('#cancelAdd').on('click', function () {
-                    layer.close(index);
-                });
-                form.on('submit(confirmAdd)', function (formData) {
-                    $.post({
-                        url: "service/consumeProject/addConsumeProject",
-                        data: JSON.stringify(formData.field),
-                        contentType: "application/json",
-                        success: function (res) {
-                            layuiAlert("结果" + res)
-                            tableIns.reload({
-                                page: {
-                                    curr: 1
-                                }
-                            });
-                        }
-                    })
+            var index = layer.open({
+                type: 1,
+                title: '新增消费项目',
+                content: $('#addWindow'),
+                area: ['1020px', '700px'],
+            });
+            $('#cancelAdd').on('click', function () {
+                layer.close(index);
+            });
+            form.on('submit(confirmAdd)', function (formData) {
+                $.post({
+                    url: "service/consumeProject/addConsumeProject",
+                    data: JSON.stringify(formData.field),
+                    contentType: "application/json",
+                    success: function (res) {
+                        layuiAlert("结果" + res)
+                        tableIns.reload({
+                            page: {
+                                curr: 1
+                            }
+                        });
+                    }
                 })
-            }
+            })
         });
 
         // “消费项目表格”渲染
@@ -549,6 +548,19 @@
                         {type: 'checkbox', width: 70},
                         {field: 'name', width: 420, title: '消费卡券'},
                     ] ]
+                })
+                $("#confirmRel").click(function () {
+                    $.post({
+                        url: "service/consumeProject/relateCoupon",
+                        data: JSON.stringify({
+                            "coupons": table.checkStatus('relTable').data,
+                            "consumeProjectId": data.consumeProjectId
+                        }),
+                        contentType: "application/json",
+                        success: function (res) {
+                            layuiAlert(res)
+                        }
+                    })
                 })
             }
         });

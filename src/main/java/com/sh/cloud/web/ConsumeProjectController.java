@@ -8,7 +8,9 @@ import com.sft.member.obtain.consume.ConsumeProjectService;
 import com.sft.member.obtain.consume.PracticalProjectService;
 import com.sft.member.obtain.coupon.CouponService;
 import com.sh.cloud.entity.ConsumeProjectMetaInfo;
+import com.sh.cloud.entity.CouponsAndConsumeProject;
 import com.sh.cloud.utils.PlatUserUtils;
+import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -50,6 +52,15 @@ public class ConsumeProjectController {
     @ResponseBody
     public String addConsumeProject(@RequestBody ConsumeProject project) {
         consumeProjectService.addConsumeProject(PlatUserUtils.getCurrentLoginPlatUser(), project);
+        return "成功！";
+    }
+
+    @PostMapping("relateCoupon")
+    @ResponseBody
+    public String relateCoupon(@RequestBody CouponsAndConsumeProject couponsAndConsumeProject) {
+        ConsumeProject project = new ConsumeProject();
+        project.consumeProjectId = couponsAndConsumeProject.getConsumeProjectId();
+        couponService.updateCouponListByConsumeProject(PlatUserUtils.getCurrentLoginPlatUser(), project, couponsAndConsumeProject.getCoupons());
         return "成功！";
     }
 
