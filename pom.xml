@@ -59,7 +59,7 @@
 		<dependency>
 			<groupId>com.sft.member</groupId>
 			<artifactId>member</artifactId>
-			<version>1.0.4.3</version>
+			<version>1.0.4.7</version>
 		</dependency>
 		<dependency>
 			<groupId>ludexing.data.carinfo</groupId>
