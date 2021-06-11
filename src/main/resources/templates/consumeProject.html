@@ -344,6 +344,7 @@
                 success: function (res) {
                     res = res.data;
                     selectE.empty();
+                    selectE.append("<option value='-1'>" + "请选择" + "</option>");
                     for (var s of res) {
                         selectE.append("<option value='" + s.consumeTypeId + "'>" + s.name + "</option>");
                     }

@@ -36,15 +36,12 @@ public class ConsumeProjectController {
 
         ConsumeProject consumeProject = new ConsumeProject();
         consumeProject.name = query;
-        consumeProject.consumeProjectId = -1;
-        ConsumeType consumeType1 = new ConsumeType();
         if (consumeType.equals(""))
-            consumeType1.consumeTypeId = -1;
+            consumeProject.consumeTypeId = -1;
         else
-            consumeType1.consumeTypeId = Integer.parseInt(consumeType);
-        List<ConsumeProject> dataByConsumeType = consumeProjectService.getConsumeProjectByConsumeType(consumeType1);
+            consumeProject.consumeTypeId = Integer.parseInt(consumeType);
         List<ConsumeProject> dataByQuery = consumeProjectService.getConsumeProjectList(consumeProject, page, limit);
-        ret.put("data", dataByConsumeType);
+        ret.put("data", dataByQuery);
         ret.put("count", consumeProjectService.getConsumeProjectListCount(consumeProject));
         return ret;
     }
