@@ -48,13 +48,8 @@ public class ConsumeProjectController {
 
     @PostMapping("addConsumeProject")
     @ResponseBody
-    public String addConsumeProject(@RequestBody ConsumeProjectMetaInfo consumeProjectMetaInfo) {
-        consumeProjectService.addConsumeProject(PlatUserUtils.getCurrentLoginPlatUser(), consumeProjectMetaInfo.getBaseInfo());
-        for (PracticalProject practicalProject : consumeProjectMetaInfo.getPracticalItems()) {
-            practicalProject.consumeProjectId = consumeProjectMetaInfo.getBaseInfo().consumeProjectId;
-            practicalProjectService.addPracticalProject(PlatUserUtils.getCurrentLoginPlatUser(), practicalProject);
-        }
-        couponService.updateCouponListByConsumeProject(PlatUserUtils.getCurrentLoginPlatUser(), consumeProjectMetaInfo.getBaseInfo(), consumeProjectMetaInfo.getRelateCoupons());
+    public String addConsumeProject(@RequestBody ConsumeProject project) {
+        consumeProjectService.addConsumeProject(PlatUserUtils.getCurrentLoginPlatUser(), project);
         return "成功！";
     }
 

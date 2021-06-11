@@ -344,7 +344,7 @@
                 success: function (res) {
                     res = res.data;
                     selectE.empty();
-                    selectE.append("<option value='-1'>" + "请选择" + "</option>");
+                    selectE.append("<option value='-1'>" + "全部" + "</option>");
                     for (var s of res) {
                         selectE.append("<option value='" + s.consumeTypeId + "'>" + s.name + "</option>");
                     }
@@ -379,11 +379,7 @@
                 form.on('submit(confirmAdd)', function (formData) {
                     $.post({
                         url: "service/consumeProject/addConsumeProject",
-                        data: JSON.stringify({
-                            baseInfo: formData.field,
-                            practicalItems: practicalItems,
-                            relateCoupons: table.checkStatus('relTable').data
-                        }),
+                        data: JSON.stringify(formData.field),
                         contentType: "application/json",
                         success: function (res) {
                             layuiAlert("结果" + res)
@@ -397,7 +393,6 @@
                 })
             }
         });
-
 
         // “消费项目表格”渲染
         var tableIns = table.render({
@@ -443,8 +438,7 @@
                     // 关闭当前弹出层
                     layer.close(index1);
                 });
-            }
-            else if (layEvent === 'delete') {
+            } else if (layEvent === 'delete') {
                 layer.confirm('确认删除消费项目【' + consumeProjectName + '】？', {icon: 3, title: '提示'}, function (index) {
                     $.post({
                         url: "service/consumeProject/deleteConsumeProject",
@@ -461,8 +455,7 @@
                         },
                     });
                 });
-            }
-            else if (layEvent === "spe") {
+            } else if (layEvent === "spe") {
                 layer.open({
                     type: 1,
                     title: '编辑',
@@ -538,8 +531,7 @@
 
                 pullCoupon("#speProjCoupon", () => {
                 })
-            }
-            else if (layEvent === "rel") {
+            } else if (layEvent === "rel") {
                 layer.open({
                     type: 1,
                     title: '关联消费卡券',
