@@ -334,7 +334,7 @@
             });
         }
 
-        function pullConsumeTypes(selector, callback) {
+        function pullConsumeTypes(selector, generateAllOption, callback) {
             var selectE = $(selector);
             $.post({
                 url: "service/consumeType/getConsumeTypeList?query=&page=1&limit=2147483640",
@@ -343,7 +343,8 @@
                 success: function (res) {
                     res = res.data;
                     selectE.empty();
-                    selectE.append("<option value='-1'>" + "全部" + "</option>");
+                    if (generateAllOption)
+                        selectE.append("<option value='-1'>" + "全部" + "</option>");
                     for (var s of res) {
                         selectE.append("<option value='" + s.consumeTypeId + "'>" + s.name + "</option>");
                     }
@@ -358,12 +359,12 @@
             })
         }
 
-        pullConsumeTypes("#consumeTypeInput", () => {
+        pullConsumeTypes("#consumeTypeInput", true, () => {
         });
 
         // 显示“新增弹窗”
         $('body').on('click', '#add', function () {
-            pullConsumeTypes("#consumeTypeInputAdd", () => {
+            pullConsumeTypes("#consumeTypeInputAdd", false, () => {
             })
             var index = layer.open({
                 type: 1,
@@ -518,7 +519,7 @@
                                 url: "service/practicalProject/deletePracticalProject",
                                 data: JSON.stringify(obj.data),
                                 contentType: "application/json",
-                                success: function (res){
+                                success: function (res) {
                                     var x = layer.open({
                                         offset: "auto",//具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
                                         content: '<div style="padding: 20px 70px;">' + res + '</div>',
@@ -610,7 +611,8 @@
                         });
                     }
                 })
-                $("#confirmRel").click(function () {
+                $("#confirmRel").unbind("click").on("click", function () {
+                    console.log(123)
                     $.post({
                         url: "service/consumeProject/relateCoupon",
                         data: JSON.stringify({
@@ -623,7 +625,7 @@
                         }
                     })
                 })
-                $("#cancelRel").click(function (){
+                $("#cancelRel").click(function () {
                     layer.closeAll()
                 })
             }
