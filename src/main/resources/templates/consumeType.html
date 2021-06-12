@@ -180,19 +180,12 @@
                     content: $('#editWindow'),
                     area: ['400px', '225px'],
                 });
-                console.log(data)
-                $.post({
-                    url: "service/consumeType/getConsumeType",
-                    data: JSON.stringify(data.field),
-                    contentType: "application/json",
-                    success: function (res) {
-                        layuiAlert(res)
-                    }
-                })
-                form.on('submit(confirmMod)', function (data) {
+                $("#consumeTypeName").val(data.name);
+                form.on('submit(confirmMod)', function (formData) {
+                    formData.field['consumeTypeId'] = data.consumeTypeId;
                     $.post({
                         url: "service/consumeType/editConsumeType",
-                        data: JSON.stringify(data.field),
+                        data: JSON.stringify(formData.field),
                         contentType: "application/json",
                         success: function (res) {
                             layuiAlert(res)

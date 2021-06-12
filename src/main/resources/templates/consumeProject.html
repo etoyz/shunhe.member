@@ -213,15 +213,10 @@
 <!--  具体项目弹窗 -->
 <div class="s-details" id="speWindow">
     <div class="layui-form">
-        <div class="layui-tab layui-tab-brief">
-            <ul class="layui-tab-title">
-                <li class="layui-this">具体项目列表</li>
-            </ul>
-            <div class="layui-tab-content">
-                <div class="layui-tab-item layui-show">
-                    <table class="layui-hide" id="speProj"></table>
-                    <span class="layui-btn layui-btn-normal" id="addSpeProj">新增具体项目</span>
-                </div>
+        <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+                <table class="layui-hide" id="speProj"></table>
+                <span class="layui-btn layui-btn-normal" id="addSpeProj">新增具体项目</span>
             </div>
         </div>
     </div>
@@ -457,14 +452,14 @@
             } else if (layEvent === "spe") {
                 layer.open({
                     type: 1,
-                    title: '编辑',
+                    title: '具体项目',
                     content: $('#speWindow'),
                     area: ['500px', '700px'],
                 });
                 var practicalItems = [];
                 var tableSpe = table.render({
                     elem: '#speProj',
-                    data: practicalItems,
+                    url: "service/practicalProject/getPracticalProjectListByConsumeProject",
                     page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                         layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
                         limit: 10,
