@@ -87,4 +87,10 @@ public class CouponController {
 
         return ret;
     }
+
+    @RequestMapping("getCouponListByConsumeProject")
+    @ResponseBody
+    public List<Coupon> getConsumeProjectListByCoupon(@RequestBody ConsumeProject project) {
+        return couponService.getCouponListByConsumeProject(project);
+    }
 }
