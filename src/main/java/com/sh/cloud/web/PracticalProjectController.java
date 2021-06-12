@@ -3,13 +3,14 @@ package com.sh.cloud.web;
 import com.sft.member.bean.ConsumeProject;
 import com.sft.member.bean.PracticalProject;
 import com.sft.member.obtain.consume.PracticalProjectService;
+import com.sh.cloud.utils.PlatUserUtils;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -29,5 +30,10 @@ public class PracticalProjectController {
         ret.put("data", practicalProjectService.getPracticalProjectListByConsumeProject(consumeProject));
 
         return ret;
+    }
+
+    @RequestMapping("addPracticalProject")
+    public String addPracticalProject(@RequestBody PracticalProject project) {
+        return practicalProjectService.addPracticalProject(PlatUserUtils.getCurrentLoginPlatUser(), project);
     }
 }

@@ -214,7 +214,7 @@
 <div class="s-details" id="speWindow">
     <div class="layui-form">
         <div class="layui-tab-content">
-            <div class="layui-tab-item layui-show">
+            <div class="s-tabBottomButton">
                 <table class="layui-hide" id="speProj"></table>
                 <span class="layui-btn layui-btn-normal" id="addSpeProj">新增具体项目</span>
             </div>
@@ -248,7 +248,7 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">对应卡券</label>
                     <div class="layui-input-inline">
-                        <select type="text" name="couponName" id="speProjCoupon" autocomplete="off" class="layui-input">
+                        <select type="text" name="couponId" id="speProjCoupon" autocomplete="off" class="layui-input">
                             <option>正在拉取...</option>
                         </select>
                     </div>
@@ -449,7 +449,8 @@
                         },
                     });
                 });
-            } else if (layEvent === "spe") {
+            }
+            else if (layEvent === "spe") {
                 layer.open({
                     type: 1,
                     title: '具体项目',
@@ -484,12 +485,28 @@
                         // 关闭当前弹出层
                         layer.close(addSpeWind);
                     });
-                    form.on('submit(confirmAddSpe)', function (data) {
-                        practicalItems.push(data.field)
-                        tableSpe.reload({
-                            data: practicalItems
+                    form.on('submit(confirmAddSpe)', function (formData) {
+                        formData.field.consumeProjectId = data.consumeProjectId;
+                        $.post({
+                            url: "service/practicalProject/addPracticalProject",
+                            data: JSON.stringify(formData.field),
+                            contentType: "application/json",
+                            success: function (res){
+                                var x = layer.open({
+                                    offset: "auto",//具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
+                                    content: '<div style="padding: 20px 70px;">' + '成功！' + '</div>',
+                                    btn: '关闭',
+                                    btnAlign: 'c',//按钮居中
+                                    shade: 0, //不显示遮罩
+                                    closeBtn: false,
+                                    yes: function () {
+                                        layer.close(x)
+                                        layer.close(addSpeWind);
+                                        tableSpe.reload()
+                                    }
+                                });
+                            }
                         })
-                        layer.close(addSpeWind);
                     })
                 })
 
@@ -503,7 +520,7 @@
                             res = res.data;
                             selectE.empty();
                             for (var s of res) {
-                                selectE.append("<option value='" + s.name + "'>" + s.name + "</option>");
+                                selectE.append("<option value='" + s.couponId + "'>" + s.name + "</option>");
                             }
                             callback();
                             form.render(); //layui的form重新渲染
@@ -518,7 +535,8 @@
 
                 pullCoupon("#speProjCoupon", () => {
                 })
-            } else if (layEvent === "rel") {
+            }
+            else if (layEvent === "rel") {
                 var progressNotice = layer.msg('正在加载...')
                 var relTable = table.render({
                     id: "relTable",
