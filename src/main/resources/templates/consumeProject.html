@@ -214,8 +214,11 @@
 <div class="s-details" id="speWindow">
     <div class="layui-form">
         <div class="layui-tab-content">
+            <table class="layui-hide" id="speProj" lay-filter="speProjTable"></table>
+            <script type="text/html" id="operationSpe">
+                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
+            </script>
             <div class="s-tabBottomButton">
-                <table class="layui-hide" id="speProj"></table>
                 <span class="layui-btn layui-btn-normal" id="addSpeProj">新增具体项目</span>
             </div>
         </div>
@@ -411,7 +414,7 @@
                 {field: 'lastEditId', width: 100, title: '最后编辑人'},
                 {field: 'lastEditTime', width: 150, title: '最后编辑时间'},
                 {field: 'operation', width: 300, title: '操作', toolbar: '#operation', fixed: 'right'}
-            ] ],
+            ]],
             size: 'sm'
         });
 
@@ -449,15 +452,13 @@
                         },
                     });
                 });
-            }
-            else if (layEvent === "spe") {
+            } else if (layEvent === "spe") {
                 layer.open({
                     type: 1,
                     title: '具体项目',
                     content: $('#speWindow'),
-                    area: ['500px', '700px'],
+                    area: ['900px', '700px'],
                 });
-                var practicalItems = [];
                 var tableSpe = table.render({
                     elem: '#speProj',
                     url: "service/practicalProject/getPracticalProjectListByConsumeProject?consumeProjectId=" + data.consumeProjectId,
@@ -468,9 +469,9 @@
                         {field: 'count', width: 150, title: '数量'},
                         {field: 'indateValue', width: 100, title: '有效天数'},
                         {field: 'startIntervalDateValue', width: 150, title: '多少天后开始'},
-                        {field: 'remark', width: 150, title: '备注'}
-                        // {field: 'operation', width: 110, title: '操作', toolbar: '#operation', fixed: 'right'}
-                    ] ],
+                        {field: 'remark', width: 150, title: '备注'},
+                        {field: 'operation', width: 110, title: '操作', toolbar: '#operationSpe', fixed: 'right'}
+                    ]],
                     size: 'sm'
                 });
                 // 显示“新增具体项目弹窗”
@@ -491,7 +492,7 @@
                             url: "service/practicalProject/addPracticalProject",
                             data: JSON.stringify(formData.field),
                             contentType: "application/json",
-                            success: function (res){
+                            success: function (res) {
                                 var x = layer.open({
                                     offset: "auto",//具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
                                     content: '<div style="padding: 20px 70px;">' + '成功！' + '</div>',
@@ -508,6 +509,32 @@
                             }
                         })
                     })
+                })
+
+                table.on('tool(speProjTable)', function (obj) {
+                    if (obj.event === "delete") {
+                        layer.confirm("确定删除具体项目【" + data.name + "】?", function () {
+                            $.post({
+                                url: "service/practicalProject/deletePracticalProject",
+                                data: JSON.stringify(obj.data),
+                                contentType: "application/json",
+                                success: function (res){
+                                    var x = layer.open({
+                                        offset: "auto",//具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
+                                        content: '<div style="padding: 20px 70px;">' + res + '</div>',
+                                        btn: '关闭',
+                                        btnAlign: 'c',//按钮居中
+                                        shade: 0, //不显示遮罩
+                                        closeBtn: false,
+                                        yes: function () {
+                                            layer.close(x)
+                                            tableSpe.reload()
+                                        }
+                                    });
+                                }
+                            })
+                        })
+                    }
                 })
 
                 function pullCoupon(selector, callback) {
@@ -535,8 +562,7 @@
 
                 pullCoupon("#speProjCoupon", () => {
                 })
-            }
-            else if (layEvent === "rel") {
+            } else if (layEvent === "rel") {
                 var progressNotice = layer.msg('正在加载...')
                 var relTable = table.render({
                     id: "relTable",
@@ -548,7 +574,7 @@
                     cols: [ [
                         {type: 'checkbox', width: 70},
                         {field: 'name', width: 420, title: '消费卡券'},
-                    ] ]
+                    ]]
                 })
                 relTable.reload({
                     done: function (resAll, page, count) {

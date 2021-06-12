@@ -36,4 +36,13 @@ public class PracticalProjectController {
     public String addPracticalProject(@RequestBody PracticalProject project) {
         return practicalProjectService.addPracticalProject(PlatUserUtils.getCurrentLoginPlatUser(), project);
     }
+
+    @RequestMapping("deletePracticalProject")
+    public String deletePracticalProject(@RequestBody PracticalProject project) {
+        if (practicalProjectService.deletePracticalProject(PlatUserUtils.getCurrentLoginPlatUser(), project))
+            return "成功！";
+        else
+            return "失败！";
+
+    }
 }
