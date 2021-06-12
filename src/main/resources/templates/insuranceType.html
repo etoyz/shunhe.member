@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>保险公司</title>
+    <title>险种</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -24,22 +24,22 @@
                 <form class="layui-form" action="">
                     <div class="layui-form-item">
                         <div class="layui-inline s-layuiInline">
-                            <label class="layui-form-label">保险公司名称</label>
+                            <label class="layui-form-label">险种名称</label>
                             <div class="layui-input-inline">
-                                <input type="text" id="insuranceCompanyInput" autocomplete="off" class="layui-input"
-                                       placeholder="请输入保险公司名称">
+                                <input type="text" id="insuranceTypeInput" autocomplete="off" class="layui-input"
+                                       placeholder="请输入险种名称">
                             </div>
                         </div>
                         <div class="layui-inline s-layuiInline">
                             <button class="layui-btn layui-btn-warm" id="queryBtn">查询</button>
-                            <button class="layui-btn layui-btn-normal" id="add">新增保险公司</button>
+                            <button class="layui-btn layui-btn-normal" id="add">新增险种</button>
                         </div>
                     </div>
                 </form>
             </div>
             <!-- 展示表格 -->
             <div class="s-commonTable">
-                <table class="layui-hide" id="insuranceCompanies" lay-filter="insuranceCompanyTabel"></table>
+                <table class="layui-hide" id="insuranceCompanies" lay-filter="insuranceTypeTabel"></table>
                 <script type="text/html" id="operation">
                     <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="edit">修改</a>
                     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
@@ -55,9 +55,9 @@
         <div>
             <div class="layui-form-item s-formItem1">
                 <div class="layui-inline">
-                    <label class="layui-form-label"><i>*</i>保险公司名称</label>
+                    <label class="layui-form-label"><i>*</i>险种名称</label>
                     <div class="layui-input-inline">
-                        <input type="text" id="insuranceCompanyName" lay-verify="required" autocomplete="off"
+                        <input type="text" id="insuranceTypeName" lay-verify="required" autocomplete="off"
                                class="layui-input">
                     </div>
                 </div>
@@ -94,9 +94,9 @@
         <div>
             <div class="layui-form-item s-formItem1">
                 <div class="layui-inline">
-                    <label class="layui-form-label"><i>*</i>保险公司名称</label>
+                    <label class="layui-form-label"><i>*</i>险种名称</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="insuranceCompanyNameE" lay-verify="required" autocomplete="off"
+                        <input type="text" name="insuranceTypeNameE" lay-verify="required" autocomplete="off"
                                class="layui-input">
                     </div>
                 </div>
@@ -155,7 +155,7 @@
         $('#add').click(function () {
             var index = layer.open({
                 type: 1,
-                title: '新增保险公司',
+                title: '新增险种',
                 content: $('#addWindow'),
                 area: ['400px', '225px'],
             });
@@ -166,9 +166,9 @@
             form.on('submit(confirmAdd)', function(data) {
                 //$("#confirmAdd").click(function () {
                 $.post({
-                    url: "service/insuranceCompany/addInsuranceCompany",
+                    url: "service/insuranceType/addInsuranceType",
                     data: JSON.stringify({
-                        name: $("#insuranceCompanyName").val()
+                        name: $("#insuranceTypeName").val()
                     }),
                     contentType: "application/json",
                     success: function (res) {
@@ -182,7 +182,7 @@
         // “会员档案表格”渲染
         var tableIns = table.render({
             elem: '#insuranceCompanies',
-            url: 'service/insuranceCompany/getInsuranceCompanyList?query=',
+            url: 'service/insuranceType/getInsuranceTypeList?query=',
             page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                 layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
                 limit: 15,
@@ -195,7 +195,7 @@
             defaultToolbar: ['filter', 'print', 'exports'],
             cols: [ [
                 // {type: 'checkbox'},
-                {field: 'name', width: 140, title: '保险公司'},
+                {field: 'name', width: 140, title: '险种'},
                 // {field: 'indexID', width: 80, title: '顺序号'},
                 {field: 'createName', width: 100, title: '创建人名称'},
                 {field: 'createTime', width: 150, title: '创建时间'},
@@ -206,10 +206,10 @@
             size: 'sm'
         });
         //监听“会员档案表格”工具条
-        table.on('tool(insuranceCompanyTabel)', function (obj) {
+        table.on('tool(insuranceTypeTabel)', function (obj) {
             var data = obj.data; //获得当前行数据
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
-            var insuranceCompanyName = data.name;
+            var insuranceTypeName = data.name;
             if (layEvent === 'edit') {
                 // var index1 = layer.open({
                 //     type: 1,
@@ -224,7 +224,7 @@
 
                 layer.open({
                     type: 1,
-                    title: '编辑保险公司信息',
+                    title: '编辑险种信息',
                     content: $('#editWindow'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
                     area: ['1022px', '225px']
                 });
@@ -241,9 +241,9 @@
 
             } else if (layEvent === 'delete') {
                 console.log(data)
-                layer.confirm('确认删除保险公司【' + insuranceCompanyName + '】？', {icon: 3, title: '提示'}, function (index) {
+                layer.confirm('确认删除险种【' + insuranceTypeName + '】？', {icon: 3, title: '提示'}, function (index) {
                     $.post({
-                        url: "service/insuranceCompany/deleteInsuranceCompany",
+                        url: "service/insuranceType/deleteInsuranceType",
                         data: {
                             id: data.id
                         },
@@ -257,7 +257,7 @@
 
         $("#queryBtn").click(function () {
             tableIns.reload({
-                url: 'service/insuranceCompany/getInsuranceCompanyList?query=' + $("#insuranceCompanyInput").val(),
+                url: 'service/insuranceType/getInsuranceTypeList?query=' + $("#insuranceTypeInput").val(),
                 page: {
                     curr: 1
                 }

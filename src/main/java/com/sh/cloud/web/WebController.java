@@ -72,6 +72,11 @@ public class WebController {
         return "insuranceCompany";
     }
 
+    @RequestMapping("/insuranceType")
+    public String insuranceType() {
+        return "insuranceType";
+    }
+
     @RequestMapping("/typeOfInsurance")
     public String typeOfInsurance() {
         return "typeOfInsurance";
