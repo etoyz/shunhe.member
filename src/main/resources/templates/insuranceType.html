@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+
+<head>
+    <meta charset="utf-8">
+    <title>保险公司</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="plugins/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="plugins/font-awesome/css/font-awesome.min.css" media="all">
+    <link rel="stylesheet" href="plugins/adjust/css/adjustLayui.css" media="all">
+    <link rel="stylesheet" href="css/table.css" media="all">
+    <link rel="stylesheet" href="css/form.css" media="all">
+    <link rel="stylesheet" href="css/common.css" media="all">
+</head>
+
+<body>
+<div class="layui-fluid main">
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="s-headerSearch">
+                <form class="layui-form" action="">
+                    <div class="layui-form-item">
+                        <div class="layui-inline s-layuiInline">
+                            <label class="layui-form-label">保险公司名称</label>
+                            <div class="layui-input-inline">
+                                <input type="text" id="insuranceCompanyInput" autocomplete="off" class="layui-input"
+                                       placeholder="请输入保险公司名称">
+                            </div>
+                        </div>
+                        <div class="layui-inline s-layuiInline">
+                            <button class="layui-btn layui-btn-warm" id="queryBtn">查询</button>
+                            <button class="layui-btn layui-btn-normal" id="add">新增保险公司</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- 展示表格 -->
+            <div class="s-commonTable">
+                <table class="layui-hide" id="insuranceCompanies" lay-filter="insuranceCompanyTabel"></table>
+                <script type="text/html" id="operation">
+                    <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="edit">修改</a>
+                    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 新增弹窗 -->
+<div class="s-details" id="addWindow">
+    <form class="layui-form" action="">
+        <div>
+            <div class="layui-form-item s-formItem1">
+                <div class="layui-inline">
+                    <label class="layui-form-label"><i>*</i>保险公司名称</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="insuranceCompanyName" lay-verify="required" autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item s-formItem1">
+                <div class="layui-inline">
+                    <label class="layui-form-label">顺序号</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="indexID" autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item s-formItem1">
+                <div class="layui-inline">
+                    <label class="layui-form-label">备注</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="remarks" autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="s-tabBottomButton">
+            <button class="layui-btn" id="confirmAdd" lay-filter="confirmAdd" lay-submit>新增</button>
+            <button class="layui-btn layui-btn-warm" id="cancelAdd">取消</button>
+        </div>
+    </form>
+</div>
+
+<!-- 修改弹窗 -->
+<div class="s-details" id="editWindow">
+    <form class="layui-form" action="">
+        <div>
+            <div class="layui-form-item s-formItem1">
+                <div class="layui-inline">
+                    <label class="layui-form-label"><i>*</i>保险公司名称</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="insuranceCompanyNameE" lay-verify="required" autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+            </div>
+<!--            <div class="layui-form-item s-formItem1">-->
+<!--                <div class="layui-inline">-->
+<!--                    <label class="layui-form-label">顺序号</label>-->
+<!--                    <div class="layui-input-inline">-->
+<!--                        <input type="text" name="indexID" autocomplete="off"-->
+<!--                               class="layui-input">-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+            <div class="layui-form-item s-formItem1">
+                <div class="layui-inline">
+                    <label class="layui-form-label">备注</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="remarksE" autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="s-tabBottomButton">
+            <button class="layui-btn" id="confirm" lay-filter="confirmMod" lay-submit>确认</button>
+            <button class="layui-btn layui-btn-warm" id="exit1">取消</button>
+        </div>
+    </form>
+</div>
+
+<script src="plugins/layui/layui.js"></script>
+<script>
+    layui.use(['form', 'table', 'layer', 'element'], function () {
+        var $ = layui.jquery,
+            form = layui.form,
+            layer = layui.layer,
+            table = layui.table,
+            element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+
+        function layuiAlert(msg) {
+            layer.open({
+                offset: "auto",//具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
+                content: '<div style="padding: 20px 70px;">' + msg + '</div>',
+                btn: '关闭',
+                btnAlign: 'c',//按钮居中
+                shade: 0, //不显示遮罩
+                closeBtn: false,
+                yes: function () {
+                    layer.closeAll();
+                    location.reload();
+                }
+            });
+        }
+
+        // 显示“新增弹窗”
+        $('#add').click(function () {
+            var index = layer.open({
+                type: 1,
+                title: '新增保险公司',
+                content: $('#addWindow'),
+                area: ['400px', '225px'],
+            });
+            $('#cancelAdd').on('click', function () {
+                // 关闭当前弹出层
+                layer.close(index);
+            });
+            form.on('submit(confirmAdd)', function(data) {
+                //$("#confirmAdd").click(function () {
+                $.post({
+                    url: "service/insuranceCompany/addInsuranceCompany",
+                    data: JSON.stringify({
+                        name: $("#insuranceCompanyName").val()
+                    }),
+                    contentType: "application/json",
+                    success: function (res) {
+                        layuiAlert("结果：" + res)
+                    }
+                })
+            })
+            return false;
+        });
+
+        // “会员档案表格”渲染
+        var tableIns = table.render({
+            elem: '#insuranceCompanies',
+            url: 'service/insuranceCompany/getInsuranceCompanyList?query=',
+            page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
+                limit: 15,
+                groups: 3, //只显示 1 个连续页码
+                first: false, //不显示首页
+                last: false //不显示尾页
+            },
+            toolbar: true, //仅开启工具栏，不显示左侧模板
+            // defaultToolbar: ['exports'], //头部工具栏右侧图标
+            defaultToolbar: ['filter', 'print', 'exports'],
+            cols: [ [
+                // {type: 'checkbox'},
+                {field: 'name', width: 140, title: '保险公司'},
+                // {field: 'indexID', width: 80, title: '顺序号'},
+                {field: 'createName', width: 100, title: '创建人名称'},
+                {field: 'createTime', width: 150, title: '创建时间'},
+                {field: 'lastEditId', width: 100, title: '最后编辑人'},
+                {field: 'lastEditTime', width: 150, title: '最后编辑时间'},
+                {field: 'operation', width: 110, title: '操作', toolbar: '#operation', fixed: 'right'}
+            ] ],
+            size: 'sm'
+        });
+        //监听“会员档案表格”工具条
+        table.on('tool(insuranceCompanyTabel)', function (obj) {
+            var data = obj.data; //获得当前行数据
+            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+            var insuranceCompanyName = data.name;
+            if (layEvent === 'edit') {
+                // var index1 = layer.open({
+                //     type: 1,
+                //     title: '编辑',
+                //     content: $('#editWindow'),
+                //     area: ['400px', '225px'],
+                // });
+                // $('#exit1').on('click', function () {
+                //     // 关闭当前弹出层
+                //     layer.close(index1);
+                // });
+
+                layer.open({
+                    type: 1,
+                    title: '编辑保险公司信息',
+                    content: $('#editWindow'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                    area: ['1022px', '225px']
+                });
+                // pullCouponTypes("#couponTypeM", function () {
+                //     //拉取卡券列表成功后，执行此回调函数填充原数据以供修改
+                //     $('#couponTypeM').val(activeLine.type);
+                //     $('#couponNameM').val(activeLine.name);
+                //     $('#priceM').val(activeLine.unitPrice);
+                //     $('#costPriceM').val(activeLine.costPrice);
+                // })
+
+
+
+
+            } else if (layEvent === 'delete') {
+                console.log(data)
+                layer.confirm('确认删除保险公司【' + insuranceCompanyName + '】？', {icon: 3, title: '提示'}, function (index) {
+                    $.post({
+                        url: "service/insuranceCompany/deleteInsuranceCompany",
+                        data: {
+                            id: data.id
+                        },
+                        success: function (res) {
+                            layuiAlert(res)
+                        }
+                    })
+                });
+            }
+        });
+
+        $("#queryBtn").click(function () {
+            tableIns.reload({
+                url: 'service/insuranceCompany/getInsuranceCompanyList?query=' + $("#insuranceCompanyInput").val(),
+                page: {
+                    curr: 1
+                }
+            })
+            return false;
+        })
+    });
+</script>
+</body>
+
+</html>
