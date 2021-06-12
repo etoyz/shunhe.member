@@ -8,18 +8,26 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("service/practicalProject")
 public class PracticalProjectController {
     @Resource
-    PracticalProjectService service;
+    PracticalProjectService practicalProjectService;
 
     @RequestMapping("getPracticalProjectListByConsumeProject")
-    public List<PracticalProject> getPracticalProjectListByConsumeProject(@RequestParam String consumeProjectId) {
+    public Map<String, Object> getPracticalProjectListByConsumeProject(@RequestParam String consumeProjectId) {
+        Map<String, Object> ret = new HashMap<>();
+        ret.put("code", 0);
+        ret.put("msg", "");
+
         ConsumeProject consumeProject = new ConsumeProject();
         consumeProject.consumeProjectId = Integer.parseInt(consumeProjectId);
-        return service.getPracticalProjectListByConsumeProject(consumeProject);
+        ret.put("data", practicalProjectService.getPracticalProjectListByConsumeProject(consumeProject));
+
+        return ret;
     }
 }
