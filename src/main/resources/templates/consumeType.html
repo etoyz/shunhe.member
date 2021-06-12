@@ -51,32 +51,23 @@
 
 <!-- 新增弹窗 -->
 <div class="s-details" id="addWindow">
-        <form class="layui-form" action="">
-            <div>
-                <div class="layui-form-item s-formItem1">
-                    <div class="layui-inline">
-                        <label class="layui-form-label"><i>*</i>消费类型</label>
-                        <div class="layui-input-inline">
-                            <input type="text" id="consumeTypeName" lay-verify="required" autocomplete="off"
-                                   class="layui-input">
-                        </div>
-                    </div>
-                </div>
-                <div class="layui-form-item s-formItem1">
-                    <div class="layui-inline">
-                        <label class="layui-form-label">顺序号</label>
-                        <div class="layui-input-inline">
-                            <input type="text" id="indexID" autocomplete="off"
-                                   class="layui-input">
-                        </div>
+    <form class="layui-form" action="">
+        <div>
+            <div class="layui-form-item s-formItem1">
+                <div class="layui-inline">
+                    <label class="layui-form-label">消费类型</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="name" lay-verify="required" autocomplete="off"
+                               class="layui-input">
                     </div>
                 </div>
             </div>
-            <div class="s-tabBottomButton">
-                <button class="layui-btn" id="confirmAdd" lay-filter="confirmAdd" lay-submit>新增</button>
-                <button class="layui-btn layui-btn-warm" id="cancelAdd">取消</button>
-            </div>
-        </form>
+        </div>
+        <div class="s-tabBottomButton">
+            <button class="layui-btn" id="confirmAdd" lay-filter="confirmAdd" lay-submit>新增</button>
+            <button class="layui-btn layui-btn-warm" id="cancelAdd">取消</button>
+        </div>
+    </form>
 </div>
 
 <!-- 修改弹窗 -->
@@ -85,26 +76,17 @@
         <div>
             <div class="layui-form-item s-formItem1">
                 <div class="layui-inline">
-                    <label class="layui-form-label"><i>*</i>消费类型</label>
+                    <label class="layui-form-label">消费类型</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="consumeTypeName" lay-verify="required" autocomplete="off"
-                               class="layui-input">
-                    </div>
-                </div>
-            </div>
-            <div class="layui-form-item s-formItem1">
-                <div class="layui-inline">
-                    <label class="layui-form-label">顺序号</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="indexID" autocomplete="off"
+                        <input type="text" name="name" id="consumeTypeName" lay-verify="required" autocomplete="off"
                                class="layui-input">
                     </div>
                 </div>
             </div>
         </div>
         <div class="s-tabBottomButton">
-            <button class="layui-btn" id="confirm" lay-filter="confirmMod" lay-submit>确认</button>
-            <button class="layui-btn layui-btn-warm" id="exit1">取消</button>
+            <button class="layui-btn layui-btn-warm" lay-filter="confirmMod" lay-submit>确认修改</button>
+            <button class="layui-btn" id="cancelMod">取消</button>
         </div>
     </form>
 </div>
@@ -128,42 +110,40 @@
                 closeBtn: false,
                 yes: function () {
                     layer.closeAll();
-                    location.reload();
                 }
             });
         }
 
         // 显示“新增弹窗”
         $('#add').click(function () {
-
             var index = layer.open({
                 type: 1,
                 title: '新增消费类型',
                 content: $('#addWindow'),
-                area: ['400px', '225px'],
+                area: ['400px', '200px'],
             });
-            $('#cancelAdd').on('click', function () {
+            $('#cancelAdd').click(function () {
                 // 关闭当前弹出层
                 layer.close(index);
+                return false;
             });
-            form.on('submit(confirmAdd)', function(data) {
-            //$("#confirmAdd").click(function () {
+            form.on('submit(confirmAdd)', function (data) {
                 $.post({
                     url: "service/consumeType/addConsumeType",
-                    data: JSON.stringify({
-                        name: $("#consumeTypeName").val()
-                    }),
+                    data: JSON.stringify(data.field),
                     contentType: "application/json",
                     success: function (res) {
-                        layuiAlert("结果：" + res)
+                        layuiAlert("成功！")
+                        tableTypes.reload();
                     }
                 })
+                return false;
             })
             return false;
         });
 
         // “会员档案表格”渲染
-        var tableIns = table.render({
+        var tableTypes = table.render({
             elem: '#consumeTypes',
             url: 'service/consumeType/getConsumeTypeList?query=',
             page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
@@ -200,12 +180,33 @@
                     content: $('#editWindow'),
                     area: ['400px', '225px'],
                 });
-                $('#exit1').on('click', function () {
+                console.log(data)
+                $.post({
+                    url: "service/consumeType/getConsumeType",
+                    data: JSON.stringify(data.field),
+                    contentType: "application/json",
+                    success: function (res) {
+                        layuiAlert(res)
+                    }
+                })
+                form.on('submit(confirmMod)', function (data) {
+                    $.post({
+                        url: "service/consumeType/editConsumeType",
+                        data: JSON.stringify(data.field),
+                        contentType: "application/json",
+                        success: function (res) {
+                            layuiAlert(res)
+                            tableTypes.reload();
+                        }
+                    })
+                    return false;
+                })
+                $('#cancelMod').on('click', function () {
                     // 关闭当前弹出层
                     layer.close(index1);
+                    return false;
                 });
             } else if (layEvent === 'delete') {
-                console.log(data)
                 layer.confirm('确认删除消费类型【' + consumeTypeName + '】？', {icon: 3, title: '提示'}, function (index) {
                     $.post({
                         url: "service/consumeType/deleteConsumeType",
@@ -214,6 +215,7 @@
                         },
                         success: function (res) {
                             layuiAlert(res)
+                            tableTypes.reload()
                         }
                     })
                 });
@@ -221,7 +223,7 @@
         });
 
         $("#queryBtn").click(function () {
-            tableIns.reload({
+            tableTypes.reload({
                 url: 'service/consumeType/getConsumeTypeList?query=' + $("#consumeTypeInput").val(),
                 page: {
                     curr: 1

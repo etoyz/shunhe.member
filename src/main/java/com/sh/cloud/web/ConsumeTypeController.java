@@ -51,4 +51,17 @@ public class ConsumeTypeController {
         else
             return "删除失败！";
     }
+
+    @RequestMapping("editConsumeType")
+    @ResponseBody
+    public String editConsumeType(@RequestBody ConsumeType consumeType) {
+        consumeTypeService.editConsumeType(PlatUserUtils.getCurrentLoginPlatUser(), consumeType);
+        return "成功！";
+    }
+
+    @RequestMapping("getConsumeType")
+    @ResponseBody
+    public ConsumeType getConsumeType(@RequestBody ConsumeType consumeType) {
+        return consumeTypeService.getConsumeType(consumeType);
+    }
 }
