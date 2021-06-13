@@ -55,6 +55,13 @@ public class ConsumeProjectController {
         return "成功！";
     }
 
+    @PostMapping("editConsumeProject")
+    @ResponseBody
+    public String editConsumeProject(@RequestBody ConsumeProject project) {
+        consumeProjectService.editConsumeProject(PlatUserUtils.getCurrentLoginPlatUser(), project);
+        return "成功！";
+    }
+
     @PostMapping("relateCoupon")
     @ResponseBody
     public String relateCoupon(@RequestBody CouponsAndConsumeProject couponsAndConsumeProject) {
