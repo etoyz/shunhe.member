@@ -135,6 +135,7 @@
                 <label class="layui-form-label">消费项目</label>
                 <div class="layui-input-inline">
                     <select type="text" id="consumeProjectId" name="consumeProjectId" autocomplete="off"
+                            lay-filter="consumeProjectId"
                             class="layui-input">
                         <option>正在拉取...</option>
                     </select>
@@ -325,7 +326,6 @@
                     timeout: 1000,
                     dataType: "json",
                     success: function (res) {
-                        console.log(res)
                         res = res.data;
                         selectE2.empty();
                         for (var s of res) {
@@ -350,7 +350,6 @@
                     dataType: "json",
                     success: function (res) {
                         res = res.data;
-                        console.log(res)
                         selectE2.empty();
                         for (var s of res) {
                             selectE2.append("<option value='" + s.consumeProjectId + "'>" + s.name + "</option>");
@@ -487,6 +486,7 @@
                         })
                     });
                     form.on('select(consumeProjectId)', function () {
+                        console.log(123)
                         pullPracticalItemIds("#practicalItemId", $("#consumeProjectId").val(), () => {
                         })
                     });
