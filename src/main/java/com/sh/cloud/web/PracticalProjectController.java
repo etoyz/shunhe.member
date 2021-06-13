@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -24,11 +26,14 @@ public class PracticalProjectController {
         Map<String, Object> ret = new HashMap<>();
         ret.put("code", 0);
         ret.put("msg", "");
-
-        ConsumeProject consumeProject = new ConsumeProject();
-        consumeProject.consumeProjectId = Integer.parseInt(consumeProjectId);
-        ret.put("data", practicalProjectService.getPracticalProjectListByConsumeProject(consumeProject));
-
+        if (!consumeProjectId.equals("null")) {
+            ConsumeProject consumeProject = new ConsumeProject();
+            consumeProject.consumeProjectId = Integer.parseInt(consumeProjectId);
+            ret.put("data", practicalProjectService.getPracticalProjectListByConsumeProject(consumeProject));
+        } else {
+            List<PracticalProject> emptyList = new ArrayList();
+            ret.put("data", emptyList);
+        }
         return ret;
     }
 
