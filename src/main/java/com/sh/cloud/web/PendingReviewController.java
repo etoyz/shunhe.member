@@ -22,7 +22,7 @@ public class PendingReviewController {
 
     @RequestMapping("getPendingReviewList")
     @ResponseBody
-    public Map<String, Object> pendingReview(@RequestBody GetPendingReviewListRequest request) {
+    public Map<String, Object> getPendingReviewList(@RequestBody GetPendingReviewListRequest request) {
         Map<String, Object> ret = new HashMap();
         ret.put("code", 0);
         ret.put("msg", "");
