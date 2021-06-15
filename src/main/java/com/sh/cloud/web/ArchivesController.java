@@ -1,6 +1,8 @@
 package com.sh.cloud.web;
 
+import com.sft.member.bean.Member;
 import com.sft.member.bean.User;
+import com.sft.member.obtain.member.MemberService;
 import com.sft.member.obtain.user.UserService;
 import com.sh.cloud.utils.PlatUserUtils;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +17,8 @@ import java.util.Map;
 public class ArchivesController {
     @Resource
     UserService shUserService;
-
+    @Resource
+    MemberService memberService;
     @PostMapping(value = "addArchives")
     public String addUser(@RequestBody User user) {
         String ret = shUserService.addUser(PlatUserUtils.getCurrentLoginPlatUser(), user);
@@ -61,6 +64,24 @@ public class ArchivesController {
         User c = new User();
         c.userId = userId;
         return shUserService.getUser(c);
+    }
+    @PostMapping(value = "getMemberNameList")
+    public List<Member> getMemberNameList() {
+        List<Member> ret=memberService.getMemberNameList();
+        return ret;
+    }
+    @PostMapping(value = "alertLevel")
+    public String alertLevel(@RequestParam String userId,@RequestParam String id) {
+        Member m=new Member();
+        m.id=id;
+        User c = new User();
+        c.userId = userId;
+        c.member=m;
+       String ret=shUserService.alertLevel(PlatUserUtils.getCurrentLoginPlatUser(), c);
+        if (ret == null || ret.equals(""))
+            return "添加成功";
+        else
+            return ret;
     }
 }
 

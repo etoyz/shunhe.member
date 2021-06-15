@@ -81,7 +81,7 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">卡片类型</label>
                     <div class="layui-input-inline">
-                        <select name="cardType" lay-filter="customerCommissioner">
+                        <select id="cardType",name="cardType" lay-filter="customerCommissioner">
                             <option value="0">可升级</option>
                             <option value="1">不可升级</option>
                         </select>
@@ -93,8 +93,8 @@
                     <label class="layui-form-label">升级锁定</label>
                     <div class="layui-input-inline">
                          <select type="text" id="lock" name="lock" autocomplete="off" class="layui-input">
-                             <option>是</option>
-                             <option>否</option>
+                             <option value="0">是</option>
+                             <option value="1">否</option>
                          </select>
                     </div>
                 </div>
@@ -147,7 +147,7 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">卡片类型</label>
                     <div class="layui-input-inline">
-                        <select name="cardTypeM" lay-filter="customerCommissioner">
+                        <select id="cardTypeM" name="cardTypeM" lay-filter="customerCommissioner">
                             <option value="0">可升级</option>
                             <option value="1">不可升级</option>
                         </select>
@@ -200,7 +200,20 @@
         laydate.render({
             elem: '#date'
         });
-
+        function layuiAlert(msg) {
+            layer.open({
+                offset: "auto",//具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
+                content: '<div style="padding: 20px 70px;">' + msg + '</div>',
+                btn: '关闭',
+                btnAlign: 'c',//按钮居中
+                shade: 0, //不显示遮罩
+                closeBtn: false,
+                yes: function () {
+                    layer.closeAll();
+                    location.reload();
+                }
+            });
+        }
         // “主体表格”渲染
         var tableIns = table.render({
             elem: '#card',
@@ -221,7 +234,7 @@
                 {field: 'name', width: '10%', title: '卡片名称'},
                 {field: 'type', width: '7%', title: '卡片类型'},
                 {field: 'lock', width: '8%', title: '升级锁定'},
-                {field: 'pointToUpdate', width: '10%', title: '升级所需积分'},
+                {field: 'score', width: '10%', title: '升级所需积分'},
                 {field: 'remark', width: '8%', title: '备注'},
                 {field: 'creator', width: '8%', title: '创建人'},
                 {field: 'creatTime', width: '10%', title: '创建时间'},
@@ -230,7 +243,23 @@
                 {field: 'id', width: '7%', title: 'id',hide:true},
                 {field: 'operation', width: '13%', title: '操作', toolbar: '#operation', fixed: 'right'}
             ] ],
-            size: 'sm'
+            size: 'sm',
+            parseData: function (res) {
+                var cType = ["可升级卡","不可升级卡"];
+                var cLock = ["是","否"];
+                for (var i = 0; i < res.data.length; i++) {
+                    res.data[i].type = cType[res.data[i].type];
+                    res.data[i].lock=cLock[res.data[i].lock];
+                    res.data[i].score=res.data[i].memberUpgradeCon.score;
+                    // if(res.data[i].cBirthday==null)
+                    //     res.data[i].cBirthday="";
+                    // if(res.data[i].cCard==null)
+                    //     res.data[i].cCard="";
+                    // if(res.data[i].phone==null)
+                    //     res.data[i].phone="";
+                }
+                return res
+            }
         });
 
 
@@ -276,7 +305,7 @@
                 });
                             $('#levelM').val(data.level);
                             $('#nameM').val(data.name);
-                            $('#typeM').val(data.type);
+                            $('#cardTypeM').val(data.type);
                             $('#lockM').val(data.lock);             //获取修改行的数据
                              form.render();
             }
@@ -297,21 +326,27 @@
             console.log("cancel")
             layer.closeAll()
         })
+       // var score=$("#pointToUpdate").val();
 
         $("#confirmAdd").click(function () {
+            var score=$("#type").val();
+            console.log(score);
             $.post({
                 url: "/service/membershipLevel/addMember",
                 data: JSON.stringify({
                     level: $("#level").val(),
                     name: $("#name").val(),
-                    type: $("#type").val(),
+                    type: $("#cardType").val(),
                     lock: $("#lock").val(),
-                    pointToUpdate: $("#pointToUpdate").val(),
+                    memberUpgradeCon:{
+                        score: $("#pointToUpdate").val()
+                    },
                     remark: $("#remark").val()
                 }),
                 contentType: "application/json",
                 success: function (res) {
                     console.log(res)
+                   layuiAlert("信息:" + res)
                 },
                 error: function (res) {
                     console.log(res)

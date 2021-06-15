@@ -917,7 +917,7 @@
         <div class="layui-form-item s-formItem3">
             <label class="layui-form-label">原会员级别</label>
             <div class="layui-input-inline">
-                <input type="text" name="originalLevel" placeholder="1" autocomplete="off" class="layui-input">
+                <input type="text" id="originalLevel" name="originalLevel" placeholder="1" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item s-formItem3">
@@ -925,14 +925,13 @@
             <div class="layui-input-inline">
                 <select name="newLevel" lay-verify="required" id="newLevel" lay-filter="newLevel">
                     <option value="">请选择会员级别</option>
-                    <option value="1">1</option>
                 </select>
             </div>
         </div>
 
         <div class="layui-form-item">
             <div class="layui-input-block s-submitButton5">
-                <button type="button" class="layui-btn" lay-submit lay-filter="save2">确认</button>
+                <button type="button" class="layui-btn" id="gadd" lay-submit lay-filter="save2">确认</button>
                 <a class="layui-btn layui-btn-danger" id="cancel">取消</a>
             </div>
         </div>
@@ -962,6 +961,27 @@
         laydate.render({
             elem: '#unbindTime'
         });
+        function pullMemberlevel(selector, callback) {
+            var selectE = $(selector);
+            $.post({
+                url: "service/Archives/getMemberNameList",
+                timeout: 1000,
+                dataType: "json",
+                success: function (res) {
+                    selectE.empty();
+                    for (var s of res) {
+                        selectE.append("<option value='" + s.level +","+s.id+"'>" + s.level + "</option>");
+                    }
+                    callback();
+                    form.render(); //layui的form重新渲染
+                },
+                error: function () {
+                    selectE.empty();
+                    selectE.append("<option>拉取失败，请刷新！</option>");
+                    form.render();
+                }
+            })
+        }
         // 显示“新增弹窗”
         $('body').on('click', '#add', function () {
             var index = layer.open({
@@ -1032,6 +1052,7 @@
         });
         //监听“会员档案表格”工具条
         var data;
+        var activelevel;
         table.on('tool(memberArchivesTabel)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
             data = obj.data; //获得当前行数据
             // var page = data.page;
@@ -1057,30 +1078,31 @@
                     area: ['1050px', '650px'],
                     offset: '20px'
                 });
-                console.log(data.userId);
+          //      console.log(data.userId);
                 $.post({
                     url: "/service/Archives/getUserInfo",
                     data: {
                         userId: data.userId
                     },
                     success: function (res) {
+                     //   activelevel=res.
                         console.log(res)
                         // for (var resR of res.data.vehicle) {
                         //   if
                         // }
-                        $('#customernameM').val(res.data.customername);
-                        $('#phoneM').val(res.data.phone);
-                        $('#cBirthdayM').val(res.data.cBirthday);
+                        $('#customernameM').val(res.customername);
+                        $('#phoneM').val(res.phone);
+                        $('#cBirthdayM').val(res.cBirthday);
                         // $('#platenumberM').val(res.data.vehicle.platenumber);
                         // $('#vinM').val(res.data.vehicle.vin);
                         // $('#vehiclelabelM').val(res.data.vehicle.vehiclelabel);
                         // $('#vehiclebrandM').val(res.data.vehicle.vehiclebrand);
                         // $('#vehiclestyleM').val(res.data.vehicle.vehiclestyle);
-                        $('#cGenderM').val(res.data.cGender);
+                        $('#cGenderM').val(res.cGender);
                         form.render()
                     },
                     error: function () {
-                        layuiAlert("删除失败")
+                        layuiAlert("修改失败")
                     }
                 });
                 $('#exit1').on('click', function () {
@@ -1097,14 +1119,12 @@
                 $('#cancel').on('click', function () {
                     // 关闭当前弹出层
                     layer.close(index2);
-                });
+                })
+                    //要触发的事件
+                    pullMemberlevel("#newLevel",  () => {$("#originalLevel").val()
+                    })
+
                 // 确认
-                form.on('submit(save2)', function (data) {
-                    // 提示窗
-                    layer.alert('修改成功！', {icon: 1});
-                    // 关闭当前弹出层
-                    layer.close(index2);
-                });
             } else if (layEvent === 'delete') { // 删除
                 layer.confirm('确定要删除吗？', {icon: 3, title: '提示'}, function (index) {
                     // 删除对应行（tr）的DOM结构，并更新缓存
@@ -1207,6 +1227,24 @@
                 }
             })
         })
+        $("#gadd").click(function () {
+           var str=$("#newLevel").val();
+           var result=str.split(",");
+           var id=result[1];
+           console.log(id);
+            $.post({
+                url: "/service/Archives/alertLevel",
+                data: {
+                    userId: data.userId,
+                     id:id
+                },
+                success: function (res) {
+                    layuiAlert('修改成功！', {icon: 1})
+                },
+                error: function () {
+                    layuiAlert("删除失败")
+                }
+        })})
         $("#confirmAddM").click(function () {
             $.post({
                 url: "/service/Archives/editArchives",

@@ -46,11 +46,12 @@ public class MembershipLevelController {
     @PostMapping("addMember")
     public String addMember(@RequestBody Member member) {
         // 通过他们的接口将map数据插入后端
-        memberService.addMember(PlatUserUtils.getCurrentLoginPlatUser(),member);
-//        if (ret == null || ret.equals(""))
-//            return "添加成功";
-//        else
+        String ret = memberService.addMember(PlatUserUtils.getCurrentLoginPlatUser(),member);
+        System.out.println("exists");
+        if (ret == null || ret.equals(""))
             return "添加成功";
+        else
+            return ret;
     }
     @PostMapping("editMember")
     public String editMember(@RequestBody Member member) {
