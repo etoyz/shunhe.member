@@ -1,5 +1,6 @@
 package com.sh.cloud.web;
 
+import com.sft.member.bean.InsuranceCompany;
 import com.sft.member.bean.InsuranceType;
 import com.sft.member.insurance.InsuranceTypeService;
 import com.sh.cloud.utils.PlatUserUtils;
@@ -43,12 +44,9 @@ public class InsuranceTypeController {
 
     @RequestMapping("editInsuranceType")
     @ResponseBody
-    public InsuranceType editInsuranceType(@RequestParam String id, @RequestParam String name) {
-        InsuranceType insuranceType = new InsuranceType();
-        insuranceType.id = id;
-        insuranceType.name = name;
+    public String editInsuranceType(@RequestBody InsuranceType insuranceType) {
         insuranceTypeService.editInsuranceType(PlatUserUtils.getCurrentLoginPlatUser(), insuranceType);
-        return insuranceType;
+        return "成功！";
     }
 
     @RequestMapping("deleteInsuranceType")
@@ -56,8 +54,7 @@ public class InsuranceTypeController {
     public String deleteInsuranceType(@RequestParam String id) {
         InsuranceType insuranceType = new InsuranceType();
         insuranceType.id = id;
-        Boolean ba;
-        if (ba =   Boolean.parseBoolean(insuranceTypeService.deleteInsuranceType(PlatUserUtils.getCurrentLoginPlatUser(), insuranceType)))
+        if (insuranceTypeService.deleteInsuranceType(PlatUserUtils.getCurrentLoginPlatUser(), insuranceType) == null)
             return "删除成功！";
         else
             return "删除失败！";
