@@ -176,7 +176,7 @@
             <div class="layui-inline">
                 <label class="layui-form-label">总金额</label>
                 <div class="layui-input-inline">
-                    <input disabled type="text" name="billSum" id="billSum" autocomplete="off"
+                    <input disabled type="text" name="totalMoney" id="totalMoney" autocomplete="off"
                            class="layui-input">
                 </div>
             </div>
@@ -258,7 +258,7 @@
             <div class="layui-inline">
                 <label class="layui-form-label">充入数量</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="buyNum" id="buyNum" autocomplete="off"
+                    <input type="text" name="count" id="count" autocomplete="off"
                            class="layui-input">
                 </div>
             </div>
@@ -271,8 +271,12 @@
             </div>
         </div>
         <div class="layui-btn-container s-tabBottomButton">
-            <span class="layui-btn layui-btn-warm" id="submitForReview">提交审核←</span>
-            <span class="layui-btn layui-btn-normal" lay-filter="addUseCard" lay-submit lay->添加明细↓↓↓</span>
+            <span class="layui-btn layui-btn-warm" id="submitForReview">
+                提交审核 <svg t="1623748927861" class="icon" viewBox="0 0 1024 620" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6305" width="21" height="21"><path d="M960 260.571L462.222 864 64 512l49.778-100.571 348.444 201.142L960 160z" p-id="6306" fill="#ffffff"></path></svg>
+            </span>
+            <span class="layui-btn layui-btn-normal" lay-filter="addUseCard" lay-submit style="text-align: center">
+                添加明细 <svg t="1623746817979" class="icon" viewBox="0 0 1024 620" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3811" width="21" height="21"><path d="M494.230588 757.699765L112.459294 380.928a44.574118 44.574118 0 0 1 0-65.174588 46.802824 46.802824 0 0 1 33.008941-13.914353H906.541176a46.983529 46.983529 0 0 1 47.164236 46.501647 45.658353 45.658353 0 0 1-14.155294 32.527059L560.188235 757.76a45.959529 45.959529 0 0 1-65.957647 0z" fill="#ffffff" p-id="3812"></path></svg>
+            </span>
         </div>
     </form>
 
@@ -374,9 +378,10 @@
                     dataType: "json",
                     success: function (res) {
                         res = res.data;
-                        for (var s of res) {
-                            selectE2.append("<option value='" + s.consumeProjectId + "'>" + s.name + "</option>");
-                        }
+                        if(res)
+                            for (var s of res) {
+                                selectE2.append("<option value='" + s.consumeProjectId + "'>" + s.name + "</option>");
+                            }
                         callback();
                         form.render(); //layui的form重新渲染
                     },
@@ -429,7 +434,6 @@
                 ]],
                 size: 'sm',
                 parseData: function (res) {
-                    console.log(res)
                     var cGender = ["", "男", "女"]
                     for (var i = 0; i < res.data.length; i++) {
                         res.data[i].cGender = cGender[res.data[i].cGender];
@@ -441,7 +445,6 @@
                             res.data[i].phone = "";
                         res.data[i]['vin'] = res.data[i].vehicle.vin;
                     }
-                    console.log(res)
                     return res
                 }
             });
@@ -471,7 +474,6 @@
                                     });
                                 })
                             })
-                            console.log(data)
                         }
                     })
                     var index1 = layer.open({
@@ -487,7 +489,6 @@
                         })
                     });
                     form.on('select(consumeProjectId)', function () {
-                        console.log(123)
                         pullPracticalItemIds("#practicalProjectId", $("#consumeProjectId").val(), () => {
                         })
                     });
@@ -501,12 +502,12 @@
 
         //popup
         {
-            var couponCheckList = [];
+            var couponReviewList = [];
 
             // "会员信息表格"渲染
             var tableUseCoupons = table.render({
                 elem: '#useCoupons',
-                data: couponCheckList,
+                data: couponReviewList,
                 height: 288,
                 page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                     layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
@@ -523,7 +524,7 @@
                     {field: 'payStyle', width: 80, title: '支付方式'}, //单元格内容水平居中
                     {field: 'timeCost', width: 80, title: '工时费'},
                     {field: 'matCost', width: 146, title: '材料费'},
-                    {field: 'billSum', width: 146, title: '总金额'},
+                    {field: 'totalMoney', width: 146, title: '总金额'},
                     {field: 'ticketID', width: 88, title: '工单号'},
                     {field: 'mileage', width: 88, title: '行驶里程'},
                     {field: 'buyNum', width: 88, title: '数量'},
@@ -539,7 +540,7 @@
             $("#submitForReview").unbind("click").click(function () {
                 $.post({
                     url: "service/useCard/submitForReview",
-                    data: JSON.stringify(couponCheckList),
+                    data: JSON.stringify(couponReviewList),
                     contentType: "application/json",
                     success: function (res) {
                         console.log(res)
@@ -549,11 +550,15 @@
 
             var uniqueID = Number(Math.random().toString().substr(3, length) + Date.now()).toString(36);
             form.on('submit(addUseCard)', function (data) {
+                console.log(activeUser)
                 data.field.userId = activeUser.userId;
                 data.field.groupId = uniqueID
-                couponCheckList.push(data.field)
+                data.field.vehicleId = activeUser.vehicle.vehicleId;
+                if(data.field.payStyle === "-1")
+                    data.field.couponId = $("#practicalProjectId").val()
+                couponReviewList.push(data.field)
                 tableUseCoupons.reload({
-                    data: couponCheckList
+                    data: couponReviewList
                 })
             })
         }
