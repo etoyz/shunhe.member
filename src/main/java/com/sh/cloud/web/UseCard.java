@@ -4,10 +4,7 @@ import com.sft.member.bean.CouponCheck;
 import com.sft.member.bean.UserCoupon;
 import com.sft.member.obtain.pay.PayService;
 import com.sh.cloud.utils.PlatUserUtils;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -20,7 +17,7 @@ public class UseCard {
 
     @RequestMapping("getEnablePayCoupon")
     @ResponseBody
-    public List<UserCoupon> getEnablePayCoupon(String userid, String consumeProjectId) {
+    public List<UserCoupon> getEnablePayCoupon(@RequestParam String userid, @RequestParam String consumeProjectId) {
         return payService.getEnablePayCoupon(userid, consumeProjectId);
     }
 

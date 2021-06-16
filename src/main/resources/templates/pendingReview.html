@@ -268,7 +268,7 @@
             </div>
         </div>
         <div class="layui-btn-container s-tabBottomButton">
-            <span class="layui-btn layui-btn-normal" id="agree">
+            <span class="layui-btn layui-btn-normal" id="checkCoupon">
                 审核 <svg t="1623748927861" class="icon" viewBox="0 0 1024 620" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6305" width="21" height="21"><path d="M960 260.571L462.222 864 64 512l49.778-100.571 348.444 201.142L960 160z" p-id="6306" fill="#ffffff"></path></svg>
             </span>
             <span class="layui-btn layui-btn-danger" lay-filter="reject" lay-submit style="text-align: center">
@@ -460,7 +460,7 @@
             //监听“会员档案表格”工具条
             var activeItem;
             table.on('tool(reviewListTable)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
-                var activeItem = obj.data; //获得当前行数据
+                activeItem = obj.data; //获得当前行数据
                 var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
                 if (layEvent === 'detail') {
                     pullConsumeTypes("#consumeTypeId", () => {
@@ -491,7 +491,7 @@
                         // 关闭当前弹出层
                         layer.close(index1);
                     })
-                    var reviewDetailList = table.render({
+                    table.render({
                         elem: '#reviewDetailList',
                         url: "service/review/getPendingReviewList",
                         method: "post",
@@ -534,14 +534,12 @@
                 }
             });
 
-
-            $("#submitForReview").unbind("click").click(function () {
-                $.post({
-                    url: "service/useCard/submitForReview",
-                    data: JSON.stringify(pendingReviewList),
-                    contentType: "application/json",
-                    success: function (res) {
-                        console.log(res)
+            $("#checkCoupon").unbind("click").click(function (){
+                $.get({
+                    url: "service/review/checkCoupon?groupId=" + activeItem.groupId,
+                    success: function (res){
+                        layuiAlert(res)
+                        tableReview.reload()
                     }
                 })
             })
