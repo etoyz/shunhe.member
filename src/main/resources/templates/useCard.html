@@ -571,6 +571,8 @@
                 data.field.vehicleId = activeUser.vehicle.vehicleId;
                 if(data.field.payStyle === "-1")
                     data.field.couponId = $("#practicalProjectId").val()
+                else if(data.field.payStyle === "-2")
+                    data.field.money = $("#count").val()
                 couponReviewList.push(data.field)
                 tableUseCoupons.reload({
                     data: couponReviewList
