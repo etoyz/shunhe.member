@@ -277,7 +277,7 @@
         </div>
     </form>
 
-    <table class="layui-hide" id="reviewDetailList" lay-filter="detailListTable"></table>
+    <table class="layui-hide" id="reviewDetailList" lay-filter="reviewDetailList"></table>
 </div>
 
 
@@ -406,7 +406,7 @@
         }
 
         //primary
-        {// “待审核详情表格”渲染
+        {// “待审核表格”渲染
             var tableReview = table.render({
                 elem: '#reviewList',
                 url: 'service/review/getPendingReviewList',
@@ -453,6 +453,10 @@
                 ]],
                 size: 'sm'
             });
+        }
+
+        //popup
+        {
             //监听“会员档案表格”工具条
             var activeItem;
             table.on('tool(reviewListTable)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
@@ -487,46 +491,49 @@
                         // 关闭当前弹出层
                         layer.close(index1);
                     })
+                    var reviewDetailList = table.render({
+                        elem: '#reviewDetailList',
+                        url: "service/review/getPendingReviewList",
+                        method: "post",
+                        contentType: "application/json",
+                        where: {
+                            user: {},
+                            couponCheck: {
+                                groupId: activeItem.groupId
+                            },
+                            groupBy: false
+                        },
+                        height: 288,
+                        page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                            layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
+                            limit: 10,
+                            groups: 3, //只显示 1 个连续页码
+                            first: false, //不显示首页
+                            last: false //不显示尾页
+                        },
+                        cols: [ [
+                            {type: 'numbers'},
+                            {field: 'consumeTypeId', width: 124, title: '消费类型'},
+                            {field: 'consumeProjectId', width: 82, title: '消费项目'},
+                            {field: 'practicalProjectId', width: 80, title: '具体项目'},
+                            {field: 'payStyle', width: 80, title: '支付方式'}, //单元格内容水平居中
+                            {field: 'timeCost', width: 80, title: '工时费'},
+                            {field: 'matCost', width: 146, title: '材料费'},
+                            {field: 'billSum', width: 146, title: '总金额'},
+                            {field: 'ticketID', width: 88, title: '工单号'},
+                            {field: 'mileage', width: 88, title: '行驶里程'},
+                            {field: 'count', width: 88, title: '数量'},
+                            {field: 'invoiceID', width: 88, title: '发票号'},
+                            {field: 'invoiceNum', width: 88, title: '开票金额'},
+                            {field: 'costPrice', width: 88, title: '成本价'},
+                            {field: '???', width: 88, title: '本次积分'},
+                            {field: 'remark', width: 88, title: '项目备注'}
+                        ]],
+                        size: 'sm'
+                    });
                 }
             });
-        }
 
-        //popup
-        {
-            var pendingReviewList = [];
-
-            // "会员信息表格"渲染
-            var tablePendingReview = table.render({
-                elem: '#reviewDetailList',
-                data: pendingReviewList,
-                height: 288,
-                page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
-                    layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
-                    limit: 10,
-                    groups: 3, //只显示 1 个连续页码
-                    first: false, //不显示首页
-                    last: false //不显示尾页
-                },
-                cols: [ [
-                    {type: 'numbers'},
-                    {field: 'consumeTypeId', width: 124, title: '消费类型'},
-                    {field: 'consumeProjectId', width: 82, title: '消费项目'},
-                    {field: 'practicalProjectId', width: 80, title: '具体项目'},
-                    {field: 'payStyle', width: 80, title: '支付方式'}, //单元格内容水平居中
-                    {field: 'timeCost', width: 80, title: '工时费'},
-                    {field: 'matCost', width: 146, title: '材料费'},
-                    {field: 'billSum', width: 146, title: '总金额'},
-                    {field: 'ticketID', width: 88, title: '工单号'},
-                    {field: 'mileage', width: 88, title: '行驶里程'},
-                    {field: 'count', width: 88, title: '数量'},
-                    {field: 'invoiceID', width: 88, title: '发票号'},
-                    {field: 'invoiceNum', width: 88, title: '开票金额'},
-                    {field: 'costPrice', width: 88, title: '成本价'},
-                    {field: '???', width: 88, title: '本次积分'},
-                    {field: 'remark', width: 88, title: '项目备注'}
-                ]],
-                size: 'sm'
-            });
 
             $("#submitForReview").unbind("click").click(function () {
                 $.post({
