@@ -1,5 +1,6 @@
 package com.sh.cloud.web;
 
+import com.sft.member.bean.ConsumeType;
 import com.sft.member.bean.InsuranceCompany;
 import com.sft.member.insurance.InsuranceCompanyService;
 import com.sh.cloud.utils.PlatUserUtils;
@@ -35,6 +36,12 @@ public class InsuranceCompanyController {
         return ret;
     }
 
+    @RequestMapping("getInsuranceCompany")
+    @ResponseBody
+    public InsuranceCompany getInsuranceCompany(@RequestBody InsuranceCompany insuranceCompany) {
+        return insuranceCompanyService.getInsuranceCompany(insuranceCompany);
+    }
+
     @RequestMapping("addInsuranceCompany")
     @ResponseBody
     public String addInsuranceCompany(@RequestBody InsuranceCompany insuranceCompany) {
@@ -43,12 +50,9 @@ public class InsuranceCompanyController {
 
     @RequestMapping("editInsuranceCompany")
     @ResponseBody
-    public InsuranceCompany editInsuranceCompany(@RequestParam String id, @RequestParam String name) {
-        InsuranceCompany insuranceCompany = new InsuranceCompany();
-        insuranceCompany.id = id;
-        insuranceCompany.name = name;
+    public String editInsuranceCompany(@RequestBody InsuranceCompany insuranceCompany) {
         insuranceCompanyService.editInsuranceCompany(PlatUserUtils.getCurrentLoginPlatUser(), insuranceCompany);
-        return insuranceCompany;
+        return "成功！";
     }
 
     @RequestMapping("deleteInsuranceCompany")
@@ -56,8 +60,7 @@ public class InsuranceCompanyController {
     public String deleteInsuranceCompany(@RequestParam String id) {
         InsuranceCompany insuranceCompany = new InsuranceCompany();
         insuranceCompany.id = id;
-        Boolean ba;
-        if (ba =   Boolean.parseBoolean(insuranceCompanyService.deleteInsuranceCompany(PlatUserUtils.getCurrentLoginPlatUser(), insuranceCompany)))
+        if (insuranceCompanyService.deleteInsuranceCompany(PlatUserUtils.getCurrentLoginPlatUser(), insuranceCompany) == null)
             return "删除成功！";
         else
             return "删除失败！";

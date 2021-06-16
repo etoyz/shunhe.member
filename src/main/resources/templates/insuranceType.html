@@ -41,7 +41,7 @@
             <div class="s-commonTable">
                 <table class="layui-hide" id="insuranceCompanies" lay-filter="insuranceTypeTabel"></table>
                 <script type="text/html" id="operation">
-                    <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="edit">修改</a>
+                    <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="mod">修改</a>
                     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
                 </script>
             </div>
@@ -62,15 +62,15 @@
                     </div>
                 </div>
             </div>
-            <div class="layui-form-item s-formItem1">
-                <div class="layui-inline">
-                    <label class="layui-form-label">顺序号</label>
-                    <div class="layui-input-inline">
-                        <input type="text" id="indexID" autocomplete="off"
-                               class="layui-input">
-                    </div>
-                </div>
-            </div>
+<!--            <div class="layui-form-item s-formItem1">-->
+<!--                <div class="layui-inline">-->
+<!--                    <label class="layui-form-label">顺序号</label>-->
+<!--                    <div class="layui-input-inline">-->
+<!--                        <input type="text" id="indexID" autocomplete="off"-->
+<!--                               class="layui-input">-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
             <div class="layui-form-item s-formItem1">
                 <div class="layui-inline">
                     <label class="layui-form-label">备注</label>
@@ -89,14 +89,14 @@
 </div>
 
 <!-- 修改弹窗 -->
-<div class="s-details" id="editWindow">
+<div class="s-details" id="modWindow">
     <form class="layui-form" action="">
         <div>
             <div class="layui-form-item s-formItem1">
                 <div class="layui-inline">
                     <label class="layui-form-label"><i>*</i>险种名称</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="insuranceTypeNameE" lay-verify="required" autocomplete="off"
+                        <input type="text" name="name" lay-verify="required" autocomplete="off"
                                class="layui-input">
                     </div>
                 </div>
@@ -114,7 +114,7 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">备注</label>
                     <div class="layui-input-inline">
-                        <input type="text" id="remarksE" autocomplete="off"
+                        <input type="text" id="remarksMod" autocomplete="off"
                                class="layui-input">
                     </div>
                 </div>
@@ -122,7 +122,7 @@
         </div>
         <div class="s-tabBottomButton">
             <button class="layui-btn" id="confirm" lay-filter="confirmMod" lay-submit>确认</button>
-            <button class="layui-btn layui-btn-warm" id="exit1">取消</button>
+            <button class="layui-btn layui-btn-warm" id="cancelMod">取消</button>
         </div>
     </form>
 </div>
@@ -173,6 +173,7 @@
                     contentType: "application/json",
                     success: function (res) {
                         layuiAlert("结果：" + res)
+                        tableIns.reload();
                     }
                 })
             })
@@ -210,35 +211,32 @@
             var data = obj.data; //获得当前行数据
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
             var insuranceTypeName = data.name;
-            if (layEvent === 'edit') {
-                // var index1 = layer.open({
-                //     type: 1,
-                //     title: '编辑',
-                //     content: $('#editWindow'),
-                //     area: ['400px', '225px'],
-                // });
-                // $('#exit1').on('click', function () {
-                //     // 关闭当前弹出层
-                //     layer.close(index1);
-                // });
-
-                layer.open({
+            if (layEvent === 'mod') {
+                var index1 = layer.open({
                     type: 1,
-                    title: '编辑险种信息',
-                    content: $('#editWindow'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
-                    area: ['1022px', '225px']
+                    title: '编辑',
+                    content: $('#modWindow'),
+                    area: ['400px', '225px'],
                 });
-                // pullCouponTypes("#couponTypeM", function () {
-                //     //拉取卡券列表成功后，执行此回调函数填充原数据以供修改
-                //     $('#couponTypeM').val(activeLine.type);
-                //     $('#couponNameM').val(activeLine.name);
-                //     $('#priceM').val(activeLine.unitPrice);
-                //     $('#costPriceM').val(activeLine.costPrice);
-                // })
-
-
-
-
+                $("#insuranceTypeName").val(data.name);
+                form.on('submit(confirmMod)', function (formData) {
+                    formData.field['id'] = data.id;
+                    $.post({
+                        url: "service/insuranceType/editInsuranceType",
+                        data: JSON.stringify(formData.field),
+                        contentType: "application/json",
+                        success: function (res) {
+                            layuiAlert(res)
+                            tableIns.reload();
+                        }
+                    })
+                    return false;
+                })
+                $('#cancelMod').on('click', function () {
+                    // 关闭当前弹出层
+                    layer.close(index1);
+                    return false;
+                });
             } else if (layEvent === 'delete') {
                 console.log(data)
                 layer.confirm('确认删除险种【' + insuranceTypeName + '】？', {icon: 3, title: '提示'}, function (index) {
@@ -249,6 +247,7 @@
                         },
                         success: function (res) {
                             layuiAlert(res)
+                            tableIns.reload()
                         }
                     })
                 });
