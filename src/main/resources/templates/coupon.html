@@ -390,7 +390,6 @@
             layer.closeAll()
         })
 
-        // $("#confirmAdd").click(function () {
         form.on('submit(confirmAdd)', function(data) {
             $.post({
                 url: "/service/coupon/addCoupon",
@@ -398,9 +397,7 @@
                 contentType: "application/json",
                 success: function (res) {
                     layuiAlert("信息:" + res)
-                },
-                error: function (res) {
-                    layuiAlert("新增失败" + res)
+                    couponTable.reload()
                 }
             })
         })
