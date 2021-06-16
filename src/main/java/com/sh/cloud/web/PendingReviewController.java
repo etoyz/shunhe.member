@@ -26,8 +26,9 @@ public class PendingReviewController {
         Map<String, Object> ret = new HashMap();
         ret.put("code", 0);
         ret.put("msg", "");
-        ret.put("count", payService.getUnCheckRecordCount(request.getUser(), request.getCouponCheck(), request.getGroupBy()));
-        ret.put("data", payService.getUnCheckRecord(request.getUser(), request.getCouponCheck(), request.getPage(), request.getLimit(), request.getGroupBy()));
+        List<CouponCheck> data = payService.getUnCheckRecord(request.getUser(), request.getCouponCheck(), request.getPage(), request.getLimit(), request.getGroupBy());
+        ret.put("data", data);
+        ret.put("count", data.size());
 
         return ret;
     }

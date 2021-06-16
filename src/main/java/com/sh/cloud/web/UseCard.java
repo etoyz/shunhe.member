@@ -27,7 +27,9 @@ public class UseCard {
     @RequestMapping("submitForReview")
     @ResponseBody
     public String submitForReview(@RequestBody List<CouponCheck> list) {
-        payService.addUnCheckRecord(PlatUserUtils.getCurrentLoginPlatUser(), list);
-        return "成功！";
+        if (payService.addUnCheckRecord(PlatUserUtils.getCurrentLoginPlatUser(), list) == null)
+            return "失败！";
+        else
+            return "成功！";
     }
 }

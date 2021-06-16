@@ -13,16 +13,14 @@
     <link rel="stylesheet" href="css/form.css" media="all">
     <link rel="stylesheet" href="css/common.css" media="all">
 </head>
+
 <body>
 <div class="layui-fluid main">
     <div class="layui-row">
         <div class="layui-col-md12">
-
             <div class="s-headerSearch">
                 <form class="layui-form" action="">
-
                     <div class="layui-form-item">
-
                         <div class="layui-inline s-layuiInline">
                             <label class="layui-form-label">车牌号</label>
                             <div class="layui-input-inline">
@@ -59,7 +57,6 @@
                     </div>
                 </form>
             </div>
-
             <!-- 展示表格 -->
             <div class="s-commonTable">
                 <table class="layui-hide" id="reviewList" lay-filter="reviewListTable"></table>
@@ -271,16 +268,16 @@
             </div>
         </div>
         <div class="layui-btn-container s-tabBottomButton">
-            <span class="layui-btn layui-btn-warm" id="submitForReview">
+            <span class="layui-btn layui-btn-normal" id="agree">
                 审核 <svg t="1623748927861" class="icon" viewBox="0 0 1024 620" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6305" width="21" height="21"><path d="M960 260.571L462.222 864 64 512l49.778-100.571 348.444 201.142L960 160z" p-id="6306" fill="#ffffff"></path></svg>
             </span>
-            <span class="layui-btn layui-btn-normal" lay-filter="addUseCard" lay-submit style="text-align: center">
-                驳回 <svg t="1623746817979" class="icon" viewBox="0 0 1024 620" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3811" width="21" height="21"><path d="M494.230588 757.699765L112.459294 380.928a44.574118 44.574118 0 0 1 0-65.174588 46.802824 46.802824 0 0 1 33.008941-13.914353H906.541176a46.983529 46.983529 0 0 1 47.164236 46.501647 45.658353 45.658353 0 0 1-14.155294 32.527059L560.188235 757.76a45.959529 45.959529 0 0 1-65.957647 0z" fill="#ffffff" p-id="3812"></path></svg>
+            <span class="layui-btn layui-btn-danger" lay-filter="reject" lay-submit style="text-align: center">
+                驳回 <svg t="1623807678000" class="icon" viewBox="0 0 1024 950" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1970" width="15" height="15"><path d="M1023.035952 170.907721l-852.12806 852.128061L0.241225 852.730697l852.248588-852.12806z" p-id="1971" fill="#ffffff"></path><path d="M170.425782 0l852.128061 852.12806L852.248758 1022.794727l-852.12806-852.248588z" p-id="1972" fill="#ffffff"></path></svg>
             </span>
         </div>
     </form>
 
-    <table class="layui-hide" id="useCoupons" lay-filter="useCouponsTable"></table>
+    <table class="layui-hide" id="reviewDetailList" lay-filter="detailListTable"></table>
 </div>
 
 
@@ -392,6 +389,20 @@
                     }
                 })
             }
+
+            function layuiAlert(msg) {
+                layer.open({
+                    offset: "auto",//具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
+                    content: '<div style="padding: 20px 70px;">' + msg + '</div>',
+                    btn: '关闭',
+                    btnAlign: 'c',//按钮居中
+                    shade: 0, //不显示遮罩
+                    closeBtn: false,
+                    yes: function () {
+                        layer.closeAll();
+                    }
+                });
+            }
         }
 
         //primary
@@ -452,7 +463,7 @@
                         pullConsumeItems("#consumeProjectId", $("#consumeTypeId").val(), () => {
                             pullPracticalItemIds("#practicalProjectId", $("#consumeProjectId").val(), () => {
                             })
-                            pullPay("#payStyle", data.userId, $("#consumeProjectId").val(), () => {
+                            pullPay("#payStyle", activeItem.userId, $("#consumeProjectId").val(), () => {
                             });
                         })
                     })
@@ -482,12 +493,12 @@
 
         //popup
         {
-            var couponCheckList = [];
+            var pendingReviewList = [];
 
             // "会员信息表格"渲染
-            var tableUseCoupons = table.render({
-                elem: '#useCoupons',
-                data: couponCheckList,
+            var tablePendingReview = table.render({
+                elem: '#reviewDetailList',
+                data: pendingReviewList,
                 height: 288,
                 page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                     layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
@@ -520,7 +531,7 @@
             $("#submitForReview").unbind("click").click(function () {
                 $.post({
                     url: "service/useCard/submitForReview",
-                    data: JSON.stringify(couponCheckList),
+                    data: JSON.stringify(pendingReviewList),
                     contentType: "application/json",
                     success: function (res) {
                         console.log(res)

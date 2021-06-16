@@ -78,7 +78,7 @@
             <div class="layui-inline">
                 <label class="layui-form-label">消费日期</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="time" id="time" lay-verify="time" autocomplete="off"
+                    <input type="text" name="time" id="time" lay-verify="time|required" autocomplete="off"
                            class="layui-input">
                 </div>
             </div>
@@ -258,7 +258,7 @@
             <div class="layui-inline">
                 <label class="layui-form-label">充入数量</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="count" id="count" autocomplete="off"
+                    <input type="text" name="count" id="count" autocomplete="off" lay-verify="required"
                            class="layui-input">
                 </div>
             </div>
@@ -391,6 +391,20 @@
                         form.render();
                     }
                 })
+            }
+
+            function layuiAlert(msg) {
+                layer.open({
+                    offset: "auto",//具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
+                    content: '<div style="padding: 20px 70px;">' + msg + '</div>',
+                    btn: '关闭',
+                    btnAlign: 'c',//按钮居中
+                    shade: 0, //不显示遮罩
+                    closeBtn: false,
+                    yes: function () {
+                        layer.closeAll();
+                    }
+                });
             }
         }
 
@@ -543,7 +557,8 @@
                     data: JSON.stringify(couponReviewList),
                     contentType: "application/json",
                     success: function (res) {
-                        console.log(res)
+                        layuiAlert(res)
+                        tableUseCoupons.reload()
                     }
                 })
             })
