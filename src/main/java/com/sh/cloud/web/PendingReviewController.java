@@ -21,17 +21,23 @@ public class PendingReviewController {
 
     @RequestMapping("getPendingReviewList")
     public Map<String, Object> getPendingReviewList(@RequestBody GetPendingReviewListRequest request) {
+        CouponCheck couponCheck = request.getCouponCheck();
+        couponCheck.type = "0";
         Map<String, Object> ret = new HashMap();
         ret.put("code", 0);
         ret.put("msg", "");
-        ret.put("data", payService.getUnCheckRecord(request.getUser(), request.getCouponCheck(), request.getPage(), request.getLimit(), request.getGroupBy()));
-        ret.put("count", payService.getUnCheckRecordCount(request.getUser(), request.getCouponCheck(), request.getGroupBy()));
+        ret.put("data", payService.getUnCheckRecord(request.getUser(), couponCheck, request.getPage(), request.getLimit(), request.getGroupBy()));
+        ret.put("count", payService.getUnCheckRecordCount(request.getUser(), couponCheck, request.getGroupBy()));
 
         return ret;
     }
 
     @RequestMapping("checkCoupon")
     public String checkCoupon(@RequestParam String groupId) {
-        return payService.checkCoupon(PlatUserUtils.getCurrentLoginPlatUser(), groupId);
+        String ret = payService.checkCoupon(PlatUserUtils.getCurrentLoginPlatUser(), groupId);
+        if (ret.equals(""))
+            return "成功！";
+        else
+            return ret;
     }
 }

@@ -1,5 +1,6 @@
 package com.sh.cloud.web;
 
+import com.sft.member.bean.CouponCheck;
 import com.sft.member.bean.PlatUser;
 import com.sft.member.obtain.pay.PayService;
 import com.sh.cloud.entity.GetConsumeListRequest;
@@ -21,12 +22,13 @@ public class CancelConsumeController {
 
     @RequestMapping("getConsumeList")
     public Map<String, Object> getConsumeList(@RequestBody GetConsumeListRequest request) {
+        CouponCheck couponCheck = request.getCouponCheck();
+        couponCheck.type = "1";
         Map<String, Object> ret = new HashMap();
-
         ret.put("code", 0);
         ret.put("msg", "");
-        ret.put("data", payService.getUnCheckRecord(request.getUser(), request.getCouponCheck(), request.getPage(), request.getLimit(), request.getGroupBy()));
-        ret.put("count", payService.getUnCheckRecordCount(request.getUser(), request.getCouponCheck(), request.getGroupBy()));
+        ret.put("data", payService.getUnCheckRecord(request.getUser(), couponCheck, request.getPage(), request.getLimit(), request.getGroupBy()));
+        ret.put("count", payService.getUnCheckRecordCount(request.getUser(), couponCheck, request.getGroupBy()));
 
         return ret;
     }
