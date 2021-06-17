@@ -271,7 +271,7 @@
             <span class="layui-btn layui-btn-normal" id="checkCoupon">
                 审核 <svg t="1623748927861" class="icon" viewBox="0 0 1024 620" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6305" width="21" height="21"><path d="M960 260.571L462.222 864 64 512l49.778-100.571 348.444 201.142L960 160z" p-id="6306" fill="#ffffff"></path></svg>
             </span>
-            <span class="layui-btn layui-btn-danger" lay-filter="reject" lay-submit style="text-align: center">
+            <span class="layui-btn layui-btn-danger" lay-filter="reject" id="reject" lay-submit style="text-align: center">
                 驳回 <svg t="1623807678000" class="icon" viewBox="0 0 1024 950" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1970" width="15" height="15"><path d="M1023.035952 170.907721l-852.12806 852.128061L0.241225 852.730697l852.248588-852.12806z" p-id="1971" fill="#ffffff"></path><path d="M170.425782 0l852.128061 852.12806L852.248758 1022.794727l-852.12806-852.248588z" p-id="1972" fill="#ffffff"></path></svg>
             </span>
         </div>
@@ -554,6 +554,16 @@
             $("#checkCoupon").unbind("click").click(function (){
                 $.get({
                     url: "service/review/checkCoupon?groupId=" + activeItem.groupId,
+                    success: function (res){
+                        layuiAlert(res)
+                        tableReview.reload()
+                    }
+                })
+            })
+
+            $("#reject").unbind("click").click(function (){
+                $.ajax({
+                    url: "service/review/cancelRecord?groupId="+activeItem.groupId,
                     success: function (res){
                         layuiAlert(res)
                         tableReview.reload()

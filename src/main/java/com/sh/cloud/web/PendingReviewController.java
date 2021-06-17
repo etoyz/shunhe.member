@@ -40,4 +40,13 @@ public class PendingReviewController {
         else
             return ret;
     }
+
+    @RequestMapping("cancelRecord")
+    public String cancelRecord(@RequestParam String groupId) {
+        String ret = payService.cancelRecord(PlatUserUtils.getCurrentLoginPlatUser(), groupId);
+        if (ret == null)
+            return "成功！";
+        else
+            return ret;
+    }
 }
