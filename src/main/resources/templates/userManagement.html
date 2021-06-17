@@ -51,7 +51,7 @@
                 <table class="layui-hide" id="user" lay-filter="userTabel"></table>
                 <script type="text/html" id="operation">
                     <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delete">删除</a>
-<!--                    <a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="modify">重置密码</a>-->
+                    <!--                    <a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="modify">重置密码</a>-->
                 </script>
             </div>
         </div>
@@ -64,23 +64,16 @@
         <div>
             <div class="layui-form-item s-formItem1">
                 <div class="layui-inline">
-                    <label class="layui-form-label">用户编号</label>
-                    <div class="layui-input-inline">
-                        <input type="text" id="userId"
-                               autocomplete="off" class="layui-input" lay-verify="required|number">
-                    </div>
-                </div>
-                <div class="layui-inline">
                     <label class="layui-form-label">用户名称</label>
                     <div class="layui-input-inline">
-                        <input type="text" id="userName"
+                        <input type="text" id="name" name="name"
                                autocomplete="off" class="layui-input" lay-verify="required">
                     </div>
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">联系电话</label>
                     <div class="layui-input-inline">
-                        <input type="text" id="phoneNum"
+                        <input type="text" id="phoneNum" name="phoneNum"
                                autocomplete="off" class="layui-input" lay-verify="required|number">
                     </div>
                 </div>
@@ -89,21 +82,21 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">登录用户名</label>
                     <div class="layui-input-inline">
-                        <input type="text" id="loginUserName"
+                        <input type="text" id="username" name="username"
                                autocomplete="off" class="layui-input" lay-verify="required">
                     </div>
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">登录密码</label>
                     <div class="layui-input-inline">
-                        <input type="text" id="loginPassword"
+                        <input type="text" id="password" name="password"
                                autocomplete="off" class="layui-input" lay-verify="required">
                     </div>
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">所属职位</label>
                     <div class="layui-input-inline">
-                        <select type="text" id="duty" autocomplete="off" class="layui-input">
+                        <select type="text" id="post" autocomplete="off" class="layui-input" name="post">
                             <option>---</option>
                             <option>销售顾问</option>
                             <option>服务顾问</option>
@@ -120,7 +113,7 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">操作类型</label>
                     <div class="layui-input-inline">
-                        <select type="text" id="operations" autocomplete="off" class="layui-input">
+                        <select type="text" id="operateType" name="operateType" autocomplete="off" class="layui-input">
                             <option>---</option>
                             <option>本店</option>
                             <option>个人</option>
@@ -131,21 +124,14 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">所属门店</label>
                     <div class="layui-input-inline">
-                        <select type="text" id="dealer" autocomplete="off" class="layui-input">
+                        <select type="text" id="dealerId" name="dealerId" autocomplete="off" class="layui-input">
                             <option>---</option>
-                            <option>烟台顺合广汽本田店</option>
+                            <option value="0">烟台顺合广汽本田店</option>
                         </select>
                     </div>
                 </div>
-<!--                <div class="layui-inline">-->
-<!--                    <label class="layui-form-label">指定IP登入</label>-->
-<!--                    <div class="layui-input-inline">-->
-<!--                        <input type="text" id="ipLimit"-->
-<!--                               class="layui-input">-->
-<!--                    </div>-->
-<!--                </div>-->
             </div>
-    </div>
+        </div>
         <div class="s-tabBottomButton">
             <button type="button" class="layui-btn" id="confirmAdd" lay-filter="confirmAdd" lay-submit>新增</button>
             <button type="button" class="layui-btn layui-btn-warm" id="cancelAdd">取消</button>
@@ -169,7 +155,7 @@
         });
 
         // “用户表格”渲染
-        var userTable = table.render({
+        var tablePlatUser = table.render({
             elem: '#user',
             url: 'service/platUserManage/getUserList?query=',
             page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
@@ -193,13 +179,14 @@
                 {field: '-', width: '10%', title: '指定IP登入'},
                 // {field: 'lastEditTime', width: '14%', title: '最后编辑时间'},
                 {field: 'operation', width: '14%', title: '操作', toolbar: '#operation'}
-            ] ],
+            ]],
             size: 'sm',
             parseData: function (res) {
                 console.log(res)
-                for (var i = 0; i < res.data.length; i++) {
-                    res.data[i].dealerId = res.data[i].dealerId === 1 ? "烟台顺合广汽本田店" : "-";
-                }
+                if (res.data)
+                    for (var i = 0; i < res.data.length; i++) {
+                        res.data[i].dealerId = res.data[i].dealerId === 1 ? "烟台顺合广汽本田店" : "-";
+                    }
                 return res
             }
         });
@@ -214,7 +201,6 @@
                 closeBtn: false,
                 yes: function () {
                     layer.closeAll();
-                    location.reload();
                 }
             });
         }
@@ -235,9 +221,7 @@
                         contentType: "application/json",
                         success: function (res) {
                             layuiAlert(res)
-                        },
-                        error: function () {
-                            layuiAlert("删除失败")
+                            tablePlatUser.reload()
                         }
                     });
                 })
@@ -267,8 +251,6 @@
                 content: $('#addWindow'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
                 area: ['1022px', '500px']
             });
-            // pullCouponTypes("#couponType", () => {
-            // })
             return false;
         })
 
@@ -276,8 +258,7 @@
             layer.closeAll()
         })
 
-
-        form.on('submit(confirmAdd)', function(data) {
+        form.on('submit(confirmAdd)', function (data) {
             $.post({
                 url: "service/platUserManage/addUser",
                 data: JSON.stringify(data.field),
@@ -285,43 +266,18 @@
                 success: function (res) {
                     console.log(res)
                     layuiAlert("信息:" + res)
-                },
-                error: function (res) {
-                    layuiAlert("新增失败" + res)
                 }
             })
         })
 
-        // var projectsTable = table.render({
-        //     id: "relTable",
-        //     elem: "#relTable",
-        //     height: 450,
-        //     width: 500,
-        //     page: false,
-        //     url: "service/consumeProject/getConsumeProjectList?query=&consumeType=",
-        //     cols: [ [
-        //         {type: 'checkbox', width: 70},
-        //         {field: 'name', width: 420, title: '消费项目'},
-        //     ] ],
-        // })
-
         $("#queryBtn").click(function () {
-            userTable.reload({
+            tablePlatUser.reload({
                 url: 'service/platUserManage/getUserList?query=' + $("#userNameSearch").val(),
                 page: {
                     curr: 1
                 }
             })
             return false;
-        })
-
-        $(document).ready(function () {
-            // $.post({
-            //     url: "service/coupon/getCouponList",
-            //     success: function (res) {
-            //         console.log(res)
-            //     }
-            // })
         })
     });
 </script>

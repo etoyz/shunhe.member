@@ -30,7 +30,6 @@ public class PlatUserManagementController {
 
         PlatUser platUser = new PlatUser();
         platUser.name = query;
-        platUser.platUserId = PlatUserUtils.getCurrentLoginPlatUser().platUserId;
         List<PlatUser> data = platUserService.getPlatUserList(platUser, page, limit);
         ret.put("count", platUserService.getPlatUserListCount(platUser));
         ret.put("data", data);
