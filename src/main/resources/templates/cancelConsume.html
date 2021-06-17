@@ -68,7 +68,7 @@
             <div class="s-commonTable">
                 <table class="layui-hide" id="consumeList" lay-filter="cancelConsumeTabel"></table>
                 <script type="text/html" id="operation">
-                    <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="rollBack">反结算</a>
+                    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="rollBack">反结算</a>
                 </script>
             </div>
         </div>
@@ -151,7 +151,7 @@
                 {field: '**', width: 210, title: '发票号'},
                 {field: '**', width: 210, title: '开票金额'},
                 {field: 'remark', width: 210, title: '项目备注'},
-                {field: 'consumeId', width: 210, title: 'id', hide: true},
+                {field: 'groupId', width: 210, title: 'groupId', hide: true},
                 {field: 'operation', width: 210, title: '操作', toolbar: '#operation', fixed: 'right'}
             ] ],
             size: 'sm'
@@ -160,19 +160,24 @@
         table.on('tool(cancelConsumeTabel)', function (obj) {
             var data = obj.data; //获得当前行数据
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
-            var insuranceTypeName = data.name;
+            var userName = data.userName;
             if (layEvent === 'rollBack') {
                 // console.log(data)
-                layer.confirm('确认删除险种【' + insuranceTypeName + '】？', {icon: 3, title: '提示'}, function (index) {
+                layer.confirm('确认反结算客户名称为【' + userName + '】的账单？', {icon: 3, title: '提示'}, function (index) {
                     // 确定要反结算该消费单记录？
                     $.post({
                         url: "service/cancelConsume/rollBack",
                         data: {
-                            id: data.id
+                            groupId: data.groupId
                         },
                         success: function (res) {
                             layuiAlert(res)
                             tableIns.reload()
+                        },
+                        error: function () {
+                            tableIns.empty();
+                            tableIns.append("<option>反结算失败，请稍后再试！</option>");
+                            form.render();
                         }
                     })
                 });
@@ -181,7 +186,7 @@
 
         $("#queryBtn").click(function () {
             tableIns.reload({
-                url: 'service/insuranceType/getInsuranceTypeList' + $("#insuranceTypeInput").val(),
+                url: 'service/cancelConsume/getConsumeList',
                 page: {
                     curr: 1
                 }
