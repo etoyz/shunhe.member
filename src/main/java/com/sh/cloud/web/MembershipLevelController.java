@@ -47,7 +47,7 @@ public class MembershipLevelController {
     public String addMember(@RequestBody Member member) {
         // 通过他们的接口将map数据插入后端
         String ret = memberService.addMember(PlatUserUtils.getCurrentLoginPlatUser(),member);
-        System.out.println("exists");
+//        System.out.println("exists");
         if (ret == null || ret.equals(""))
             return "添加成功";
         else
