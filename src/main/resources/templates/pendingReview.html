@@ -427,15 +427,14 @@
                     last: false //不显示尾页
                 },
                 toolbar: true, //仅开启工具栏，不显示左侧模板
-                // defaultToolbar: ['exports'], //头部工具栏右侧图标
                 defaultToolbar: ['filter', 'print', 'exports'],
                 cols: [ [
                     {field: 'time', width: 150, title: '消费日期'},
-                    {field: '**', width: 56, title: '流水号'},
-                    {field: 'userId', width: 96, title: '客户名称'},
-                    {field: 'userId', width: 156, title: '会员卡号'}, //单元格内容水平居中
-                    {field: 'vehicleId', width: 160, title: '车架号'},
-                    {field: 'vehicleId', width: 88, title: '车牌号'},
+                    {field: 'groupId', width: 56, title: '流水号'},
+                    {field: 'customername', width: 96, title: '客户名称'},
+                    {field: 'memberNumber', width: 156, title: '会员卡号'}, //单元格内容水平居中
+                    {field: 'vin', width: 160, title: '车架号'},
+                    {field: 'platenumber', width: 88, title: '车牌号'},
                     {field: 'consumeTypeId', width: 82, title: '消费类型'},
                     {field: 'consumeProjectId', width: 54, title: '消费项目'},
                     {field: 'practicalProjectId', width: 210, title: '具体项目'},
@@ -453,9 +452,26 @@
                     {field: 'operation', width: 210, title: '操作', toolbar: '#operation', fixed: 'right'}
                 ]],
                 size: 'sm',
-                parseData:function (res) {
-                    //TODO 通过ID获取Name并显示
-                    return res
+                parseData: function (resp) {
+                    let data = resp.data;
+                    if (data)
+                        for (let i = 0; i < data.length; i++) {
+                            $.post({
+                                url: "service/Archives/getUserInfo?userId=" + data[i].userId,
+                                async: false,
+                                success: function (res){
+                                    data[i].customername = res.customername
+                                    data[i].memberNumber = res.memberNumber
+                                    data[i].vin = res.vehicle.vin
+                                    data[i].platenumber = res.vehicle.platenumber
+                                    if(i === data.length - 1) {
+                                        resp.data = data
+                                        return resp
+                                    }
+                                }
+                            })
+                        }
+                    //TODO 显示消费类型、消费项目、具体项目、支付方式
                 }
             });
         }
@@ -511,9 +527,9 @@
                                             {field: 'remark', width: 88, title: '项目备注'}
                                         ]],
                                         size: 'sm',
-                                        parseData:function (res) {
+                                        parseData: function (res) {
                                             let data = res.data
-                                            for(var i = 0; i < data.length; i++){
+                                            for (var i = 0; i < data.length; i++) {
                                                 data[i].consumeProjectName = $('#consumeProjectId option:selected').text()
                                                 data[i].consumeTypeName = $('#consumeTypeId option:selected').text()
                                                 data[i].practicalProjectName = $('#practicalProjectId option:selected').text()
@@ -551,20 +567,20 @@
                 }
             });
 
-            $("#checkCoupon").unbind("click").click(function (){
+            $("#checkCoupon").unbind("click").click(function () {
                 $.get({
                     url: "service/review/checkCoupon?groupId=" + activeItem.groupId,
-                    success: function (res){
+                    success: function (res) {
                         layuiAlert(res)
                         tableReview.reload()
                     }
                 })
             })
 
-            $("#reject").unbind("click").click(function (){
+            $("#reject").unbind("click").click(function () {
                 $.ajax({
-                    url: "service/review/cancelRecord?groupId="+activeItem.groupId,
-                    success: function (res){
+                    url: "service/review/cancelRecord?groupId=" + activeItem.groupId,
+                    success: function (res) {
                         layuiAlert(res)
                         tableReview.reload()
                     }
