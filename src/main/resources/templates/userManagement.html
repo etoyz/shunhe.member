@@ -48,10 +48,9 @@
 
             <!-- 展示表格 -->
             <div class="s-commonTable">
-                <table class="layui-hide" id="user" lay-filter="userTabel"></table>
+                <table class="layui-hide" id="user" lay-filter="userTable"></table>
                 <script type="text/html" id="operation">
-                    <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delete">删除</a>
-                    <!--                    <a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="modify">重置密码</a>-->
+                    <a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="modify">重置密码</a>
                 </script>
             </div>
         </div>
@@ -207,35 +206,14 @@
 
         //监听“用户表格”工具条
         var activeLine
-        table.on('tool(userTabel)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+        table.on('tool(userTable)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
             activeLine = obj.data; //获得当前行数据
-            // var page = data.page;
-            // var limit = data.limit;
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值f）
-            if (layEvent === 'delete') { // 用卡
-                layer.confirm("确认删除用户【" + activeLine.name + "】?", {icon: 3, title: '提示'}, function () {
-                    activeLine.type = activeLine.type === "储值" ? 1 : 0;
-                    $.post({
-                        url: "/service/coupon/deleteCoupon",
-                        data: JSON.stringify(activeLine),
-                        contentType: "application/json",
-                        success: function (res) {
-                            layuiAlert(res)
-                            tablePlatUser.reload()
-                        }
-                    });
-                })
-            }
             if (layEvent === 'modify') {
-                layer.confirm("是否重置密码？", function () {
-                    delete activeLine.roleset
-                    delete activeLine.relateUserId
-                    delete activeLine.platUserId
-                    console.log(activeLine)
+                console.log(activeLine)
+                layer.confirm("确认重置用户【" + activeLine.name + "】的密码?", {icon: 3, title: '提示'}, function () {
                     $.post({
-                        url: "service/platUserManage/resetPassword",
-                        data: JSON.stringify(activeLine),
-                        contentType: "application/json",
+                        url: "service/platUserManage/resetPassword?platUserId=" + activeLine.platUserId,
                         success: function (res) {
                             layuiAlert("修改结果：" + res)
                         }

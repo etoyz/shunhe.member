@@ -30,6 +30,7 @@ public class PlatUserManagementController {
 
         PlatUser platUser = new PlatUser();
         platUser.name = query;
+        platUser.platUserId = PlatUserUtils.getCurrentLoginPlatUser().platUserId;
         List<PlatUser> data = platUserService.getPlatUserList(platUser, page, limit);
         ret.put("count", platUserService.getPlatUserListCount(platUser));
         ret.put("data", data);
@@ -44,10 +45,12 @@ public class PlatUserManagementController {
 
     @RequestMapping("resetPassword")
     @ResponseBody
-    public String resetPassword(@RequestBody PlatUser platUser) {
-        String ret = platUserService.resetPassword(PlatUserUtils.getCurrentLoginPlatUser(), platUser, "111111");
+    public String resetPassword(@RequestParam String platUserId) {
+        PlatUser user = new PlatUser();
+        user.platUserId = platUserId;
+        String ret = platUserService.resetPassword(PlatUserUtils.getCurrentLoginPlatUser(), user, "111111");
         if (ret == null)
-            return "";
+            return "成功";
         else
             return ret;
     }
