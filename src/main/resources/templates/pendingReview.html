@@ -13,16 +13,14 @@
     <link rel="stylesheet" href="css/form.css" media="all">
     <link rel="stylesheet" href="css/common.css" media="all">
 </head>
+
 <body>
 <div class="layui-fluid main">
     <div class="layui-row">
         <div class="layui-col-md12">
-
             <div class="s-headerSearch">
                 <form class="layui-form" action="">
-
                     <div class="layui-form-item">
-
                         <div class="layui-inline s-layuiInline">
                             <label class="layui-form-label">车牌号</label>
                             <div class="layui-input-inline">
@@ -59,7 +57,6 @@
                     </div>
                 </form>
             </div>
-
             <!-- 展示表格 -->
             <div class="s-commonTable">
                 <table class="layui-hide" id="reviewList" lay-filter="reviewListTable"></table>
@@ -271,16 +268,16 @@
             </div>
         </div>
         <div class="layui-btn-container s-tabBottomButton">
-            <span class="layui-btn layui-btn-warm" id="submitForReview">
+            <span class="layui-btn layui-btn-normal" id="checkCoupon">
                 审核 <svg t="1623748927861" class="icon" viewBox="0 0 1024 620" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6305" width="21" height="21"><path d="M960 260.571L462.222 864 64 512l49.778-100.571 348.444 201.142L960 160z" p-id="6306" fill="#ffffff"></path></svg>
             </span>
-            <span class="layui-btn layui-btn-normal" lay-filter="addUseCard" lay-submit style="text-align: center">
-                驳回 <svg t="1623746817979" class="icon" viewBox="0 0 1024 620" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3811" width="21" height="21"><path d="M494.230588 757.699765L112.459294 380.928a44.574118 44.574118 0 0 1 0-65.174588 46.802824 46.802824 0 0 1 33.008941-13.914353H906.541176a46.983529 46.983529 0 0 1 47.164236 46.501647 45.658353 45.658353 0 0 1-14.155294 32.527059L560.188235 757.76a45.959529 45.959529 0 0 1-65.957647 0z" fill="#ffffff" p-id="3812"></path></svg>
+            <span class="layui-btn layui-btn-danger" lay-filter="reject" lay-submit style="text-align: center">
+                驳回 <svg t="1623807678000" class="icon" viewBox="0 0 1024 950" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1970" width="15" height="15"><path d="M1023.035952 170.907721l-852.12806 852.128061L0.241225 852.730697l852.248588-852.12806z" p-id="1971" fill="#ffffff"></path><path d="M170.425782 0l852.128061 852.12806L852.248758 1022.794727l-852.12806-852.248588z" p-id="1972" fill="#ffffff"></path></svg>
             </span>
         </div>
     </form>
 
-    <table class="layui-hide" id="useCoupons" lay-filter="useCouponsTable"></table>
+    <table class="layui-hide" id="reviewDetailList" lay-filter="reviewDetailList"></table>
 </div>
 
 
@@ -392,10 +389,24 @@
                     }
                 })
             }
+
+            function layuiAlert(msg) {
+                layer.open({
+                    offset: "auto",//具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
+                    content: '<div style="padding: 20px 70px;">' + msg + '</div>',
+                    btn: '关闭',
+                    btnAlign: 'c',//按钮居中
+                    shade: 0, //不显示遮罩
+                    closeBtn: false,
+                    yes: function () {
+                        layer.closeAll();
+                    }
+                });
+            }
         }
 
         //primary
-        {// “待审核详情表格”渲染
+        {// “待审核表格”渲染
             var tableReview = table.render({
                 elem: '#reviewList',
                 url: 'service/review/getPendingReviewList',
@@ -419,7 +430,7 @@
                 // defaultToolbar: ['exports'], //头部工具栏右侧图标
                 defaultToolbar: ['filter', 'print', 'exports'],
                 cols: [ [
-                    {field: 'time', width: 80, title: '消费日期'},
+                    {field: 'time', width: 150, title: '消费日期'},
                     {field: '**', width: 56, title: '流水号'},
                     {field: 'userId', width: 96, title: '客户名称'},
                     {field: 'userId', width: 156, title: '会员卡号'}, //单元格内容水平居中
@@ -434,26 +445,87 @@
                     {field: 'totalMoney', width: 210, title: '总金额'},
                     {field: '**', width: 210, title: '工单号'},
                     {field: '**', width: 210, title: '行驶里程'},
+                    {field: 'count', width: 210, title: '数量'},
                     {field: '**', width: 210, title: '发票号'},
                     {field: '**', width: 210, title: '开票金额'},
                     {field: 'remark', width: 210, title: '项目备注'},
                     {field: 'userId', width: 210, title: 'id', hide: true},
                     {field: 'operation', width: 210, title: '操作', toolbar: '#operation', fixed: 'right'}
                 ]],
-                size: 'sm'
+                size: 'sm',
+                parseData:function (res) {
+                    //TODO 通过ID获取Name并显示
+                    return res
+                }
             });
+        }
+
+        //popup
+        {
             //监听“会员档案表格”工具条
             var activeItem;
             table.on('tool(reviewListTable)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
-                var activeItem = obj.data; //获得当前行数据
+                activeItem = obj.data; //获得当前行数据
                 var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
                 if (layEvent === 'detail') {
                     pullConsumeTypes("#consumeTypeId", () => {
                         pullConsumeItems("#consumeProjectId", $("#consumeTypeId").val(), () => {
                             pullPracticalItemIds("#practicalProjectId", $("#consumeProjectId").val(), () => {
+                                pullPay("#payStyle", activeItem.userId, $("#consumeProjectId").val(), () => {
+                                    table.render({
+                                        elem: '#reviewDetailList',
+                                        url: "service/review/getPendingReviewList",
+                                        method: "post",
+                                        contentType: "application/json",
+                                        where: {
+                                            user: {},
+                                            couponCheck: {
+                                                groupId: activeItem.groupId
+                                            },
+                                            groupBy: false
+                                        },
+                                        height: 288,
+                                        page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                                            layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
+                                            limit: 10,
+                                            groups: 3, //只显示 1 个连续页码
+                                            first: false, //不显示首页
+                                            last: false //不显示尾页
+                                        },
+                                        cols: [ [
+                                            {type: 'numbers'},
+                                            {field: 'consumeTypeName', width: 124, title: '消费类型'},
+                                            {field: 'consumeProjectName', width: 82, title: '消费项目'},
+                                            {field: 'practicalProjectName', width: 80, title: '具体项目'},
+                                            {field: 'payStyleName', width: 80, title: '支付方式'}, //单元格内容水平居中
+                                            {field: 'timeCost', width: 80, title: '工时费'},
+                                            {field: 'matCost', width: 146, title: '材料费'},
+                                            {field: 'totalMoney', width: 146, title: '总金额'},
+                                            {field: 'ticketID', width: 88, title: '工单号'},
+                                            {field: 'mileage', width: 88, title: '行驶里程'},
+                                            {field: 'count', width: 88, title: '数量'},
+                                            {field: 'invoiceID', width: 88, title: '发票号'},
+                                            {field: 'invoiceNum', width: 88, title: '开票金额'},
+                                            {field: 'costPrice', width: 88, title: '成本价'},
+                                            {field: '???', width: 88, title: '本次积分'},
+                                            {field: 'remark', width: 88, title: '项目备注'}
+                                        ]],
+                                        size: 'sm',
+                                        parseData:function (res) {
+                                            let data = res.data
+                                            for(var i = 0; i < data.length; i++){
+                                                data[i].consumeProjectName = $('#consumeProjectId option:selected').text()
+                                                data[i].consumeTypeName = $('#consumeTypeId option:selected').text()
+                                                data[i].practicalProjectName = $('#practicalProjectId option:selected').text()
+                                                data[i].payStyleName = $('#payStyle option:selected').text()
+                                            }
+                                            console.log(data)
+                                            res.data = data
+                                            return res
+                                        }
+                                    });
+                                });
                             })
-                            pullPay("#payStyle", data.userId, $("#consumeProjectId").val(), () => {
-                            });
                         })
                     })
                     $("#time").val(activeItem.time)
@@ -478,52 +550,13 @@
                     })
                 }
             });
-        }
 
-        //popup
-        {
-            var couponCheckList = [];
-
-            // "会员信息表格"渲染
-            var tableUseCoupons = table.render({
-                elem: '#useCoupons',
-                data: couponCheckList,
-                height: 288,
-                page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
-                    layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
-                    limit: 10,
-                    groups: 3, //只显示 1 个连续页码
-                    first: false, //不显示首页
-                    last: false //不显示尾页
-                },
-                cols: [ [
-                    {type: 'numbers'},
-                    {field: 'consumeTypeId', width: 124, title: '消费类型'},
-                    {field: 'consumeProjectId', width: 82, title: '消费项目'},
-                    {field: 'practicalProjectId', width: 80, title: '具体项目'},
-                    {field: 'payStyle', width: 80, title: '支付方式'}, //单元格内容水平居中
-                    {field: 'timeCost', width: 80, title: '工时费'},
-                    {field: 'matCost', width: 146, title: '材料费'},
-                    {field: 'billSum', width: 146, title: '总金额'},
-                    {field: 'ticketID', width: 88, title: '工单号'},
-                    {field: 'mileage', width: 88, title: '行驶里程'},
-                    {field: 'count', width: 88, title: '数量'},
-                    {field: 'invoiceID', width: 88, title: '发票号'},
-                    {field: 'invoiceNum', width: 88, title: '开票金额'},
-                    {field: 'costPrice', width: 88, title: '成本价'},
-                    {field: '???', width: 88, title: '本次积分'},
-                    {field: 'remark', width: 88, title: '项目备注'}
-                ]],
-                size: 'sm'
-            });
-
-            $("#submitForReview").unbind("click").click(function () {
-                $.post({
-                    url: "service/useCard/submitForReview",
-                    data: JSON.stringify(couponCheckList),
-                    contentType: "application/json",
-                    success: function (res) {
-                        console.log(res)
+            $("#checkCoupon").unbind("click").click(function (){
+                $.get({
+                    url: "service/review/checkCoupon?groupId=" + activeItem.groupId,
+                    success: function (res){
+                        layuiAlert(res)
+                        tableReview.reload()
                     }
                 })
             })

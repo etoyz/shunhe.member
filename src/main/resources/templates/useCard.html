@@ -78,7 +78,7 @@
             <div class="layui-inline">
                 <label class="layui-form-label">消费日期</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="time" id="time" lay-verify="time" autocomplete="off"
+                    <input type="text" name="time" id="time" lay-verify="time|required" autocomplete="off"
                            class="layui-input">
                 </div>
             </div>
@@ -258,7 +258,7 @@
             <div class="layui-inline">
                 <label class="layui-form-label">充入数量</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="count" id="count" autocomplete="off"
+                    <input type="text" name="count" id="count" autocomplete="off" lay-verify="required"
                            class="layui-input">
                 </div>
             </div>
@@ -392,11 +392,25 @@
                     }
                 })
             }
+
+            function layuiAlert(msg) {
+                layer.open({
+                    offset: "auto",//具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
+                    content: '<div style="padding: 20px 70px;">' + msg + '</div>',
+                    btn: '关闭',
+                    btnAlign: 'c',//按钮居中
+                    shade: 0, //不显示遮罩
+                    closeBtn: false,
+                    yes: function () {
+                        layer.closeAll();
+                    }
+                });
+            }
         }
 
         //primary
         {// “用卡表格”渲染
-            var tableIns = table.render({
+            var tableUserList = table.render({
                 elem: '#memberList',
                 url: 'service/Archives/getArchivesList?query=',
                 height: 'full-291',
@@ -518,16 +532,16 @@
                 },
                 cols: [ [
                     {type: 'numbers'},
-                    {field: 'consumeTypeId', width: 124, title: '消费类型'},
-                    {field: 'consumeProjectId', width: 82, title: '消费项目'},
-                    {field: 'practicalProjectId', width: 80, title: '具体项目'},
-                    {field: 'payStyle', width: 80, title: '支付方式'}, //单元格内容水平居中
+                    {field: 'consumeTypeName', width: 124, title: '消费类型'},
+                    {field: 'consumeProjectName', width: 82, title: '消费项目'},
+                    {field: 'practicalProjectName', width: 80, title: '具体项目'},
+                    {field: 'payStyleName', width: 80, title: '支付方式'}, //单元格内容水平居中
                     {field: 'timeCost', width: 80, title: '工时费'},
                     {field: 'matCost', width: 146, title: '材料费'},
                     {field: 'totalMoney', width: 146, title: '总金额'},
                     {field: 'ticketID', width: 88, title: '工单号'},
                     {field: 'mileage', width: 88, title: '行驶里程'},
-                    {field: 'buyNum', width: 88, title: '数量'},
+                    {field: 'count', width: 88, title: '数量'},
                     {field: 'invoiceID', width: 88, title: '发票号'},
                     {field: 'invoiceNum', width: 88, title: '开票金额'},
                     {field: 'costPrice', width: 88, title: '成本价'},
@@ -543,20 +557,28 @@
                     data: JSON.stringify(couponReviewList),
                     contentType: "application/json",
                     success: function (res) {
-                        console.log(res)
+                        layuiAlert(res)
+                        tableUseCoupons.reload()
                     }
                 })
             })
 
             var uniqueID = Number(Math.random().toString().substr(3, length) + Date.now()).toString(36);
             form.on('submit(addUseCard)', function (data) {
-                console.log(activeUser)
-                data.field.userId = activeUser.userId;
-                data.field.groupId = uniqueID
-                data.field.vehicleId = activeUser.vehicle.vehicleId;
-                if(data.field.payStyle === "-1")
-                    data.field.couponId = $("#practicalProjectId").val()
-                couponReviewList.push(data.field)
+                var formData = data.field
+                console.log(formData)
+                formData.userId = activeUser.userId;
+                formData.groupId = uniqueID
+                formData.vehicleId = activeUser.vehicle.vehicleId;
+                formData.consumeProjectName = $('#consumeProjectId option:selected').text()
+                formData.consumeTypeName = $('#consumeTypeId option:selected').text()
+                formData.practicalProjectName = $('#practicalProjectId option:selected').text()
+                formData.payStyleName = $('#payStyle option:selected').text()
+                if(formData.payStyle === "-1")
+                    formData.couponId = $("#practicalProjectId").val()
+                else if(formData.payStyle === "-2")
+                    formData.money = $("#count").val()
+                couponReviewList.push(formData)
                 tableUseCoupons.reload({
                     data: couponReviewList
                 })
