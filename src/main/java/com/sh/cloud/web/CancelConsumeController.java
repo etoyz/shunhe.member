@@ -35,7 +35,10 @@ public class CancelConsumeController {
 
     @RequestMapping("rollBack")
     public String rollBack(@RequestParam String groupId) {
-        return payService.rollBack(PlatUserUtils.getCurrentLoginPlatUser(), groupId);
+        if ("".equals(payService.rollBack(PlatUserUtils.getCurrentLoginPlatUser(), groupId)))
+            return "成功！";
+        else
+            return "失败！";
     }
 
 
