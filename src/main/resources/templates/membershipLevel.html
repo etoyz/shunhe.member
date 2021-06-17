@@ -51,140 +51,146 @@
 </div>
 
 <!-- 添加卡片弹窗 -->
-<div class="s-details" id="addWindow">
-    <div>
-        <form class="layui-form" action="">
-            <div class="layui-form-item s-formItem5">
-                <div class="layui-inline">
-                    <label class="layui-form-label">会员级别</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="level" id="level"
-                               autocomplete="off" class="layui-input">
+<form class="layui-form" action="">
+    <div class="s-details" id="addWindow">
+        <div>
+            <form class="layui-form" action="">
+                <div class="layui-form-item s-formItem5">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">会员级别</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="level" id="level"
+                                   autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">卡片名称</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="name" id="name"
+                                   autocomplete="off" class="layui-input">
+                            <!--                        <select type="text" id="cardType" name="cardType" autocomplete="off" class="layui-input">-->
+                            <!--                            <option id="selectHead">正在拉取...</option>-->
+                            <!--                        </select>-->
+                        </div>
+                    </div>
+                    <!--                <div class="layui-inline">-->
+                    <!--                    <label class="layui-form-label">卡片等级</label>-->
+                    <!--                    <div class="layui-input-inline">-->
+                    <!--                        <input type="text" name="type" id="type" autocomplete="off" class="layui-input">-->
+                    <!--                    </div>-->
+                    <!--                </div>-->
+                    <div class="layui-inline">
+                        <label class="layui-form-label">卡片类型</label>
+                        <div class="layui-input-inline">
+                            <select id="type" name="type">
+                                <option value="0">可升级</option>
+                                <option value="1">不可升级</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">卡片名称</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="name" id="name"
-                               autocomplete="off" class="layui-input">
-<!--                        <select type="text" id="cardType" name="cardType" autocomplete="off" class="layui-input">-->
-<!--                            <option id="selectHead">正在拉取...</option>-->
-<!--                        </select>-->
+                <div class="layui-form-item s-formItem5">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">升级锁定</label>
+                        <div class="layui-input-inline">
+                            <select type="text" id="lock" name="lock" autocomplete="off" class="layui-input">
+                                <option value="0">是</option>
+                                <option value="1">否</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">升级所需积分</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="score" id="score" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">备注</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="remark" id="remark" autocomplete="off" class="layui-input">
+                        </div>
                     </div>
                 </div>
-<!--                <div class="layui-inline">-->
-<!--                    <label class="layui-form-label">卡片等级</label>-->
-<!--                    <div class="layui-input-inline">-->
-<!--                        <input type="text" name="type" id="type" autocomplete="off" class="layui-input">-->
-<!--                    </div>-->
-<!--                </div>-->
-                <div class="layui-inline">
-                    <label class="layui-form-label">卡片类型</label>
-                    <div class="layui-input-inline">
-                        <select id="cardType",name="cardType" lay-filter="customerCommissioner">
-                            <option value="0">可升级</option>
-                            <option value="1">不可升级</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="layui-form-item s-formItem5">
-                <div class="layui-inline">
-                    <label class="layui-form-label">升级锁定</label>
-                    <div class="layui-input-inline">
-                         <select type="text" id="lock" name="lock" autocomplete="off" class="layui-input">
-                             <option value="0">是</option>
-                             <option value="1">否</option>
-                         </select>
-                    </div>
-                </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">升级所需积分</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="pointToUpdate" id="pointToUpdate" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">备注</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="remark" id="remark" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-            </div>
-        </form>
+            </form>
+        </div>
+        <div class="s-tabBottomButton">
+            <button type="button" class="layui-btn layui-btn-danger" id="confirmAdd" lay-filter="confirmAdd" lay-submit>
+                添加
+            </button>
+            <button type="button" class="layui-btn" id="cancelAdd">取消</button>
+        </div>
     </div>
-    <div class="s-tabBottomButton">
-        <button type="button" class="layui-btn layui-btn-danger" id="confirmAdd">添加</button>
-        <button type="button" class="layui-btn" id="cancelAdd">取消</button>
-    </div>
-</div>
-
+</form>
 <!-- 修改卡片弹窗 -->
-<div class="s-details" id="modWindow">
-    <div>
-        <form class="layui-form" action="">
-            <div class="layui-form-item s-formItem5">
-                <div class="layui-inline">
-                    <label class="layui-form-label">会员级别</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="levelM" id="levelM"
-                               autocomplete="off" class="layui-input">
+<form class="layui-form" action="">
+    <div class="s-details" id="modWindow">
+        <div>
+            <form class="layui-form" action="">
+                <div class="layui-form-item s-formItem5">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">会员级别</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="level" id="levelM"
+                                   autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">卡片名称</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="name" id="nameM"
+                                   autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <!--                <div class="layui-inline">-->
+                    <!--                    <label class="layui-form-label">卡片等级</label>-->
+                    <!--                    <div class="layui-input-inline">-->
+                    <!--                        <input type="text" name="typeM" id="typeM" autocomplete="off" class="layui-input">-->
+                    <!--                    </div>-->
+                    <!--                </div>-->
+                    <div class="layui-inline">
+                        <label class="layui-form-label">卡片类型</label>
+                        <div class="layui-input-inline">
+                            <select id="cardTypeM" name="type">
+                                <option value="0">可升级</option>
+                                <option value="1">不可升级</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">卡片名称</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="nameM" id="nameM"
-                               autocomplete="off" class="layui-input">
+                <div class="layui-form-item s-formItem5">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">升级锁定</label>
+                        <div class="layui-input-inline">
+                            <select type="text" id="lockM" name="lock" autocomplete="off" class="layui-input">
+                                <option>是</option>
+                                <option>否</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">升级所需积分</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="score" id="scoreM" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">备注</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="remark" id="remarkM" autocomplete="off" class="layui-input">
+                        </div>
                     </div>
                 </div>
-<!--                <div class="layui-inline">-->
-<!--                    <label class="layui-form-label">卡片等级</label>-->
-<!--                    <div class="layui-input-inline">-->
-<!--                        <input type="text" name="typeM" id="typeM" autocomplete="off" class="layui-input">-->
-<!--                    </div>-->
-<!--                </div>-->
-                <div class="layui-inline">
-                    <label class="layui-form-label">卡片类型</label>
-                    <div class="layui-input-inline">
-                        <select id="cardTypeM" name="cardTypeM" lay-filter="customerCommissioner">
-                            <option value="0">可升级</option>
-                            <option value="1">不可升级</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="layui-form-item s-formItem5">
-                <div class="layui-inline">
-                    <label class="layui-form-label">升级锁定</label>
-                    <div class="layui-input-inline">
-                        <select type="text" id="lockM" name="lockM" autocomplete="off" class="layui-input">
-                            <option>是</option>
-                            <option>否</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">升级所需积分</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="pointToUpdateM" id="pointToUpdateM" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">备注</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="remarkM" id="remarkM" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-            </div>
-        </form>
+            </form>
+        </div>
+        <div class="s-tabBottomButton">
+            <button type="button" class="layui-btn layui-btn-danger" id="confirmMod" lay-filter="confirmMod" lay-submit>
+                修改
+            </button>
+            <button type="button" class="layui-btn" id="cancelMod">取消</button>
+        </div>
     </div>
-    <div class="s-tabBottomButton">
-        <button type="button" class="layui-btn layui-btn-danger" id="confirmMod">修改</button>
-        <button type="button" class="layui-btn" id="cancelMod">取消</button>
-    </div>
-</div>
-
+</form>
 
 <script src="plugins/layui/layui.js"></script>
 <script>
@@ -200,6 +206,7 @@
         laydate.render({
             elem: '#date'
         });
+
         function layuiAlert(msg) {
             layer.open({
                 offset: "auto",//具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
@@ -214,6 +221,7 @@
                 }
             });
         }
+
         // “主体表格”渲染
         var tableIns = table.render({
             elem: '#card',
@@ -240,17 +248,17 @@
                 {field: 'creatTime', width: '10%', title: '创建时间'},
                 {field: 'lastEditor', width: '8%', title: '最后编辑人'},
                 {field: 'lastEditTime', width: '11%', title: '最后编辑时间'},
-                {field: 'id', width: '7%', title: 'id',hide:true},
+                {field: 'id', width: '7%', title: 'id', hide: true},
                 {field: 'operation', width: '13%', title: '操作', toolbar: '#operation', fixed: 'right'}
-            ] ],
+            ]],
             size: 'sm',
             parseData: function (res) {
-                var cType = ["可升级卡","不可升级卡"];
-                var cLock = ["是","否"];
+                var cType = ["可升级卡", "不可升级卡"];
+                var cLock = ["是", "否"];
                 for (var i = 0; i < res.data.length; i++) {
                     res.data[i].type = cType[res.data[i].type];
-                    res.data[i].lock=cLock[res.data[i].lock];
-                    res.data[i].score=res.data[i].memberUpgradeCon.score;
+                    res.data[i].lock = cLock[res.data[i].lock];
+                    res.data[i].score = res.data[i].memberUpgradeCon.score;
                     // if(res.data[i].cBirthday==null)
                     //     res.data[i].cBirthday="";
                     // if(res.data[i].cCard==null)
@@ -301,13 +309,14 @@
                     type: 1,
                     title: '修改信息',
                     content: $('#modWindow'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
-                    area: ['1022px', '225px']
+                    area: ['1022px', '320px']
                 });
-                            $('#levelM').val(data.level);
-                            $('#nameM').val(data.name);
-                            $('#cardTypeM').val(data.type);
-                            $('#lockM').val(data.lock);             //获取修改行的数据
-                             form.render();
+                $('#levelM').val(data.level);
+                $('#nameM').val(data.name);
+                $('#typeM').val(data.type);
+                $('#lockM').val(data.lock);             //获取修改行的数据
+                $('#scoreM').val(data.memberUpgradeCon.score);
+                form.render();
             }
         });
 
@@ -317,7 +326,7 @@
                 type: 1,
                 title: '添加信息',
                 content: $('#addWindow'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
-                area: ['1022px', '225px']
+                area: ['900px', '225px']
             });
             return false;
         })
@@ -326,27 +335,33 @@
             console.log("cancel")
             layer.closeAll()
         })
-       // var score=$("#pointToUpdate").val();
+        // var score=$("#pointToUpdate").val();
 
-        $("#confirmAdd").click(function () {
-            var score=$("#type").val();
+        // $("#confirmAdd").click(function () {
+        form.on('submit(confirmAdd)', function (data) {
+            var score = $("#type").val();
             console.log(score);
+            data.field.memberUpgradeCon = {
+                score: data.field.score
+            }
             $.post({
                 url: "/service/membershipLevel/addMember",
-                data: JSON.stringify({
-                    level: $("#level").val(),
-                    name: $("#name").val(),
-                    type: $("#cardType").val(),
-                    lock: $("#lock").val(),
-                    memberUpgradeCon:{
-                        score: $("#pointToUpdate").val()
-                    },
-                    remark: $("#remark").val()
-                }),
+                data: JSON.stringify(data.field
+                    //     {
+                    //     level: $("#level").val(),
+                    //     name: $("#name").val(),
+                    //     type: $("#cardType").val(),
+                    //     lock: $("#lock").val(),
+                    //     memberUpgradeCon:{
+                    //         score: $("#pointToUpdate").val()
+                    //     },
+                    //     remark: $("#remark").val()
+                    // }
+                ),
                 contentType: "application/json",
                 success: function (res) {
                     console.log(res)
-                   layuiAlert("信息:" + res)
+                    layuiAlert("信息:" + res)
                 },
                 error: function (res) {
                     console.log(res)
@@ -356,18 +371,15 @@
         })
 
         var modWind;
-        $("#confirmMod").click(function () {
+        // $("#confirmMod").click(function () {
+        form.on('submit(confirmMod)', function (data) {
+            data.field.id = activeCardid
+            data.field.memberUpgradeCon = {
+                score: data.field.score
+            }
             $.post({
                 url: "service/membershipLevel/editMember",
-                data: JSON.stringify({
-                    membershipLevel: $("#levelM").val(),
-                    cardName: $("#nameM").val(),
-                    cardLevel: $("#typeM").val(),
-                    upLock: $("#lockM").val(),
-                    pointToUpdate: $("#pointToUpdateM").val(),
-                    remark: $("#remarkM").val(),
-                    id:activeCardid,
-                }),
+                data: JSON.stringify(data.field),
                 contentType: "application/json",
                 success: function (res) {
                     console.log(res)

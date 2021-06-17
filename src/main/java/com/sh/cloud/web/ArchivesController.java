@@ -74,6 +74,7 @@ public class ArchivesController {
     public String alertLevel(@RequestParam String userId,@RequestParam String id) {
         Member m=new Member();
         m.id=id;
+       // m.level="11";
         User c = new User();
         c.userId = userId;
         c.member=m;
