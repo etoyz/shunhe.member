@@ -26,12 +26,12 @@
                         <div class="layui-inline s-layuiInline">
                             <label class="layui-form-label">卡片名称</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="cardNameInput" autocomplete="off" class="layui-input"
+                                <input type="text" name="cardNameInput" id="cardNameInput" autocomplete="off" class="layui-input"
                                        placeholder="请输入卡片名称">
                             </div>
                         </div>
                         <div class="layui-inline s-layuiInline">
-                            <button class="layui-btn layui-btn-warm">查询</button>
+                            <button class="layui-btn layui-btn-warm" id="queryBtn">查询</button>
                             <button id="addBtn" class="layui-btn layui-btn-normal">添加卡片</button>
                         </div>
                     </div>
@@ -385,6 +385,16 @@
                     console.log(res)
                 }
             })
+        })
+        $("#queryBtn").click(function () {
+            tableIns.reload({
+                url: 'service/membershipLevel/getMemberList?query=' + $("#cardNameInput").val(),
+                page: {
+                    curr: 1
+                },
+                size: 'sm',
+            })
+            return false;
         })
     });
 </script>
