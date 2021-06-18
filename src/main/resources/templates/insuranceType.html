@@ -204,7 +204,28 @@
                 {field: 'lastEditTime', width: 150, title: '最后编辑时间'},
                 {field: 'operation', width: 110, title: '操作', toolbar: '#operation', fixed: 'right'}
             ] ],
-            size: 'sm'
+            size: 'sm',
+            parseData: function (res) {
+                let data = res.data
+                for (let i = 0; i < data.length; i++) {
+                    $.post({
+                        url: "service/platUserManage/getUserInfo?platUserId=" + data[i].createId,
+                        async: false,
+                        success: function (resp){
+                            data[i].createName = resp.name
+                        }
+                    })
+                    $.post({
+                        url: "service/platUserManage/getUserInfo?platUserId=" + data[i].lastEditId,
+                        async: false,
+                        success: function (resp){
+                            data[i].lastEditName = resp.name
+                        }
+                    })
+                }
+                res.data = data
+                return res
+            }
         });
         //监听“会员档案表格”工具条
         table.on('tool(insuranceTypeTabel)', function (obj) {

@@ -417,7 +417,6 @@
             parseData: function (res) {
                 let data = res.data
                 for (let i = 0; i < data.length; i++) {
-                    data[i].type = data[i].type === 1 ? "代金券" : "储值"
                     $.post({
                         url: "service/platUserManage/getUserInfo?platUserId=" + data[i].createId,
                         async: false,

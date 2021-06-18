@@ -40,7 +40,8 @@ public class PlatUserManagementController {
 
     @RequestMapping("addUser")
     public String addUser(@RequestBody PlatUser user) {
-        return platUserService.addUser(PlatUserUtils.getCurrentLoginPlatUser(), user);
+        platUserService.addUser(PlatUserUtils.getCurrentLoginPlatUser(), user);
+        return "成功！";
     }
 
     @RequestMapping("resetPassword")
@@ -56,6 +57,7 @@ public class PlatUserManagementController {
     }
 
     @RequestMapping("getUserInfo")
+    @ResponseBody
     public PlatUser getUserInfo(@RequestParam String platUserId) {
         PlatUser user = new PlatUser();
         user.platUserId = platUserId;

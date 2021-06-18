@@ -266,6 +266,27 @@
                     // if(res.data[i].phone==null)
                     //     res.data[i].phone="";
                 }
+                // added by yz, 如果传过来Id，就自动显示
+                {
+                    let data = res.data
+                    for (let i = 0; i < data.length; i++) {
+                        $.post({
+                            url: "service/platUserManage/getUserInfo?platUserId=" + data[i].createId,
+                            async: false,
+                            success: function (resp){
+                                data[i].createName = resp.name
+                            }
+                        })
+                        $.post({
+                            url: "service/platUserManage/getUserInfo?platUserId=" + data[i].lastEditId,
+                            async: false,
+                            success: function (resp){
+                                data[i].lastEditName = resp.name
+                            }
+                        })
+                    }
+                    res.data = data
+                }
                 return res
             }
         });
