@@ -407,13 +407,35 @@
                 // {type: 'checkbox'},
                 {field: 'name', width: 140, title: '消费项目'},
                 // {field: 'indexID', width: 80, title: '顺序号'},
-                {field: 'createId', width: 100, title: '创建人'},
+                {field: 'createName', width: 100, title: '创建人'},
                 {field: 'createTime', width: 150, title: '创建时间'},
-                {field: 'lastEditId', width: 100, title: '最后编辑人'},
+                {field: 'lastEditName', width: 100, title: '最后编辑人'},
                 {field: 'lastEditTime', width: 150, title: '最后编辑时间'},
                 {field: 'operation', width: 300, title: '操作', toolbar: '#operation', fixed: 'right'}
             ]],
-            size: 'sm'
+            size: 'sm',
+            parseData: function (res) {
+                let data = res.data
+                for (let i = 0; i < data.length; i++) {
+                    data[i].type = data[i].type === 1 ? "代金券" : "储值"
+                    $.post({
+                        url: "service/platUserManage/getUserInfo?platUserId=" + data[i].createId,
+                        async: false,
+                        success: function (resp){
+                            data[i].createName = resp.name
+                        }
+                    })
+                    $.post({
+                        url: "service/platUserManage/getUserInfo?platUserId=" + data[i].lastEditId,
+                        async: false,
+                        success: function (resp){
+                            data[i].lastEditName = resp.name
+                        }
+                    })
+                }
+                res.data = data
+                return res
+            }
         });
 
         //监听“会员档案表格”工具条
@@ -488,7 +510,22 @@
                         {field: 'remark', width: 150, title: '备注'},
                         {field: 'operation', width: 110, title: '操作', toolbar: '#operationSpe', fixed: 'right'}
                     ]],
-                    size: 'sm'
+                    size: 'sm',
+                    parseData: function (res) {
+                        let data = res.data
+                        for (let i = 0; i < data.length; i++) {
+                            $.post({
+                                url: "service/practicalProject/getPracticalProject?practicalProjectId=" + data[i].practicalProjectId,
+                                async: false,
+                                success: function (resp){
+                                    console.log(resp)
+                                    data[i].couponName = resp.couponName
+                                }
+                            })
+                        }
+                        res.data = data
+                        return res
+                    }
                 });
                 // 显示“新增具体项目弹窗”
                 $('body').on('click', '#addSpeProj', function () {

@@ -54,4 +54,11 @@ public class PlatUserManagementController {
         else
             return ret;
     }
+
+    @RequestMapping("getUserInfo")
+    public PlatUser getUserInfo(@RequestParam String platUserId) {
+        PlatUser user = new PlatUser();
+        user.platUserId = platUserId;
+        return platUserService.getPlatUser(user);
+    }
 }

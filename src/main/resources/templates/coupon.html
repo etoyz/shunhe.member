@@ -217,18 +217,33 @@
                 {field: 'costPrice', width: '7%', title: '成本价'},
                 {field: 'remark', width: '6%', title: '备注'},
                 // {field: 'orderID', width: '7%', title: '顺序号'},
-                {field: 'createId', width: '7%', title: '创建人'},
+                {field: 'createName', width: '7%', title: '创建人'},
                 {field: 'createTime', width: '14%', title: '创建时间'},
-                {field: 'lastEditId', width: '7%', title: '最后编辑人'},
+                {field: 'lastEditName', width: '7%', title: '最后编辑人'},
                 {field: 'lastEditTime', width: '14%', title: '最后编辑时间'},
                 {field: 'operation', width: '200', title: '操作', toolbar: '#operation', fixed: 'right'}
             ] ],
             size: 'sm',
             parseData: function (res) {
-                let cTypes = [ "代金券", "储值" ]
-                for (let i = 0; i < res.data.length; i++) {
-                    res.data[i].type = cTypes[res.data[i].type];
+                let data = res.data
+                for (let i = 0; i < data.length; i++) {
+                    data[i].type = data[i].type === 1 ? "代金券" : "储值"
+                    $.post({
+                        url: "service/platUserManage/getUserInfo?platUserId=" + data[i].createId,
+                        async: false,
+                        success: function (resp){
+                            data[i].createName = resp.name
+                        }
+                    })
+                    $.post({
+                        url: "service/platUserManage/getUserInfo?platUserId=" + data[i].lastEditId,
+                        async: false,
+                        success: function (resp){
+                            data[i].lastEditName = resp.name
+                        }
+                    })
                 }
+                res.data = data
                 return res
             }
         });
