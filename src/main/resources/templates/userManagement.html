@@ -33,7 +33,6 @@
                             <div class="layui-input-inline">
                                 <select type="text" id="dealerSearch" autocomplete="off" class="layui-input"
                                         placeholder="请输入卡券名称">
-                                    <option>---</option>
                                     <option>烟台顺和广汽本田</option>
                                 </select>
                             </div>
@@ -124,7 +123,6 @@
                     <label class="layui-form-label">所属门店</label>
                     <div class="layui-input-inline">
                         <select type="text" id="dealerId" name="dealerId" autocomplete="off" class="layui-input">
-                            <option>---</option>
                             <option value="0">烟台顺合广汽本田店</option>
                         </select>
                     </div>
@@ -184,7 +182,7 @@
                 console.log(res)
                 if (res.data)
                     for (var i = 0; i < res.data.length; i++) {
-                        res.data[i].dealerId = res.data[i].dealerId === 1 ? "烟台顺合广汽本田店" : "-";
+                        res.data[i].dealerId = "烟台顺合广汽本田店";
                     }
                 return res
             }
