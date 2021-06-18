@@ -50,4 +50,11 @@ public class PracticalProjectController {
             return "失败！";
 
     }
+
+    @RequestMapping("getPracticalProject")
+    public PracticalProject getPracticalProject(@RequestParam int practicalProjectId) {
+        PracticalProject project = new PracticalProject();
+        project.practicalProjectId = practicalProjectId;
+        return practicalProjectService.getPracticalProject(project);
+    }
 }

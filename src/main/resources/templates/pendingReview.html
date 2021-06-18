@@ -407,6 +407,22 @@
 
         //primary
         {// “待审核表格”渲染
+            // TODO 优化：先(并发)异步请求全部数据，请求完后再渲染表格
+            // $.post({
+            //     url: 'service/review/getPendingReviewList',
+            //     async: true,
+            //     data: JSON.stringify({
+            //         page: 1,
+            //         limit: 5,
+            //         user: {},
+            //         couponCheck: {},
+            //         groupBy: true
+            //     }),
+            //     contentType: "application/json",
+            //     success: function (res){
+            //         console.log(res)
+            //     }
+            // })
             var tableReview = table.render({
                 elem: '#reviewList',
                 url: 'service/review/getPendingReviewList',
@@ -430,32 +446,34 @@
                 defaultToolbar: ['filter', 'print', 'exports'],
                 cols: [ [
                     {field: 'time', width: 150, title: '消费日期'},
-                    {field: 'groupId', width: 56, title: '流水号'},
-                    {field: 'customername', width: 96, title: '客户名称'},
-                    {field: 'memberNumber', width: 156, title: '会员卡号'}, //单元格内容水平居中
-                    {field: 'vin', width: 160, title: '车架号'},
-                    {field: 'platenumber', width: 88, title: '车牌号'},
-                    {field: 'consumeTypeId', width: 82, title: '消费类型'},
-                    {field: 'consumeProjectId', width: 54, title: '消费项目'},
-                    {field: 'practicalProjectId', width: 210, title: '具体项目'},
-                    {field: 'payStyle', width: 210, title: '支付方式'},
-                    {field: '**', width: 210, title: '工时费'},
-                    {field: '**', width: 210, title: '材料费'},
-                    {field: 'totalMoney', width: 210, title: '总金额'},
-                    {field: '**', width: 210, title: '工单号'},
-                    {field: '**', width: 210, title: '行驶里程'},
-                    {field: 'count', width: 210, title: '数量'},
-                    {field: '**', width: 210, title: '发票号'},
-                    {field: '**', width: 210, title: '开票金额'},
-                    {field: 'remark', width: 210, title: '项目备注'},
-                    {field: 'userId', width: 210, title: 'id', hide: true},
-                    {field: 'operation', width: 210, title: '操作', toolbar: '#operation', fixed: 'right'}
+                    {field: 'groupId', width: 100, title: '流水号'},
+                    {field: 'customername', width: 100, title: '客户名称'},
+                    {field: 'memberNumber', width: 160, title: '会员卡号'}, //单元格内容水平居中
+                    {field: 'vin', width: 200, title: '车架号'},
+                    {field: 'platenumber', width: 200, title: '车牌号'},
+                    {field: 'consumeTypeName', width: 120, title: '消费类型'},
+                    {field: 'consumeProjectName', width: 120, title: '消费项目'},
+                    {field: 'practicalProjectName', width: 120, title: '具体项目'},
+                    {field: 'payStyleName', width: 100, title: '支付方式'},
+                    {field: '**', width: 100, title: '工时费'},
+                    {field: '**', width: 100, title: '材料费'},
+                    {field: 'totalMoney', width: 100, title: '总金额'},
+                    {field: '**', width: 100, title: '工单号'},
+                    {field: '**', width: 100, title: '行驶里程'},
+                    {field: 'count', width: 100, title: '数量'},
+                    {field: '**', width: 100, title: '发票号'},
+                    {field: '**', width: 100, title: '开票金额'},
+                    {field: 'remark', width: 100, title: '项目备注'},
+                    {field: 'userId', title: 'id', hide: true},
+                    {field: 'operation', width: 100, title: '操作', toolbar: '#operation', fixed: 'right'}
                 ]],
                 size: 'sm',
                 parseData: function (resp) {
+                    console.log(resp)
                     let data = resp.data;
-                    if (data)
+                    if (data) {
                         for (let i = 0; i < data.length; i++) {
+                            console.log(data[i])
                             $.post({
                                 url: "service/Archives/getUserInfo?userId=" + data[i].userId,
                                 async: false,
@@ -464,14 +482,26 @@
                                     data[i].memberNumber = res.memberNumber
                                     data[i].vin = res.vehicle.vin
                                     data[i].platenumber = res.vehicle.platenumber
-                                    if(i === data.length - 1) {
-                                        resp.data = data
-                                        return resp
-                                    }
                                 }
                             })
+                            $.post({
+                                url: "service/practicalProject/getPracticalProject?practicalProjectId=" + data[i].practicalProjectId,
+                                async: false,
+                                success: function (res) {
+                                    data[i].practicalProjectName = res.practicalProjectName
+                                }
+                            })
+                            {
+                                if(data[i].payStyle === '-1')
+                                    data[i].payStyleName = '卡券发放'
+                                else if(data[i].payStyle === '-2')
+                                    data[i].payStyleName = '储值'
+                                else {
+                                    //TODO 异步请求卡券名称
+                                }
+                            }
                         }
-                    //TODO 显示消费类型、消费项目、具体项目、支付方式
+                    }
                 }
             });
         }

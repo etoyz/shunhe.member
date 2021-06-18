@@ -61,7 +61,9 @@ public class ConsumeTypeController {
 
     @RequestMapping("getConsumeType")
     @ResponseBody
-    public ConsumeType getConsumeType(@RequestBody ConsumeType consumeType) {
+    public ConsumeType getConsumeType(@RequestParam int consumeTypeId) {
+        ConsumeType consumeType = new ConsumeType();
+        consumeType.consumeTypeId = consumeTypeId;
         return consumeTypeService.getConsumeType(consumeType);
     }
 }
