@@ -492,7 +492,7 @@
                 <div class="layui-tab-item">内容7</div>
                 <div class="s-tabBottomButton">
                     <button class="layui-btn" id="confirmAdd" lay-filter="confirmAdd" lay-submit>确认</button>
-                    <button class="layui-btn layui-btn-warm">取消</button>
+                    <button class="layui-btn layui-btn-warm" id="cancelAdd">取消</button>
                 </div>
             </div>
     </form>
@@ -1033,9 +1033,10 @@
                 area: ['1050px', '650px'],
                 offset: '20px'
             });
-            $('#exit').on('click', function () {
+            $('#cancelAdd').on('click', function () {
                 // 关闭当前弹出层
                 layer.close(index);
+                return false;
             });
         });
 

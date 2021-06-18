@@ -54,8 +54,9 @@ public class MembershipLevelController {
             return ret;
     }
     @PostMapping("editMember")
-    public String editMember(@RequestBody Member member) {
-        memberService.editMember(PlatUserUtils.getCurrentLoginPlatUser(), member);
-        return "修改成功！";
+    public Member editMember(@RequestBody Member member) {
+        Member m;
+        m=memberService.editMember(PlatUserUtils.getCurrentLoginPlatUser(), member);
+        return m;
     }
 }

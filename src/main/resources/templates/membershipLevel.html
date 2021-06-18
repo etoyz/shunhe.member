@@ -163,8 +163,8 @@
                         <label class="layui-form-label">升级锁定</label>
                         <div class="layui-input-inline">
                             <select type="text" id="lockM" name="lock" autocomplete="off" class="layui-input">
-                                <option>是</option>
-                                <option>否</option>
+                                <option value="0">是</option>
+                                <option value="1">否</option>
                             </select>
                         </div>
                     </div>
@@ -332,10 +332,14 @@
                     content: $('#modWindow'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
                     area: ['1022px', '320px']
                 });
+                console.log(data.type);
+                console.log(data.lock);
+                var  mtype=data.type=== "可升级卡" ? "0" : "1";
+                var  mlock=data.lock=== "是" ? "0" : "1";
                 $('#levelM').val(data.level);
                 $('#nameM').val(data.name);
-                $('#typeM').val(data.type);
-                $('#lockM').val(data.lock);             //获取修改行的数据
+                $('#cardTypeM').val(mtype);
+                $('#lockM').val(mlock);             //获取修改行的数据
                 $('#scoreM').val(data.memberUpgradeCon.score);
                 form.render();
             }
@@ -404,6 +408,7 @@
                 contentType: "application/json",
                 success: function (res) {
                     console.log(res)
+                    layuiAlert("信息:" + res)
                 }
             })
         })
