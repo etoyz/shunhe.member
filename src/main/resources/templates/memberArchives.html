@@ -944,46 +944,48 @@
 <script src="plugins/layui/layui.js"></script>
 <script>
     layui.use(['form', 'laydate', 'table', 'layer', 'element'], function () {
-        var $ = layui.jquery,
-            form = layui.form,
-            laydate = layui.laydate,
-            layer = layui.layer,
-            table = layui.table,
-            element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+        {
+            var $ = layui.jquery,
+                form = layui.form,
+                laydate = layui.laydate,
+                layer = layui.layer,
+                table = layui.table,
+                element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
 
-        //日期
-        laydate.render({
-            elem: '#cBirthday'
-        });
-        laydate.render({
-            elem: '#cBirthdayM'
-        });
-        laydate.render({
-            elem: '#bindTime'
-        });
-        laydate.render({
-            elem: '#unbindTime'
-        });
-        function pullMemberlevel(selector, callback) {
-            var selectE = $(selector);
-            $.post({
-                url: "service/Archives/getMemberNameList",
-                timeout: 1000,
-                dataType: "json",
-                success: function (res) {
-                    selectE.empty();
-                    for (var s of res) {
-                        selectE.append("<option value='" + s.level +","+s.id+"'>" + s.level + "</option>");
+            //日期
+            laydate.render({
+                elem: '#cBirthday'
+            });
+            laydate.render({
+                elem: '#cBirthdayM'
+            });
+            laydate.render({
+                elem: '#bindTime'
+            });
+            laydate.render({
+                elem: '#unbindTime'
+            });
+            function pullMemberlevel(selector, callback) {
+                var selectE = $(selector);
+                $.post({
+                    url: "service/Archives/getMemberNameList",
+                    timeout: 1000,
+                    dataType: "json",
+                    success: function (res) {
+                        selectE.empty();
+                        for (var s of res) {
+                            selectE.append("<option value='" + s.level +","+s.id+"'>" + s.level + "</option>");
+                        }
+                        callback();
+                        form.render(); //layui的form重新渲染
+                    },
+                    error: function () {
+                        selectE.empty();
+                        selectE.append("<option>拉取失败，请刷新！</option>");
+                        form.render();
                     }
-                    callback();
-                    form.render(); //layui的form重新渲染
-                },
-                error: function () {
-                    selectE.empty();
-                    selectE.append("<option>拉取失败，请刷新！</option>");
-                    form.render();
-                }
-            })
+                })
+            }
         }
         // 显示“新增弹窗”
         $('body').on('click', '#add', function () {
@@ -1001,7 +1003,7 @@
         });
 
         // “会员档案表格”渲染
-        var tableIns = table.render({
+        var tableUserList = table.render({
             elem: '#memberArchives',
             url: 'service/Archives/getArchivesList?query=',
             height: 'full-291',
@@ -1020,38 +1022,47 @@
             cols: [ [
                 {type: 'checkbox'},
                 {field: 'customername', width: 80, title: '客户名称'},
-                // {field: 'cGender', width: 56, title: '性别'},
+                {field: 'cGender', width: 56, title: '性别'},
                 {field: 'cBirthday', width: 96, title: '生日'},
                 {field: 'cCard', width: 156, title: '证件号'}, //单元格内容水平居中
+                {field: 'phone', width: 156, title: '电话号码'}, //单元格内容水平居中
                 {field: 'memberNumber', width: 160, title: '会员卡号'},
                 {field: 'level', width: 80, title: '会员级别'},
-                {field: 'province', width: 152, title: '省'},
-                {field: 'city', width: 152, title: '市'},
-                {field: 'district', width: 152, title: '区'},
                 {field: 'detailedAddress', width: 302, title: '详细地址'},
                 {field: 'vin', width: 156, title: '车架号'},
                 {field: 'platenumber', width: 88, title: '车牌号'},
                 {field: 'vehiclelabel', width: 82, title: '品牌'},
                 {field: 'vehiclestyle', width: 54, title: '车系'},
                 {field: 'vehiclebrand', width: 210, title: '车型'},
+                {field: 'province', width: 152, title: '省'},
+                {field: 'city', width: 152, title: '市'},
+                {field: 'district', width: 152, title: '区'},
                 {field: 'userId', width: 210, title: 'id',hide:true},
                 {field: 'operation', width: 210, title: '操作', toolbar: '#operation', fixed: 'right'}
             ] ],
             size: 'sm',
             parseData: function (res) {
-                var cGender = ["男","女"]
-                for (var i = 0; i < res.data.length; i++) {
-                    // res.data[i].cGender = cGender[res.data[i].cGender];
-                    res.data[i].vin=res.data[i].vehicle.vin;
-                    res.data[i].platenumber=res.data[i].vehicle.platenumber;
-                    res.data[i].level=res.data[i].member.level;
-                    // if(res.data[i].cBirthday==null)
-                    //     res.data[i].cBirthday="";
-                    // if(res.data[i].cCard==null)
-                    //     res.data[i].cCard="";
-                    // if(res.data[i].phone==null)
-                    //     res.data[i].phone="";
+                let data = res.data
+                for (let i = 0; i < data.length; i++) {
+                    $.post({
+                        url: "service/Archives/getUserInfo?userId=" + data[i].userId,
+                        async: false,
+                        success: function (resp){
+                            console.log(resp)
+                            data[i].cGender = resp.cGender === 1 ? "男" : "女"
+                            data[i].cBirthday = resp.cBirthday
+                            data[i].phone = resp.phone
+                            data[i].customername = resp.customername
+                            data[i].level = resp.member.level
+                            data[i].vin = resp.vehicle.vin
+                            data[i].platenumber = resp.vehicle.platenumber
+                            data[i].vehiclebrand = resp.vehicle.vehiclebrand
+                            data[i].vehiclelabel = resp.vehicle.vehiclelabel
+                            data[i].vehiclestyle = resp.vehicle.vehiclestyle
+                        }
+                    })
                 }
+                res.data = data
                 return res
             }
         });
@@ -1066,8 +1077,8 @@
             var tr = obj.tr; //获得当前行 tr 的DOM对象
             var customer = activedata.customer;
             if (layEvent === 'resetPasswords') { // 重置密码
-                console.log(tableIns.config.page.curr);
-                console.log(tableIns.config.page.limit);
+                console.log(tableUserList.config.page.curr);
+                console.log(tableUserList.config.page.limit);
                 layer.confirm('确定要重置用户账号：[' + user + ']密码吗？', {icon: 3, title: '提示'}, function (index) {
                     layer.close(index);
                     //向服务端发送删除指令
@@ -1273,7 +1284,7 @@
                 return false;
         })
         $("#queryBtn").click(function () {
-            tableIns.reload({
+            tableUserList.reload({
                 url: 'service/Archives/getArchivesList?query=' + $("#customerName1").val(),
                 page: {
                     curr: 1
