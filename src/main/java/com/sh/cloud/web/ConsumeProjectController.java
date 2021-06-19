@@ -27,7 +27,7 @@ public class ConsumeProjectController {
 
     @RequestMapping("getConsumeProjectList")
     @ResponseBody
-    public Map<String, Object> getProjectList(@RequestParam String query, @RequestParam String consumeType, @RequestParam int page, @RequestParam int limit) {
+    public Map<String, Object> getConsumeProjectList(@RequestParam String query, @RequestParam String consumeType, @RequestParam int page, @RequestParam int limit) {
         Map<String, Object> ret = new HashMap<>();
         ret.put("code", 0);
         ret.put("msg", "");
@@ -39,6 +39,22 @@ public class ConsumeProjectController {
         else
             consumeProject.consumeTypeId = Integer.parseInt(consumeType);
         List<ConsumeProject> dataByQuery = consumeProjectService.getConsumeProjectList(consumeProject, page, limit);
+        ret.put("data", dataByQuery);
+        ret.put("count", consumeProjectService.getConsumeProjectListCount(consumeProject));
+        return ret;
+    }
+
+    @RequestMapping("getConsumeProjectNameList")
+    @ResponseBody
+    public Map<String, Object> getConsumeProjectNameList() {
+        Map<String, Object> ret = new HashMap<>();
+        ret.put("code", 0);
+        ret.put("msg", "");
+
+        ConsumeProject consumeProject = new ConsumeProject();
+        consumeProject.name = "";
+        consumeProject.consumeTypeId = -1;
+        List<ConsumeProject> dataByQuery = consumeProjectService.getConsumeProjectList(consumeProject, 1, Integer.MAX_VALUE);
         ret.put("data", dataByQuery);
         ret.put("count", consumeProjectService.getConsumeProjectListCount(consumeProject));
         return ret;

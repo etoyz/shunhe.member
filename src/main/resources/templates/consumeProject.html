@@ -598,7 +598,7 @@
                 function pullCoupon(selector, callback) {
                     var selectE = $(selector);
                     $.get({
-                        url: "service/coupon/getCouponList?query=&page=0&limit=2147483640",
+                        url: "service/coupon/getCouponNameList",
                         timeout: 1000,
                         dataType: "json",
                         success: function (res) {
@@ -628,7 +628,7 @@
                     height: 550,
                     width: 493,
                     page: false,
-                    url: "service/coupon/getCouponList?query=",
+                    url: "service/coupon/getCouponNameList",
                     cols: [ [
                         {type: 'checkbox', width: 70},
                         {field: 'name', width: 420, title: '消费卡券'},

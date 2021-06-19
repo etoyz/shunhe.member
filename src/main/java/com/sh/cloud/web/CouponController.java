@@ -79,9 +79,21 @@ public class CouponController {
 
         Coupon c = new Coupon();
         c.name = query;
-        c.type = 666;
+        c.type = -1;
         List<Coupon> data = couponService.getCouponList(c, page, limit);
         ret.put("count", couponService.getCouponListCount(c));
+        ret.put("data", data);
+
+        return ret;
+    }
+
+    @GetMapping("getCouponNameList")
+    public Map<String, Object> getCouponNameList() {
+        Map<String, Object> ret = new HashMap<>();
+        ret.put("code", 0);
+        ret.put("msg", "");
+
+        List<Coupon> data = couponService.getCouponNameList();
         ret.put("data", data);
 
         return ret;
