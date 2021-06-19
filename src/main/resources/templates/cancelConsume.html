@@ -217,7 +217,7 @@
             }
         });
 
-        $("#queryBtn").click(function () {
+        $("#queryBtn").unbind("click").click(function () {
             tableIns.reload({
                 url: 'service/cancelConsume/getConsumeList',
                 page: {

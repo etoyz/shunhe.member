@@ -1296,7 +1296,7 @@
             })
             return false;
         })
-        $("#gadd").click(function () {
+        $("#gadd").unbind("click").click(function () {
             var str = $("#newLevel").val();
             var result = str.split(",");
             var id = result[1];
@@ -1312,7 +1312,7 @@
                 }
             })
         })
-        $("#queryBtn").click(function () {
+        $("#queryBtn").unbind("click").click(function () {
             tableUserList.reload({
                 url: 'service/Archives/getArchivesList?query=' + $("#customerName1").val(),
                 page: {

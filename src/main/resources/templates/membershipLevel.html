@@ -369,7 +369,7 @@
         });
 
         var addWind;
-        $("#addBtn").click(function () {
+        $("#addBtn").unbind("click").click(function () {
             addWind = layer.open({
                 type: 1,
                 title: '添加信息',
@@ -379,13 +379,13 @@
             return false;
         })
 
-        $("#cancelAdd, #cancelMod, #cancelRel").click(function () {
+        $("#cancelAdd, #cancelMod, #cancelRel").unbind("click").click(function () {
             console.log("cancel")
             layer.closeAll()
         })
         // var score=$("#pointToUpdate").val();
 
-        // $("#confirmAdd").click(function () {
+        // $("#confirmAdd").unbind("click").click(function () {
         form.on('submit(confirmAdd)', function (data) {
             var score = $("#type").val();
             console.log(score);
@@ -419,8 +419,8 @@
         })
 
         var modWind;
-        // $("#confirmMod").click(function () {
-        $("#queryBtn").click(function () {
+        // $("#confirmMod").unbind("click").click(function () {
+        $("#queryBtn").unbind("click").click(function () {
             tableIns.reload({
                 url: 'service/membershipLevel/getMemberList?query=' + $("#cardNameInput").val(),
                 page: {

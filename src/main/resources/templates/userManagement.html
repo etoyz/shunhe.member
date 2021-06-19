@@ -220,7 +220,7 @@
             }
         });
 
-        $("#addBtn").click(function () {
+        $("#addBtn").unbind("click").click(function () {
             $("#name").val("")
             $("#phoneNum").val("")
             $("#username").val("")
@@ -234,7 +234,7 @@
             return false;
         })
 
-        $("#cancelAdd, #cancelMod, #cancelRel").click(function () {
+        $("#cancelAdd, #cancelMod, #cancelRel").unbind("click").click(function () {
             layer.closeAll()
         })
 
@@ -250,7 +250,7 @@
             })
         })
 
-        $("#queryBtn").click(function () {
+        $("#queryBtn").unbind("click").click(function () {
             tablePlatUser.reload({
                 url: 'service/platUserManage/getUserList?query=' + $("#userNameSearch").val(),
                 page: {

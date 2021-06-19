@@ -405,7 +405,7 @@
             }
         });
 
-        $("#addBtn").click(function () {
+        $("#addBtn").unbind("click").click(function () {
             $("#couponName").val("")
             $("#remark").val("")
             $("#price").val(0)
@@ -422,7 +422,7 @@
             return false;
         })
 
-        $("#cancelAdd, #cancelMod, #cancelRel").click(function () {
+        $("#cancelAdd, #cancelMod, #cancelRel").unbind("click").click(function () {
             layer.closeAll()
         })
 
@@ -438,7 +438,7 @@
             })
         })
 
-        $("#confirmRel").click(function () {
+        $("#confirmRel").unbind("click").click(function () {
             $.post({
                 url: "service/coupon/relateConsumeProject",
                 data: JSON.stringify({
@@ -452,7 +452,7 @@
             })
         })
 
-        $("#queryBtn").click(function () {
+        $("#queryBtn").unbind("click").click(function () {
             couponTable.reload({
                 url: 'service/coupon/getCouponList?query=' + $("#couponNameInput").val(),
                 page: {
@@ -460,15 +460,6 @@
                 }
             })
             return false;
-        })
-
-        $(document).ready(function () {
-            // $.post({
-            //     url: "service/coupon/getCouponList",
-            //     success: function (res) {
-            //         console.log(res)
-            //     }
-            // })
         })
     });
 </script>

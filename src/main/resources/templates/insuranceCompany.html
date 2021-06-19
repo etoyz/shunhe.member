@@ -151,7 +151,7 @@
         }
 
         // 显示“新增弹窗”
-        $('#add').click(function () {
+        $('#add').unbind("click").click(function () {
             var index = layer.open({
                 type: 1,
                 title: '新增保险公司',
@@ -164,7 +164,7 @@
                 return false;
             });
             form.on('submit(confirmAdd)', function (data) {
-                //$("#confirmAdd").click(function () {
+                //$("#confirmAdd").unbind("click").click(function () {
                 $.post({
                     url: "service/insuranceCompany/addInsuranceCompany",
                     data: JSON.stringify({
@@ -281,7 +281,7 @@
             }
         });
 
-        $("#queryBtn").click(function () {
+        $("#queryBtn").unbind("click").click(function () {
             tableIns.reload({
                 url: 'service/insuranceCompany/getInsuranceCompanyList?query=' + $("#insuranceCompanyInput").val(),
                 page: {

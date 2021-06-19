@@ -115,7 +115,7 @@
         }
 
         // 显示“新增弹窗”
-        $('#add').click(function () {
+        $('#add').unbind("click").click(function () {
             $("#name").val("")
             var index = layer.open({
                 type: 1,
@@ -123,7 +123,7 @@
                 content: $('#addWindow'),
                 area: ['400px', '200px'],
             });
-            $('#cancelAdd').click(function () {
+            $('#cancelAdd').unbind("click").click(function () {
                 // 关闭当前弹出层
                 layer.close(index);
                 return false;
@@ -237,7 +237,7 @@
             }
         });
 
-        $("#queryBtn").click(function () {
+        $("#queryBtn").unbind("click").click(function () {
             tableTypes.reload({
                 url: 'service/consumeType/getConsumeTypeList?query=' + $("#consumeTypeInput").val(),
                 page: {
