@@ -196,13 +196,13 @@
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
             var consumeTypeName = data.name;
             if (layEvent === 'edit') {
+                $("#consumeTypeName").val(data.name);
                 var index1 = layer.open({
                     type: 1,
                     title: '编辑',
                     content: $('#editWindow'),
                     area: ['400px', '225px'],
                 });
-                $("#consumeTypeName").val(data.name);
                 form.on('submit(confirmMod)', function (formData) {
                     formData.field['consumeTypeId'] = data.consumeTypeId;
                     $.post({
@@ -211,7 +211,7 @@
                         contentType: "application/json",
                         success: function (res) {
                             layuiAlert(res)
-                            tableTypes.reload();
+                            obj.update(formData.field)
                         }
                     })
                     return false;
