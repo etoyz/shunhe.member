@@ -329,7 +329,8 @@
                         contentType: "application/json",
                         success: function (res) {
                             layuiAlert(res)
-                            obj.del()
+                            if("删除成功！" === res)
+                                obj.del()
                         }
                     });
                 })
