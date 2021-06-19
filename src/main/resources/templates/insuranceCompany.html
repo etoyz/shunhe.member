@@ -146,7 +146,6 @@
                 closeBtn: false,
                 yes: function () {
                     layer.closeAll();
-                    location.reload();
                 }
             });
         }
@@ -162,6 +161,7 @@
             $('#cancelAdd').on('click', function () {
                 // 关闭当前弹出层
                 layer.close(index);
+                return false;
             });
             form.on('submit(confirmAdd)', function (data) {
                 //$("#confirmAdd").click(function () {
@@ -253,7 +253,7 @@
                         contentType: "application/json",
                         success: function (res) {
                             layuiAlert(res)
-                            tableIns.reload();
+                            obj.update(data.field);
                         }
                     })
                     return false;
@@ -273,11 +273,7 @@
                         },
                         success: function (res) {
                             layuiAlert(res)
-                            tableIns.reload({
-                                page: {
-                                    curr: 1
-                                }
-                            });
+                            obj.del()
                         }
                     })
                 });

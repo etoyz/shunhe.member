@@ -146,7 +146,6 @@
                 closeBtn: false,
                 yes: function () {
                     layer.closeAll();
-                    location.reload();
                 }
             });
         }
@@ -248,7 +247,7 @@
                         contentType: "application/json",
                         success: function (res) {
                             layuiAlert(res)
-                            tableIns.reload();
+                            obj.update(data.field);
                         }
                     })
                     return false;
@@ -268,7 +267,7 @@
                         },
                         success: function (res) {
                             layuiAlert(res)
-                            tableIns.reload()
+                            obj.del()
                         }
                     })
                 });
