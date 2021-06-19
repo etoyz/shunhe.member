@@ -88,6 +88,44 @@ public class WebController {
     }
     // ----------------------------------------
 
+    // ------------- Menu: Report center -------------
+    // 用卡历史
+    @RequestMapping("/useCardHistory")
+    public String useCardHistory() {
+        return "useCardHistory";
+    }
+
+    // 反结算历史
+    @RequestMapping("/cancelConsumeHistory")
+    public String cancelConsumeHistory() {
+        return "cancelConsumeeHistory";
+    }
+
+    // 卡券统计
+    @RequestMapping("/couponStatistical")
+    public String couponStatistical() {
+        return "couponStatistical";
+    }
+
+    // 储值统计
+    @RequestMapping("/depositStatistical")
+    public String depositStatistical() {
+        return "depositStatistical";
+    }
+
+    // 群发统计
+    @RequestMapping("/massStatistical")
+    public String massStatistical() {
+        return "massStatistical";
+    }
+
+    // 抽奖统计
+    @RequestMapping("/raffleStatistical")
+    public String raffleStatistical() {
+        return "raffleStatistical";
+    }
+    // ----------------------------------------
+
     // ------------- Menu: System management -------------
     @RequestMapping("/userManagement")
     public String userManagement() {
