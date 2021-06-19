@@ -79,17 +79,17 @@
             </div>
             <div class="layui-form-item s-formItem1">
                 <div class="layui-inline">
-                    <label class="layui-form-label"><i>*</i>单价</label>
+                    <label class="layui-form-label">单价</label>
                     <div class="layui-input-inline">
                         <input autocomplete="off" class="layui-input" id="price"
-                               lay-verify="number" name="unitPrice" type="text">
+                               lay-verify="number" value="0" name="unitPrice" type="text">
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <label class="layui-form-label"><i>*</i>成本价</label>
+                    <label class="layui-form-label">成本价</label>
                     <div class="layui-input-inline">
                         <input autocomplete="off" class="layui-input" id="costPrice"
-                               lay-verify="number" name="costPrice" type="text">
+                               lay-verify="number" value="0" name="costPrice" type="text">
                     </div>
                 </div>
                 <div class="layui-inline">
@@ -139,14 +139,14 @@
             </div>
             <div class="layui-form-item s-formItem1">
                 <div class="layui-inline">
-                    <label class="layui-form-label"><i>*</i>单价</label>
+                    <label class="layui-form-label">单价</label>
                     <div class="layui-input-inline">
                         <input autocomplete="off" class="layui-input" id="priceM"
                                lay-verify="number" name="unitPrice" type="text">
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <label class="layui-form-label"><i>*</i>成本价</label>
+                    <label class="layui-form-label">成本价</label>
                     <div class="layui-input-inline">
                         <input autocomplete="off" class="layui-input" id="costPriceM"
                                lay-verify="number" name="costPrice" type="text">
@@ -352,6 +352,22 @@
                     $('#priceM').val(activeLine.unitPrice);
                     $('#costPriceM').val(activeLine.costPrice);
                 })
+                form.on('submit(confirmMod)', function (data) {
+                    data.field.couponId = activeLine.couponId
+                    delete data.field.type
+                    $.post({
+                        url: "service/coupon/modCoupon",
+                        data: JSON.stringify(data.field),
+                        contentType: "application/json",
+                        success: function (res) {
+                            layuiAlert("修改结果：" + res)
+                            obj.update(data.field);
+                        },
+                        error: function () {
+                            layuiAlert("修改失败")
+                        }
+                    })
+                })
             }
             if (layEvent === 'relate') {
                 var progressNotice = layer.msg('正在加载...')
@@ -417,21 +433,6 @@
                 success: function (res) {
                     layuiAlert("信息:" + res)
                     couponTable.reload()
-                }
-            })
-        })
-
-        form.on('submit(confirmMod)', function (data) {
-            data.field.couponId = activeLine.couponId
-            $.post({
-                url: "service/coupon/modCoupon",
-                data: JSON.stringify(data.field),
-                contentType: "application/json",
-                success: function (res) {
-                    layuiAlert("修改结果：" + res)
-                },
-                error: function () {
-                    layuiAlert("修改失败")
                 }
             })
         })
