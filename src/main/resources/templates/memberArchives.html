@@ -80,7 +80,7 @@
                             </div>
                         </div>
                         <div class="layui-inline">
-                            <label class="layui-form-label">性别</label>
+                            <label class="layui-form-label"><i>*</i>性别</label>
                             <div class="layui-input-inline">
                                 <select id="cGender" lay-filter="gender" name="cGender">
                                     <option value="">请选择性别</option>
@@ -93,7 +93,7 @@
                         <div class="layui-inline">
                             <label class="layui-form-label">生日</label>
                             <div class="layui-input-inline">
-                                <input autocomplete="off" class="layui-input" id="cBirthday" lay-verify="date"
+                                <input autocomplete="off" class="layui-input" id="cBirthday"
                                        name="cBirthday"
                                        placeholder="yyyy-MM-dd" type="text">
                             </div>
@@ -108,7 +108,7 @@
                             </div>
                         </div>
                         <div class="layui-inline">
-                            <label class="layui-form-label">证件号</label>
+                            <label class="layui-form-label"><i>*</i>证件号</label>
                             <div class="layui-input-inline">
                                 <input autocomplete="off" class="layui-input" id="cCard" lay-verify="required" name="cCard"
                                        type="text">
@@ -527,7 +527,7 @@
                             </div>
                         </div>
                         <div class="layui-inline">
-                            <label class="layui-form-label">性别</label>
+                            <label class="layui-form-label"><i>*</i>性别</label>
                             <div class="layui-input-inline">
                                 <select id="cGenderM" lay-filter="gender" name="cGender">
                                     <option value="">请选择性别</option>
@@ -540,7 +540,7 @@
                         <div class="layui-inline">
                             <label class="layui-form-label">生日</label>
                             <div class="layui-input-inline">
-                                <input autocomplete="off" class="layui-input" id="cBirthdayM" lay-verify="date"
+                                <input autocomplete="off" class="layui-input" id="cBirthdayM"
                                        name="cBirthday"
                                        placeholder="yyyy-MM-dd" type="text">
                             </div>
@@ -555,7 +555,7 @@
                             </div>
                         </div>
                         <div class="layui-inline">
-                            <label class="layui-form-label">证件号</label>
+                            <label class="layui-form-label"><i>*</i>证件号</label>
                             <div class="layui-input-inline">
                                 <input autocomplete="off" class="layui-input" id="cCardM" lay-verify="required" name="cCard"
                                        type="text">
@@ -668,7 +668,7 @@
                     </div>
                     <div class="layui-form-item s-formItem5">
                         <div class="layui-inline">
-                            <label class="layui-form-label">品牌</label>
+                            <label class="layui-form-label"><i>*</i>品牌</label>
                             <div class="layui-input-inline">
                                 <input autocomplete="off" class="layui-input" id="vehiclelabelM" lay-verify="required"
                                        name="vehiclelabel"
@@ -676,7 +676,7 @@
                             </div>
                         </div>
                         <div class="layui-inline">
-                            <label class="layui-form-label">车系</label>
+                            <label class="layui-form-label"><i>*</i>车系</label>
                             <div class="layui-input-inline">
                                 <input autocomplete="off" class="layui-input" id="vehiclestyleM" lay-verify="required"
                                        name="vehiclestyle"
@@ -1044,7 +1044,7 @@
         var tableUserList = table.render({
             elem: '#memberArchives',
             url: 'service/Archives/getArchivesList?query=',
-            height: 'full-291',
+            height: 'full-100',
             page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                 layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
                 limit: 15,
@@ -1090,6 +1090,7 @@
                             data[i].cGender = resp.cGender === 1 ? "男" : "女"
                             data[i].cBirthday = resp.cBirthday
                             data[i].phone = resp.phone
+                            data[i].cCard = resp.cCard
                             data[i].customername = resp.customername
                             data[i].level = resp.member.level
                             data[i].vin = resp.vehicle.vin
@@ -1158,6 +1159,35 @@
                         form.render()
                     }
                 });
+                form.on('submit(confirmAddM)', function (data) {
+                    console.log(data)
+                    data.field.vehicle = {
+                        platenumber: data.field.platenumber,
+                        vin: data.field.vin,
+                        vehiclelabel: data.field.vehiclelabel,
+                        vehiclebrand: data.field.vehiclebrand,
+                        vehiclestyle: data.field.vehiclestyle,
+                        customername: data.field.customername
+                    }
+                    data.field.member = {
+                        level: data.field.level
+                    }
+                    data.field.userId = activedata.userId
+                    // data.field.userId : data.userId;
+                    $.post({
+                        url: "/service/Archives/editArchives",
+                        data: JSON.stringify(data.field),
+                        contentType: "application/json",
+                        success: function (res) {
+                            var t
+                            data.field.cGender=t=== "1" ? "男" : "女";
+                             // console.log(res)
+                            layer.closeAll();
+                            obj.update(data.field);
+                        }
+                    })
+                    return false
+                })
                 $('#cancelEdit').on('click', function () {
                     layer.close(index1);
                     return false
@@ -1281,32 +1311,6 @@
                     layuiAlert('修改成功！', {icon: 1})
                 }
             })
-        })
-        form.on('submit(confirmAddM)', function (data) {
-            console.log(data)
-            data.field.vehicle = {
-                platenumber: data.field.platenumber,
-                vin: data.field.vin,
-                vehiclelabel: data.field.vehiclelabel,
-                vehiclebrand: data.field.vehiclebrand,
-                vehiclestyle: data.field.vehiclestyle,
-                customername: data.field.customername
-            }
-            data.field.member = {
-                level: data.field.level
-            }
-            data.field.userId = activedata.userId
-            // data.field.userId : data.userId;
-            $.post({
-                url: "/service/Archives/editArchives",
-                data: JSON.stringify(data.field),
-                contentType: "application/json",
-                success: function (res) {
-                    console.log(res)
-                    layuiAlert("信息:" + res)
-                }
-            })
-            return false
         })
         $("#queryBtn").click(function () {
             tableUserList.reload({
