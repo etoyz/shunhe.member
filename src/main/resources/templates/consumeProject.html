@@ -364,6 +364,10 @@
 
         // 显示“新增弹窗”
         $('body').unbind("click").on('click', '#add', function () {
+            $("#consumeProjectName").val("")
+            $("#invoice").val("")
+            $("#remark").val("")
+            $("#intRatio").val("")
             pullConsumeTypes("#consumeTypeInputAdd", false, () => {
             })
             layer.open({
@@ -384,6 +388,7 @@
                 })
                 return false
             })
+            return false
         });
 
         // “消费项目表格”渲染

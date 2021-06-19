@@ -329,11 +329,7 @@
                         contentType: "application/json",
                         success: function (res) {
                             layuiAlert(res)
-                            couponTable.reload({
-                                page: {
-                                    curr: 1
-                                }
-                            });
+                            obj.del()
                         }
                     });
                 })
@@ -410,6 +406,11 @@
         });
 
         $("#addBtn").click(function () {
+            $("#couponName").val("")
+            $("#remark").val("")
+            $("#price").val("")
+            $("#costPrice").val("")
+            $("#orderID").val("")
             layer.open({
                 type: 1,
                 title: '新增卡券',
