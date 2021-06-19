@@ -150,7 +150,7 @@
                 {field: '**', width: 100, title: '发票号'},
                 {field: '**', width: 100, title: '开票金额'},
                 {field: 'remark', width: 100, title: '项目备注'},
-                {field: 'groupId', width: 100, title: 'groupId', hide: true},
+                {field: 'id', width: 100, title: 'id', hide: true},
                 {field: 'operation', width: 80, title: '操作', toolbar: '#operation', fixed: 'right'}
             ]],
             size: 'sm',
@@ -200,7 +200,7 @@
                     $.post({
                         url: "service/cancelConsume/rollBack",
                         data: {
-                            groupId: data.groupId
+                            id: data.id
                         },
                         success: function (res) {
                             layuiAlert(res)
