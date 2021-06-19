@@ -52,20 +52,20 @@ public class WebController {
         return "consumeProject";
     }
 
-    @RequestMapping("/brand")
-    public String brand() {
-        return "brand";
-    }
-
-    @RequestMapping("/carSeries")
-    public String carSeries() {
-        return "carSeries";
-    }
-
-    @RequestMapping("/model")
-    public String model() {
-        return "model";
-    }
+//    @RequestMapping("/brand")
+//    public String brand() {
+//        return "brand";
+//    }
+//
+//    @RequestMapping("/carSeries")
+//    public String carSeries() {
+//        return "carSeries";
+//    }
+//
+//    @RequestMapping("/model")
+//    public String model() {
+//        return "model";
+//    }
 
     @RequestMapping("/insuranceCompany")
     public String insuranceCompany() {
