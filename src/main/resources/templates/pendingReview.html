@@ -71,30 +71,28 @@
 <!-- 待审核item弹窗 -->
 <div class="s-details" id="reviewWindow">
     <form action="" autocomplete="off" class="layui-form">
-        <div class="layui-form-item s-formItem5">
+        <div class="layui-form-item s-formItem6">
             <div class="layui-inline">
                 <label class="layui-form-label">消费日期</label>
                 <div class="layui-input-inline">
-                    <input autocomplete="off" class="layui-input" disabled id="time" lay-verify="time"
-                           name="time" type="text">
+                    <input autocomplete="off" disabled class="layui-input" id="time" lay-verify="time|required" name="time"
+                           type="text">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">车牌号</label>
                 <div class="layui-input-inline">
-                    <input autocomplete="off" class="layui-input" disabled id="licensePlate"
+                    <input autocomplete="off" disabled class="layui-input" id="licensePlate"
                            type="text">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">车架号</label>
                 <div class="layui-input-inline">
-                    <input autocomplete="off" class="layui-input" disabled id="vin" name="vin"
+                    <input autocomplete="off" disabled class="layui-input" id="vin" name="vin"
                            type="text">
                 </div>
             </div>
-        </div>
-        <div class="layui-form-item s-formItem5">
             <div class="layui-inline">
                 <label class="layui-form-label">客户姓名</label>
                 <div class="layui-input-inline">
@@ -109,6 +107,8 @@
                            type="text">
                 </div>
             </div>
+        </div>
+        <div class="layui-form-item s-formItem6">
             <div class="layui-inline">
                 <label class="layui-form-label">会员级别</label>
                 <div class="layui-input-inline">
@@ -116,12 +116,10 @@
                            type="text">
                 </div>
             </div>
-        </div>
-        <div class="layui-form-item s-formItem5">
             <div class="layui-inline">
                 <label class="layui-form-label">消费类型</label>
                 <div class="layui-input-inline">
-                    <select autocomplete="off" class="layui-input" disabled id="consumeTypeId" lay-filter="consumeTypeId"
+                    <select autocomplete="off" disabled class="layui-input" id="consumeTypeId" lay-filter="consumeTypeId"
                             name="consumeTypeId"
                             type="text">
                         <option>正在拉取...</option>
@@ -131,7 +129,7 @@
             <div class="layui-inline">
                 <label class="layui-form-label">消费项目</label>
                 <div class="layui-input-inline">
-                    <select autocomplete="off" class="layui-input" disabled id="consumeProjectId" lay-filter="consumeProjectId"
+                    <select autocomplete="off" disabled class="layui-input" id="consumeProjectId" lay-filter="consumeProjectId"
                             name="consumeProjectId"
                             type="text">
                         <option>正在拉取...</option>
@@ -145,17 +143,24 @@
                     </select>
                 </div>
             </div>
-        </div>
-        <div class="layui-form-item s-formItem5">
-            <div class="layui-bl">
-                <label class="layui-form-label">项目备注</label>
-                <div class="layui-input-inline" style="width: 800px">
-                    <input autocomplete="off" class="layui-input" disabled id="billRemark" name="billRemark"
+            <div class="layui-inline">
+                <label class="layui-form-label">成本价</label>
+                <div class="layui-input-inline">
+                    <input autocomplete="off" disabled class="layui-input" id="costPrice" lay-verify="number" name="costPrice"
                            type="text">
                 </div>
             </div>
         </div>
-        <div class="layui-form-item s-formItem5">
+        <div class="layui-form-item s-formItem6">
+            <div class="layui-bl">
+                <label class="layui-form-label">项目备注</label>
+                <div class="layui-input-inline" style="width: 800px">
+                    <input autocomplete="off" disabled class="layui-input" id="billRemark" name="billRemark"
+                           type="text">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item s-formItem6">
             <div class="layui-inline">
                 <label class="layui-form-label">工时费</label>
                 <div class="layui-input-inline">
@@ -173,12 +178,10 @@
             <div class="layui-inline">
                 <label class="layui-form-label">总金额</label>
                 <div class="layui-input-inline">
-                    <input autocomplete="off" class="layui-input" disabled id="billSum" name="billSum"
+                    <input autocomplete="off" class="layui-input" disabled id="totalMoney" name="totalMoney"
                            type="text">
                 </div>
             </div>
-        </div>
-        <div class="layui-form-item s-formItem5">
             <div class="layui-inline">
                 <label class="layui-form-label">行驶里程</label>
                 <div class="layui-input-inline">
@@ -193,15 +196,8 @@
                            type="text">
                 </div>
             </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">增加发票</label>
-                <div class="layui-input-inline">
-                    <input autocomplete="off" class="layui-input" disabled id="addInvoice" name="addInvoice"
-                           type="text">
-                </div>
-            </div>
         </div>
-        <div class="layui-form-item s-formItem5">
+        <div class="layui-form-item s-formItem6">
             <div class="layui-inline">
                 <label class="layui-form-label">是否开票</label>
                 <div class="layui-input-inline">
@@ -214,39 +210,44 @@
             <div class="layui-inline">
                 <label class="layui-form-label">开票金额</label>
                 <div class="layui-input-inline">
-                    <input autocomplete="off" class="layui-input" disabled id="invoiceNum" name="invoiceNum"
-                           type="text">
+                    <input autocomplete="off" class="layui-input" id="invoiceNum" name="invoiceNum"
+                           disabled type="text">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">发票号</label>
                 <div class="layui-input-inline">
-                    <input autocomplete="off" class="layui-input" disabled id="invoiceID" name="invoiceID"
-                           type="text">
+                    <input autocomplete="off" class="layui-input" id="invoiceID" name="invoiceID"
+                           disabled type="text">
                 </div>
             </div>
-        </div>
-        <div class="layui-form-item s-formItem5">
+            <div class="layui-inline">
+                <label class="layui-form-label">增加发票</label>
+                <div class="layui-input-inline">
+                    <input autocomplete="off" class="layui-input" id="addInvoice" name="addInvoice"
+                           disabled type="text">
+                </div>
+            </div>
             <div class="layui-inline">
                 <label class="layui-form-label">本次开票</label>
                 <div class="layui-input-inline">
-                    <input autocomplete="off" class="layui-input" disabled id="currentInvoice" name="currentInvoice"
-                           type="text">
-                </div>
-            </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">剩余开票</label>
-                <div class="layui-input-inline">
-                    <input autocomplete="off" class="layui-input" disabled id="resInvoice" name="resInvoice"
-                           type="text">
+                    <input autocomplete="off" class="layui-input" id="currentInvoice" name="currentInvoice"
+                           disabled type="text">
                 </div>
             </div>
         </div>
-        <div class="layui-form-item s-formItem5">
+        <div class="layui-form-item s-formItem6">
+            <div class="layui-inline">
+                <label class="layui-form-label">剩余开票</label>
+                <div class="layui-input-inline">
+                    <input autocomplete="off" class="layui-input" id="resInvoice" name="resInvoice"
+                           disabled type="text">
+                </div>
+            </div>
             <div class="layui-inline">
                 <label class="layui-form-label">支付方式</label>
                 <div class="layui-input-inline">
-                    <select autocomplete="off" disabled id="payStyle" name="payStyle">
+                    <select autocomplete="off" id="payStyle" name="payStyle" disabled>
                         <option value="-1">卡券下发</option>
                         <option value="-2">储值</option>
                     </select>
@@ -255,17 +256,11 @@
             <div class="layui-inline">
                 <label class="layui-form-label">充入数量</label>
                 <div class="layui-input-inline">
-                    <input autocomplete="off" class="layui-input" disabled id="buyNum" name="buyNum"
-                           type="text">
+                    <input autocomplete="off" class="layui-input" id="count" lay-verify="required|number" name="count"
+                           disabled type="text">
                 </div>
             </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">成本价</label>
-                <div class="layui-input-inline">
-                    <input autocomplete="off" class="layui-input" disabled id="costPrice" name="costPrice"
-                           type="text">
-                </div>
-            </div>
+
         </div>
         <div class="layui-btn-container s-tabBottomButton">
             <span class="layui-btn layui-btn-normal" id="checkCoupon">

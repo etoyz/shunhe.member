@@ -74,7 +74,7 @@
 <!-- 用卡弹窗 -->
 <div class="s-details" id="useWindow">
     <form action="" autocomplete="off" class="layui-form">
-        <div class="layui-form-item s-formItem5">
+        <div class="layui-form-item s-formItem6">
             <div class="layui-inline">
                 <label class="layui-form-label">消费日期</label>
                 <div class="layui-input-inline">
@@ -96,8 +96,6 @@
                            type="text">
                 </div>
             </div>
-        </div>
-        <div class="layui-form-item s-formItem5">
             <div class="layui-inline">
                 <label class="layui-form-label">客户姓名</label>
                 <div class="layui-input-inline">
@@ -112,6 +110,8 @@
                            type="text">
                 </div>
             </div>
+        </div>
+        <div class="layui-form-item s-formItem6">
             <div class="layui-inline">
                 <label class="layui-form-label">会员级别</label>
                 <div class="layui-input-inline">
@@ -119,8 +119,6 @@
                            type="text">
                 </div>
             </div>
-        </div>
-        <div class="layui-form-item s-formItem5">
             <div class="layui-inline">
                 <label class="layui-form-label">消费类型</label>
                 <div class="layui-input-inline">
@@ -148,8 +146,15 @@
                     </select>
                 </div>
             </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">成本价</label>
+                <div class="layui-input-inline">
+                    <input autocomplete="off" class="layui-input" id="costPrice" lay-verify="number" name="costPrice"
+                           type="text">
+                </div>
+            </div>
         </div>
-        <div class="layui-form-item s-formItem5">
+        <div class="layui-form-item s-formItem6">
             <div class="layui-bl">
                 <label class="layui-form-label">项目备注</label>
                 <div class="layui-input-inline" style="width: 800px">
@@ -158,7 +163,7 @@
                 </div>
             </div>
         </div>
-        <div class="layui-form-item s-formItem5">
+        <div class="layui-form-item s-formItem6">
             <div class="layui-inline">
                 <label class="layui-form-label">工时费</label>
                 <div class="layui-input-inline">
@@ -180,8 +185,6 @@
                            type="text">
                 </div>
             </div>
-        </div>
-        <div class="layui-form-item s-formItem5">
             <div class="layui-inline">
                 <label class="layui-form-label">行驶里程</label>
                 <div class="layui-input-inline">
@@ -196,15 +199,8 @@
                            type="text">
                 </div>
             </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">增加发票</label>
-                <div class="layui-input-inline">
-                    <input autocomplete="off" class="layui-input" disabled id="addInvoice" name="addInvoice"
-                           type="text">
-                </div>
-            </div>
         </div>
-        <div class="layui-form-item s-formItem5">
+        <div class="layui-form-item s-formItem6">
             <div class="layui-inline">
                 <label class="layui-form-label">是否开票</label>
                 <div class="layui-input-inline">
@@ -228,8 +224,13 @@
                            type="text">
                 </div>
             </div>
-        </div>
-        <div class="layui-form-item s-formItem5">
+            <div class="layui-inline">
+                <label class="layui-form-label">增加发票</label>
+                <div class="layui-input-inline">
+                    <input autocomplete="off" class="layui-input" disabled id="addInvoice" name="addInvoice"
+                           type="text">
+                </div>
+            </div>
             <div class="layui-inline">
                 <label class="layui-form-label">本次开票</label>
                 <div class="layui-input-inline">
@@ -237,6 +238,8 @@
                            type="text">
                 </div>
             </div>
+        </div>
+        <div class="layui-form-item s-formItem6">
             <div class="layui-inline">
                 <label class="layui-form-label">剩余开票</label>
                 <div class="layui-input-inline">
@@ -244,8 +247,6 @@
                            type="text">
                 </div>
             </div>
-        </div>
-        <div class="layui-form-item s-formItem5">
             <div class="layui-inline">
                 <label class="layui-form-label">支付方式</label>
                 <div class="layui-input-inline">
@@ -262,13 +263,7 @@
                            type="text">
                 </div>
             </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">成本价</label>
-                <div class="layui-input-inline">
-                    <input autocomplete="off" class="layui-input" id="costPrice" lay-verify="number" name="costPrice"
-                           type="text">
-                </div>
-            </div>
+
         </div>
         <div class="layui-btn-container s-tabBottomButton">
             <span class="layui-btn layui-btn-warm" id="submitForReview">
@@ -291,7 +286,6 @@
         <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delete">删除</a>
     </script>
 </div>
-
 
 <script src="plugins/layui/layui.js"></script>
 <script>
