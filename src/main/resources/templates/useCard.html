@@ -411,123 +411,6 @@
             }
         }
 
-        //primary
-        {// “用卡表格”渲染
-            var tableUserList = table.render({
-                elem: '#memberList',
-                url: 'service/Archives/getArchivesList?query=',
-                height: 'full-291',
-                page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
-                    layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
-                    limit: 15,
-                    //,curr: 5 //设定初始在第 5 页
-                    groups: 3, //只显示 1 个连续页码
-                    first: false, //不显示首页
-                    last: false //不显示尾页
-
-                },
-                toolbar: true, //仅开启工具栏，不显示左侧模板
-                // defaultToolbar: ['exports'], //头部工具栏右侧图标
-                defaultToolbar: ['filter', 'print', 'exports'],
-                cols: [ [
-                    {type: 'checkbox'},
-                    {field: 'customername', width: 80, title: '客户名称'},
-                    {field: 'cGender', width: 56, title: '性别'},
-                    {field: 'cBirthday', width: 96, title: '生日'},
-                    {field: 'cCard', width: 156, title: '证件号'}, //单元格内容水平居中
-                    {field: 'phone', width: 156, title: '电话号码'}, //单元格内容水平居中
-                    {field: 'memberNumber', width: 160, title: '会员卡号'},
-                    {field: 'level', width: 80, title: '会员级别'},
-                    {field: 'detailedAddress', width: 302, title: '详细地址'},
-                    {field: 'vin', width: 156, title: '车架号'},
-                    {field: 'platenumber', width: 88, title: '车牌号'},
-                    {field: 'vehiclelabel', width: 82, title: '品牌'},
-                    {field: 'vehiclestyle', width: 54, title: '车系'},
-                    {field: 'vehiclebrand', width: 210, title: '车型'},
-                    {field: 'province', width: 152, title: '省'},
-                    {field: 'city', width: 152, title: '市'},
-                    {field: 'district', width: 152, title: '区'},
-                    {field: 'userId', width: 210, title: 'id', hide: true},
-                    {field: 'operation', width: 210, title: '操作', toolbar: '#operation', fixed: 'right'}
-                ]],
-                size: 'sm',
-                parseData: function (res) {
-                    let data = res.data
-                    for (let i = 0; i < data.length; i++) {
-                        $.post({
-                            url: "service/Archives/getUserInfo?userId=" + data[i].userId,
-                            async: false,
-                            success: function (resp) {
-                                console.log(resp)
-                                data[i].cGender = resp.cGender === 1 ? "男" : "女"
-                                data[i].cBirthday = resp.cBirthday
-                                data[i].phone = resp.phone
-                                data[i].customername = resp.customername
-                                data[i].level = resp.member.level
-                                data[i].vin = resp.vehicle.vin
-                                data[i].platenumber = resp.vehicle.platenumber
-                                data[i].vehiclebrand = resp.vehicle.vehiclebrand
-                                data[i].vehiclelabel = resp.vehicle.vehiclelabel
-                                data[i].vehiclestyle = resp.vehicle.vehiclestyle
-                            }
-                        })
-                    }
-                    res.data = data
-                    return res
-                }
-            });
-            var activeUser;
-            //监听“会员档案表格”工具条
-            table.on('tool(memberListTable)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
-                var data = obj.data; //获得当前行数据
-                activeUser = data;
-                var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
-                if (layEvent === 'use') { // 用卡
-                    $.post({
-                        url: "service/Archives/getUserInfo",
-                        data: {
-                            userId: data.userId
-                        },
-                        success: function (res) {
-                            $("#licensePlate").val(res.vehicle.platenumber);
-                            $("#vin").val(res.vehicle.vin);
-                            $("#customerName").val(res.customername);
-                            $("#memberNumber").val(res.memberNumber);
-                            $("#customerLevel").val(res.member.level);
-                            pullConsumeTypes("#consumeTypeId", () => {
-                                pullConsumeItems("#consumeProjectId", $("#consumeTypeId").val(), () => {
-                                    pullPracticalItemIds("#practicalProjectId", $("#consumeProjectId").val(), () => {
-                                    })
-                                    pullPay("#payStyle", data.userId, $("#consumeProjectId").val(), () => {
-                                    });
-                                })
-                            })
-                        }
-                    })
-                    var index1 = layer.open({
-                        type: 1,
-                        title: '用卡',
-                        content: $('#useWindow'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
-                        area: ['100%', '100%']
-                    });
-                    form.on('select(consumeTypeId)', function () {
-                        pullConsumeItems("#consumeProjectId", $("#consumeTypeId").val(), () => {
-                            pullPracticalItemIds("#practicalProjectId", $("#consumeProjectId").val(), () => {
-                            })
-                        })
-                    });
-                    form.on('select(consumeProjectId)', function () {
-                        pullPracticalItemIds("#practicalProjectId", $("#consumeProjectId").val(), () => {
-                        })
-                    });
-                    $('#exit1').on('click', function () {
-                        // 关闭当前弹出层
-                        layer.close(index1);
-                    })
-                }
-            });
-        }
-
         //popup
         {
             var couponReviewList = [];
@@ -619,6 +502,127 @@
                     data: couponReviewList
                 })
             })
+        }
+
+        //primary
+        {// “用卡表格”渲染
+            var tableUserList = table.render({
+                elem: '#memberList',
+                url: 'service/Archives/getArchivesList?query=',
+                height: 'full-291',
+                page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                    layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
+                    limit: 15,
+                    //,curr: 5 //设定初始在第 5 页
+                    groups: 3, //只显示 1 个连续页码
+                    first: false, //不显示首页
+                    last: false //不显示尾页
+
+                },
+                toolbar: true, //仅开启工具栏，不显示左侧模板
+                // defaultToolbar: ['exports'], //头部工具栏右侧图标
+                defaultToolbar: ['filter', 'print', 'exports'],
+                cols: [ [
+                    {type: 'checkbox'},
+                    {field: 'customername', width: 80, title: '客户名称'},
+                    {field: 'cGender', width: 56, title: '性别'},
+                    {field: 'cBirthday', width: 96, title: '生日'},
+                    {field: 'cCard', width: 156, title: '证件号'}, //单元格内容水平居中
+                    {field: 'phone', width: 156, title: '电话号码'}, //单元格内容水平居中
+                    {field: 'memberNumber', width: 160, title: '会员卡号'},
+                    {field: 'level', width: 80, title: '会员级别'},
+                    {field: 'detailedAddress', width: 302, title: '详细地址'},
+                    {field: 'vin', width: 156, title: '车架号'},
+                    {field: 'platenumber', width: 88, title: '车牌号'},
+                    {field: 'vehiclelabel', width: 82, title: '品牌'},
+                    {field: 'vehiclestyle', width: 54, title: '车系'},
+                    {field: 'vehiclebrand', width: 210, title: '车型'},
+                    {field: 'province', width: 152, title: '省'},
+                    {field: 'city', width: 152, title: '市'},
+                    {field: 'district', width: 152, title: '区'},
+                    {field: 'userId', width: 210, title: 'id', hide: true},
+                    {field: 'operation', width: 210, title: '操作', toolbar: '#operation', fixed: 'right'}
+                ]],
+                size: 'sm',
+                parseData: function (res) {
+                    let data = res.data
+                    for (let i = 0; i < data.length; i++) {
+                        $.post({
+                            url: "service/Archives/getUserInfo?userId=" + data[i].userId,
+                            async: false,
+                            success: function (resp) {
+                                console.log(resp)
+                                data[i].cGender = resp.cGender === 1 ? "男" : "女"
+                                data[i].cBirthday = resp.cBirthday
+                                data[i].phone = resp.phone
+                                data[i].customername = resp.customername
+                                data[i].level = resp.member.level
+                                data[i].vin = resp.vehicle.vin
+                                data[i].platenumber = resp.vehicle.platenumber
+                                data[i].vehiclebrand = resp.vehicle.vehiclebrand
+                                data[i].vehiclelabel = resp.vehicle.vehiclelabel
+                                data[i].vehiclestyle = resp.vehicle.vehiclestyle
+                            }
+                        })
+                    }
+                    res.data = data
+                    return res
+                }
+            });
+            var activeUser;
+            //监听“会员档案表格”工具条
+            table.on('tool(memberListTable)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+                var data = obj.data; //获得当前行数据
+                activeUser = data;
+                var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+                if (layEvent === 'use') { // 用卡
+                    //清空弹窗列表
+                    tableUseCoupons.reload({
+                        data: []
+                    })
+                    $.post({
+                        url: "service/Archives/getUserInfo",
+                        data: {
+                            userId: data.userId
+                        },
+                        success: function (res) {
+                            $("#licensePlate").val(res.vehicle.platenumber);
+                            $("#vin").val(res.vehicle.vin);
+                            $("#customerName").val(res.customername);
+                            $("#memberNumber").val(res.memberNumber);
+                            $("#customerLevel").val(res.member.level);
+                            pullConsumeTypes("#consumeTypeId", () => {
+                                pullConsumeItems("#consumeProjectId", $("#consumeTypeId").val(), () => {
+                                    pullPracticalItemIds("#practicalProjectId", $("#consumeProjectId").val(), () => {
+                                    })
+                                    pullPay("#payStyle", data.userId, $("#consumeProjectId").val(), () => {
+                                    });
+                                })
+                            })
+                        }
+                    })
+                    var index1 = layer.open({
+                        type: 1,
+                        title: '用卡',
+                        content: $('#useWindow'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                        area: ['100%', '100%']
+                    });
+                    form.on('select(consumeTypeId)', function () {
+                        pullConsumeItems("#consumeProjectId", $("#consumeTypeId").val(), () => {
+                            pullPracticalItemIds("#practicalProjectId", $("#consumeProjectId").val(), () => {
+                            })
+                        })
+                    });
+                    form.on('select(consumeProjectId)', function () {
+                        pullPracticalItemIds("#practicalProjectId", $("#consumeProjectId").val(), () => {
+                        })
+                    });
+                    $('#exit1').on('click', function () {
+                        // 关闭当前弹出层
+                        layer.close(index1);
+                    })
+                }
+            });
         }
     });
 </script>
