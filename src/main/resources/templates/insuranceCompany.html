@@ -96,7 +96,7 @@
                 <div class="layui-inline">
                     <label class="layui-form-label"><i>*</i>保险公司名称</label>
                     <div class="layui-input-inline">
-                        <input autocomplete="off" class="layui-input" lay-verify="required" name="name"
+                        <input autocomplete="off" class="layui-input" lay-verify="required" name="name" id="insuranceCompanyNameMod"
                                type="text">
                     </div>
                 </div>
@@ -238,13 +238,14 @@
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
             var insuranceCompanyName = data.name;
             if (layEvent === 'mod') {
+                $("#insuranceCompanyNameMod").val(data.name);
+                $("#remarksMod").val(data.remark);
                 var index1 = layer.open({
                     type: 1,
                     title: '编辑保险公司信息',
                     content: $('#modWindow'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
                     area: ['400px', '225px']
                 });
-                $("#insuranceCompanyName").val(data.name);
                 form.on('submit(confirmMod)', function (formData) {
                     formData.field['id'] = data.id;
                     $.post({
