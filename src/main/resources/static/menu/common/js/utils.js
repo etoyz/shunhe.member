@@ -1,12 +1,12 @@
 /** kit_admin-v1.1.0 MIT License By http://kit/zhengjinfan.cn e-mail:zheng_jinfan@126.com */
- ;/**
+;/**
  * Name:utils.js
  * Author:Van
  * E-mail:zheng_jinfan@126.com
  * Website:http://kit.zhengjinfan.cn/
  * LICENSE:MIT
  */
-layui.define(['layer'], function(exports) {
+layui.define(['layer'], function (exports) {
     var $ = layui.jquery,
         layer = layui.layer,
         _modName = 'utils';
@@ -15,7 +15,7 @@ layui.define(['layer'], function(exports) {
         /**
          * 根据一个html内容读取出body标签里的文本
          */
-        getBodyContent: function(content) {
+        getBodyContent: function (content) {
             var REG_BODY = /<body[^>]*>([\s\S]*)<\/body>/,
                 result = REG_BODY.exec(content);
             if (result && result.length === 2)
@@ -25,16 +25,16 @@ layui.define(['layer'], function(exports) {
         /**
          * 读取html字符串
          */
-        loadHtml: function(url, callback) {
+        loadHtml: function (url, callback) {
             var result;
             $.ajax({
                 url: url,
                 async: false,
                 dataType: 'html',
-                beforeSend: function(request) {
+                beforeSend: function (request) {
                     request.setRequestHeader("IsGetHtml", 'true');
                 },
-                error: function(xhr, err, msg) {
+                error: function (xhr, err, msg) {
                     var m = ['<div style="padding: 20px;font-size: 20px;text-align:left;color:#009688;">',
                         '<p>{{msg}}  >>> ' + url + '</p>',
                         '</div>'
@@ -45,10 +45,10 @@ layui.define(['layer'], function(exports) {
                     }
                     result = m.replace('{{msg}}', '<i class="layui-icon" style="font-size:70px;">&#xe69c;</i>  未知错误.');
                 },
-                success: function(res) {
+                success: function (res) {
                     result = res;
                 },
-                complete: function() {
+                complete: function () {
                     typeof callback === 'function' && callback();
                 }
             });
@@ -57,53 +57,53 @@ layui.define(['layer'], function(exports) {
         /**
          * 加载等待层
          */
-        load: function(type) {
+        load: function (type) {
             type = type || 0;
-            return layer.load(type, { shade: [0.3, '#333'] });
+            return layer.load(type, {shade: [0.3, '#333']});
         },
         /**
          * ajax post
          */
-        post: function(url, params, callback, options) {
+        post: function (url, params, callback, options) {
             var defaults = {
-                error: function(xhr, err, msg) {
+                error: function (xhr, err, msg) {
                     console.log('发生错误了..');
                     console.log(xhr);
                     console.log(err);
                     console.log(msg);
                 },
-                complete: function(xhr, statusCode) {
+                complete: function (xhr, statusCode) {
                     console.log('complete.' + statusCode);
                 }
             };
             $.extend(true, defaults, options);
             $.ajax({
                 url: url,
-                beforeSend: function(request) {
+                beforeSend: function (request) {
                     request.setRequestHeader("IsAjax", 'true');
                 },
                 dataType: 'json',
                 method: 'POST',
                 data: params,
-                error: function(xhr, err, msg) {
+                error: function (xhr, err, msg) {
                     defaults.error(xhr, err, msg);
                 },
-                success: function(res) {
+                success: function (res) {
                     if (res.code === 101) {
                         layer.alert(res.msg, {
                             icon: 2,
                             title: '系统提示',
-                            cancel: function(index, layero) {
+                            cancel: function (index, layero) {
                                 top.location.href = location.origin + '/Account/Login';
                             }
-                        }, function() {
+                        }, function () {
                             top.location.href = location.origin + '/Account/Login';
                         });
                     } else {
                         callback(res);
                     }
                 },
-                complete: function(xhr, statusCode) {
+                complete: function (xhr, statusCode) {
                     defaults.complete(xhr, statusCode);
                 }
             });
@@ -111,51 +111,51 @@ layui.define(['layer'], function(exports) {
         /**
          * ajax get
          */
-        get: function(url, params, callback, options) {
+        get: function (url, params, callback, options) {
             var defaults = {
-                error: function(xhr, err, msg) {
+                error: function (xhr, err, msg) {
                     console.log('发生错误了..');
                     console.log(xhr);
                     console.log(err);
                     console.log(msg);
                 },
-                complete: function(xhr, statusCode) {
+                complete: function (xhr, statusCode) {
                     console.log('complete.' + statusCode);
                 }
             };
             $.extend(true, defaults, options);
             $.ajax({
                 url: url,
-                beforeSend: function(request) {
+                beforeSend: function (request) {
                     request.setRequestHeader("IsAjax", 'true');
                 },
                 dataType: 'json',
                 method: 'GET',
                 data: params,
-                error: function(xhr, err, msg) {
+                error: function (xhr, err, msg) {
                     defaults.error(xhr, err, msg);
                 },
-                success: function(res) {
+                success: function (res) {
                     if (res.code === 101) {
                         layer.alert(res.msg, {
                             icon: 2,
                             title: '系统提示',
-                            cancel: function(index, layero) {
+                            cancel: function (index, layero) {
                                 top.location.href = location.origin + '/Account/Login';
                             }
-                        }, function() {
+                        }, function () {
                             top.location.href = location.origin + '/Account/Login';
                         });
                     } else {
                         callback(res);
                     }
                 },
-                complete: function(xhr, statusCode) {
+                complete: function (xhr, statusCode) {
                     defaults.complete(xhr, statusCode);
                 }
             });
         },
-        keyWordHighlight: function(o, flag, rndColor, url) {
+        keyWordHighlight: function (o, flag, rndColor, url) {
             /// <summary>
             ///     使用 javascript HTML DOM 高亮显示页面特定字词.
             ///     实例:
@@ -201,7 +201,8 @@ layui.define(['layer'], function(exports) {
                     }
                 }
             }
-            //------------------------------------------------ 
+
+            //------------------------------------------------
             function fEleA(text, flag) {
                 var style = ' style="background-color:' + bgCor + ';color:' + fgCor + ';" '
                 var o = document.createElement('span');
@@ -216,7 +217,8 @@ layui.define(['layer'], function(exports) {
                 o.innerHTML = str;
                 return o;
             }
-            //------------------------------------------------ 
+
+            //------------------------------------------------
             function fRndCor(under, over) {
                 if (arguments.length == 1) {
                     var over = under;
@@ -247,7 +249,7 @@ layui.define(['layer'], function(exports) {
 
                 function padNum(str, num, len) {
                     var temp = ''
-                    for (var i = 0; i < len; temp += num, i++);
+                    for (var i = 0; i < len; temp += num, i++) ;
                     return temp = (temp += str).substr(temp.length - len);
                 }
             }

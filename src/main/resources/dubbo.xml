@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://code.alibabatech.com/schema/dubbo
        http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
     <!-- 提供方应用信息，用于计算依赖关系 -->
-    <dubbo:application name="member-service"  />
+    <dubbo:application name="member-service"/>
     <dubbo:consumer check="false"/>
     <!-- 注册中心服务地址 -->
-    <dubbo:registry id="zookeeper" protocol="zookeeper" address="${spring.dubbo.registry.address}" />
+    <dubbo:registry id="zookeeper" protocol="zookeeper" address="${spring.dubbo.registry.address}"/>
 
     <!-- 用dubbo协议在30001 -->
     <dubbo:protocol name="dubbo" port="${spring.dubbo.protocol.port}" charset="UTF-8"/>
@@ -19,13 +19,13 @@
 
     <!-- 具体服务接口的实现 -->
     <dubbo:reference id="userService"
-                     interface="com.dubbo.user.service.UserService" />
+                     interface="com.dubbo.user.service.UserService"/>
     <dubbo:reference id="permissionService"
-                     interface="com.dubbo.user.service.PermissionService" />
+                     interface="com.dubbo.user.service.PermissionService"/>
     <dubbo:reference id="roleService"
-                     interface="com.dubbo.user.service.RoleService" />
+                     interface="com.dubbo.user.service.RoleService"/>
     <dubbo:reference id="vehicleService"
-                     interface="com.dubbo.user.service.VehicleService" />
+                     interface="com.dubbo.user.service.VehicleService"/>
     <dubbo:reference id="couponService"
                      interface="com.sft.member.obtain.coupon.CouponService" async="false"/>
     <dubbo:reference id="consumeProjectService"

@@ -39,7 +39,7 @@ public class HomeController {
     }
 
     @RequestMapping("/vehicleManagement")
-    public String vehicleManagement(){
+    public String vehicleManagement() {
         return "userweb/vehicleManagement";
     }
 //    @RequestMapping("/index")

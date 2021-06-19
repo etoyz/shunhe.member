@@ -6,13 +6,13 @@ import lombok.Data;
  * Created by jxh on 2019/2/14.
  */
 @Data
-public class Result <T> {
+public class Result<T> {
 
+    public String msg = "";
+    public String type = "";
     private int code = 200;
     private String result = "success";
     private String message = "";
-    public String msg = "";
-    public String type = "";
     private long count;
     private boolean is;
     private String tip;
@@ -61,17 +61,19 @@ public class Result <T> {
         this.message = message;
         this.data = data;
     }
+
     public Result(String result, String message, T data) {
         this.result = result;
         this.message = message;
         this.data = data;
     }
+
     /**
      * 全部参数
      *
      * @param resultCode resultCode
      * @param message    message
-     * @param count       count
+     * @param count      count
      * @param data       data
      */
     public Result(int resultCode, String message, long count, T data) {
@@ -80,7 +82,8 @@ public class Result <T> {
         this.count = count;
         this.data = data;
     }
-    public Result(int resultCode, String message, long count, T data,boolean is,String tip) {
+
+    public Result(int resultCode, String message, long count, T data, boolean is, String tip) {
         this.code = resultCode;
         this.msg = message;
         this.count = count;

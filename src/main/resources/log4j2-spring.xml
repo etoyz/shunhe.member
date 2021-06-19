@@ -97,77 +97,77 @@
     </Loggers>
 
 </Configuration>
-<!--<?xml version="1.0" encoding="UTF-8" ?>-->
-<!--&lt;!&ndash;设置log4j2的自身log级别为warn&ndash;&gt;-->
-<!--&lt;!&ndash;日志级别以及优先级排序: OFF > FATAL > ERROR > WARN > INFO > DEBUG > TRACE > ALL &ndash;&gt;-->
-<!--&lt;!&ndash;Configuration后面的status，这个用于设置log4j2自身内部的信息输出，可以不设置， 当设置成trace时，你会看到log4j2内部各种详细输出&ndash;&gt;-->
-<!--&lt;!&ndash;monitorInterval：Log4j能够自动检测修改配置 文件和重新配置本身，设置间隔秒数&ndash;&gt;-->
-<!--<configuration status="warn" monitorInterval="30">-->
-    <!--&lt;!&ndash;定义通用属性，下面可以使用${name}引用}&ndash;&gt;-->
-    <!--<Properties>-->
+        <!--<?xml version="1.0" encoding="UTF-8" ?>-->
+        <!--&lt;!&ndash;设置log4j2的自身log级别为warn&ndash;&gt;-->
+        <!--&lt;!&ndash;日志级别以及优先级排序: OFF > FATAL > ERROR > WARN > INFO > DEBUG > TRACE > ALL &ndash;&gt;-->
+        <!--&lt;!&ndash;Configuration后面的status，这个用于设置log4j2自身内部的信息输出，可以不设置， 当设置成trace时，你会看到log4j2内部各种详细输出&ndash;&gt;-->
+        <!--&lt;!&ndash;monitorInterval：Log4j能够自动检测修改配置 文件和重新配置本身，设置间隔秒数&ndash;&gt;-->
+        <!--<configuration status="warn" monitorInterval="30">-->
+        <!--&lt;!&ndash;定义通用属性，下面可以使用${name}引用}&ndash;&gt;-->
+        <!--<Properties>-->
         <!--&lt;!&ndash; 定义日志文件根目录 &ndash;&gt;-->
         <!--<Property name="logDir" value="logs123" />-->
         <!--&lt;!&ndash; 定义日志的通用格式 &ndash;&gt;-->
         <!--<Property name="genericPattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />-->
         <!--&lt;!&ndash; 定义日志分卷文件通用文件名形式 &ndash;&gt;-->
         <!--<Property name="genericFilePattern" value="%d{yyyy-MM-dd}-%i" />-->
-    <!--</Properties>-->
-    <!--&lt;!&ndash;先定义所有的appender&ndash;&gt;-->
-    <!--<appenders>-->
+        <!--</Properties>-->
+        <!--&lt;!&ndash;先定义所有的appender&ndash;&gt;-->
+        <!--<appenders>-->
         <!--&lt;!&ndash;这个输出控制台的配置&ndash;&gt;-->
         <!--<console name="Console" target="SYSTEM_OUT">-->
-            <!--&lt;!&ndash;输出日志的格式&ndash;&gt;-->
-            <!--<PatternLayout pattern="${genericPattern}"/>-->
+        <!--&lt;!&ndash;输出日志的格式&ndash;&gt;-->
+        <!--<PatternLayout pattern="${genericPattern}"/>-->
         <!--</console>-->
         <!--&lt;!&ndash;文件会打印出所有信息，这个log每次运行程序会自动清空，由append属性决定，这个也挺有用的，适合临时测试用&ndash;&gt;-->
         <!--<File name="log" fileName="log/test.log" append="false">-->
-            <!--<PatternLayout pattern="%d{HH:mm:ss.SSS} %-5level %class{36} %L %M - %msg%xEx%n"/>-->
+        <!--<PatternLayout pattern="%d{HH:mm:ss.SSS} %-5level %class{36} %L %M - %msg%xEx%n"/>-->
         <!--</File>-->
         <!--&lt;!&ndash; 这个会打印出所有的info及以下级别的信息，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档&ndash;&gt;-->
         <!--<RollingFile name="RollingFileInfo" fileName="${sys:user.home}/logs/hpaasvc/info.log"-->
-                     <!--filePattern="${sys:user.home}/logs/hpaasvc/$${date:yyyy-MM}/info-%d{yyyy-MM-dd}-%i.log">-->
-            <!--<Filters>-->
-                <!--&lt;!&ndash;控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch）&ndash;&gt;-->
-                <!--<ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>-->
-                <!--<ThresholdFilter level="WARN" onMatch="DENY" onMismatch="NEUTRAL"/>-->
-            <!--</Filters>-->
-            <!--<PatternLayout pattern="[%d{HH:mm:ss:SSS}] [%p] - %l - %m%n"/>-->
-            <!--<Policies>-->
-                <!--<TimeBasedTriggeringPolicy/>-->
-                <!--<SizeBasedTriggeringPolicy size="100 MB"/>-->
-            <!--</Policies>-->
+        <!--filePattern="${sys:user.home}/logs/hpaasvc/$${date:yyyy-MM}/info-%d{yyyy-MM-dd}-%i.log">-->
+        <!--<Filters>-->
+        <!--&lt;!&ndash;控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch）&ndash;&gt;-->
+        <!--<ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>-->
+        <!--<ThresholdFilter level="WARN" onMatch="DENY" onMismatch="NEUTRAL"/>-->
+        <!--</Filters>-->
+        <!--<PatternLayout pattern="[%d{HH:mm:ss:SSS}] [%p] - %l - %m%n"/>-->
+        <!--<Policies>-->
+        <!--<TimeBasedTriggeringPolicy/>-->
+        <!--<SizeBasedTriggeringPolicy size="100 MB"/>-->
+        <!--</Policies>-->
         <!--</RollingFile>-->
         <!--<RollingFile name="RollingFileWarn" fileName="${sys:user.home}/logs/hpaasvc/warn.log"-->
-                     <!--filePattern="${sys:user.home}/logs/hpaasvc/$${date:yyyy-MM}/warn-%d{yyyy-MM-dd}-%i.log">-->
-            <!--<Filters>-->
-                <!--<ThresholdFilter level="WARN" onMatch="ACCEPT" onMismatch="DENY"/>-->
-                <!--<ThresholdFilter level="ERROR" onMatch="DENY" onMismatch="NEUTRAL"/>-->
-            <!--</Filters>-->
-            <!--<PatternLayout pattern="[%d{HH:mm:ss:SSS}] [%p] - %l - %m%n"/>-->
-            <!--<Policies>-->
-                <!--<TimeBasedTriggeringPolicy/>-->
-                <!--<SizeBasedTriggeringPolicy size="100 MB"/>-->
-            <!--</Policies>-->
-            <!--&lt;!&ndash; DefaultRolloverStrategy属性如不设置，则默认为最多同一文件夹下7个文件，这里设置了20 &ndash;&gt;-->
-            <!--<DefaultRolloverStrategy max="20"/>-->
+        <!--filePattern="${sys:user.home}/logs/hpaasvc/$${date:yyyy-MM}/warn-%d{yyyy-MM-dd}-%i.log">-->
+        <!--<Filters>-->
+        <!--<ThresholdFilter level="WARN" onMatch="ACCEPT" onMismatch="DENY"/>-->
+        <!--<ThresholdFilter level="ERROR" onMatch="DENY" onMismatch="NEUTRAL"/>-->
+        <!--</Filters>-->
+        <!--<PatternLayout pattern="[%d{HH:mm:ss:SSS}] [%p] - %l - %m%n"/>-->
+        <!--<Policies>-->
+        <!--<TimeBasedTriggeringPolicy/>-->
+        <!--<SizeBasedTriggeringPolicy size="100 MB"/>-->
+        <!--</Policies>-->
+        <!--&lt;!&ndash; DefaultRolloverStrategy属性如不设置，则默认为最多同一文件夹下7个文件，这里设置了20 &ndash;&gt;-->
+        <!--<DefaultRolloverStrategy max="20"/>-->
         <!--</RollingFile>-->
         <!--<RollingFile name="RollingFileError" fileName="${sys:user.home}/logs/hpaasvc/error.log"-->
-                     <!--filePattern="${sys:user.home}/logs/hpaasvc/$${date:yyyy-MM}/error-%d{yyyy-MM-dd}-%i.log">-->
-            <!--<ThresholdFilter level="ERROR"/>-->
-            <!--<PatternLayout pattern="[%d{HH:mm:ss:SSS}] [%p] - %l - %m%n"/>-->
-            <!--<Policies>-->
-                <!--<TimeBasedTriggeringPolicy/>-->
-                <!--<SizeBasedTriggeringPolicy size="100 MB"/>-->
-            <!--</Policies>-->
+        <!--filePattern="${sys:user.home}/logs/hpaasvc/$${date:yyyy-MM}/error-%d{yyyy-MM-dd}-%i.log">-->
+        <!--<ThresholdFilter level="ERROR"/>-->
+        <!--<PatternLayout pattern="[%d{HH:mm:ss:SSS}] [%p] - %l - %m%n"/>-->
+        <!--<Policies>-->
+        <!--<TimeBasedTriggeringPolicy/>-->
+        <!--<SizeBasedTriggeringPolicy size="100 MB"/>-->
+        <!--</Policies>-->
         <!--</RollingFile>-->
-    <!--</appenders>-->
-    <!--&lt;!&ndash;然后定义logger，只有定义了logger并引入的appender，appender才会生效&ndash;&gt;-->
-    <!--<loggers>-->
+        <!--</appenders>-->
+        <!--&lt;!&ndash;然后定义logger，只有定义了logger并引入的appender，appender才会生效&ndash;&gt;-->
+        <!--<loggers>-->
         <!--&lt;!&ndash; 定义根logger，根logger是必须的，这里我把根logger定义为异步的，也可为定义为普通的同步的，但是注意在同步根logger和异步根logger中只能存在一个，不能两个都配置 &ndash;&gt;-->
         <!--&lt;!&ndash; 普通的根logger，注意，跟上面的异步跟root同时只能存在一个 &ndash;&gt;-->
         <!--&lt;!&ndash; <Root level="trace"> <AppenderRef ref="consoleAppender" /> </Root> &ndash;&gt;-->
         <!--<asyncRoot level="info">-->
-            <!--<AppenderRef ref="consoleAppender" />-->
+        <!--<AppenderRef ref="consoleAppender" />-->
         <!--</asyncRoot>-->
         <!--&lt;!&ndash;过滤掉spring和hibernate的一些无用的debug信息&ndash;&gt;-->
         <!--<logger name="org.springframework" level="INFO">-->
@@ -176,14 +176,14 @@
         <!--</logger>-->
         <!--&lt;!&ndash;一个普通的looger&ndash;&gt;-->
         <!--<logger level="DEBUG" name="com.asiainfo.dao" additivity="false">-->
-            <!--&lt;!&ndash;输出的信息源，这里输出到控制台&ndash;&gt;-->
-            <!--<AppenderRef ref="Console" />-->
+        <!--&lt;!&ndash;输出的信息源，这里输出到控制台&ndash;&gt;-->
+        <!--<AppenderRef ref="Console" />-->
         <!--</logger>-->
         <!--&lt;!&ndash; 定义一个普通的logger，这里我定义为异步的 &ndash;&gt;-->
         <!--<asyncLogger name="com.foo.Bar" level="info" additivity="false">-->
-            <!--<AppenderRef ref="Console" />-->
-            <!--<AppenderRef ref="RollingFileInfo" />-->
+        <!--<AppenderRef ref="Console" />-->
+        <!--<AppenderRef ref="RollingFileInfo" />-->
         <!--</asyncLogger>-->
 
-    <!--</loggers>-->
-<!--</configuration>-->
+        <!--</loggers>-->
+        <!--</configuration>-->

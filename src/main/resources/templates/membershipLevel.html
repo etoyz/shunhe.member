@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
-      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<html lang="zh_CN"
+>
 <head>
     <meta charset="utf-8">
     <title>会员级别</title>
-    <meta name="renderer" content="webkit">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="plugins/layui/css/layui.css" media="all">
-    <link rel="stylesheet" href="plugins/font-awesome/css/font-awesome.min.css" media="all">
-    <link rel="stylesheet" href="plugins/adjust/css/adjustLayui.css" media="all">
-    <link rel="stylesheet" href="css/table.css" media="all">
-    <link rel="stylesheet" href="css/form.css" media="all">
-    <link rel="stylesheet" href="css/common.css" media="all">
+    <meta content="webkit" name="renderer">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
+    <link href="plugins/layui/css/layui.css" media="all" rel="stylesheet">
+    <link href="plugins/font-awesome/css/font-awesome.min.css" media="all" rel="stylesheet">
+    <link href="plugins/adjust/css/adjustLayui.css" media="all" rel="stylesheet">
+    <link href="css/table.css" media="all" rel="stylesheet">
+    <link href="css/form.css" media="all" rel="stylesheet">
+    <link href="css/common.css" media="all" rel="stylesheet">
 </head>
 <body>
 <!--页面主体-->
@@ -21,18 +21,19 @@
         <div class="layui-col-md12">
 
             <div class="s-headerSearch" id="headArea">
-                <form class="layui-form" action="">
+                <form action="" autocomplete="off" class="layui-form">
                     <div class="layui-form-item">
                         <div class="layui-inline s-layuiInline">
                             <label class="layui-form-label">卡片名称</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="cardNameInput" id="cardNameInput" autocomplete="off" class="layui-input"
-                                       placeholder="请输入卡片名称">
+                                <input autocomplete="off" class="layui-input" id="cardNameInput" name="cardNameInput"
+                                       placeholder="请输入卡片名称"
+                                       type="text">
                             </div>
                         </div>
                         <div class="layui-inline s-layuiInline">
                             <button class="layui-btn layui-btn-warm" id="queryBtn">查询</button>
-                            <button id="addBtn" class="layui-btn layui-btn-normal">添加卡片</button>
+                            <button class="layui-btn layui-btn-normal" id="addBtn">添加卡片</button>
                         </div>
                     </div>
                 </form>
@@ -41,7 +42,7 @@
             <!-- 展示表格 -->
             <div class="s-commonTable">
                 <table class="layui-hide" id="card" lay-filter="cardTabel"></table>
-                <script type="text/html" id="operation">
+                <script id="operation" type="text/html">
                     <a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="modify">修改</a>
                     <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delete">删除</a>
                 </script>
@@ -51,23 +52,23 @@
 </div>
 
 <!-- 添加卡片弹窗 -->
-<form class="layui-form" action="">
+<form action="" autocomplete="off" class="layui-form">
     <div class="s-details" id="addWindow">
         <div>
-            <form class="layui-form" action="">
+            <form action="" autocomplete="off" class="layui-form">
                 <div class="layui-form-item s-formItem5">
                     <div class="layui-inline">
                         <label class="layui-form-label">会员级别</label>
                         <div class="layui-input-inline">
-                            <input type="text" name="level" id="level"
-                                   autocomplete="off" class="layui-input">
+                            <input autocomplete="off" class="layui-input" id="level"
+                                   name="level" type="text">
                         </div>
                     </div>
                     <div class="layui-inline">
                         <label class="layui-form-label">卡片名称</label>
                         <div class="layui-input-inline">
-                            <input type="text" name="name" id="name"
-                                   autocomplete="off" class="layui-input">
+                            <input autocomplete="off" class="layui-input" id="name"
+                                   name="name" type="text">
                             <!--                        <select type="text" id="cardType" name="cardType" autocomplete="off" class="layui-input">-->
                             <!--                            <option id="selectHead">正在拉取...</option>-->
                             <!--                        </select>-->
@@ -93,7 +94,7 @@
                     <div class="layui-inline">
                         <label class="layui-form-label">升级锁定</label>
                         <div class="layui-input-inline">
-                            <select type="text" id="lock" name="lock" autocomplete="off" class="layui-input">
+                            <select autocomplete="off" class="layui-input" id="lock" name="lock" type="text">
                                 <option value="0">是</option>
                                 <option value="1">否</option>
                             </select>
@@ -102,44 +103,44 @@
                     <div class="layui-inline">
                         <label class="layui-form-label">升级所需积分</label>
                         <div class="layui-input-inline">
-                            <input type="text" name="score" id="score" autocomplete="off" class="layui-input">
+                            <input autocomplete="off" class="layui-input" id="score" name="score" type="text">
                         </div>
                     </div>
                     <div class="layui-inline">
                         <label class="layui-form-label">备注</label>
                         <div class="layui-input-inline">
-                            <input type="text" name="remark" id="remark" autocomplete="off" class="layui-input">
+                            <input autocomplete="off" class="layui-input" id="remark" name="remark" type="text">
                         </div>
                     </div>
                 </div>
             </form>
         </div>
         <div class="s-tabBottomButton">
-            <button type="button" class="layui-btn layui-btn-danger" id="confirmAdd" lay-filter="confirmAdd" lay-submit>
+            <button class="layui-btn layui-btn-danger" id="confirmAdd" lay-filter="confirmAdd" lay-submit type="button">
                 添加
             </button>
-            <button type="button" class="layui-btn" id="cancelAdd">取消</button>
+            <button class="layui-btn" id="cancelAdd" type="button">取消</button>
         </div>
     </div>
 </form>
 <!-- 修改卡片弹窗 -->
-<form class="layui-form" action="">
+<form action="" autocomplete="off" class="layui-form">
     <div class="s-details" id="modWindow">
         <div>
-            <form class="layui-form" action="">
+            <form action="" autocomplete="off" class="layui-form">
                 <div class="layui-form-item s-formItem5">
                     <div class="layui-inline">
                         <label class="layui-form-label">会员级别</label>
                         <div class="layui-input-inline">
-                            <input type="text" name="level" id="levelM"
-                                   autocomplete="off" class="layui-input">
+                            <input autocomplete="off" class="layui-input" id="levelM"
+                                   name="level" type="text">
                         </div>
                     </div>
                     <div class="layui-inline">
                         <label class="layui-form-label">卡片名称</label>
                         <div class="layui-input-inline">
-                            <input type="text" name="name" id="nameM"
-                                   autocomplete="off" class="layui-input">
+                            <input autocomplete="off" class="layui-input" id="nameM"
+                                   name="name" type="text">
                         </div>
                     </div>
                     <!--                <div class="layui-inline">-->
@@ -162,7 +163,7 @@
                     <div class="layui-inline">
                         <label class="layui-form-label">升级锁定</label>
                         <div class="layui-input-inline">
-                            <select type="text" id="lockM" name="lock" autocomplete="off" class="layui-input">
+                            <select autocomplete="off" class="layui-input" id="lockM" name="lock" type="text">
                                 <option value="0">是</option>
                                 <option value="1">否</option>
                             </select>
@@ -171,23 +172,23 @@
                     <div class="layui-inline">
                         <label class="layui-form-label">升级所需积分</label>
                         <div class="layui-input-inline">
-                            <input type="text" name="score" id="scoreM" autocomplete="off" class="layui-input">
+                            <input autocomplete="off" class="layui-input" id="scoreM" name="score" type="text">
                         </div>
                     </div>
                     <div class="layui-inline">
                         <label class="layui-form-label">备注</label>
                         <div class="layui-input-inline">
-                            <input type="text" name="remark" id="remarkM" autocomplete="off" class="layui-input">
+                            <input autocomplete="off" class="layui-input" id="remarkM" name="remark" type="text">
                         </div>
                     </div>
                 </div>
             </form>
         </div>
         <div class="s-tabBottomButton">
-            <button type="button" class="layui-btn layui-btn-danger" id="confirmMod" lay-filter="confirmMod" lay-submit>
+            <button class="layui-btn layui-btn-danger" id="confirmMod" lay-filter="confirmMod" lay-submit type="button">
                 修改
             </button>
-            <button type="button" class="layui-btn" id="cancelMod">取消</button>
+            <button class="layui-btn" id="cancelMod" type="button">取消</button>
         </div>
     </div>
 </form>
@@ -273,14 +274,14 @@
                         $.post({
                             url: "service/platUserManage/getUserInfo?platUserId=" + data[i].createId,
                             async: false,
-                            success: function (resp){
+                            success: function (resp) {
                                 data[i].createName = resp.name
                             }
                         })
                         $.post({
                             url: "service/platUserManage/getUserInfo?platUserId=" + data[i].lastEditId,
                             async: false,
-                            success: function (resp){
+                            success: function (resp) {
                                 data[i].lastEditName = resp.name
                             }
                         })
@@ -334,8 +335,8 @@
                 });
                 console.log(data.type);
                 console.log(data.lock);
-                var  mtype=data.type=== "可升级卡" ? "0" : "1";
-                var  mlock=data.lock=== "是" ? "0" : "1";
+                var mtype = data.type === "可升级卡" ? "0" : "1";
+                var mlock = data.lock === "是" ? "0" : "1";
                 $('#levelM').val(data.level);
                 $('#nameM').val(data.name);
                 $('#cardTypeM').val(mtype);

@@ -10,12 +10,13 @@ import org.springframework.context.annotation.ImportResource;
 @ImportResource({"classpath:dubbo.xml"})
 public class MemberConsumptionPointsApplication extends SpringBootServletInitializer {
 
-	@Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-		return application.sources(MemberConsumptionPointsApplication.class);
-	}
-	public static void main(String[] args) {
-		SpringApplication.run(MemberConsumptionPointsApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(MemberConsumptionPointsApplication.class, args);
+    }
+
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(MemberConsumptionPointsApplication.class);
+    }
 
 }

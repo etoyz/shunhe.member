@@ -1,45 +1,45 @@
 <!DOCTYPE html>
-<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
-      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<html lang="zh_CN"
+>
 <head>
     <meta charset="utf-8">
     <title>用户管理</title>
-    <meta name="renderer" content="webkit">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="plugins/layui/css/layui.css" media="all">
-    <link rel="stylesheet" href="plugins/font-awesome/css/font-awesome.min.css" media="all">
-    <link rel="stylesheet" href="plugins/adjust/css/adjustLayui.css" media="all">
-    <link rel="stylesheet" href="css/table.css" media="all">
-    <link rel="stylesheet" href="css/form.css" media="all">
-    <link rel="stylesheet" href="css/common.css" media="all">
+    <meta content="webkit" name="renderer">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
+    <link href="plugins/layui/css/layui.css" media="all" rel="stylesheet">
+    <link href="plugins/font-awesome/css/font-awesome.min.css" media="all" rel="stylesheet">
+    <link href="plugins/adjust/css/adjustLayui.css" media="all" rel="stylesheet">
+    <link href="css/table.css" media="all" rel="stylesheet">
+    <link href="css/form.css" media="all" rel="stylesheet">
+    <link href="css/common.css" media="all" rel="stylesheet">
 </head>
 <body>
 <div class="layui-fluid main">
     <div class="layui-row">
         <div class="layui-col-md12">
             <div class="s-headerSearch" id="headArea">
-                <form class="layui-form" action="">
+                <form action="" autocomplete="off" class="layui-form">
                     <div class="layui-form-item">
                         <div class="layui-inline s-layuiInline">
                             <label class="layui-form-label">用户名称</label>
                             <div class="layui-input-inline">
-                                <input type="text" id="userNameSearch" autocomplete="off" class="layui-input"
-                                       placeholder="请输入用户名称">
+                                <input autocomplete="off" class="layui-input" id="userNameSearch" placeholder="请输入用户名称"
+                                       type="text">
                             </div>
                         </div>
                         <div class="layui-inline s-layuiInline">
                             <label class="layui-form-label">所属店面</label>
                             <div class="layui-input-inline">
-                                <select type="text" id="dealerSearch" autocomplete="off" class="layui-input"
-                                        placeholder="请输入卡券名称">
+                                <select autocomplete="off" class="layui-input" id="dealerSearch" placeholder="请输入卡券名称"
+                                        type="text">
                                     <option>烟台顺和广汽本田</option>
                                 </select>
                             </div>
                         </div>
                         <div class="layui-inline s-layuiInline">
-                            <button id="queryBtn" class="layui-btn layui-btn-warm">查询</button>
-                            <button id="addBtn" class="layui-btn layui-btn-normal">新增用户</button>
+                            <button class="layui-btn layui-btn-warm" id="queryBtn">查询</button>
+                            <button class="layui-btn layui-btn-normal" id="addBtn">新增用户</button>
                         </div>
                     </div>
                 </form>
@@ -48,7 +48,7 @@
             <!-- 展示表格 -->
             <div class="s-commonTable">
                 <table class="layui-hide" id="user" lay-filter="userTable"></table>
-                <script type="text/html" id="operation">
+                <script id="operation" type="text/html">
                     <a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="modify">重置密码</a>
                 </script>
             </div>
@@ -58,21 +58,21 @@
 
 <!-- 新增用户弹窗 -->
 <div class="s-details" id="addWindow">
-    <form class="layui-form" action="">
+    <form action="" autocomplete="off" class="layui-form">
         <div>
             <div class="layui-form-item s-formItem1">
                 <div class="layui-inline">
                     <label class="layui-form-label">用户名称</label>
                     <div class="layui-input-inline">
-                        <input type="text" id="name" name="name"
-                               autocomplete="off" class="layui-input" lay-verify="required">
+                        <input autocomplete="off" class="layui-input" id="name"
+                               lay-verify="required" name="name" type="text">
                     </div>
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">联系电话</label>
                     <div class="layui-input-inline">
-                        <input type="text" id="phoneNum" name="phoneNum"
-                               autocomplete="off" class="layui-input" lay-verify="required|number">
+                        <input autocomplete="off" class="layui-input" id="phoneNum"
+                               lay-verify="required|number" name="phoneNum" type="text">
                     </div>
                 </div>
             </div>
@@ -80,21 +80,21 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">登录用户名</label>
                     <div class="layui-input-inline">
-                        <input type="text" id="username" name="username"
-                               autocomplete="off" class="layui-input" lay-verify="required">
+                        <input autocomplete="off" class="layui-input" id="username"
+                               lay-verify="required" name="username" type="text">
                     </div>
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">登录密码</label>
                     <div class="layui-input-inline">
-                        <input type="text" id="password" name="password"
-                               autocomplete="off" class="layui-input" lay-verify="required">
+                        <input autocomplete="off" class="layui-input" id="password"
+                               lay-verify="required" name="password" type="text">
                     </div>
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">所属职位</label>
                     <div class="layui-input-inline">
-                        <select type="text" id="post" autocomplete="off" class="layui-input" name="post">
+                        <select autocomplete="off" class="layui-input" id="post" name="post" type="text">
                             <option>---</option>
                             <option>销售顾问</option>
                             <option>服务顾问</option>
@@ -111,7 +111,7 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">操作类型</label>
                     <div class="layui-input-inline">
-                        <select type="text" id="operateType" name="operateType" autocomplete="off" class="layui-input">
+                        <select autocomplete="off" class="layui-input" id="operateType" name="operateType" type="text">
                             <option>---</option>
                             <option>本店</option>
                             <option>个人</option>
@@ -122,7 +122,7 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">所属门店</label>
                     <div class="layui-input-inline">
-                        <select type="text" id="dealerId" name="dealerId" autocomplete="off" class="layui-input">
+                        <select autocomplete="off" class="layui-input" id="dealerId" name="dealerId" type="text">
                             <option value="0">烟台顺合广汽本田店</option>
                         </select>
                     </div>
@@ -130,8 +130,8 @@
             </div>
         </div>
         <div class="s-tabBottomButton">
-            <button type="button" class="layui-btn" id="confirmAdd" lay-filter="confirmAdd" lay-submit>新增</button>
-            <button type="button" class="layui-btn layui-btn-warm" id="cancelAdd">取消</button>
+            <button class="layui-btn" id="confirmAdd" lay-filter="confirmAdd" lay-submit type="button">新增</button>
+            <button class="layui-btn layui-btn-warm" id="cancelAdd" type="button">取消</button>
         </div>
     </form>
 </div>

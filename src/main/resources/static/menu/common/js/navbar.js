@@ -1,12 +1,12 @@
 /** kit_admin-v1.1.0 MIT License By http://kit/zhengjinfan.cn e-mail:zheng_jinfan@126.com */
- ;/**
+;/**
  * Name:navbar.js
  * Author:Van
  * E-mail:zheng_jinfan@126.com
  * Website:http://kit.zhengjinfan.cn/
  * LICENSE:MIT
  */
-layui.define(['layer', 'laytpl', 'element'], function(exports) {
+layui.define(['layer', 'laytpl', 'element'], function (exports) {
     var $ = layui.jquery,
         layer = layui.layer,
         _modName = 'navbar',
@@ -28,7 +28,7 @@ layui.define(['layer', 'laytpl', 'element'], function(exports) {
             elem: undefined, //容器
             filter: 'kitNavbar' //过滤器名称
         },
-        set: function(options) {
+        set: function (options) {
             var that = this;
             that.config.data = undefined;
             $.extend(true, that.config, options);
@@ -37,7 +37,7 @@ layui.define(['layer', 'laytpl', 'element'], function(exports) {
         /**
          * 是否已设置了elem
          */
-        hasElem: function() {
+        hasElem: function () {
             var that = this,
                 _config = that.config;
             if (_config.elem === undefined && _doc.find('ul[kit-navbar]').length === 0 && $(_config.elem)) {
@@ -49,14 +49,14 @@ layui.define(['layer', 'laytpl', 'element'], function(exports) {
         /**
          * 获取容器的jq对象
          */
-        getElem: function() {
+        getElem: function () {
             var _config = this.config;
             return (_config.elem !== undefined && $(_config.elem).length > 0) ? $(_config.elem) : _doc.find('ul[kit-navbar]');
         },
         /**
          * 绑定特定a标签的点击事件
          */
-        bind: function(callback, params) {
+        bind: function (callback, params) {
             var that = this,
                 _config = that.config;
             var defaults = {
@@ -68,18 +68,18 @@ layui.define(['layer', 'laytpl', 'element'], function(exports) {
             // if (!that.hasElem())
             //     return that;
             // var _elem = that.getElem();
-            _target.find('a[kit-target]').each(function() {
+            _target.find('a[kit-target]').each(function () {
                 var _that = $(this),
                     tipsId = undefined;
                 if (defaults.showTips) {
-                    _that.hover(function() {
+                    _that.hover(function () {
                         tipsId = layer.tips($(this).children('span').text(), this);
-                    }, function() {
+                    }, function () {
                         if (tipsId)
                             layer.close(tipsId);
                     });
                 }
-                _that.off('click').on('click', function() {
+                _that.off('click').on('click', function () {
                     var options = _that.data('options');
                     var data;
                     if (options !== undefined) {
@@ -99,7 +99,7 @@ layui.define(['layer', 'laytpl', 'element'], function(exports) {
                     typeof callback === 'function' && callback(data);
                 });
             });
-            $('.kit-side-fold').off('click').on('click', function() {
+            $('.kit-side-fold').off('click').on('click', function () {
                 var _side = _doc.find('div.kit-side');
                 if (_side.hasClass('kit-sided')) {
                     _side.removeClass('kit-sided');
@@ -116,7 +116,7 @@ layui.define(['layer', 'laytpl', 'element'], function(exports) {
         /**
          * 渲染navbar
          */
-        render: function(callback) {
+        render: function (callback) {
             var that = this,
                 _config = that.config, //配置
                 _remote = _config.remote, //远程参数配置
@@ -178,11 +178,11 @@ layui.define(['layer', 'laytpl', 'element'], function(exports) {
                 var options = {
                     url: _remote.url,
                     type: _remote.type,
-                    error: function(xhr, status, thrown) {
+                    error: function (xhr, status, thrown) {
                         layui.hint().error('Navbar error:AJAX请求出错.' + thrown);
                         navbarLoadIndex && layer.close(navbarLoadIndex);
                     },
-                    success: function(res) {
+                    success: function (res) {
                         _data = res;
                     }
                 };
@@ -196,15 +196,15 @@ layui.define(['layer', 'laytpl', 'element'], function(exports) {
                 $.support.cors = true;
                 $.ajax(options);
             }
-            var tIndex = setInterval(function() {
+            var tIndex = setInterval(function () {
                 if (_data.length > 0) {
                     clearInterval(tIndex);
                     //渲染模板
-                    laytpl(_tpl.join('')).render(_data, function(html) {
+                    laytpl(_tpl.join('')).render(_data, function (html) {
                         _elem.html(html);
                         element.init();
                         //绑定a标签的点击事件
-                        that.bind(function(data) {
+                        that.bind(function (data) {
                             typeof callback === 'function' && callback(data);
                         });
                         //关闭等待层

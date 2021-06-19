@@ -85,7 +85,7 @@ public class MongoUser {
                 ", password='" + password + '\'' +
                 ", pid='" + pid + '\'' +
                 ", gender=" + gender +
-                ", phone='" + phone+ '\'' +
+                ", phone='" + phone + '\'' +
                 ", address='" + address + '\'' +
                 ", registertime='" + registertime + '\'' +
                 ", roleset=" + roleset +

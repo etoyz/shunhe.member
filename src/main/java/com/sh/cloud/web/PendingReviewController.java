@@ -1,16 +1,16 @@
 package com.sh.cloud.web;
 
 import com.sft.member.bean.CouponCheck;
-import com.sft.member.bean.PlatUser;
-import com.sft.member.bean.User;
 import com.sft.member.obtain.pay.PayService;
 import com.sh.cloud.entity.GetPendingReviewListRequest;
 import com.sh.cloud.utils.PlatUserUtils;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RestController

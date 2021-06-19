@@ -46,7 +46,7 @@ public class ShiroCasConfiguration {
     // cas server地址
 //    public static final String casServerUrlPrefix = "http://10.100.15.107:8300/cas";
     public static final String casServerUrlPrefix = Global.getConfig("cas.url");
-//    public static final String casServerUrlPrefix = "http://unified.bek88.com/cas";
+    //    public static final String casServerUrlPrefix = "http://unified.bek88.com/cas";
 //    public static final String casServerUrlPrefix = "http://122.5.51.134:9888/cas";
     // Cas登录页面地址
     public static final String casLoginUrl = casServerUrlPrefix + "/login";
@@ -58,18 +58,48 @@ public class ShiroCasConfiguration {
 //    public static final String shiroServerUrlPrefix = "http://222.135.141.236:888";
 //    public static final String shiroServerUrlPrefix = "http://shunhe.bek88.com:888";
 //    public static final String shiroServerUrlPrefix = "http://platform.bek88.com";
-    public static final String shiroServerUrlPrefix = Global.getConfig("base.url");;
-//    public static final String shiroServerUrlPrefix = "http://172.17.239.92:3080";
+    public static final String shiroServerUrlPrefix = Global.getConfig("base.url");
+    //    public static final String shiroServerUrlPrefix = "http://172.17.239.92:3080";
     // casFilter UrlPattern
     public static final String casFilterUrlPattern = "/cas";
     // 登录地址
     public static final String loginUrl = casLoginUrl + "?service=" + shiroServerUrlPrefix + casFilterUrlPattern;
     // 登出地址
-    public static final String logoutUrl = casLogoutUrl+"?service="+shiroServerUrlPrefix + casFilterUrlPattern;
+    public static final String logoutUrl = casLogoutUrl + "?service=" + shiroServerUrlPrefix + casFilterUrlPattern;
     // 登录成功地址
     public static final String loginSuccessUrl = "/";
     // 权限认证失败跳转地址
     public static final String unauthorizedUrl = "/error/403.html";
+
+    @Bean
+    public static EhCacheManager getEhCacheManager() {
+        EhCacheManager em = new EhCacheManager();
+        em.setCacheManagerConfigFile("classpath:ehcache-shiro.xml");
+        return em;
+    }
+
+    public static void clearAuthorizationInfo(String userName) {
+        Cache cache;
+        if (userName != null) {
+            cache = getEhCacheManager().getCache("authorizationCache");
+            Iterator var3 = cache.keys().iterator();
+
+            while (var3.hasNext()) {
+                Object key = var3.next();
+                if (key instanceof SimplePrincipalCollection) {
+                    SimplePrincipalCollection collection = (SimplePrincipalCollection) key;
+                    if (userName.equals(collection.getPrimaryPrincipal().toString())) {
+                        cache.remove(collection);
+                        break;
+                    }
+                }
+            }
+        } else {
+            cache = getEhCacheManager().getCache("authorizationCache");
+            cache.clear();
+        }
+
+    }
 
     private CorsConfiguration buildConfig() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
@@ -88,24 +118,26 @@ public class ShiroCasConfiguration {
 
     /**
      * 页面上使用shiro标签
+     *
      * @return
      */
     @Bean(name = "shiroDialect")
-    public ShiroDialect shiroDialect(){
+    public ShiroDialect shiroDialect() {
         return new ShiroDialect();
     }
 
     @Bean
-    public SingleSignOutFilter singleSignOutFilter(){
+    public SingleSignOutFilter singleSignOutFilter() {
         return new SingleSignOutFilter();
     }
 
     /**
      * 注册单点登出filter
+     *
      * @return
      */
     @Bean
-    public FilterRegistrationBean singleSignOutFilterBean(){
+    public FilterRegistrationBean singleSignOutFilterBean() {
         FilterRegistrationBean bean = new FilterRegistrationBean();
         bean.setName("singleSignOutFilterBean");
         bean.setFilter(singleSignOutFilter());
@@ -116,12 +148,14 @@ public class ShiroCasConfiguration {
         //log.info("================================singleSignOutFilterBean执行");
         return bean;
     }
+
     /**
      * 注册单点登出listener
+     *
      * @return
      */
     @Bean
-    public ServletListenerRegistrationBean<SingleSignOutHttpSessionListener> singleSignOutHttpSessionListenerBean(){
+    public ServletListenerRegistrationBean<SingleSignOutHttpSessionListener> singleSignOutHttpSessionListenerBean() {
         ServletListenerRegistrationBean<SingleSignOutHttpSessionListener> bean = new ServletListenerRegistrationBean();
         bean.setListener(new SingleSignOutHttpSessionListener());
 //        bean.setName(""); //默认为bean name
@@ -131,35 +165,6 @@ public class ShiroCasConfiguration {
         return bean;
     }
 
-    @Bean
-    public static EhCacheManager getEhCacheManager() {
-        EhCacheManager em = new EhCacheManager();
-        em.setCacheManagerConfigFile("classpath:ehcache-shiro.xml");
-        return em;
-    }
-
-    public static void clearAuthorizationInfo(String userName) {
-        Cache cache;
-        if (userName != null) {
-            cache = getEhCacheManager().getCache("authorizationCache");
-            Iterator var3 = cache.keys().iterator();
-
-            while(var3.hasNext()) {
-                Object key = var3.next();
-                if (key instanceof SimplePrincipalCollection) {
-                    SimplePrincipalCollection collection = (SimplePrincipalCollection)key;
-                    if (userName.equals(collection.getPrimaryPrincipal().toString())) {
-                        cache.remove(collection);
-                        break;
-                    }
-                }
-            }
-        } else {
-            cache = getEhCacheManager().getCache("authorizationCache");
-            cache.clear();
-        }
-
-    }
     @Bean(name = "myShiroCasRealm")
     public MyShiroCasRealm myShiroCasRealm(EhCacheManager cacheManager) {
         MyShiroCasRealm realm = new MyShiroCasRealm();
@@ -215,13 +220,12 @@ public class ShiroCasConfiguration {
 //    }
 
 
-
     /**
      * 注册DelegatingFilterProxy（Shiro）
      *
      * @return
      * @author SHANHY
-     * @create  2016年1月13日
+     * @create 2016年1月13日
      */
     @Bean
     public FilterRegistrationBean delegatingFilterProxy() {
@@ -271,7 +275,7 @@ public class ShiroCasConfiguration {
      *
      * @return
      * @author SHANHY
-     * @create  2016年1月17日
+     * @create 2016年1月17日
      */
     @Bean(name = "casFilter")
     public CasFilter getCasFilter() {
@@ -298,11 +302,10 @@ public class ShiroCasConfiguration {
      * 然后读取数据库相关配置，配置到 shiroFilterFactoryBean 的访问规则中。实际项目中，请使用自己的Service来处理业务逻辑。
      *
      * @param securityManager
-     * @param casFilter
-    //     * @param userDao
+     * @param casFilter       //     * @param userDao
      * @return
      * @author SHANHY
-     * @create  2016年1月14日
+     * @create 2016年1月14日
      */
     @Bean(name = "shiroFilter")
     public ShiroFilterFactoryBean getShiroFilterFactoryBean(DefaultWebSecurityManager securityManager, CasFilter casFilter
@@ -333,11 +336,11 @@ public class ShiroCasConfiguration {
      * 加载shiroFilter权限控制规则（从数据库读取然后配置）,角色/权限信息由MyShiroCasRealm对象提供doGetAuthorizationInfo实现获取来的
      *
      * @author SHANHY
-     * @create  2016年1月14日
+     * @create 2016年1月14日
      */
     private void loadShiroFilterChain(ShiroFilterFactoryBean shiroFilterFactoryBean
 //            , UserDao userDao
-    ){
+    ) {
         /////////////////////// 下面这些规则配置最好配置到配置文件中 ///////////////////////
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<String, String>();
 
@@ -354,13 +357,13 @@ public class ShiroCasConfiguration {
         //filterChainDefinitionMap.put("/logout","logout"); //logut请求采用logout filter
 
         //2.不拦截的请求
-        filterChainDefinitionMap.put("/static/**","anon");
-        filterChainDefinitionMap.put("/css/**","anon");
-        filterChainDefinitionMap.put("/js/**","anon");
+        filterChainDefinitionMap.put("/static/**", "anon");
+        filterChainDefinitionMap.put("/css/**", "anon");
+        filterChainDefinitionMap.put("/js/**", "anon");
         filterChainDefinitionMap.put("/login", "anon");
-        filterChainDefinitionMap.put("/logout","anon");
-        filterChainDefinitionMap.put("/error","anon");
-        filterChainDefinitionMap.put("/swagger-ui.html","anon");
+        filterChainDefinitionMap.put("/logout", "anon");
+        filterChainDefinitionMap.put("/error", "anon");
+        filterChainDefinitionMap.put("/swagger-ui.html", "anon");
         //3.拦截的请求（从本地数据库获取或者从casserver获取(webservice,http等远程方式)，看你的角色权限配置在哪里）
         filterChainDefinitionMap.put("/user", "authc"); //需要登录
         filterChainDefinitionMap.put("/user/add/**", "authc,roles[admin]"); //需要登录，且用户角色为admin
@@ -375,22 +378,24 @@ public class ShiroCasConfiguration {
     }
 
     @Bean
-    public SimpleMappingExceptionResolver simpleMappingExceptionResolver(){
+    public SimpleMappingExceptionResolver simpleMappingExceptionResolver() {
         SimpleMappingExceptionResolver simpleMappingExceptionResolver = new SimpleMappingExceptionResolver();
         Properties mappings = new Properties();
-        mappings.setProperty("UnauthorizeException","/403");
+        mappings.setProperty("UnauthorizeException", "/403");
         simpleMappingExceptionResolver.setExceptionMappings(mappings);
         simpleMappingExceptionResolver.setDefaultErrorView("/403");
         return simpleMappingExceptionResolver;
     }
+
     /**
-     *  开启shiro aop注解支持.
-     *  使用代理方式;所以需要开启代码支持;
+     * 开启shiro aop注解支持.
+     * 使用代理方式;所以需要开启代码支持;
+     *
      * @param securityManager
      * @return
      */
     @Bean
-    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(DefaultWebSecurityManager securityManager){
+    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(DefaultWebSecurityManager securityManager) {
         AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
         authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
         return authorizationAttributeSourceAdvisor;

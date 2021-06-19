@@ -90,7 +90,9 @@ public class WebController {
 
     // ------------- Menu: System management -------------
     @RequestMapping("/userManagement")
-    public String userManagement() { return "userManagement"; }
+    public String userManagement() {
+        return "userManagement";
+    }
     // ----------------------------------------
 
     // ------------ For debugging ------------

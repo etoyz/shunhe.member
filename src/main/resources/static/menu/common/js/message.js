@@ -1,12 +1,12 @@
 /** kit_admin-v1.1.0 MIT License By http://kit/zhengjinfan.cn e-mail:zheng_jinfan@126.com */
- ;/**
+;/**
  * Name:message.js
  * Author:Van
  * E-mail:zheng_jinfan@126.com
  * Website:http://kit.zhengjinfan.cn/
  * LICENSE:MIT
  */
-layui.define(['jquery', 'kitconfig'], function(exports) {
+layui.define(['jquery', 'kitconfig'], function (exports) {
     var $ = layui.jquery,
         kitconfig = layui.kitconfig,
         _modName = 'message',
@@ -16,14 +16,14 @@ layui.define(['jquery', 'kitconfig'], function(exports) {
     var message = {
         v: '1.0.0',
         times: 1,
-        _message: function() {
+        _message: function () {
             var _msg = $(_MESSAGE);
             if (_msg.length > 0)
                 return _msg;
             _body.append('<div class="kit-message"></div>');
             return $(_MESSAGE);
         },
-        show: function(options) {
+        show: function (options) {
             var that = this,
                 _message = that._message(),
                 id = that.times,
@@ -41,14 +41,14 @@ layui.define(['jquery', 'kitconfig'], function(exports) {
             ];
             _message.append(tpl.join(''));
             var _times = _message.children('div[data-times=' + id + ']').find('i.fa-times');
-            _times.off('click').on('click', function() {
+            _times.off('click').on('click', function () {
                 var _t = $(this).parents('div.kit-message-item').removeClass('layui-anim-upbit').addClass('layui-anim-fadeout');
-                setTimeout(function() {
+                setTimeout(function () {
                     _t.remove();
                 }, 1000);
             });
             if (autoClose) { //是否自动关闭
-                setTimeout(function() {
+                setTimeout(function () {
                     _times.click();
                 }, 3000);
             }

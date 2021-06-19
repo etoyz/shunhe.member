@@ -1,6 +1,5 @@
 package com.sh.cloud.entity;
 
-import com.sft.member.bean.ConsumeProject;
 import com.sft.member.bean.Coupon;
 import lombok.Getter;
 import lombok.Setter;

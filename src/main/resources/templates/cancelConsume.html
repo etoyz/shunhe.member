@@ -1,19 +1,19 @@
 <!DOCTYPE html>
-<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
-      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<html lang="zh_CN"
+>
 
 <head>
     <meta charset="utf-8">
     <title>反结算</title>
-    <meta name="renderer" content="webkit">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="plugins/layui/css/layui.css" media="all">
-    <link rel="stylesheet" href="plugins/font-awesome/css/font-awesome.min.css" media="all">
-    <link rel="stylesheet" href="plugins/adjust/css/adjustLayui.css" media="all">
-    <link rel="stylesheet" href="css/table.css" media="all">
-    <link rel="stylesheet" href="css/form.css" media="all">
-    <link rel="stylesheet" href="css/common.css" media="all">
+    <meta content="webkit" name="renderer">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
+    <link href="plugins/layui/css/layui.css" media="all" rel="stylesheet">
+    <link href="plugins/font-awesome/css/font-awesome.min.css" media="all" rel="stylesheet">
+    <link href="plugins/adjust/css/adjustLayui.css" media="all" rel="stylesheet">
+    <link href="css/table.css" media="all" rel="stylesheet">
+    <link href="css/form.css" media="all" rel="stylesheet">
+    <link href="css/common.css" media="all" rel="stylesheet">
 </head>
 
 <body>
@@ -21,41 +21,41 @@
     <div class="layui-row">
         <div class="layui-col-md12">
             <div class="s-headerSearch">
-                <form class="layui-form" action="">
+                <form action="" autocomplete="off" class="layui-form">
                     <div class="layui-form-item">
                         <div class="layui-inline s-layuiInline">
                             <label class="layui-form-label">消费日期：</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="time" id="time" autocomplete="off" class="layui-input"
-                                       placeholder="请选择消费日期范围">
+                                <input autocomplete="off" class="layui-input" id="time" name="time" placeholder="请选择消费日期范围"
+                                       type="text">
                             </div>
                         </div>
                         <div class="layui-inline s-layuiInline">
                             <label class="layui-form-label">客户名称：</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="userName" autocomplete="off" class="layui-input"
-                                       placeholder="请输入客户名称">
+                                <input autocomplete="off" class="layui-input" name="userName" placeholder="请输入客户名称"
+                                       type="text">
                             </div>
                         </div>
                         <div class="layui-inline s-layuiInline">
                             <label class="layui-form-label">会员卡号：</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="userId" autocomplete="off" class="layui-input"
-                                       placeholder="请输入会员卡号">
+                                <input autocomplete="off" class="layui-input" name="userId" placeholder="请输入会员卡号"
+                                       type="text">
                             </div>
                         </div>
                         <div class="layui-inline s-layuiInline">
                             <label class="layui-form-label">车架号：</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="vehicleId" autocomplete="off" class="layui-input"
-                                       placeholder="请输入车架号">
+                                <input autocomplete="off" class="layui-input" name="vehicleId" placeholder="请输入车架号"
+                                       type="text">
                             </div>
                         </div>
                         <div class="layui-inline s-layuiInline">
                             <label class="layui-form-label">车牌号：</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="vehicleId" autocomplete="off" class="layui-input"
-                                       placeholder="请输入车牌号">
+                                <input autocomplete="off" class="layui-input" name="vehicleId" placeholder="请输入车牌号"
+                                       type="text">
                             </div>
                         </div>
                         <div class="layui-inline s-layuiInline">
@@ -67,7 +67,7 @@
             <!-- 展示表格 -->
             <div class="s-commonTable">
                 <table class="layui-hide" id="consumeList" lay-filter="cancelConsumeTabel"></table>
-                <script type="text/html" id="operation">
+                <script id="operation" type="text/html">
                     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="rollBack">反结算</a>
                 </script>
             </div>
@@ -88,9 +88,9 @@
 
         laydate.render({
             elem: '#time'
-            ,type: 'datetime'
-            ,range: '到'
-            ,format: 'yyyy年M月d日H时m分'
+            , type: 'datetime'
+            , range: '到'
+            , format: 'yyyy-M-d'
         });
 
         function layuiAlert(msg) {
@@ -152,7 +152,7 @@
                 {field: 'remark', width: 100, title: '项目备注'},
                 {field: 'groupId', width: 100, title: 'groupId', hide: true},
                 {field: 'operation', width: 80, title: '操作', toolbar: '#operation', fixed: 'right'}
-            ] ],
+            ]],
             size: 'sm',
             parseData: function (resp) {
                 let data = resp.data;
@@ -162,7 +162,7 @@
                         $.post({
                             url: "service/Archives/getUserInfo?userId=" + data[i].userId,
                             async: false,
-                            success: function (res){
+                            success: function (res) {
                                 data[i].customername = res.customername
                                 data[i].memberNumber = res.memberNumber
                                 data[i].vin = res.vehicle.vin
@@ -177,9 +177,9 @@
                             }
                         })
                         {
-                            if(data[i].payStyle === '-1')
+                            if (data[i].payStyle === '-1')
                                 data[i].payStyleName = '卡券发放'
-                            else if(data[i].payStyle === '-2')
+                            else if (data[i].payStyle === '-2')
                                 data[i].payStyleName = '储值'
                             else {
                                 //TODO 异步请求卡券名称
@@ -226,7 +226,6 @@
             return false;
         })
     });
-
 
 
 </script>

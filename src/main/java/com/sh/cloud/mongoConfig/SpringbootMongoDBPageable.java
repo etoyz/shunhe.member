@@ -8,7 +8,7 @@ import java.io.Serializable;
 /**
  * Created by jxh on 2019/3/1.
  */
-public class SpringbootMongoDBPageable implements Serializable,Pageable{
+public class SpringbootMongoDBPageable implements Serializable, Pageable {
     /**
      * @Fields: serialVersionUID
      * @Todo: TODO

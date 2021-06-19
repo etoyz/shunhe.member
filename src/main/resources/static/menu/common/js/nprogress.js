@@ -1,9 +1,9 @@
 /** kit_admin-v1.1.0 MIT License By http://kit/zhengjinfan.cn e-mail:zheng_jinfan@126.com */
- ;/* NProgress, (c) 2013, 2014 Rico Sta. Cruz - http://ricostacruz.com/nprogress
+;/* NProgress, (c) 2013, 2014 Rico Sta. Cruz - http://ricostacruz.com/nprogress
  * @license MIT */
-layui.define('kitconfig', function(exports) {
+layui.define('kitconfig', function (exports) {
     var kitconfig = layui.kitconfig;
-    (function(root, factory) {
+    (function (root, factory) {
 
         if (typeof define === 'function' && define.amd) {
             define(factory);
@@ -13,7 +13,7 @@ layui.define('kitconfig', function(exports) {
             root.NProgress = factory();
         }
 
-    })(this, function() {
+    })(this, function () {
         var NProgress = {};
 
         NProgress.version = '0.2.0';
@@ -40,7 +40,7 @@ layui.define('kitconfig', function(exports) {
          *       minimum: 0.1
          *     });
          */
-        NProgress.configure = function(options) {
+        NProgress.configure = function (options) {
             var key, value;
             for (key in options) {
                 value = options[key];
@@ -63,7 +63,7 @@ layui.define('kitconfig', function(exports) {
          *     NProgress.set(1.0);
          */
 
-        NProgress.set = function(n) {
+        NProgress.set = function (n) {
             var started = NProgress.isStarted();
 
             n = clamp(n, Settings.minimum, 1);
@@ -76,7 +76,7 @@ layui.define('kitconfig', function(exports) {
 
             progress.offsetWidth; /* Repaint */
 
-            queue(function(next) {
+            queue(function (next) {
                 // Set positionUsing if it hasn't already been set
                 if (Settings.positionUsing === '') Settings.positionUsing = NProgress.getPositioningCSS();
 
@@ -91,12 +91,12 @@ layui.define('kitconfig', function(exports) {
                     });
                     progress.offsetWidth; /* Repaint */
 
-                    setTimeout(function() {
+                    setTimeout(function () {
                         css(progress, {
                             transition: 'all ' + speed + 'ms linear',
                             opacity: 0
                         });
-                        setTimeout(function() {
+                        setTimeout(function () {
                             NProgress.remove();
                             next();
                         }, speed);
@@ -109,7 +109,7 @@ layui.define('kitconfig', function(exports) {
             return this;
         };
 
-        NProgress.isStarted = function() {
+        NProgress.isStarted = function () {
             return typeof NProgress.status === 'number';
         };
 
@@ -120,11 +120,11 @@ layui.define('kitconfig', function(exports) {
          *     NProgress.start();
          *
          */
-        NProgress.start = function() {
+        NProgress.start = function () {
             if (!NProgress.status) NProgress.set(0);
 
-            var work = function() {
-                setTimeout(function() {
+            var work = function () {
+                setTimeout(function () {
                     if (!NProgress.status) return;
                     NProgress.trickle();
                     work();
@@ -148,7 +148,7 @@ layui.define('kitconfig', function(exports) {
          *     NProgress.done(true);
          */
 
-        NProgress.done = function(force) {
+        NProgress.done = function (force) {
             if (!force && !NProgress.status) return this;
 
             return NProgress.inc(0.3 + 0.5 * Math.random()).set(1);
@@ -158,7 +158,7 @@ layui.define('kitconfig', function(exports) {
          * Increments by a random amount.
          */
 
-        NProgress.inc = function(amount) {
+        NProgress.inc = function (amount) {
             var n = NProgress.status;
 
             if (!n) {
@@ -173,7 +173,7 @@ layui.define('kitconfig', function(exports) {
             }
         };
 
-        NProgress.trickle = function() {
+        NProgress.trickle = function () {
             return NProgress.inc(Math.random() * Settings.trickleRate);
         };
 
@@ -183,11 +183,11 @@ layui.define('kitconfig', function(exports) {
          *
          * @param $promise jQUery Promise
          */
-        (function() {
+        (function () {
             var initial = 0,
                 current = 0;
 
-            NProgress.promise = function($promise) {
+            NProgress.promise = function ($promise) {
                 if (!$promise || $promise.state() === "resolved") {
                     return this;
                 }
@@ -199,7 +199,7 @@ layui.define('kitconfig', function(exports) {
                 initial++;
                 current++;
 
-                $promise.always(function() {
+                $promise.always(function () {
                     current--;
                     if (current === 0) {
                         initial = 0;
@@ -219,7 +219,7 @@ layui.define('kitconfig', function(exports) {
          * setting.
          */
 
-        NProgress.render = function(fromStart) {
+        NProgress.render = function (fromStart) {
             if (NProgress.isRendered()) return document.getElementById('nprogress');
 
             addClass(document.documentElement, 'nprogress-busy');
@@ -255,7 +255,7 @@ layui.define('kitconfig', function(exports) {
          * Removes the element. Opposite of render().
          */
 
-        NProgress.remove = function() {
+        NProgress.remove = function () {
             removeClass(document.documentElement, 'nprogress-busy');
             removeClass(document.querySelector(Settings.parent), 'nprogress-custom-parent');
             var progress = document.getElementById('nprogress');
@@ -266,7 +266,7 @@ layui.define('kitconfig', function(exports) {
          * Checks if the progress bar is rendered.
          */
 
-        NProgress.isRendered = function() {
+        NProgress.isRendered = function () {
             return !!document.getElementById('nprogress');
         };
 
@@ -274,15 +274,15 @@ layui.define('kitconfig', function(exports) {
          * Determine which positioning CSS rule to use.
          */
 
-        NProgress.getPositioningCSS = function() {
+        NProgress.getPositioningCSS = function () {
             // Sniff on document.body.style
             var bodyStyle = document.body.style;
 
             // Sniff prefixes
             var vendorPrefix = ('WebkitTransform' in bodyStyle) ? 'Webkit' :
                 ('MozTransform' in bodyStyle) ? 'Moz' :
-                ('msTransform' in bodyStyle) ? 'ms' :
-                ('OTransform' in bodyStyle) ? 'O' : '';
+                    ('msTransform' in bodyStyle) ? 'ms' :
+                        ('OTransform' in bodyStyle) ? 'O' : '';
 
             if (vendorPrefix + 'Perspective' in bodyStyle) {
                 // Modern browsers with 3D support, e.g. Webkit, IE10
@@ -325,11 +325,11 @@ layui.define('kitconfig', function(exports) {
             var barCSS;
 
             if (Settings.positionUsing === 'translate3d') {
-                barCSS = { transform: 'translate3d(' + toBarPerc(n) + '%,0,0)' };
+                barCSS = {transform: 'translate3d(' + toBarPerc(n) + '%,0,0)'};
             } else if (Settings.positionUsing === 'translate') {
-                barCSS = { transform: 'translate(' + toBarPerc(n) + '%,0)' };
+                barCSS = {transform: 'translate(' + toBarPerc(n) + '%,0)'};
             } else {
-                barCSS = { 'margin-left': toBarPerc(n) + '%' };
+                barCSS = {'margin-left': toBarPerc(n) + '%'};
             }
 
             barCSS.transition = 'all ' + speed + 'ms ' + ease;
@@ -341,7 +341,7 @@ layui.define('kitconfig', function(exports) {
          * (Internal) Queues a function to be executed.
          */
 
-        var queue = (function() {
+        var queue = (function () {
             var pending = [];
 
             function next() {
@@ -351,26 +351,26 @@ layui.define('kitconfig', function(exports) {
                 }
             }
 
-            return function(fn) {
+            return function (fn) {
                 pending.push(fn);
                 if (pending.length == 1) next();
             };
         })();
 
         /**
-         * (Internal) Applies css properties to an element, similar to the jQuery 
+         * (Internal) Applies css properties to an element, similar to the jQuery
          * css method.
          *
-         * While this helper does assist with vendor prefixed property names, it 
+         * While this helper does assist with vendor prefixed property names, it
          * does not perform any manipulation of values prior to setting styles.
          */
 
-        var css = (function() {
+        var css = (function () {
             var cssPrefixes = ['Webkit', 'O', 'Moz', 'ms'],
                 cssProps = {};
 
             function camelCase(string) {
-                return string.replace(/^-ms-/, 'ms-').replace(/-([\da-z])/gi, function(match, letter) {
+                return string.replace(/^-ms-/, 'ms-').replace(/-([\da-z])/gi, function (match, letter) {
                     return letter.toUpperCase();
                 });
             }
@@ -400,7 +400,7 @@ layui.define('kitconfig', function(exports) {
                 element.style[prop] = value;
             }
 
-            return function(element, properties) {
+            return function (element, properties) {
                 var args = arguments,
                     prop,
                     value;
@@ -457,8 +457,8 @@ layui.define('kitconfig', function(exports) {
         }
 
         /**
-         * (Internal) Gets a space separated list of the class names on the element. 
-         * The list is wrapped with a single space on each end to facilitate finding 
+         * (Internal) Gets a space separated list of the class names on the element.
+         * The list is wrapped with a single space on each end to facilitate finding
          * matches within the list.
          */
 

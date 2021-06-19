@@ -1,6 +1,5 @@
 package com.sh.cloud.web;
 
-import com.sft.member.bean.InsuranceCompany;
 import com.sft.member.bean.InsuranceType;
 import com.sft.member.insurance.InsuranceTypeService;
 import com.sh.cloud.utils.PlatUserUtils;

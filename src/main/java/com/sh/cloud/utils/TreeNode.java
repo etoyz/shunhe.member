@@ -9,22 +9,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TreeNode implements Serializable {
+    protected String nodeName;
+    //    protected Object obj;
+//    protected TreeNode parentNode;
+    protected List<TreeNode> data;
+    protected List<TreeNode> children;
     private String parentId;
     private String parentIds;
     private String selfId;
-    protected String nodeName;
-//    protected Object obj;
-//    protected TreeNode parentNode;
-    protected List<TreeNode> data;
     private String title;
     private String value;
-
     //zTree
     private String iconCls;
     private String text;
     private String state;
-    protected List<TreeNode> children;
-
     private boolean checked = false;
     private boolean disabled = false;
     private String id;
@@ -60,7 +58,7 @@ public class TreeNode implements Serializable {
     }
 
     public void initChildList() {
-        if (data == null){
+        if (data == null) {
             data = new ArrayList<TreeNode>();
             children = new ArrayList<TreeNode>();
         }
@@ -114,6 +112,10 @@ public class TreeNode implements Serializable {
 //            parentNode.deleteChildNode(id);
 //        }
 //    }
+
+    public void setData(List<TreeNode> childList) {
+        this.data = childList;
+    }
 
     /* 删除当前节点的某个子节点 */
     public void deleteChildNode(String childId) {
@@ -187,11 +189,7 @@ public class TreeNode implements Serializable {
     }
 
     public void print(int content) {
-        System.out.println(String.valueOf(content));
-    }
-
-    public void setData(List<TreeNode> childList) {
-        this.data = childList;
+        System.out.println(content);
     }
 
     public String getParentId() {

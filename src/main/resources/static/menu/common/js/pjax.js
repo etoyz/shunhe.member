@@ -1,5 +1,5 @@
 /** kit_admin-v1.1.0 MIT License By http://kit/zhengjinfan.cn e-mail:zheng_jinfan@126.com */
- ;layui.define(['jquery'], function(exports) {
+;layui.define(['jquery'], function (exports) {
     var jQuery = layui.jquery;
 
     /*!
@@ -8,7 +8,7 @@
      * https://github.com/defunkt/jquery-pjax
      */
 
-    (function($) {
+    (function ($) {
 
         // When called on a container with a selector, fetches the href with
         // ajax into the container or with the data-pjax attribute on the link
@@ -35,7 +35,7 @@
         // Returns the jQuery object
         function fnPjax(selector, container, options) {
             var context = this
-            return this.on('click.pjax', selector, function(event) {
+            return this.on('click.pjax', selector, function (event) {
                 var opts = $.extend({}, optionsFor(container, options))
                 if (!opts.container)
                     opts.container = $(this).attr('data-pjax') || context
@@ -209,7 +209,7 @@
 
             var timeoutTimer
 
-            options.beforeSend = function(xhr, settings) {
+            options.beforeSend = function (xhr, settings) {
                 // No timeout for non-GET requests
                 // Its not safe to request the resource again with a fallback method.
                 if (settings.type !== 'GET') {
@@ -223,7 +223,7 @@
                     return false
 
                 if (settings.timeout > 0) {
-                    timeoutTimer = setTimeout(function() {
+                    timeoutTimer = setTimeout(function () {
                         if (fire('pjax:timeout', [xhr, options]))
                             xhr.abort('timeout')
                     }, settings.timeout)
@@ -237,7 +237,7 @@
                 options.requestUrl = stripInternalParams(url)
             }
 
-            options.complete = function(xhr, textStatus) {
+            options.complete = function (xhr, textStatus) {
                 if (timeoutTimer)
                     clearTimeout(timeoutTimer)
 
@@ -246,7 +246,7 @@
                 fire('pjax:end', [xhr, options])
             }
 
-            options.error = function(xhr, textStatus, errorThrown) {
+            options.error = function (xhr, textStatus, errorThrown) {
                 var container = extractContainer("", xhr, options)
 
                 var allowed = fire('pjax:error', [xhr, textStatus, errorThrown, options])
@@ -255,7 +255,7 @@
                 }
             }
 
-            options.success = function(data, status, xhr) {
+            options.success = function (data, status, xhr) {
                 var previousState = pjax.state;
 
                 // If $.pjax.defaults.version is a function, invoke it first.
@@ -302,7 +302,8 @@
                 // Clear out any focused controls before inserting new page contents.
                 try {
                     document.activeElement.blur()
-                } catch (e) {}
+                } catch (e) {
+                }
 
                 if (container.title) document.title = container.title
 
@@ -524,7 +525,7 @@
 
             var data = options.data
             if (typeof data === 'string') {
-                $.each(data.split('&'), function(index, value) {
+                $.each(data.split('&'), function (index, value) {
                     var pair = value.split('=')
                     form.append($('<input>', {
                         type: 'hidden',
@@ -533,7 +534,7 @@
                     }))
                 })
             } else if ($.isArray(data)) {
-                $.each(data, function(index, value) {
+                $.each(data, function (index, value) {
                     form.append($('<input>', {
                         type: 'hidden',
                         name: value.name,
@@ -575,9 +576,9 @@
 
         function cloneContents(container) {
             var cloned = container.clone()
-                // Unmark script tags as already being eval'd so they can get executed again
-                // when restored from cache. HAXX: Uses jQuery internal method.
-            cloned.find('script').each(function() {
+            // Unmark script tags as already being eval'd so they can get executed again
+            // when restored from cache. HAXX: Uses jQuery internal method.
+            cloned.find('script').each(function () {
                 if (!this.src) jQuery._data(this, 'globalEval', false)
             })
             return [container.selector, cloned.contents()]
@@ -751,7 +752,7 @@
             // Clean up any <title> tags
             if (obj.contents) {
                 // Remove any parent title elements
-                obj.contents = obj.contents.not(function() {
+                obj.contents = obj.contents.not(function () {
                     return $(this).is('title')
                 })
 
@@ -782,9 +783,9 @@
 
             var existingScripts = $('script[src]')
 
-            scripts.each(function() {
+            scripts.each(function () {
                 var src = this.src
-                var matchedScripts = existingScripts.filter(function() {
+                var matchedScripts = existingScripts.filter(function () {
                     return this.src === src
                 })
                 if (matchedScripts.length) return
@@ -866,7 +867,7 @@
         //
         // Returns String version or undefined.
         function findVersion() {
-            return $('meta').filter(function() {
+            return $('meta').filter(function () {
                 var name = $(this).attr('http-equiv')
                 return name && name.toUpperCase() === 'X-PJAX-VERSION'
             }).attr('content')
@@ -914,7 +915,7 @@
         //
         // Returns nothing.
         function disable() {
-            $.fn.pjax = function() {
+            $.fn.pjax = function () {
                 return this
             }
             $.pjax = fallbackPjax
@@ -922,7 +923,7 @@
             $.pjax.disable = $.noop
             $.pjax.click = $.noop
             $.pjax.submit = $.noop
-            $.pjax.reload = function() {
+            $.pjax.reload = function () {
                 window.location.reload()
             }
 

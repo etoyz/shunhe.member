@@ -14,6 +14,7 @@ import java.security.Principal;
 
 /**
  * 用户工具类
+ *
  * @author ThinkGem
  * @version 2013-12-05
  */
@@ -21,21 +22,21 @@ public class UserUtils {
 
 //	private static UserDao userDao = SpringContextHolder.getBean(UserDao.class);
 
-	public static final String USER_CACHE = "userCache";
-	public static final String USER_CACHE_ID_ = "id_";
-	public static final String USER_CACHE_LOGIN_NAME_ = "ln";
-	public static final String USER_CACHE_LIST_BY_OFFICE_ID_ = "oid_";
-	public static final String USER_CACHE_LIST_BY_USER_ID_ = "uid_";
-	public static final String USER_CACHE_LIST_BY_GROUP_ID_ = "gid_";
+    public static final String USER_CACHE = "userCache";
+    public static final String USER_CACHE_ID_ = "id_";
+    public static final String USER_CACHE_LOGIN_NAME_ = "ln";
+    public static final String USER_CACHE_LIST_BY_OFFICE_ID_ = "oid_";
+    public static final String USER_CACHE_LIST_BY_USER_ID_ = "uid_";
+    public static final String USER_CACHE_LIST_BY_GROUP_ID_ = "gid_";
 
-	public static final String CACHE_AUTH_INFO = "authInfo";
-	public static final String CACHE_ROLE_LIST = "roleList";
-	public static final String CACHE_MENU_LIST = "menuList";
-	public static final String CACHE_AREA_LIST = "areaList";
-	public static final String CACHE_GROUP_INFO_LIST = "groupInfoList";
-	public static final String CACHE_OFFICE_LIST = "officeList";
-	public static final String CACHE_OFFICE_ALL_LIST = "officeAllList";
-	
+    public static final String CACHE_AUTH_INFO = "authInfo";
+    public static final String CACHE_ROLE_LIST = "roleList";
+    public static final String CACHE_MENU_LIST = "menuList";
+    public static final String CACHE_AREA_LIST = "areaList";
+    public static final String CACHE_GROUP_INFO_LIST = "groupInfoList";
+    public static final String CACHE_OFFICE_LIST = "officeList";
+    public static final String CACHE_OFFICE_ALL_LIST = "officeAllList";
+
 //	/**
 //	 * 根据ID获取用户
 //	 * @param id
@@ -51,7 +52,7 @@ public class UserUtils {
 //		}
 //		return user;
 //	}
-	
+
 //	/**
 //	 * 根据登录名获取用户
 //	 * @param loginName
@@ -71,7 +72,7 @@ public class UserUtils {
 //		}
 //		return user;
 //	}
-	
+
 //	/**
 //	 * 清除当前用户缓存
 //	 */
@@ -85,7 +86,7 @@ public class UserUtils {
 //		removeCache(CACHE_OFFICE_ALL_LIST);
 //		UserUtils.clearCache(getUser());
 //	}
-	
+
 //	/**
 //	 * 清除指定用户缓存
 //	 * @param user
@@ -102,26 +103,27 @@ public class UserUtils {
 //		}
 //		CacheUtils.remove(USER_CACHE, USER_CACHE_LIST_BY_USER_ID_ + user.getId());
 //	}
-	
-	/**
-	 * 获取当前用户
-	 * @return 取不到返回 new User()
-	 */
-	public static MongoUser getUser(){
 
-		Session session = getSession();
-		Object object = session.getAttribute("user");
+    /**
+     * 获取当前用户
+     *
+     * @return 取不到返回 new User()
+     */
+    public static MongoUser getUser() {
 
-		if (object!=null){
-			MongoUser mongoUser = (MongoUser) object;
-			if (mongoUser != null){
-				return mongoUser;
-			}
-			return new MongoUser();
-		}
-		// 如果没有登录，则返回实例化空的User对象。
-		return new MongoUser();
-	}
+        Session session = getSession();
+        Object object = session.getAttribute("user");
+
+        if (object != null) {
+            MongoUser mongoUser = (MongoUser) object;
+            if (mongoUser != null) {
+                return mongoUser;
+            }
+            return new MongoUser();
+        }
+        // 如果没有登录，则返回实例化空的User对象。
+        return new MongoUser();
+    }
 
 //	/**
 //	 * 获取当前用户角色列表
@@ -143,7 +145,7 @@ public class UserUtils {
 //		}
 //		return roleList;
 //	}
-	
+
 //	/**
 //	 * 获取当前用户授权菜单
 //	 * @return
@@ -164,73 +166,73 @@ public class UserUtils {
 //		}
 //		return menuList;
 //	}
-	
 
-	/**
-	 * 获取授权主要对象
-	 */
-	public static Subject getSubject(){
-		return SecurityUtils.getSubject();
-	}
-	
-	/**
-	 * 获取当前登录者对象
-	 */
-	public static Principal getPrincipal(){
-		try{
-			Subject subject = SecurityUtils.getSubject();
-			Principal principal = (Principal)subject.getPrincipal();
-			if (principal != null){
-				return principal;
-			}
+
+    /**
+     * 获取授权主要对象
+     */
+    public static Subject getSubject() {
+        return SecurityUtils.getSubject();
+    }
+
+    /**
+     * 获取当前登录者对象
+     */
+    public static Principal getPrincipal() {
+        try {
+            Subject subject = SecurityUtils.getSubject();
+            Principal principal = (Principal) subject.getPrincipal();
+            if (principal != null) {
+                return principal;
+            }
 //			subject.logout();
-		}catch (UnavailableSecurityManagerException e) {
+        } catch (UnavailableSecurityManagerException e) {
 
-		}catch (InvalidSessionException e){
+        } catch (InvalidSessionException e) {
 
-		}
-		return null;
-	}
-	
-	public static Session getSession(){
-		try{
-			Subject subject = SecurityUtils.getSubject();
-			Session session = subject.getSession(false);
-			if (session == null){
-				session = subject.getSession();
-			}
-			if (session != null){
-				return session;
-			}
+        }
+        return null;
+    }
+
+    public static Session getSession() {
+        try {
+            Subject subject = SecurityUtils.getSubject();
+            Session session = subject.getSession(false);
+            if (session == null) {
+                session = subject.getSession();
+            }
+            if (session != null) {
+                return session;
+            }
 //			subject.logout();
-		}catch (InvalidSessionException e){
-			
-		}
-		return null;
-	}
-	
-	// ============== User Cache ==============
-	
-	public static Object getCache(String key) {
-		return getCache(key, null);
-	}
-	
-	public static Object getCache(String key, Object defaultValue) {
+        } catch (InvalidSessionException e) {
+
+        }
+        return null;
+    }
+
+    // ============== User Cache ==============
+
+    public static Object getCache(String key) {
+        return getCache(key, null);
+    }
+
+    public static Object getCache(String key, Object defaultValue) {
 //		Object obj = getCacheMap().get(key);
-		Object obj = getSession().getAttribute(key);
-		return obj==null?defaultValue:obj;
-	}
+        Object obj = getSession().getAttribute(key);
+        return obj == null ? defaultValue : obj;
+    }
 
-	public static void putCache(String key, Object value) {
+    public static void putCache(String key, Object value) {
 //		getCacheMap().put(key, value);
-		getSession().setAttribute(key, value);
-	}
+        getSession().setAttribute(key, value);
+    }
 
-	public static void removeCache(String key) {
+    public static void removeCache(String key) {
 //		getCacheMap().remove(key);
-		getSession().removeAttribute(key);
-	}
-	
+        getSession().removeAttribute(key);
+    }
+
 //	public static Map<String, Object> getCacheMap(){
 //		Principal principal = getPrincipal();
 //		if(principal!=null){
@@ -238,5 +240,5 @@ public class UserUtils {
 //		}
 //		return new HashMap<String, Object>();
 //	}
-	
+
 }

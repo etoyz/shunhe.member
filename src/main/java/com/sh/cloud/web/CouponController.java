@@ -5,7 +5,6 @@ import com.sft.member.bean.Coupon;
 import com.sft.member.obtain.coupon.CouponService;
 import com.sh.cloud.entity.CouponAndConsumeProjects;
 import com.sh.cloud.utils.PlatUserUtils;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;

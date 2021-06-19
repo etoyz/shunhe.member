@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<html lang="zh_CN">
 <head>
     <meta charset="utf-8">
     <title>用卡</title>
-    <meta name="renderer" content="webkit">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="plugins/layui/css/layui.css" media="all">
-    <link rel="stylesheet" href="plugins/font-awesome/css/font-awesome.min.css" media="all">
-    <link rel="stylesheet" href="plugins/adjust/css/adjustLayui.css" media="all">
-    <link rel="stylesheet" href="css/table.css" media="all">
-    <link rel="stylesheet" href="css/form.css" media="all">
-    <link rel="stylesheet" href="css/common.css" media="all">
+    <meta content="webkit" name="renderer">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
+    <link href="plugins/layui/css/layui.css" media="all" rel="stylesheet">
+    <link href="plugins/font-awesome/css/font-awesome.min.css" media="all" rel="stylesheet">
+    <link href="plugins/adjust/css/adjustLayui.css" media="all" rel="stylesheet">
+    <link href="css/table.css" media="all" rel="stylesheet">
+    <link href="css/form.css" media="all" rel="stylesheet">
+    <link href="css/common.css" media="all" rel="stylesheet">
 </head>
 <body>
 <div class="layui-fluid main">
@@ -19,36 +19,36 @@
         <div class="layui-col-md12">
 
             <div class="s-headerSearch">
-                <form class="layui-form" action="">
+                <form action="" autocomplete="off" class="layui-form">
 
                     <div class="layui-form-item">
 
                         <div class="layui-inline s-layuiInline">
                             <label class="layui-form-label">车牌号</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="carNumber" autocomplete="off" class="layui-input"
-                                       placeholder="请输入车牌号">
+                                <input autocomplete="off" class="layui-input" name="carNumber" placeholder="请输入车牌号"
+                                       type="text">
                             </div>
                         </div>
                         <div class="layui-inline s-layuiInline">
                             <label class="layui-form-label">车架号</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="chassisNumber" autocomplete="off" class="layui-input"
-                                       placeholder="请输入车架号">
+                                <input autocomplete="off" class="layui-input" name="chassisNumber" placeholder="请输入车架号"
+                                       type="text">
                             </div>
                         </div>
                         <div class="layui-inline s-layuiInline">
                             <label class="layui-form-label">客户名称</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="customerName" autocomplete="off" class="layui-input"
-                                       placeholder="请输入客户名称">
+                                <input autocomplete="off" class="layui-input" name="customerName" placeholder="请输入客户名称"
+                                       type="text">
                             </div>
                         </div>
                         <div class="layui-inline s-layuiInline">
                             <label class="layui-form-label">会员卡号</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="membership" autocomplete="off" class="layui-input"
-                                       placeholder="请输入会员卡号">
+                                <input autocomplete="off" class="layui-input" name="membership" placeholder="请输入会员卡号"
+                                       type="text">
                             </div>
                         </div>
 
@@ -63,7 +63,7 @@
             <!-- 展示表格 -->
             <div class="s-commonTable">
                 <table class="layui-hide" id="memberList" lay-filter="memberListTable"></table>
-                <script type="text/html" id="operation">
+                <script id="operation" type="text/html">
                     <a class="layui-btn layui-btn-xs" lay-event="use">用卡</a>
                 </script>
             </div>
@@ -73,27 +73,27 @@
 
 <!-- 用卡弹窗 -->
 <div class="s-details" id="useWindow">
-    <form class="layui-form" action="">
+    <form action="" autocomplete="off" class="layui-form">
         <div class="layui-form-item s-formItem5">
             <div class="layui-inline">
                 <label class="layui-form-label">消费日期</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="time" id="time" lay-verify="time|required" autocomplete="off"
-                           class="layui-input">
+                    <input autocomplete="off" class="layui-input" id="time" lay-verify="time|required" name="time"
+                           type="text">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">车牌号</label>
                 <div class="layui-input-inline">
-                    <input disabled type="text" id="licensePlate" autocomplete="off"
-                           class="layui-input">
+                    <input autocomplete="off" class="layui-input" disabled id="licensePlate"
+                           type="text">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">车架号</label>
                 <div class="layui-input-inline">
-                    <input disabled type="text" name="vin" id="vin" autocomplete="off"
-                           class="layui-input">
+                    <input autocomplete="off" class="layui-input" disabled id="vin" name="vin"
+                           type="text">
                 </div>
             </div>
         </div>
@@ -101,22 +101,22 @@
             <div class="layui-inline">
                 <label class="layui-form-label">客户姓名</label>
                 <div class="layui-input-inline">
-                    <input disabled type="text" id="customerName" autocomplete="off"
-                           class="layui-input">
+                    <input autocomplete="off" class="layui-input" disabled id="customerName"
+                           type="text">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">会员卡号</label>
                 <div class="layui-input-inline">
-                    <input disabled type="text" id="memberNumber" autocomplete="off"
-                           class="layui-input">
+                    <input autocomplete="off" class="layui-input" disabled id="memberNumber"
+                           type="text">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">会员级别</label>
                 <div class="layui-input-inline">
-                    <input disabled type="text" id="customerLevel" autocomplete="off"
-                           class="layui-input">
+                    <input autocomplete="off" class="layui-input" disabled id="customerLevel"
+                           type="text">
                 </div>
             </div>
         </div>
@@ -124,9 +124,9 @@
             <div class="layui-inline">
                 <label class="layui-form-label">消费类型</label>
                 <div class="layui-input-inline">
-                    <select type="text" id="consumeTypeId" lay-filter="consumeTypeId" name="consumeTypeId"
-                            autocomplete="off"
-                            class="layui-input">
+                    <select autocomplete="off" class="layui-input" id="consumeTypeId" lay-filter="consumeTypeId"
+                            name="consumeTypeId"
+                            type="text">
                         <option>正在拉取...</option>
                     </select>
                 </div>
@@ -134,9 +134,9 @@
             <div class="layui-inline">
                 <label class="layui-form-label">消费项目</label>
                 <div class="layui-input-inline">
-                    <select type="text" id="consumeProjectId" name="consumeProjectId" autocomplete="off"
-                            lay-filter="consumeProjectId"
-                            class="layui-input">
+                    <select autocomplete="off" class="layui-input" id="consumeProjectId" lay-filter="consumeProjectId"
+                            name="consumeProjectId"
+                            type="text">
                         <option>正在拉取...</option>
                     </select>
                 </div>
@@ -144,7 +144,7 @@
             <div class="layui-inline">
                 <label class="layui-form-label">具体项目</label>
                 <div class="layui-input-inline">
-                    <select name="practicalProjectId" id="practicalProjectId" autocomplete="off">
+                    <select autocomplete="off" id="practicalProjectId" name="practicalProjectId">
                     </select>
                 </div>
             </div>
@@ -153,8 +153,8 @@
             <div class="layui-bl">
                 <label class="layui-form-label">项目备注</label>
                 <div class="layui-input-inline" style="width: 800px">
-                    <input type="text" name="billRemark" id="billRemark" autocomplete="off"
-                           class="layui-input">
+                    <input autocomplete="off" class="layui-input" id="billRemark" name="billRemark"
+                           type="text">
                 </div>
             </div>
         </div>
@@ -162,22 +162,22 @@
             <div class="layui-inline">
                 <label class="layui-form-label">工时费</label>
                 <div class="layui-input-inline">
-                    <input disabled type="text" name="timeCost" id="timeCost" autocomplete="off"
-                           class="layui-input">
+                    <input autocomplete="off" class="layui-input" disabled id="timeCost" name="timeCost"
+                           type="text">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">材料费</label>
                 <div class="layui-input-inline">
-                    <input disabled type="text" name="matCost" id="matCost" autocomplete="off"
-                           class="layui-input">
+                    <input autocomplete="off" class="layui-input" disabled id="matCost" name="matCost"
+                           type="text">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">总金额</label>
                 <div class="layui-input-inline">
-                    <input disabled type="text" name="totalMoney" id="totalMoney" autocomplete="off"
-                           class="layui-input">
+                    <input autocomplete="off" class="layui-input" disabled id="totalMoney" name="totalMoney"
+                           type="text">
                 </div>
             </div>
         </div>
@@ -185,22 +185,22 @@
             <div class="layui-inline">
                 <label class="layui-form-label">行驶里程</label>
                 <div class="layui-input-inline">
-                    <input disabled type="text" name="mileage" id="mileage" autocomplete="off"
-                           class="layui-input">
+                    <input autocomplete="off" class="layui-input" disabled id="mileage" name="mileage"
+                           type="text">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">工单号</label>
                 <div class="layui-input-inline">
-                    <input disabled type="text" name="ticketID" id="ticketID" autocomplete="off"
-                           class="layui-input">
+                    <input autocomplete="off" class="layui-input" disabled id="ticketID" name="ticketID"
+                           type="text">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">增加发票</label>
                 <div class="layui-input-inline">
-                    <input disabled type="text" name="addInvoice" id="addInvoice" autocomplete="off"
-                           class="layui-input">
+                    <input autocomplete="off" class="layui-input" disabled id="addInvoice" name="addInvoice"
+                           type="text">
                 </div>
             </div>
         </div>
@@ -208,24 +208,24 @@
             <div class="layui-inline">
                 <label class="layui-form-label">是否开票</label>
                 <div class="layui-input-inline">
-                    <select name="invoiceFlag" id="invoiceFlag" autocomplete="off">
+                    <select autocomplete="off" id="invoiceFlag" name="invoiceFlag">
                         <option value="1">是</option>
-                        <option value="0" selected>否</option>
+                        <option selected value="0">否</option>
                     </select>
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">开票金额</label>
                 <div class="layui-input-inline">
-                    <input disabled type="text" name="invoiceNum" id="invoiceNum" autocomplete="off"
-                           class="layui-input">
+                    <input autocomplete="off" class="layui-input" disabled id="invoiceNum" name="invoiceNum"
+                           type="text">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">发票号</label>
                 <div class="layui-input-inline">
-                    <input disabled type="text" name="invoiceID" id="invoiceID" autocomplete="off"
-                           class="layui-input">
+                    <input autocomplete="off" class="layui-input" disabled id="invoiceID" name="invoiceID"
+                           type="text">
                 </div>
             </div>
         </div>
@@ -233,15 +233,15 @@
             <div class="layui-inline">
                 <label class="layui-form-label">本次开票</label>
                 <div class="layui-input-inline">
-                    <input disabled type="text" name="currentInvoice" id="currentInvoice" autocomplete="off"
-                           class="layui-input">
+                    <input autocomplete="off" class="layui-input" disabled id="currentInvoice" name="currentInvoice"
+                           type="text">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">剩余开票</label>
                 <div class="layui-input-inline">
-                    <input disabled type="text" name="resInvoice" id="resInvoice" autocomplete="off"
-                           class="layui-input">
+                    <input autocomplete="off" class="layui-input" disabled id="resInvoice" name="resInvoice"
+                           type="text">
                 </div>
             </div>
         </div>
@@ -249,7 +249,7 @@
             <div class="layui-inline">
                 <label class="layui-form-label">支付方式</label>
                 <div class="layui-input-inline">
-                    <select name="payStyle" id="payStyle" autocomplete="off">
+                    <select autocomplete="off" id="payStyle" name="payStyle">
                         <option value="-1">卡券下发</option>
                         <option value="-2">储值</option>
                     </select>
@@ -258,28 +258,28 @@
             <div class="layui-inline">
                 <label class="layui-form-label">充入数量</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="count" id="count" autocomplete="off" lay-verify="required"
-                           class="layui-input">
+                    <input autocomplete="off" class="layui-input" id="count" lay-verify="required|number" name="count"
+                           type="text">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">成本价</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="costPrice" id="costPrice" autocomplete="off"
-                           class="layui-input">
+                    <input autocomplete="off" class="layui-input" id="costPrice" lay-verify="number" name="costPrice"
+                           type="text">
                 </div>
             </div>
         </div>
         <div class="layui-btn-container s-tabBottomButton">
             <span class="layui-btn layui-btn-warm" id="submitForReview">
-                提交审核 <svg t="1623748927861" class="icon" viewBox="0 0 1024 620" version="1.1"
-                          xmlns="http://www.w3.org/2000/svg" p-id="6305" width="21" height="21"><path
-                    d="M960 260.571L462.222 864 64 512l49.778-100.571 348.444 201.142L960 160z" p-id="6306"
-                    fill="#ffffff"></path></svg>
+                提交审核 <svg class="icon" height="21" p-id="6305" t="1623748927861"
+                          version="1.1" viewBox="0 0 1024 620" width="21" xmlns="http://www.w3.org/2000/svg"><path
+                    d="M960 260.571L462.222 864 64 512l49.778-100.571 348.444 201.142L960 160z" fill="#ffffff"
+                    p-id="6306"></path></svg>
             </span>
             <span class="layui-btn layui-btn-normal" lay-filter="addUseCard" lay-submit style="text-align: center">
-                添加明细 <svg t="1623746817979" class="icon" viewBox="0 0 1024 620" version="1.1"
-                          xmlns="http://www.w3.org/2000/svg" p-id="3811" width="21" height="21"><path
+                添加明细 <svg class="icon" height="21" p-id="3811" t="1623746817979"
+                          version="1.1" viewBox="0 0 1024 620" width="21" xmlns="http://www.w3.org/2000/svg"><path
                     d="M494.230588 757.699765L112.459294 380.928a44.574118 44.574118 0 0 1 0-65.174588 46.802824 46.802824 0 0 1 33.008941-13.914353H906.541176a46.983529 46.983529 0 0 1 47.164236 46.501647 45.658353 45.658353 0 0 1-14.155294 32.527059L560.188235 757.76a45.959529 45.959529 0 0 1-65.957647 0z"
                     fill="#ffffff" p-id="3812"></path></svg>
             </span>
@@ -287,7 +287,7 @@
     </form>
 
     <table class="layui-hide" id="tableUseCoupons" lay-filter="tableUseCoupons"></table>
-    <script type="text/html" id="operationUseCardTable">
+    <script id="operationUseCardTable" type="text/html">
         <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delete">删除</a>
     </script>
 </div>
@@ -453,9 +453,9 @@
                     {field: 'province', width: 152, title: '省'},
                     {field: 'city', width: 152, title: '市'},
                     {field: 'district', width: 152, title: '区'},
-                    {field: 'userId', width: 210, title: 'id',hide:true},
+                    {field: 'userId', width: 210, title: 'id', hide: true},
                     {field: 'operation', width: 210, title: '操作', toolbar: '#operation', fixed: 'right'}
-                ] ],
+                ]],
                 size: 'sm',
                 parseData: function (res) {
                     let data = res.data
@@ -463,7 +463,7 @@
                         $.post({
                             url: "service/Archives/getUserInfo?userId=" + data[i].userId,
                             async: false,
-                            success: function (resp){
+                            success: function (resp) {
                                 console.log(resp)
                                 data[i].cGender = resp.cGender === 1 ? "男" : "女"
                                 data[i].cBirthday = resp.cBirthday
@@ -575,8 +575,8 @@
             table.on('tool(tableUseCoupons)', function (obj) {
                 let data = obj.data
                 if (obj.event === 'delete') {
-                    for(let i = 0; i < couponReviewList.length; i++){
-                        if(couponReviewList[i].cnt === data.cnt){
+                    for (let i = 0; i < couponReviewList.length; i++) {
+                        if (couponReviewList[i].cnt === data.cnt) {
                             console.log(data.cnt)
                             couponReviewList.splice(i, 1)
                             tableUseCoupons.reload({

@@ -35,6 +35,62 @@ public class TreeHelper {
     }
 
     /**
+     * adapt the entities to the corresponding treeNode
+     *
+     * @param entityList list that contains the entities
+     * @return the list containg the corresponding treeNodes of the entities
+     */
+    public static List<TreeNode> changeEnititiesToTreeNodes(List entityList) {
+//        OrganizationEntity orgEntity = new OrganizationEntity();
+        Permission permission = new Permission();
+        List<TreeNode> tempNodeList = new ArrayList<TreeNode>();
+        TreeNode treeNode;
+
+        Iterator it = entityList.iterator();
+        while (it.hasNext()) {
+//            orgEntity = (OrganizationEntity) it.next();
+//            treeNode = new TreeNode();
+//            treeNode.setObj(orgEntity);
+//            treeNode.setParentId(orgEntity.getParentId());
+//            treeNode.setSelfId(orgEntity.getOrgId());
+//            treeNode.setNodeName(orgEntity.getOrgName());
+            permission = (Permission) it.next();
+            treeNode = new TreeNode();
+//            treeNode.setObj(groupInfo);
+            treeNode.setParentId(permission.getPid());
+            treeNode.setpId(permission.getPid());
+            //treeNode.setParentIds(groupInfo.getParentIds());
+            treeNode.setId(permission.get_id());
+//            treeNode.setId(groupInfo.getId());
+            treeNode.setTitle(permission.getName());
+            treeNode.setName(permission.getName());
+            treeNode.setValue(permission.get_id());
+            treeNode.setState("closed");
+            tempNodeList.add(treeNode);
+        }
+        return tempNodeList;
+    }
+
+    public static void main(String[] args) {
+//        List<OrganizationEntity> list = new ArrayList<OrganizationEntity>();
+//        OrganizationEntity organizationEntity = new OrganizationEntity(1,0,"name1");
+//        list.add(organizationEntity);
+//        OrganizationEntity organizationEntity2 = new OrganizationEntity(2,1,"name2");
+//        list.add(organizationEntity2);
+//        OrganizationEntity organizationEntity3 = new OrganizationEntity(3,2,"name3");
+//        list.add(organizationEntity3);
+//        OrganizationEntity organizationEntity4 = new OrganizationEntity(4,2,"name4");
+//        list.add(organizationEntity4);
+//        OrganizationEntity organizationEntity5 = new OrganizationEntity(6,5,"name5");
+//        list.add(organizationEntity5);
+//        OrganizationEntity organizationEntity6 = new OrganizationEntity(7,6,"name6");
+//        list.add(organizationEntity6);
+//        List<TreeNode> lt = new TreeHelper().changeEnititiesToTreeNodes(list);
+//        TreeHelper helper = new TreeHelper(lt);
+//        System.out.println(helper.getTempNodeList().size());
+    }
+
+    /**
      * generate a tree from the given treeNode or entity list
      */
     public void generateTree() {
@@ -118,43 +174,6 @@ public class TreeHelper {
         return insertFlag;
     }
 
-    /**
-     * adapt the entities to the corresponding treeNode
-     *
-     * @param entityList list that contains the entities
-     * @return the list containg the corresponding treeNodes of the entities
-     */
-    public static List<TreeNode> changeEnititiesToTreeNodes(List entityList) {
-//        OrganizationEntity orgEntity = new OrganizationEntity();
-        Permission permission = new Permission();
-        List<TreeNode> tempNodeList = new ArrayList<TreeNode>();
-        TreeNode treeNode;
-
-        Iterator it = entityList.iterator();
-        while (it.hasNext()) {
-//            orgEntity = (OrganizationEntity) it.next();
-//            treeNode = new TreeNode();
-//            treeNode.setObj(orgEntity);
-//            treeNode.setParentId(orgEntity.getParentId());
-//            treeNode.setSelfId(orgEntity.getOrgId());
-//            treeNode.setNodeName(orgEntity.getOrgName());
-            permission = (Permission) it.next();
-            treeNode = new TreeNode();
-//            treeNode.setObj(groupInfo);
-            treeNode.setParentId(permission.getPid());
-            treeNode.setpId(permission.getPid());
-            //treeNode.setParentIds(groupInfo.getParentIds());
-            treeNode.setId(permission.get_id());
-//            treeNode.setId(groupInfo.getId());
-            treeNode.setTitle(permission.getName());
-            treeNode.setName(permission.getName());
-            treeNode.setValue(permission.get_id());
-            treeNode.setState("closed");
-            tempNodeList.add(treeNode);
-        }
-        return tempNodeList;
-    }
-
     public boolean isValidTree() {
         return this.isValidTree;
     }
@@ -181,24 +200,5 @@ public class TreeHelper {
 
     public void setNodeMap(HashMap nodeMap) {
         this.nodeMap = nodeMap;
-    }
-
-    public static void main(String[] args) {
-//        List<OrganizationEntity> list = new ArrayList<OrganizationEntity>();
-//        OrganizationEntity organizationEntity = new OrganizationEntity(1,0,"name1");
-//        list.add(organizationEntity);
-//        OrganizationEntity organizationEntity2 = new OrganizationEntity(2,1,"name2");
-//        list.add(organizationEntity2);
-//        OrganizationEntity organizationEntity3 = new OrganizationEntity(3,2,"name3");
-//        list.add(organizationEntity3);
-//        OrganizationEntity organizationEntity4 = new OrganizationEntity(4,2,"name4");
-//        list.add(organizationEntity4);
-//        OrganizationEntity organizationEntity5 = new OrganizationEntity(6,5,"name5");
-//        list.add(organizationEntity5);
-//        OrganizationEntity organizationEntity6 = new OrganizationEntity(7,6,"name6");
-//        list.add(organizationEntity6);
-//        List<TreeNode> lt = new TreeHelper().changeEnititiesToTreeNodes(list);
-//        TreeHelper helper = new TreeHelper(lt);
-//        System.out.println(helper.getTempNodeList().size());
     }
 }

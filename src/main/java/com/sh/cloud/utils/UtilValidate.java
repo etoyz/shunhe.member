@@ -82,7 +82,7 @@ public class UtilValidate {
         return ((obj != null) && (obj instanceof String));
     }
 
-    public static boolean isNotHaveChinese(String s){
+    public static boolean isNotHaveChinese(String s) {
         return s.getBytes().length == s.length();
     }
 }

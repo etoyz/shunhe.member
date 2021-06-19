@@ -1,18 +1,19 @@
 ﻿<!DOCTYPE html>
-<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
-      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<html lang="zh_CN"
+>
 <head>
     <meta charset="utf-8">
-    <title车系</title>
-    <meta name="renderer" content="webkit">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="plugins/layui/css/layui.css" media="all">
-    <link rel="stylesheet" href="plugins/font-awesome/css/font-awesome.min.css" media="all">
-    <link rel="stylesheet" href="plugins/adjust/css/adjustLayui.css" media="all">
-    <link rel="stylesheet" href="css/table.css" media="all">
-    <link rel="stylesheet" href="css/form.css" media="all">
-    <link rel="stylesheet" href="css/common.css" media="all">
+    <title车系
+    </title>
+    <meta content="webkit" name="renderer">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
+    <link href="plugins/layui/css/layui.css" media="all" rel="stylesheet">
+    <link href="plugins/font-awesome/css/font-awesome.min.css" media="all" rel="stylesheet">
+    <link href="plugins/adjust/css/adjustLayui.css" media="all" rel="stylesheet">
+    <link href="css/table.css" media="all" rel="stylesheet">
+    <link href="css/form.css" media="all" rel="stylesheet">
+    <link href="css/common.css" media="all" rel="stylesheet">
 </head>
 <body>
 <div class="layui-fluid main">
@@ -20,18 +21,18 @@
         <div class="layui-col-md12">
 
             <div class="s-headerSearch" id="headArea">
-                <form class="layui-form" action="">
+                <form action="" autocomplete="off" class="layui-form">
                     <div class="layui-form-item">
                         <div class="layui-inline s-layuiInline">
-                            <label class="layui-form-label"车系名称</label>
+                            <label class="layui-form-label" 车系名称</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="carSeriesNameInput" autocomplete="off" class="layui-input"
-                                       placeholder="请输车系名称">
+                                <input autocomplete="off" class="layui-input" name="carSeriesNameInput" placeholder="请输车系名称"
+                                       type="text">
                             </div>
                         </div>
                         <div class="layui-inline s-layuiInline">
                             <button class="layui-btn layui-btn-warm">查询</button>
-                            <button id="addBtn" class="layui-btn layui-btn-normal">添车系</button>
+                            <button class="layui-btn layui-btn-normal" id="addBtn">添车系</button>
                         </div>
                     </div>
                 </form>
@@ -40,7 +41,7 @@
             <!-- 展示表格 -->
             <div class="s-commonTable">
                 <table class="layui-hide" id="carSeries" lay-filter="carSeriesTabel"></table>
-                <script type="text/html" id="operation">
+                <script id="operation" type="text/html">
                     <a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="modify">修改</a>
                     <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delete">删除</a>
                     <!--                    <a class="layui-btn layui-btn-xs" lay-event="relate">关联</a>-->
@@ -53,20 +54,20 @@
 <!-- 添车系弹窗 -->
 <div class="s-details" id="addWindow">
     <div>
-        <form class="layui-form" action="">
+        <form action="" autocomplete="off" class="layui-form">
             <div class="layui-form-item s-formItem5">
-<!--                <div class="layui-inline">-->
-<!--                    <label class="layui-form-label">编号</label>-->
-<!--                    <div class="layui-input-inline">-->
-<!--                        <input type="text" name="carSeriesID" id="carSeriesID"-->
-<!--                               autocomplete="off" class="layui-input">-->
-<!--                    </div>-->
-<!--                </div>-->
+                <!--                <div class="layui-inline">-->
+                <!--                    <label class="layui-form-label">编号</label>-->
+                <!--                    <div class="layui-input-inline">-->
+                <!--                        <input type="text" name="carSeriesID" id="carSeriesID"-->
+                <!--                               autocomplete="off" class="layui-input">-->
+                <!--                    </div>-->
+                <!--                </div>-->
                 <div class="layui-inline">
                     <label class="layui-form-label">车系名称</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="carSeriesName" id="carSeriesName"
-                               autocomplete="off" class="layui-input">
+                        <input autocomplete="off" class="layui-input" id="carSeriesName"
+                               name="carSeriesName" type="text">
                     </div>
                 </div>
             </div>
@@ -74,8 +75,8 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">所属品牌名称</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="carSeriesOfBrandName" id="carSeriesOfBrandName"
-                               autocomplete="off" class="layui-input">
+                        <input autocomplete="off" class="layui-input" id="carSeriesOfBrandName"
+                               name="carSeriesOfBrandName" type="text">
                     </div>
                 </div>
             </div>
@@ -83,36 +84,36 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">顺序号</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="indexID" id="indexID"
-                               autocomplete="off" class="layui-input">
+                        <input autocomplete="off" class="layui-input" id="indexID"
+                               name="indexID" type="text">
                     </div>
                 </div>
             </div>
         </form>
     </div>
     <div class="s-tabBottomButton">
-        <button type="button" class="layui-btn layui-btn-danger" id="confirmAdd">添加</button>
-        <button type="button" class="layui-btn" id="cancelAdd">取消</button>
+        <button class="layui-btn layui-btn-danger" id="confirmAdd" type="button">添加</button>
+        <button class="layui-btn" id="cancelAdd" type="button">取消</button>
     </div>
 </div>
 
 <!-- 修车系弹窗 -->
 <div class="s-details" id="modWindow">
     <div>
-        <form class="layui-form" action="">
+        <form action="" autocomplete="off" class="layui-form">
             <div class="layui-form-item s-formItem5">
-<!--                <div class="layui-inline">-->
-<!--                    <label class="layui-form-label">编号</label>-->
-<!--                    <div class="layui-input-inline">-->
-<!--                        <input type="text" name="carSeriesIDM" id="carSeriesIDM"-->
-<!--                               autocomplete="off" class="layui-input">-->
-<!--                    </div>-->
-<!--                </div>-->
+                <!--                <div class="layui-inline">-->
+                <!--                    <label class="layui-form-label">编号</label>-->
+                <!--                    <div class="layui-input-inline">-->
+                <!--                        <input type="text" name="carSeriesIDM" id="carSeriesIDM"-->
+                <!--                               autocomplete="off" class="layui-input">-->
+                <!--                    </div>-->
+                <!--                </div>-->
                 <div class="layui-inline">
                     <label class="layui-form-label">车系名称</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="carSeriesNameM" id="carSeriesNameM"
-                               autocomplete="off" class="layui-input">
+                        <input autocomplete="off" class="layui-input" id="carSeriesNameM"
+                               name="carSeriesNameM" type="text">
                     </div>
                 </div>
             </div>
@@ -120,8 +121,8 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">所属品牌名称</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="carSeriesOfBrandNameM" id="carSeriesOfBrandNameM"
-                               autocomplete="off" class="layui-input">
+                        <input autocomplete="off" class="layui-input" id="carSeriesOfBrandNameM"
+                               name="carSeriesOfBrandNameM" type="text">
                     </div>
                 </div>
             </div>
@@ -129,16 +130,16 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">顺序号</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="indexIDM" id="indexIDM"
-                               autocomplete="off" class="layui-input">
+                        <input autocomplete="off" class="layui-input" id="indexIDM"
+                               name="indexIDM" type="text">
                     </div>
                 </div>
             </div>
         </form>
     </div>
     <div class="s-tabBottomButton">
-        <button type="button" class="layui-btn layui-btn-danger" id="confirmMod">修改</button>
-        <button type="button" class="layui-btn" id="cancelMod">取消</button>
+        <button class="layui-btn layui-btn-danger" id="confirmMod" type="button">修改</button>
+        <button class="layui-btn" id="cancelMod" type="button">取消</button>
     </div>
 </div>
 
@@ -208,7 +209,7 @@
                 {field: 'lastEditor', width: '12%', title: '最后编辑人'},
                 {field: 'lastEditTime', width: '12%', title: '最后编辑时间'},
                 {field: 'operation', width: '12%', title: '操作', toolbar: '#operation', fixed: 'right'}
-            ] ],
+            ]],
             size: 'sm'
         });
 

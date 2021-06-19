@@ -20,7 +20,7 @@ public class MongoVehicle {
 
     @ApiModelProperty(value = "发动机号")
     private String engine;
-//    @ApiModelProperty(value = "设备类型")
+    //    @ApiModelProperty(value = "设备类型")
 //    private String vehicle_type;
 //    @ApiModelProperty(value = "车型")
 //    private String vehicle_brand;

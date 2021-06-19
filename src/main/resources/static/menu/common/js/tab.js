@@ -1,12 +1,12 @@
 /** kit_admin-v1.1.0 MIT License By http://kit/zhengjinfan.cn e-mail:zheng_jinfan@126.com */
- ;/**
+;/**
  * Name:tab.js
  * Author:Van
  * E-mail:zheng_jinfan@126.com
  * Website:http://kit.zhengjinfan.cn/
  * LICENSE:MIT
  */
-layui.define(['jquery', 'element', 'nprogress', 'utils'], function(exports) {
+layui.define(['jquery', 'element', 'nprogress', 'utils'], function (exports) {
     var $ = layui.jquery,
         _modName = 'tab',
         element = layui.element,
@@ -17,7 +17,7 @@ layui.define(['jquery', 'element', 'nprogress', 'utils'], function(exports) {
             page: 'page',
             iframe: 'iframe'
         };
-    var Tab = function() {
+    var Tab = function () {
         this.config = {
             elem: undefined,
             mainUrl: 'main.html',
@@ -27,7 +27,7 @@ layui.define(['jquery', 'element', 'nprogress', 'utils'], function(exports) {
         this.v = '1.0.5';
     };
     Tab.fn = Tab.prototype;
-    Tab.fn.set = function(options) {
+    Tab.fn.set = function (options) {
         var that = this;
         $.extend(true, that.config, options);
         return that;
@@ -35,7 +35,7 @@ layui.define(['jquery', 'element', 'nprogress', 'utils'], function(exports) {
     /**
      * 渲染选项卡
      */
-    Tab.fn.render = function() {
+    Tab.fn.render = function () {
         var that = this,
             _config = that.config;
         if (_config.elem === undefined) {
@@ -49,16 +49,16 @@ layui.define(['jquery', 'element', 'nprogress', 'utils'], function(exports) {
     /**
      * 添加一个选项卡
      */
-    Tab.fn.tabAdd = function(params) {
+    Tab.fn.tabAdd = function (params) {
         _tab.tabAdd(params);
     };
     /**
      * 关闭一个选项卡
      */
-    Tab.fn.close = function(layId) {
+    Tab.fn.close = function (layId) {
         _tab.tabDelete(layId);
     };
-    Tab.fn.getId = function() {
+    Tab.fn.getId = function () {
         return _tab.getCurrLayId();
     };
     //私用对象
@@ -69,7 +69,7 @@ layui.define(['jquery', 'element', 'nprogress', 'utils'], function(exports) {
         _content: undefined,
         _parentElem: undefined, //要存放的容器
         //检查选项卡DOM是否存在
-        tabDomExists: function() {
+        tabDomExists: function () {
             var that = this;
             if (_doc.find('div.kit-tab').length > 0) {
                 that._title = $('.kit-tab ul.layui-tab-title');
@@ -81,7 +81,7 @@ layui.define(['jquery', 'element', 'nprogress', 'utils'], function(exports) {
         /**
          * 创建选项卡DOM
          */
-        createTabDom: function() {
+        createTabDom: function () {
             var that = this,
                 _config = that._config;
             that._parentElem = _config.elem;
@@ -125,14 +125,14 @@ layui.define(['jquery', 'element', 'nprogress', 'utils'], function(exports) {
             var _tool = $('.kit-tab-tool'),
                 _toolBody = $('.kit-tab-tool-body');
             //监听操作点击事件
-            _tool.on('click', function() {
+            _tool.on('click', function () {
                 _toolBody.toggle();
             });
             //监听操作项点击事件
-            _toolBody.find('li.kit-item').each(function() {
+            _toolBody.find('li.kit-item').each(function () {
                 var $that = $(this);
                 var target = $that.data('target');
-                $that.off('click').on('click', function() {
+                $that.off('click').on('click', function () {
                     var layId = that._title.children('li[class=layui-this]').attr('lay-id');
                     switch (target) {
                         case 'refresh': //刷新
@@ -141,7 +141,7 @@ layui.define(['jquery', 'element', 'nprogress', 'utils'], function(exports) {
                                     var loadIndex = that.load();
                                     var url = that._title.children('li[lay-id=' + layId + ']').data('url');
                                     that._content.children('div[lay-item-id=' + layId + ']')
-                                        .html(that.getBodyContent(url + '?v=' + new Date().getTime(), function() {
+                                        .html(that.getBodyContent(url + '?v=' + new Date().getTime(), function () {
                                             that.closeLoad(loadIndex);
                                         }));
                                     break;
@@ -156,14 +156,14 @@ layui.define(['jquery', 'element', 'nprogress', 'utils'], function(exports) {
                                 that.tabDelete(layId);
                             break;
                         case 'closeOther': //关闭其他
-                            that._title.children('li[lay-id]').each(function() {
+                            that._title.children('li[lay-id]').each(function () {
                                 var curId = $(this).attr('lay-id');
                                 if (curId != layId && curId != -1)
                                     that.tabDelete(curId);
                             });
                             break;
                         case 'closeAll': //关闭所有
-                            that._title.children('li[lay-id]').each(function() {
+                            that._title.children('li[lay-id]').each(function () {
                                 var curId = $(this).attr('lay-id');
                                 if (curId != -1)
                                     that.tabDelete(curId);
@@ -177,24 +177,24 @@ layui.define(['jquery', 'element', 'nprogress', 'utils'], function(exports) {
             //监听浏览器窗口改变事件
             that.winResize();
         },
-        load: function() {
-            return layer.load(0, { shade: [0.3, '#333'] });
+        load: function () {
+            return layer.load(0, {shade: [0.3, '#333']});
         },
-        closeLoad: function(index) {
-            setTimeout(function() {
+        closeLoad: function (index) {
+            setTimeout(function () {
                 index && layer.close(index);
             }, 500);
         },
-        getBodyContent: function(url, callback) {
+        getBodyContent: function (url, callback) {
             return utils.getBodyContent(utils.loadHtml(url, callback));
         },
         /**
          * 监听浏览器窗口改变事件
          */
-        winResize: function() {
+        winResize: function () {
             var that = this,
                 _config = that._config;
-            _win.on('resize', function() {
+            _win.on('resize', function () {
                 var currBoxHeight = $(that._parentElem).height(); //获取当前容器的高度
                 switch (_config.renderType) {
                     case renderType.page:
@@ -209,32 +209,32 @@ layui.define(['jquery', 'element', 'nprogress', 'utils'], function(exports) {
         /**
          * 检查选项卡是否存在
          */
-        tabExists: function(layId) {
+        tabExists: function (layId) {
             var that = this;
             return that._title.find('li[lay-id=' + layId + ']').length > 0;
         },
         /**
          * 删除选项卡
          */
-        tabDelete: function(layId) {
+        tabDelete: function (layId) {
             element.tabDelete(this._filter, layId);
         },
         /**
          * 设置选中选项卡
          */
-        tabChange: function(layId) {
+        tabChange: function (layId) {
             element.tabChange(this._filter, layId);
         },
         /**
          * 获取选项卡对象
          */
-        getTab: function(layId) {
+        getTab: function (layId) {
             return this._title.find('li[lay-id=' + layId + ']');
         },
         /**
          * 添加一个选项卡，已存在则获取焦点
          */
-        tabAdd: function(options) {
+        tabAdd: function (options) {
             var that = this,
                 _config = that._config,
                 loadIndex = undefined;
@@ -269,8 +269,8 @@ layui.define(['jquery', 'element', 'nprogress', 'utils'], function(exports) {
             var contentHtm = '<div class="layui-tab-item layui-show" lay-item-id="' + id + '">{{content}}</div>';
             switch (_config.renderType) {
                 case renderType.page:
-                    contentHtm = contentHtm.replace('{{content}}', that.getBodyContent(url + '?v=' + new Date().getTime(), function() {
-                        setTimeout(function() {
+                    contentHtm = contentHtm.replace('{{content}}', that.getBodyContent(url + '?v=' + new Date().getTime(), function () {
+                        setTimeout(function () {
                             NProgress.done();
                             _config.openWait && loadIndex && that.closeLoad(loadIndex);
                         }, 500);
@@ -284,13 +284,13 @@ layui.define(['jquery', 'element', 'nprogress', 'utils'], function(exports) {
             that._title.append(titleHtm.join(''));
             that._content.append(contentHtm);
             if (_config.renderType === renderType.iframe) {
-                that._content.find('div[lay-item-id=' + id + ']').find('iframe').on('load', function() {
+                that._content.find('div[lay-item-id=' + id + ']').find('iframe').on('load', function () {
                     NProgress.done();
                     _config.openWait && loadIndex && that.closeLoad(loadIndex);
                 });
             }
             //监听选项卡关闭事件
-            that.getTab(id).find('i.layui-tab-close').off('click').on('click', function() {
+            that.getTab(id).find('i.layui-tab-close').off('click').on('click', function () {
                 //关闭之前
                 if (_config.closeBefore) {
                     if (_config.closeBefore(options)) {
@@ -303,7 +303,7 @@ layui.define(['jquery', 'element', 'nprogress', 'utils'], function(exports) {
             that.tabChange(id);
             that.winResize();
             if (_config.onSwitch) {
-                element.on('tab(' + that._filter + ')', function(data) {
+                element.on('tab(' + that._filter + ')', function (data) {
                     _config.onSwitch({
                         index: data.index,
                         elem: data.elem,
@@ -315,7 +315,7 @@ layui.define(['jquery', 'element', 'nprogress', 'utils'], function(exports) {
         /**
          * 获取当前选项卡的id
          */
-        getCurrLayId: function() {
+        getCurrLayId: function () {
             return this._title.find('li.layui-this').attr('lay-id');
         }
     };

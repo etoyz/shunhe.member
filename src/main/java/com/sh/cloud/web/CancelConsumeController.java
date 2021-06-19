@@ -1,7 +1,6 @@
 package com.sh.cloud.web;
 
 import com.sft.member.bean.CouponCheck;
-import com.sft.member.bean.PlatUser;
 import com.sft.member.obtain.pay.PayService;
 import com.sh.cloud.entity.GetConsumeListRequest;
 import com.sh.cloud.utils.PlatUserUtils;

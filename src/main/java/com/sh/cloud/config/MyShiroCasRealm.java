@@ -45,13 +45,13 @@ public class MyShiroCasRealm extends CasRealm {
 //    @Autowired
 //    private MongoUserService service;
 
-//    @Autowired
+    //    @Autowired
 //    private UserInfoDao userDao;
 //public MyShiroCasRealm() {
 //    this.setAuthenticationTokenClass(UsernamePasswordToken.class);
 //}
     @PostConstruct
-    public void initProperty(){
+    public void initProperty() {
 //      setDefaultRoles("ROLE_USER");
         setCasServerUrlPrefix(ShiroCasConfiguration.casServerUrlPrefix);
         // 客户端回调地址
@@ -59,7 +59,7 @@ public class MyShiroCasRealm extends CasRealm {
     }
 
 
-     /**
+    /**
      * 1、CAS认证 ,验证用户身份
      * 2、将用户基本信息设置到会话中(不用了，随时可以获取的)
      */
@@ -117,13 +117,15 @@ public class MyShiroCasRealm extends CasRealm {
         AuthenticationInfo authc = super.doGetAuthenticationInfo(token);
         String account = (String) authc.getPrincipals().getPrimaryPrincipal();
         String userStr = userService.getUser(account);
-        MongoUser user = GsonUtil.gson.fromJson(userStr,MongoUser.class);//service.findByName(account);
+        MongoUser user = GsonUtil.gson.fromJson(userStr, MongoUser.class);//service.findByName(account);
         //将用户信息存入session中
         SecurityUtils.getSubject().getSession().setAttribute("user", user);
         return authc;
     }
+
     /**
      * 权限认证，为当前登录的Subject授予角色和权限
+     *
      * @see ：本例中该方法的调用时机为需授权资源被访问时
      * @see ：并且每次访问需授权资源时都会执行该方法中的逻辑，这表明本例中默认并未启用AuthorizationCache
      * @see ：如果连续访问同一个URL（比如刷新），该方法不会被重复调用，Shiro有一个时间间隔（也就是cache时间，在ehcache-shiro.xml中配置），超过这个时间间隔再刷新页面，该方法会被执行
@@ -132,27 +134,27 @@ public class MyShiroCasRealm extends CasRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         logger.info("##################执行Shiro权限认证##################");
         //获取当前登录输入的用户名，等价于(String) principalCollection.fromRealm(getName()).iterator().next();
-        String loginName = (String)super.getAvailablePrincipal(principalCollection);
+        String loginName = (String) super.getAvailablePrincipal(principalCollection);
         //到数据库查是否有此对象
 //        UserInfo user=userDao.findByUsername(loginName);// 实际项目中，这里可以根据实际情况做缓存，如果不做，Shiro自己也是有时间间隔机制，2分钟内不会重复执行该方法
         String userStr = userService.getUser(loginName);
-        MongoUser mongoUser = GsonUtil.gson.fromJson(userStr,MongoUser.class);
+        MongoUser mongoUser = GsonUtil.gson.fromJson(userStr, MongoUser.class);
 //        MongoUser mongoUser = service.findByName(loginName);
-        if(mongoUser!=null){
-            System.out.println(mongoUser.toString());
+        if (mongoUser != null) {
+            System.out.println(mongoUser);
             //权限信息对象info,用来存放查出的用户的所有的角色（role）及权限（permission）
-            SimpleAuthorizationInfo info=new SimpleAuthorizationInfo();
+            SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
             List<Role> roles = roleService.getUserHasRoles(mongoUser.get_id());
             Set<String> roleset = new HashSet<>();
             //用户的角色集合\
-            for(Role role:roles){
+            for (Role role : roles) {
                 roleset.add(role.getRole());
             }
             info.setRoles(roleset);
 //            用户的角色对应的所有权限，如果只使用角色定义访问权限，下面的四行可以不要
 //            info.addRoles(mongoUser.getRoleset());
             List<Permission> permissions = permissionService.getUserHasPermissions(mongoUser.get_id());
-            if(UtilValidate.isNotEmpty(permissions)){
+            if (UtilValidate.isNotEmpty(permissions)) {
                 for (Permission permission : permissions) {
                     if (UtilValidate.isEmpty(permission)) {
                         continue;

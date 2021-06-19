@@ -19,6 +19,7 @@ public class ArchivesController {
     UserService shUserService;
     @Resource
     MemberService memberService;
+
     @PostMapping(value = "addArchives")
     public String addUser(@RequestBody User user) {
         String ret = shUserService.addUser(PlatUserUtils.getCurrentLoginPlatUser(), user);
@@ -65,20 +66,22 @@ public class ArchivesController {
         c.userId = userId;
         return shUserService.getUser(c);
     }
+
     @PostMapping(value = "getMemberNameList")
     public List<Member> getMemberNameList() {
-        List<Member> ret=memberService.getMemberNameList();
+        List<Member> ret = memberService.getMemberNameList();
         return ret;
     }
+
     @PostMapping(value = "alertLevel")
-    public String alertLevel(@RequestParam String userId,@RequestParam String id) {
-        Member m=new Member();
-        m.id=id;
-       // m.level="11";
+    public String alertLevel(@RequestParam String userId, @RequestParam String id) {
+        Member m = new Member();
+        m.id = id;
+        // m.level="11";
         User c = new User();
         c.userId = userId;
-        c.member=m;
-       String ret=shUserService.alertLevel(PlatUserUtils.getCurrentLoginPlatUser(), c);
+        c.member = m;
+        String ret = shUserService.alertLevel(PlatUserUtils.getCurrentLoginPlatUser(), c);
         if (ret == null || ret.equals(""))
             return "添加成功";
         else

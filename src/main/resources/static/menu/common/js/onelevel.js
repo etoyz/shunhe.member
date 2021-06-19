@@ -1,12 +1,12 @@
 /** kit_admin-v1.1.0 MIT License By http://kit/zhengjinfan.cn e-mail:zheng_jinfan@126.com */
- ;/**
+;/**
  * Name:onelevel.js
  * Author:Van
  * E-mail:zheng_jinfan@126.com
  * Website:http://kit.zhengjinfan.cn/
  * LICENSE:MIT
  */
-layui.define(['jquery', 'laytpl', 'element'], function(exports) {
+layui.define(['jquery', 'laytpl', 'element'], function (exports) {
     var $ = layui.jquery,
         _modName = 'oneLevel',
         _win = $(window),
@@ -24,7 +24,7 @@ layui.define(['jquery', 'laytpl', 'element'], function(exports) {
             },
             onClicked: undefined
         },
-        set: function(options) {
+        set: function (options) {
             var that = this;
             $.extend(true, that.config, options);
             return that;
@@ -32,7 +32,7 @@ layui.define(['jquery', 'laytpl', 'element'], function(exports) {
         /**
          * 是否已设置了elem
          */
-        hasElem: function() {
+        hasElem: function () {
             var that = this,
                 _config = that.config;
             if (_config.elem === undefined && _doc.find('ul[kit-one-level]').length === 0 && $(_config.elem)) {
@@ -45,11 +45,11 @@ layui.define(['jquery', 'laytpl', 'element'], function(exports) {
         /**
          * 获取容器的jq对象
          */
-        getElem: function() {
+        getElem: function () {
             var _config = this.config;
             return (_config.elem !== undefined && $(_config.elem).length > 0) ? $(_config.elem) : _doc.find('ul[kit-one-level]');
         },
-        render: function() {
+        render: function () {
             var that = this,
                 _config = that.config, //配置
                 _remote = _config.remote, //远程参数配置
@@ -80,10 +80,10 @@ layui.define(['jquery', 'laytpl', 'element'], function(exports) {
                 var options = {
                     url: _remote.url,
                     type: _remote.type,
-                    error: function(xhr, status, thrown) {
+                    error: function (xhr, status, thrown) {
                         layui.hint().error('One-Level error:AJAX请求出错.' + thrown);
                     },
-                    success: function(res) {
+                    success: function (res) {
                         _data = res;
                     }
                 };
@@ -97,14 +97,14 @@ layui.define(['jquery', 'laytpl', 'element'], function(exports) {
                 $.support.cors = true;
                 $.ajax(options);
             }
-            var tIndex = setInterval(function() {
+            var tIndex = setInterval(function () {
                 if (_data.length > 0)
                     clearInterval(tIndex);
                 //渲染模板
-                laytpl(_tpl.join('')).render(_data, function(html) {
+                laytpl(_tpl.join('')).render(_data, function (html) {
                     _elem.html(html);
                     layui.element.init();
-                    typeof _config.onClicked === 'function' && _elem.children('li.layui-nav-item').off('click').on('click', function() {
+                    typeof _config.onClicked === 'function' && _elem.children('li.layui-nav-item').off('click').on('click', function () {
                         var _a = $(this).children('a'),
                             id = _a.data('id');
                         _config.onClicked(id);
