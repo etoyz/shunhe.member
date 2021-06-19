@@ -116,6 +116,7 @@
 
         // 显示“新增弹窗”
         $('#add').click(function () {
+            $("#name").val("")
             var index = layer.open({
                 type: 1,
                 title: '新增消费类型',
@@ -128,7 +129,6 @@
                 return false;
             });
             form.on('submit(confirmAdd)', function (data) {
-                $("#name").clear()
                 $.post({
                     url: "service/consumeType/addConsumeType",
                     data: JSON.stringify(data.field),

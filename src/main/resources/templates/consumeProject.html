@@ -228,7 +228,7 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">项目名称</label>
                     <div class="layui-input-inline">
-                        <input autocomplete="off" class="layui-input"
+                        <input autocomplete="off" class="layui-input" id="name"
                                lay-verify="required" name="name" type="text">
                     </div>
                 </div>
@@ -237,7 +237,7 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">备注</label>
                     <div class="layui-input-inline">
-                        <input autocomplete="off" class="layui-input"
+                        <input autocomplete="off" class="layui-input" id="remarkSpe"
                                lay-verify="required" name="remark" type="text">
                     </div>
                 </div>
@@ -256,7 +256,7 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">数量</label>
                     <div class="layui-input-inline">
-                        <input autocomplete="off" class="layui-input"
+                        <input autocomplete="off" class="layui-input" id="count"
                                lay-verify="required|number" name="count" type="text">
                     </div>
                 </div>
@@ -265,7 +265,7 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">有效期(天)</label>
                     <div class="layui-input-inline">
-                        <input autocomplete="off" class="layui-input"
+                        <input autocomplete="off" class="layui-input" id="indateValue"
                                lay-verify="required|number" name="indateValue" type="text">
                     </div>
                 </div>
@@ -274,7 +274,7 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">多少天后开始</label>
                     <div class="layui-input-inline">
-                        <input autocomplete="off" class="layui-input"
+                        <input autocomplete="off" class="layui-input" id="startIntervalDateValue"
                                lay-verify="required|number" name="startIntervalDateValue">
                     </div>
                 </div>
@@ -533,7 +533,12 @@
                     }
                 });
                 // 显示“新增具体项目弹窗”
-                $('body').on('click', '#addSpeProj', function () {
+                $('#addSpeProj').unbind("click").click(function () {
+                    $("#name").val("")
+                    $("#remarkSpe").val("")
+                    $("#startIntervalDateValue").val("")
+                    $("#indateValue").val("")
+                    $("#count").val("")
                     var addSpeWind = layer.open({
                         type: 1,
                         title: '新增具体项目',
