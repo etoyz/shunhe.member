@@ -39,6 +39,7 @@ public class PlatUserManagementController {
     }
 
     @RequestMapping("addUser")
+    @ResponseBody
     public String addUser(@RequestBody PlatUser user) {
         platUserService.addUser(PlatUserUtils.getCurrentLoginPlatUser(), user);
         return "成功！";

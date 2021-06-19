@@ -221,6 +221,10 @@
         });
 
         $("#addBtn").click(function () {
+            $("#name").val("")
+            $("#phoneNum").val("")
+            $("#username").val("")
+            $("#password").val("")
             layer.open({
                 type: 1,
                 title: '新增用户',
@@ -241,6 +245,7 @@
                 contentType: "application/json",
                 success: function (res) {
                     layuiAlert("信息:" + res)
+                    tablePlatUser.reload()
                 }
             })
         })
