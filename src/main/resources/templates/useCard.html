@@ -608,9 +608,12 @@
                 formData.practicalProjectName = $('#practicalProjectId option:selected').text()
                 formData.payStyleName = $('#payStyle option:selected').text()
                 if (formData.payStyle === "-1")
-                    formData.couponId = $("#practicalProjectId").val()
-                else if (formData.payStyle === "-2")
+                    formData.practicalProjectId = $("#practicalProjectId").val()
+                else if (formData.payStyle === "-2") {
+                    formData.practicalProjectId = $("#practicalProjectId").val()
                     formData.money = $("#count").val()
+                    formData.count = 0
+                }
                 couponReviewList.push(formData)
                 tableUseCoupons.reload({
                     data: couponReviewList
