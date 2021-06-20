@@ -52,7 +52,7 @@
 </div>
 
 <!-- 添加卡片弹窗 -->
-<form action="" autocomplete="off" class="layui-form">
+<form action="" autocomplete="off" class="layui-form" id="test">
     <div class="s-details" id="addWindow">
         <div>
             <form action="" autocomplete="off" class="layui-form">
@@ -208,6 +208,7 @@
             elem: '#date'
         });
 
+
         function layuiAlert(msg) {
             layer.open({
                 offset: "auto",//具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
@@ -218,7 +219,8 @@
                 closeBtn: false,
                 yes: function () {
                     layer.closeAll();
-                    location.reload();
+                    $("#test")[0].reset();
+                    tableIns.reload();
                 }
             });
         }
@@ -370,6 +372,7 @@
 
         var addWind;
         $("#addBtn").unbind("click").click(function () {
+            $("#test")[0].reset();
             addWind = layer.open({
                 type: 1,
                 title: '添加信息',
@@ -380,6 +383,7 @@
         })
 
         $("#cancelAdd, #cancelMod, #cancelRel").unbind("click").click(function () {
+            $("#test")[0].reset();
             console.log("cancel")
             layer.closeAll()
         })

@@ -1,9 +1,13 @@
 package com.sh.cloud.web;
 
+import com.sft.member.bean.Brand;
+import com.sft.member.bean.CarSeries;
 import com.sft.member.bean.Member;
 import com.sft.member.bean.User;
 import com.sft.member.obtain.member.MemberService;
 import com.sft.member.obtain.user.UserService;
+import com.sft.member.obtain.vehicle.BrandService;
+import com.sft.member.obtain.vehicle.CarSeriesService;
 import com.sh.cloud.utils.PlatUserUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +23,10 @@ public class ArchivesController {
     UserService shUserService;
     @Resource
     MemberService memberService;
-
+    @Resource
+    BrandService brandService;
+    @Resource
+    CarSeriesService carSeriesService;
     @PostMapping(value = "addArchives")
     public String addUser(@RequestBody User user) {
         String ret = shUserService.addUser(PlatUserUtils.getCurrentLoginPlatUser(), user);
@@ -38,6 +45,7 @@ public class ArchivesController {
         User c = new User();
         c.customername = query;
         List<User> data = shUserService.getUserList(c, page, limit);
+//        data.addAll(data);
         ret.put("count", shUserService.getUserList(c));
         ret.put("data", data);
 
@@ -72,7 +80,21 @@ public class ArchivesController {
         List<Member> ret = memberService.getMemberNameList();
         return ret;
     }
-
+    @PostMapping(value = "getBrandNameList")
+    public List<Brand> getBrandNameList() {
+        List<Brand> ret = brandService.getBrandNameList();
+        return ret;
+    }
+    @PostMapping(value = "getCarSeriesNameList")
+    public List<CarSeries> getCarSeriesNameList() {
+        List<CarSeries> ret = carSeriesService.getCarSeriesNameList();
+        return ret;
+    }
+//    @PostMapping(value = "getBrandNameList")
+//    public List<Member> getMemberNameList() {
+//        List<Member> ret = memberService.getMemberNameList();
+//        return ret;
+//    }
     @PostMapping(value = "alertLevel")
     public String alertLevel(@RequestParam String userId, @RequestParam String id) {
         Member m = new Member();
