@@ -251,8 +251,6 @@
                 <label class="layui-form-label">支付方式</label>
                 <div class="layui-input-inline">
                     <select autocomplete="off" id="payStyle" name="payStyle">
-                        <option value="-1">卡券下发</option>
-                        <option value="-2">储值</option>
                     </select>
                 </div>
             </div>
@@ -380,10 +378,12 @@
                     timeout: 1000,
                     dataType: "json",
                     success: function (res) {
-                        res = res.data;
+                        selectE2.empty()
+                        selectE2.append('<option value="-1">卡券下发</option>');
+                        selectE2.append('<option value="-2">储值</option>');
                         if (res)
                             for (var s of res) {
-                                selectE2.append("<option value='" + s.consumeProjectId + "'>" + s.name + "</option>");
+                                selectE2.append("<option value='" + s.couponId + "'>" + s.coupon.name + "</option>");
                             }
                         callback();
                         form.render(); //layui的form重新渲染
@@ -613,11 +613,15 @@
                         pullConsumeItems("#consumeProjectId", $("#consumeTypeId").val(), () => {
                             pullPracticalItemIds("#practicalProjectId", $("#consumeProjectId").val(), () => {
                             })
+                            pullPay("#payStyle", data.userId, $("#consumeProjectId").val(), () => {
+                            });
                         })
                     });
                     form.on('select(consumeProjectId)', function () {
                         pullPracticalItemIds("#practicalProjectId", $("#consumeProjectId").val(), () => {
                         })
+                        pullPay("#payStyle", data.userId, $("#consumeProjectId").val(), () => {
+                        });
                     });
                     $('#exit1').on('click', function () {
                         // 关闭当前弹出层

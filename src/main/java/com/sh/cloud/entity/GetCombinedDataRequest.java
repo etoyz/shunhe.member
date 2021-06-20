@@ -2,15 +2,18 @@ package com.sh.cloud.entity;
 
 import com.sft.member.bean.CouponCheck;
 import com.sft.member.bean.User;
+import com.sft.member.bean.Vehicle;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class GetPendingReviewListRequest {
+public class GetCombinedDataRequest {
     User user;
 
     CouponCheck couponCheck;
+
+    Vehicle vehicle;
 
     Boolean groupBy;
 

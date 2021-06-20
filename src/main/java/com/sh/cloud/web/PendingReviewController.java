@@ -2,7 +2,7 @@ package com.sh.cloud.web;
 
 import com.sft.member.bean.CouponCheck;
 import com.sft.member.obtain.pay.PayService;
-import com.sh.cloud.entity.GetPendingReviewListRequest;
+import com.sh.cloud.entity.GetCombinedDataRequest;
 import com.sh.cloud.utils.PlatUserUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +20,7 @@ public class PendingReviewController {
     PayService payService;
 
     @RequestMapping("getPendingReviewList")
-    public Map<String, Object> getPendingReviewList(@RequestBody GetPendingReviewListRequest request) {
+    public Map<String, Object> getPendingReviewList(@RequestBody GetCombinedDataRequest request) {
         CouponCheck couponCheck = request.getCouponCheck();
         couponCheck.type = "0";
         Map<String, Object> ret = new HashMap();

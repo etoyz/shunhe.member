@@ -2,7 +2,7 @@ package com.sh.cloud.web;
 
 import com.sft.member.bean.CouponCheck;
 import com.sft.member.obtain.pay.PayService;
-import com.sh.cloud.entity.GetConsumeListRequest;
+import com.sh.cloud.entity.GetCombinedDataRequest;
 import com.sh.cloud.utils.PlatUserUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,8 +19,9 @@ public class CancelConsumeController {
     @Resource
     PayService payService;
 
+    // 获取整个列表
     @RequestMapping("getConsumeList")
-    public Map<String, Object> getConsumeList(@RequestBody GetConsumeListRequest request) {
+    public Map<String, Object> getConsumeList(@RequestBody GetCombinedDataRequest request) {
         CouponCheck couponCheck = request.getCouponCheck();
         couponCheck.type = "1";
         Map<String, Object> ret = new HashMap();

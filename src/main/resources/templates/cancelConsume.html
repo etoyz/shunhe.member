@@ -22,7 +22,7 @@
         <div class="layui-col-md12">
             <div class="s-headerSearch">
                 <form action="" autocomplete="off" class="layui-form">
-                    <div class="layui-form-item">
+                    <div class="layui-form-item" id="formHead">
                         <div class="layui-inline s-layuiInline">
                             <label class="layui-form-label">消费日期：</label>
                             <div class="layui-input-inline">
@@ -33,28 +33,28 @@
                         <div class="layui-inline s-layuiInline">
                             <label class="layui-form-label">客户名称：</label>
                             <div class="layui-input-inline">
-                                <input autocomplete="off" class="layui-input" name="userName" placeholder="请输入客户名称"
+                                <input autocomplete="off" class="layui-input" id="userName" name="userName" placeholder="请输入客户名称"
                                        type="text">
                             </div>
                         </div>
                         <div class="layui-inline s-layuiInline">
                             <label class="layui-form-label">会员卡号：</label>
                             <div class="layui-input-inline">
-                                <input autocomplete="off" class="layui-input" name="userId" placeholder="请输入会员卡号"
+                                <input autocomplete="off" class="layui-input" id="userId" name="userId" placeholder="请输入会员卡号"
                                        type="text">
                             </div>
                         </div>
                         <div class="layui-inline s-layuiInline">
                             <label class="layui-form-label">车架号：</label>
                             <div class="layui-input-inline">
-                                <input autocomplete="off" class="layui-input" name="vehicleId" placeholder="请输入车架号"
+                                <input autocomplete="off" class="layui-input" id="vin" name="vin" placeholder="请输入车架号"
                                        type="text">
                             </div>
                         </div>
                         <div class="layui-inline s-layuiInline">
                             <label class="layui-form-label">车牌号：</label>
                             <div class="layui-input-inline">
-                                <input autocomplete="off" class="layui-input" name="vehicleId" placeholder="请输入车牌号"
+                                <input autocomplete="off" class="layui-input" id="platenumber" name="platenumber" placeholder="请输入车牌号"
                                        type="text">
                             </div>
                         </div>
@@ -220,6 +220,20 @@
         $("#queryBtn").unbind("click").click(function () {
             tableIns.reload({
                 url: 'service/cancelConsume/getConsumeList',
+                where: {
+                    user: {
+                        customername: $("#userName").val(),
+                        memberNumber: $("#userId").val(),
+                    },
+                    couponCheck: {
+                        time: $("#time").val(),
+                    },
+                    Vehicle: {
+                        vin: $("#vin").val(),
+                        platenumber: $("#platenumber").val()
+                    },
+                    groupBy: true
+                },
                 page: {
                     curr: 1
                 }
