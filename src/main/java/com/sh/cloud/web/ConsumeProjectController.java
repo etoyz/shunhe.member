@@ -5,6 +5,7 @@ import com.sft.member.bean.Coupon;
 import com.sft.member.obtain.consume.ConsumeProjectService;
 import com.sft.member.obtain.consume.PracticalProjectService;
 import com.sft.member.obtain.coupon.CouponService;
+import com.sh.cloud.entity.ConsumeProjectAndConsumeProjects;
 import com.sh.cloud.entity.CouponsAndConsumeProject;
 import com.sh.cloud.utils.PlatUserUtils;
 import org.springframework.stereotype.Controller;
@@ -98,5 +99,21 @@ public class ConsumeProjectController {
     @ResponseBody
     public List<ConsumeProject> getConsumeProjectListByCoupon(@RequestBody Coupon coupon) {
         return consumeProjectService.getConsumeProjectByCoupon(coupon);
+    }
+
+    @RequestMapping("getRelateConsumeProject")
+    @ResponseBody
+    public List<ConsumeProject> getRelateConsumeProject(@RequestBody ConsumeProject project) {
+        return consumeProjectService.getRelateConsumeProject(project);
+    }
+
+    @RequestMapping("relateConsumeProject")
+    @ResponseBody
+    public String relateConsumeProject(@RequestBody ConsumeProjectAndConsumeProjects consumeProjectAndConsumeProjects) {
+        String ret = consumeProjectService.setRelateConsumeProject(PlatUserUtils.getCurrentLoginPlatUser(), consumeProjectAndConsumeProjects.getProject(), consumeProjectAndConsumeProjects.getProjects());
+        if (ret == null)
+            return "成功！";
+        else
+            return ret;
     }
 }

@@ -51,6 +51,7 @@
                 <script id="operation" type="text/html">
                     <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="edit">修改</a>
                     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="rel">关联消费卡券</a>
+                    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="rel2">关联消费项目</a>
                     <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="spe">具体项目</a>
                     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
                 </script>
@@ -413,7 +414,7 @@
                 {field: 'createTime', width: 150, title: '创建时间'},
                 {field: 'lastEditName', width: 100, title: '最后编辑人'},
                 {field: 'lastEditTime', width: 150, title: '最后编辑时间'},
-                {field: 'operation', width: 300, title: '操作', toolbar: '#operation', fixed: 'right'}
+                {field: 'operation', width: 350, title: '操作', toolbar: '#operation', fixed: 'right'}
             ]],
             size: 'sm',
             parseData: function (res) {
@@ -477,7 +478,8 @@
                     })
                     return false
                 })
-            } else if (layEvent === 'delete') {
+            }
+            else if (layEvent === 'delete') {
                 layer.confirm('确认删除消费项目【' + consumeProjectName + '】？', {icon: 3, title: '提示'}, function (index) {
                     $.post({
                         url: "service/consumeProject/deleteConsumeProject",
@@ -625,7 +627,8 @@
 
                 pullCoupon("#speProjCoupon", () => {
                 })
-            } else if (layEvent === "rel") {
+            }
+            else if (layEvent === "rel") {
                 layer.msg('正在加载...')
                 var relTable = table.render({
                     id: "relTable",
@@ -679,6 +682,72 @@
                         data: JSON.stringify({
                             "coupons": table.checkStatus('relTable').data,
                             "consumeProjectId": data.consumeProjectId
+                        }),
+                        contentType: "application/json",
+                        success: function (res) {
+                            layuiAlert(res)
+                        }
+                    })
+                })
+                $("#cancelRel").unbind("click").click(function () {
+                    layer.closeAll()
+                })
+            }
+            else if (layEvent === "rel2") {
+                layer.msg('正在加载...')
+                var relTable2 = table.render({
+                    id: "relTable",
+                    elem: "#relTable",
+                    height: 550,
+                    width: 493,
+                    page: false,
+                    url: "service/consumeProject/getConsumeProjectNameList",
+                    cols: [ [
+                        {type: 'checkbox', width: 70},
+                        {field: 'name', width: 420, title: '消费项目'},
+                    ]]
+                })
+                relTable2.reload({
+                    done: function (resAll, page, count) {
+                        $.post({
+                            url: "service/consumeProject/getRelateConsumeProject",
+                            data: JSON.stringify(data),
+                            contentType: "application/json",
+                            success: function (resRel) {
+                                console.log(resRel)
+                                console.log(resAll)
+                                var i = 0;
+                                for (var resA of resAll.data) {
+                                    for (var resR of resRel) {
+                                        if (resA.consumeProjectId === resR.consumeProjectId) {
+                                            resAll.data[i]["LAY_CHECKED"] = 'true';
+                                            var index = resAll.data[i]['LAY_TABLE_INDEX'];
+                                            $('tr[data-index=' + index + '] input[type="checkbox"]').prop('checked', true);
+                                            $('tr[data-index=' + index + '] input[type="checkbox"]').next().addClass('layui-form-checked');
+                                        }
+                                    }
+                                    i++;
+                                }
+                                layer.msg('加载完成', {time: 1000})
+                                var relWindow = layer.open({
+                                    type: 1,
+                                    title: '关联消费项目',
+                                    content: $('#relWindow'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                                    area: ['530px', '620px']
+                                });
+                            },
+                            error: function () {
+                                layer.msg('加载失败！请刷新!', {time: 10000})
+                            }
+                        });
+                    }
+                })
+                $("#confirmRel").unbind("click").on("click", function () {
+                    $.post({
+                        url: "service/consumeProject/relateConsumeProject",
+                        data: JSON.stringify({
+                            "project": activeProject,
+                            "projects": table.checkStatus('relTable').data
                         }),
                         contentType: "application/json",
                         success: function (res) {

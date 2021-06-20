@@ -269,7 +269,7 @@
                     d="M960 260.571L462.222 864 64 512l49.778-100.571 348.444 201.142L960 160z" fill="#ffffff"
                     p-id="6306"></path></svg>
             </span>
-            <span class="layui-btn layui-btn-danger" id="reject" lay-filter="reject" lay-submit
+            <span class="layui-btn layui-btn-danger" id="reject" lay-filter="reject"
                   style="text-align: center">
                 驳回 <svg class="icon" height="15" p-id="1970" t="1623807678000"
                         version="1.1" viewBox="0 0 1024 950" width="15" xmlns="http://www.w3.org/2000/svg"><path
@@ -411,22 +411,6 @@
 
         //primary
         {// “待审核表格”渲染
-            // TODO 优化：先(并发)异步请求全部数据，请求完后再渲染表格
-            // $.post({
-            //     url: 'service/review/getPendingReviewList',
-            //     async: true,
-            //     data: JSON.stringify({
-            //         page: 1,
-            //         limit: 5,
-            //         user: {},
-            //         couponCheck: {},
-            //         groupBy: true
-            //     }),
-            //     contentType: "application/json",
-            //     success: function (res){
-            //         console.log(res)
-            //     }
-            // })
             var tableReview = table.render({
                 elem: '#reviewList',
                 url: 'service/review/getPendingReviewList',
@@ -473,11 +457,9 @@
                 ]],
                 size: 'sm',
                 parseData: function (resp) {
-                    console.log(resp)
                     let data = resp.data;
                     if (data) {
                         for (let i = 0; i < data.length; i++) {
-                            console.log(data[i])
                             $.post({
                                 url: "service/Archives/getUserInfo?userId=" + data[i].userId,
                                 async: false,
@@ -568,6 +550,9 @@
                                                 data[i].consumeTypeName = $('#consumeTypeId option:selected').text()
                                                 data[i].practicalProjectName = $('#practicalProjectId option:selected').text()
                                                 data[i].payStyleName = $('#payStyle option:selected').text()
+                                                if(data[i].payStyle === "-2") {
+                                                    data[i].count = data[i].money
+                                                }
                                             }
                                             console.log(data)
                                             res.data = data
