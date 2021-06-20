@@ -485,6 +485,7 @@
                 formData.groupId = uniqueID
                 formData.cnt = cnt + 1
                 cnt++
+                // 下列字段用于列表显示，接口不需要这些
                 formData.vehicleId = activeUser.vehicle.vehicleId;
                 formData.consumeProjectName = $('#consumeProjectId option:selected').text()
                 formData.consumeTypeName = $('#consumeTypeId option:selected').text()
@@ -577,8 +578,9 @@
                 var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
                 if (layEvent === 'use') { // 用卡
                     //清空弹窗列表
+                    couponReviewList = []
                     tableUseCoupons.reload({
-                        data: []
+                        data: couponReviewList
                     })
                     $.post({
                         url: "service/Archives/getUserInfo",
