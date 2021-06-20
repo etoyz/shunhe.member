@@ -1,6 +1,7 @@
 package com.sh.cloud.web;
 
 import com.sft.member.bean.CouponCheck;
+import com.sft.member.bean.User;
 import com.sft.member.obtain.pay.PayService;
 import com.sh.cloud.entity.GetCombinedDataRequest;
 import com.sh.cloud.utils.PlatUserUtils;
@@ -25,6 +26,8 @@ public class CancelConsumeController {
         CouponCheck couponCheck = request.getCouponCheck();
         couponCheck.type = "1";
         Map<String, Object> ret = new HashMap();
+//        User user = new User();
+//        user.vehicle.vin = request.getUser()
         ret.put("code", 0);
         ret.put("msg", "");
         ret.put("data", payService.getUnCheckRecord(request.getUser(), couponCheck, request.getPage(), request.getLimit(), request.getGroupBy()));
