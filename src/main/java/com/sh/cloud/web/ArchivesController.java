@@ -8,6 +8,7 @@ import com.sft.member.obtain.member.MemberService;
 import com.sft.member.obtain.user.UserService;
 import com.sft.member.obtain.vehicle.BrandService;
 import com.sft.member.obtain.vehicle.CarSeriesService;
+import com.sh.cloud.entity.GetUserListRequest;
 import com.sh.cloud.utils.PlatUserUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,6 +48,20 @@ public class ArchivesController {
         List<User> data = shUserService.getUserList(c, page, limit);
 //        data.addAll(data);
         ret.put("count", shUserService.getUserList(c));
+        ret.put("data", data);
+
+        return ret;
+    }
+
+    @RequestMapping("getUserList")
+    @ResponseBody
+    public Map<String, Object> getUserList(@RequestBody GetUserListRequest request) {
+        Map<String, Object> ret = new HashMap<>();
+        ret.put("code", 0);
+        ret.put("msg", "");
+
+        List<User> data = shUserService.getUserList(request.getUser(), request.getPage(), request.getLimit());
+        ret.put("count", shUserService.getUserList(request.getUser()));
         ret.put("data", data);
 
         return ret;

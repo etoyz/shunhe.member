@@ -629,29 +629,29 @@
                     })
                 }
             });
-        }
 
-        $("#queryBtn").unbind("click").click(function () {
-            tableUseCoupons.reload({
-                url: 'service/Archives/getUserInfo',
-                where: {
-                    user: {
-                        customername: $("#customerName").val(),
-                        memberNumber: $("#membership").val(),
-                        vehicle: {
-                            vin: $("#chassisNumber").val(),
-                            platenumber: $("#carNumber").val()
+            $("#queryBtn").unbind("click").click(function () {
+                tableUserList.reload({
+                    url: 'service/Archives/getUserList',
+                    method: "post",
+                    contentType: "application/json",
+                    where: {
+                        user: {
+                            customername: $("#customerName").val(),
+                            memberNumber: $("#membership").val(),
+                            vehicle: {
+                                vin: $("#chassisNumber").val(),
+                                platenumber: $("#carNumber").val()
+                            }
                         }
                     },
-                    groupBy: true
-                },
-                page: {
-                    curr: 1
-                }
+                    page: {
+                        curr: 1
+                    }
+                })
+                return false;
             })
-            return false;
-        })
-
+        }
     });
 </script>
 </body>

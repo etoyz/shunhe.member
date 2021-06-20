@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class GetCombinedDataRequest {
+public class GetPendingReviewListRequest {
     User user;
 
     CouponCheck couponCheck;
