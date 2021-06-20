@@ -26,34 +26,34 @@
                         <div class="layui-inline s-layuiInline">
                             <label class="layui-form-label">车牌号</label>
                             <div class="layui-input-inline">
-                                <input autocomplete="off" class="layui-input" name="carNumber" placeholder="请输入车牌号"
+                                <input autocomplete="off" class="layui-input" name="carNumber" id="carNumber" placeholder="请输入车牌号"
                                        type="text">
                             </div>
                         </div>
                         <div class="layui-inline s-layuiInline">
                             <label class="layui-form-label">车架号</label>
                             <div class="layui-input-inline">
-                                <input autocomplete="off" class="layui-input" name="chassisNumber" placeholder="请输入车架号"
+                                <input autocomplete="off" class="layui-input" name="chassisNumber" id="chassisNumber" placeholder="请输入车架号"
                                        type="text">
                             </div>
                         </div>
                         <div class="layui-inline s-layuiInline">
                             <label class="layui-form-label">客户名称</label>
                             <div class="layui-input-inline">
-                                <input autocomplete="off" class="layui-input" name="customerName" placeholder="请输入客户名称"
+                                <input autocomplete="off" class="layui-input" name="customerName" id="customerName" placeholder="请输入客户名称"
                                        type="text">
                             </div>
                         </div>
                         <div class="layui-inline s-layuiInline">
                             <label class="layui-form-label">会员卡号</label>
                             <div class="layui-input-inline">
-                                <input autocomplete="off" class="layui-input" name="membership" placeholder="请输入会员卡号"
+                                <input autocomplete="off" class="layui-input" name="membership" id="membership" placeholder="请输入会员卡号"
                                        type="text">
                             </div>
                         </div>
 
                         <div class="layui-inline s-layuiInline">
-                            <button class="layui-btn layui-btn-warm">查询</button>
+                            <button class="layui-btn layui-btn-warm"id="queryBtn">查询</button>
                         </div>
 
                     </div>
@@ -630,6 +630,28 @@
                 }
             });
         }
+
+        $("#queryBtn").unbind("click").click(function () {
+            tableUseCoupons.reload({
+                url: 'service/Archives/getUserInfo',
+                where: {
+                    user: {
+                        customername: $("#customerName").val(),
+                        memberNumber: $("#membership").val(),
+                        Vehicle: {
+                            vin: $("#chassisNumber").val(),
+                            platenumber: $("#carNumber").val()
+                        }
+                    },
+                    groupBy: true
+                },
+                page: {
+                    curr: 1
+                }
+            })
+            return false;
+        })
+
     });
 </script>
 </body>
