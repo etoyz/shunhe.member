@@ -230,7 +230,8 @@
                         },
                         success: function (res) {
                             layuiAlert(res)
-                            tableTypes.reload()
+                            if("删除成功！" === res)
+                                obj.del()
                         }
                     })
                 });

@@ -274,7 +274,8 @@
                         },
                         success: function (res) {
                             layuiAlert(res)
-                            obj.del()
+                            if(res === "删除成功！")
+                                obj.del()
                         }
                     })
                 });

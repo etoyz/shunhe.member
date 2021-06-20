@@ -488,11 +488,8 @@
                         },
                         success: function (res) {
                             layuiAlert(res)
-                            tableProj.reload({
-                                page: {
-                                    curr: 1
-                                }
-                            });
+                            if("删除成功！" === res)
+                                obj.del()
                         },
                     });
                 });
