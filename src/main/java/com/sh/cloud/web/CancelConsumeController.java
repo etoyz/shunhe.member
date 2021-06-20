@@ -19,6 +19,7 @@ public class CancelConsumeController {
     @Resource
     PayService payService;
 
+    // 获取整个列表
     @RequestMapping("getConsumeList")
     public Map<String, Object> getConsumeList(@RequestBody GetConsumeListRequest request) {
         CouponCheck couponCheck = request.getCouponCheck();
