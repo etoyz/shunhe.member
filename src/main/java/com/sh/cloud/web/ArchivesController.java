@@ -85,13 +85,14 @@ public class ArchivesController {
         List<Brand> ret = brandService.getBrandNameList();
         return ret;
     }
-    @PostMapping(value = "getCarSeriesNameList")
-    public List<CarSeries> getCarSeriesNameList() {
-        List<CarSeries> ret = carSeriesService.getCarSeriesNameList();
-        return ret;
-    }
-//    @PostMapping(value = "getBrandNameList")
-//    public List<Member> getMemberNameList() {
+//    @PostMapping(value = "getCarSeriesNameList")
+//    public List<CarSeries> getCarSeriesNameList() {
+//        List<CarSeries> ret = carSeriesService.getCarSeriesNameList();
+//        return ret;
+//    }
+//    车型接口没有resource
+//    @PostMapping(value = "getCarTypeNameList")
+//    public List<CarType> getMemberNameList() {
 //        List<Member> ret = memberService.getMemberNameList();
 //        return ret;
 //    }

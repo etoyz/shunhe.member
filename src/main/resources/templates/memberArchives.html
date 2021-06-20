@@ -35,7 +35,6 @@
                             <button class="layui-btn layui-btn-warm" id="queryBtn">查询</button>
                             <span class="layui-btn layui-btn-normal" id="add">新增会员</span>
                         </div>
-
                     </div>
                 </form>
             </div>
@@ -55,9 +54,8 @@
 </div>
 
 <!-- 新增弹窗 -->
-<form action="" autocomplete="off" class="layui-form" id="test">
 <div class="s-details" id="addWindow">
-    <form action="" autocomplete="off" class="layui-form">
+    <form action="" autocomplete="off" class="layui-form" id="addForm">
         <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
             <ul class="layui-tab-title">
                 <li class="layui-this">车主信息</li>
@@ -499,13 +497,12 @@
                     <button class="layui-btn layui-btn-warm" id="cancelAdd">取消</button>
                 </div>
             </div>
+        </div>
     </form>
 </div>
-</div>
-</form>
 <!-- 编辑弹窗 -->
 <div class="s-details" id="editWindow">
-    <form action="" autocomplete="off" class="layui-form">
+    <form action="" autocomplete="off" class="layui-form" id="editForm">
         <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
             <ul class="layui-tab-title">
                 <li class="layui-this">车主信息</li>
@@ -567,17 +564,17 @@
                     <div class="layui-form-item s-formItem5">
                         <label class="layui-form-label">省市区</label>
                         <div class="layui-input-inline">
-                            <select id="provid" lay-filter="provid" name="provid">
+                            <select id="providM" lay-filter="provid" name="provid">
                                 <option value="">请选择省</option>
                             </select>
                         </div>
                         <div class="layui-input-inline">
-                            <select id="cityid" lay-filter="cityid" name="cityid">
+                            <select id="cityidM" lay-filter="cityid" name="cityid">
                                 <option value="">请选择市</option>
                             </select>
                         </div>
                         <div class="layui-input-inline">
-                            <select id="areaid" lay-filter="areaid" name="areaid">
+                            <select id="areaidM" lay-filter="areaid" name="areaid">
                                 <option value="">请选择县/区</option>
                             </select>
                         </div>
@@ -1029,6 +1026,52 @@
                 }
             })
         }
+        //车系
+        // function pullCarSeries(selector, callback) {
+        //     var selectE = $(selector);
+        //     $.post({
+        //         url: "service/Archives/getCarSeriesNameList",
+        //         timeout: 1000,
+        //         dataType: "json",
+        //         success: function (res) {
+        //             selectE.empty();
+        //             for (var s of res) {
+        //                 selectE.append("<option value='" + s.name + "'>" + s.name + "</option>");
+        //             }
+        //             callback();
+        //             form.render(); //layui的form重新渲染
+        //         },
+        //         error: function () {
+        //             selectE.empty();
+        //             selectE.append("<option value='一汽大众'>拉取失败，默认为一汽大众！</option>");
+        //             form.render();
+        //         }
+        //     })
+        // }
+
+        //车型
+        // function pullCarType(selector, callback) {
+        //     var selectE = $(selector);
+        //     $.post({
+        //         url: "service/Archives/getCarTypeNameList",
+        //         timeout: 1000,
+        //         dataType: "json",
+        //         success: function (res) {
+        //             selectE.empty();
+        //             for (var s of res) {
+        //                 selectE.append("<option value='" + s.name + "'>" + s.name + "</option>");
+        //             }
+        //             callback();
+        //             form.render(); //layui的form重新渲染
+        //         },
+        //         error: function () {
+        //             selectE.empty();
+        //             selectE.append("<option value='一汽大众'>拉取失败，默认为一汽大众！</option>");
+        //             form.render();
+        //         }
+        //     })
+        // }
+
         function pullMemberlevel(selector, callback) {
             var selectE = $(selector);
             $.post({
@@ -1051,8 +1094,8 @@
             })
         }
         // 显示“新增弹窗”
-        $('body').on('click', '#add', function () {
-            $("#test")[0].reset();
+        $("#add").unbind("click").click(function () {
+            $('#addForm').trigger('reset');
             var index = layer.open({
                 type: 1,
                 title: '新增弹窗',
@@ -1061,10 +1104,11 @@
                 offset: '20px'
             });
             pullBrandName("#vehiclelabel", () => {
-            })
+                //
+            });
             $('#cancelAdd').on('click', function () {
                 // 关闭当前弹出层
-                $("#test")[0].reset();
+                $('#addForm').trigger('reset');
                 layer.close(index);
                 return false;
             });
@@ -1118,7 +1162,7 @@
                         url: "service/Archives/getUserInfo?userId=" + data[i].userId,
                         async: false,
                         success: function (resp) {
-                            console.log(resp)
+                            //console.log(resp)
                             data[i].cGender = resp.cGender === 1 ? "男" : "女"
                             data[i].cBirthday = resp.cBirthday
                             data[i].phone = resp.phone

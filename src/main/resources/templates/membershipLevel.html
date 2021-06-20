@@ -52,10 +52,9 @@
 </div>
 
 <!-- 添加卡片弹窗 -->
-<form action="" autocomplete="off" class="layui-form" id="test">
     <div class="s-details" id="addWindow">
         <div>
-            <form action="" autocomplete="off" class="layui-form">
+            <form action="" autocomplete="off" class="layui-form" id="test">
                 <div class="layui-form-item s-formItem5">
                     <div class="layui-inline">
                         <label class="layui-form-label"><i>*</i>会员级别</label>
@@ -122,9 +121,8 @@
             <button class="layui-btn" id="cancelAdd" type="button">取消</button>
         </div>
     </div>
-</form>
 <!-- 修改卡片弹窗 -->
-<form action="" autocomplete="off" class="layui-form">
+
     <div class="s-details" id="modWindow">
         <div>
             <form action="" autocomplete="off" class="layui-form">
@@ -191,7 +189,6 @@
             <button class="layui-btn" id="cancelMod" type="button">取消</button>
         </div>
     </div>
-</form>
 
 <script src="plugins/layui/layui.js"></script>
 <script>
@@ -219,7 +216,7 @@
                 closeBtn: false,
                 yes: function () {
                     layer.closeAll();
-                    $("#test")[0].reset();
+                    $("#test").reset();
                     tableIns.reload();
                 }
             });
@@ -372,7 +369,8 @@
 
         var addWind;
         $("#addBtn").unbind("click").click(function () {
-            $("#test")[0].reset();
+            $('#test').trigger('reset');
+             // $('test').reset();
             addWind = layer.open({
                 type: 1,
                 title: '添加信息',
@@ -383,7 +381,8 @@
         })
 
         $("#cancelAdd, #cancelMod, #cancelRel").unbind("click").click(function () {
-            $("#test")[0].reset();
+            $('#test').trigger('reset');
+            // $('test').reset();
             console.log("cancel")
             layer.closeAll()
         })
