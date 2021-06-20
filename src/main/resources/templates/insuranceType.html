@@ -248,7 +248,7 @@
                         contentType: "application/json",
                         success: function (res) {
                             layuiAlert(res)
-                            obj.update(data.field);
+                            obj.update(formData.field);
                         }
                     })
                     return false;
@@ -258,7 +258,8 @@
                     layer.close(index1);
                     return false;
                 });
-            } else if (layEvent === 'delete') {
+            }
+            else if (layEvent === 'delete') {
                 console.log(data)
                 layer.confirm('确认删除险种【' + insuranceTypeName + '】？', {icon: 3, title: '提示'}, function (index) {
                     $.post({
