@@ -25,8 +25,9 @@ public class CancelConsumeController {
         CouponCheck couponCheck = request.getCouponCheck();
         couponCheck.type = "1";
         Map<String, Object> ret = new HashMap();
-//        User user = new User();
-//        user.vehicle.vin = request.getUser()
+        if(request.getCouponCheck().time != null) {
+            request.getCouponCheck().time = request.getCouponCheck().time.replaceFirst(" @ ", "@");
+        }
         ret.put("code", 0);
         ret.put("msg", "");
         ret.put("data", payService.getUnCheckRecord(request.getUser(), couponCheck, request.getPage(), request.getLimit(), request.getGroupBy()));
