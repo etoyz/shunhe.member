@@ -165,24 +165,31 @@
             },
             cols: [ [
                 // {type: 'checkbox'},
-                {field: 'platUserId', width: '10%', title: '用户编号'},
-                {field: 'name', width: '8%', title: '用户名称'},
-                {field: 'phone', width: '8%', title: '联系电话'},
+                {field: 'platUserId', width: '120', title: '用户编号'},
+                {field: 'name', width: '120', title: '用户名称'},
+                {field: 'username', width: '120', title: '登录用户名'},
+                {field: 'phone', width: '150', title: '联系电话'},
                 // {field: '-', width: '7%', title: '所属角色'},
-                {field: 'post', width: '10%', title: '所属职位'},
+                {field: 'post', width: '120', title: '所属职位'},
                 // {field: 'orderID', width: '7%', title: '顺序号'},
-                {field: 'operateType', width: '8%', title: '操作类型'},
-                {field: 'dealerId', width: '14%', title: '所属门店'},
-                {field: '-', width: '10%', title: '指定IP登入'},
+                {field: 'operateType', width: '80', title: '操作类型'},
+                {field: 'dealerId', width: '150', title: '所属门店'},
+                {field: '-', width: '100', title: '指定IP登入'},
                 // {field: 'lastEditTime', width: '14%', title: '最后编辑时间'},
-                {field: 'operation', width: '14%', title: '操作', toolbar: '#operation'}
+                {field: 'operation', width: '100', title: '操作', toolbar: '#operation'}
             ]],
             size: 'sm',
             parseData: function (res) {
-                console.log(res)
                 if (res.data)
                     for (var i = 0; i < res.data.length; i++) {
-                        res.data[i].dealerId = "烟台顺合广汽本田店";
+                        res.data[i].dealerId = "烟台顺合广汽本田";
+                        $.post({
+                            url: "service/platUserManage/getUserInfo?platUserId=" + res.data[i].platUserId,
+                            async: false,
+                            success: function (resp) {
+                                res.data[i].username = resp.username
+                            }
+                        })
                     }
                 return res
             }

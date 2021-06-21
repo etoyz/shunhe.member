@@ -99,7 +99,7 @@
             <div class="layui-inline">
                 <label class="layui-form-label">客户姓名</label>
                 <div class="layui-input-inline">
-                    <input autocomplete="off" class="layui-input" disabled id="customerName"
+                    <input autocomplete="off" class="layui-input" disabled id="customerNamePop"
                            type="text">
                 </div>
             </div>
@@ -107,7 +107,7 @@
                 <label class="layui-form-label">会员卡号</label>
                 <div class="layui-input-inline">
                     <input autocomplete="off" class="layui-input" disabled id="memberNumber"
-                           type="text">
+                           type="text" style="width: 150px">
                 </div>
             </div>
         </div>
@@ -115,7 +115,7 @@
             <div class="layui-inline">
                 <label class="layui-form-label">会员级别</label>
                 <div class="layui-input-inline">
-                    <input autocomplete="off" class="layui-input" disabled id="customerLevel"
+                    <input autocomplete="off" class="layui-input" disabled id="memberlevelPop"
                            type="text">
                 </div>
             </div>
@@ -299,7 +299,8 @@
 
             //日期
             laydate.render({
-                elem: '#time'
+                elem: '#time',
+                value: Date()
             });
 
             function pullConsumeTypes(selector, callback) {
@@ -496,7 +497,6 @@
                 else if (formData.payStyle === "-2") {
                     formData.practicalProjectId = $("#practicalProjectId").val()
                     formData.money = $("#count").val()
-                    formData.count = 0
                 }
                 couponReviewList.push(formData)
                 tableUseCoupons.reload({
@@ -552,17 +552,18 @@
                             url: "service/Archives/getUserInfo?userId=" + data[i].userId,
                             async: false,
                             success: function (resp) {
-                                console.log(resp)
-                                data[i].cGender = resp.cGender === 1 ? "男" : "女"
-                                data[i].cBirthday = resp.cBirthday
-                                data[i].phone = resp.phone
-                                data[i].customername = resp.customername
-                                data[i].level = resp.member.level
-                                data[i].vin = resp.vehicle.vin
-                                data[i].platenumber = resp.vehicle.platenumber
-                                data[i].vehiclebrand = resp.vehicle.vehiclebrand
-                                data[i].vehiclelabel = resp.vehicle.vehiclelabel
-                                data[i].vehiclestyle = resp.vehicle.vehiclestyle
+                                try {
+                                    data[i].cGender = resp.cGender === 1 ? "男" : "女"
+                                    data[i].cBirthday = resp.cBirthday
+                                    data[i].phone = resp.phone
+                                    data[i].customername = resp.customername
+                                    data[i].level = resp.member.level
+                                    data[i].vin = resp.vehicle.vin
+                                    data[i].platenumber = resp.vehicle.platenumber
+                                    data[i].vehiclebrand = resp.vehicle.vehiclebrand
+                                    data[i].vehiclelabel = resp.vehicle.vehiclelabel
+                                    data[i].vehiclestyle = resp.vehicle.vehiclestyle
+                                }catch (e){}
                             }
                         })
                     }
@@ -591,8 +592,9 @@
                             $("#licensePlate").val(res.vehicle.platenumber);
                             $("#vin").val(res.vehicle.vin);
                             $("#customerName").val(res.customername);
+                            $("#customerNamePop").val(res.customername);
                             $("#memberNumber").val(res.memberNumber);
-                            $("#customerLevel").val(res.member.level);
+                            $("#memberlevelPop").val(res.member.level);
                             pullConsumeTypes("#consumeTypeId", () => {
                                 pullConsumeItems("#consumeProjectId", $("#consumeTypeId").val(), () => {
                                     pullPracticalItemIds("#practicalProjectId", $("#consumeProjectId").val(), () => {

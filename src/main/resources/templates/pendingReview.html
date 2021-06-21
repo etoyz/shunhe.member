@@ -82,29 +82,29 @@
             <div class="layui-inline">
                 <label class="layui-form-label">车牌号</label>
                 <div class="layui-input-inline">
-                    <input autocomplete="off" disabled class="layui-input" id="licensePlate"
+                    <input autocomplete="off" disabled class="layui-input" id="platenumberPop"
                            type="text">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">车架号</label>
                 <div class="layui-input-inline">
-                    <input autocomplete="off" disabled class="layui-input" id="vin" name="vin"
+                    <input autocomplete="off" disabled class="layui-input" id="vinPop" name="vin"
                            type="text">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">客户姓名</label>
                 <div class="layui-input-inline">
-                    <input autocomplete="off" class="layui-input" disabled id="customerName"
+                    <input autocomplete="off" class="layui-input" disabled id="customernamePop"
                            type="text">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">会员卡号</label>
                 <div class="layui-input-inline">
-                    <input autocomplete="off" class="layui-input" disabled id="memberNumber"
-                           type="text">
+                    <input autocomplete="off" class="layui-input" disabled id="memberNumberPop"
+                           type="text" style="width: 150px">
                 </div>
             </div>
         </div>
@@ -112,7 +112,7 @@
             <div class="layui-inline">
                 <label class="layui-form-label">会员级别</label>
                 <div class="layui-input-inline">
-                    <input autocomplete="off" class="layui-input" disabled id="customerLevel"
+                    <input autocomplete="off" class="layui-input" disabled id="memberlevelPop"
                            type="text">
                 </div>
             </div>
@@ -464,10 +464,12 @@
                                 url: "service/Archives/getUserInfo?userId=" + data[i].userId,
                                 async: false,
                                 success: function (res) {
+                                    console.log(res)
                                     data[i].customername = res.customername
                                     data[i].memberNumber = res.memberNumber
                                     data[i].vin = res.vehicle.vin
                                     data[i].platenumber = res.vehicle.platenumber
+                                    data[i].memberlevel = res.member.level
                                 }
                             })
                             $.post({
@@ -500,6 +502,7 @@
                 activeItem = obj.data; //获得当前行数据
                 var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
                 if (layEvent === 'detail') {
+                    console.log(activeItem)
                     pullConsumeTypes("#consumeTypeId", () => {
                         pullConsumeItems("#consumeProjectId", $("#consumeTypeId").val(), () => {
                             pullPracticalItemIds("#practicalProjectId", $("#consumeProjectId").val(), () => {
@@ -571,6 +574,12 @@
                     $("#totalMoney").val(activeItem.totalMoney)
                     $("#userId").val(activeItem.userId)
                     $("#vehicleId").val(activeItem.vehicleId)
+                    $("#platenumberPop").val(activeItem.platenumber)
+                    $("#vinPop").val(activeItem.vin)
+                    $("#memberNumberPop").val(activeItem.memberNumber)
+                    $("#memberlevelPop").val(activeItem.memberlevel)
+                    $("#customernamePop").val(activeItem.customername)
+
                     console.log(activeItem)
                     var index1 = layer.open({
                         type: 1,
