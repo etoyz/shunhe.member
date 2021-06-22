@@ -33,7 +33,7 @@
                             <div class="layui-input-inline">
                                 <select autocomplete="off" class="layui-input" id="dealerSearch" placeholder="请输入卡券名称"
                                         type="text">
-                                    <option>烟台顺和广汽本田</option>
+                                    <option>烟台顺合广汽本田</option>
                                 </select>
                             </div>
                         </div>
@@ -123,7 +123,7 @@
                     <label class="layui-form-label">所属门店</label>
                     <div class="layui-input-inline">
                         <select autocomplete="off" class="layui-input" id="dealerId" name="dealerId" type="text">
-                            <option value="0">烟台顺合广汽本田店</option>
+                            <option value="0">烟台顺合广汽本田</option>
                         </select>
                     </div>
                 </div>
@@ -183,13 +183,6 @@
                 if (res.data)
                     for (var i = 0; i < res.data.length; i++) {
                         res.data[i].dealerId = "烟台顺合广汽本田";
-                        $.post({
-                            url: "service/platUserManage/getUserInfo?platUserId=" + res.data[i].platUserId,
-                            async: false,
-                            success: function (resp) {
-                                res.data[i].username = resp.username
-                            }
-                        })
                     }
                 return res
             }
