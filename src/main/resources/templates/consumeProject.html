@@ -239,7 +239,7 @@
                     <label class="layui-form-label">备注</label>
                     <div class="layui-input-inline">
                         <input autocomplete="off" class="layui-input" id="remarkSpe"
-                               lay-verify="required" name="remark" type="text">
+                               name="remark" type="text">
                     </div>
                 </div>
             </div>
@@ -608,6 +608,7 @@
                         success: function (res) {
                             res = res.data;
                             selectE.empty();
+                            selectE.append("<option value='" + -1 + "'>-</option>");
                             for (var s of res) {
                                 selectE.append("<option value='" + s.couponId + "'>" + s.name + "</option>");
                             }

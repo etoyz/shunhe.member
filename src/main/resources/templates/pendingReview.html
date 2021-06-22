@@ -155,7 +155,7 @@
             <div class="layui-bl">
                 <label class="layui-form-label">项目备注</label>
                 <div class="layui-input-inline" style="width: 800px">
-                    <input autocomplete="off" disabled class="layui-input" id="billRemark" name="billRemark"
+                    <input autocomplete="off" disabled class="layui-input" id="remarkPop" name="remark"
                            type="text">
                 </div>
             </div>
@@ -441,7 +441,7 @@
                     {field: 'platenumber', width: 200, title: '车牌号'},
                     {field: 'consumeTypeName', width: 120, title: '消费类型'},
                     {field: 'consumeProjectName', width: 120, title: '消费项目'},
-                    {field: 'practicalProjectName', width: 120, title: '具体项目'},
+                    {field: 'practicalProjectName', width: 160, title: '具体项目'},
                     {field: 'payStyleName', width: 100, title: '支付方式'},
                     {field: '**', width: 100, title: '工时费'},
                     {field: '**', width: 100, title: '材料费'},
@@ -476,7 +476,8 @@
                                 url: "service/practicalProject/getPracticalProject?practicalProjectId=" + data[i].practicalProjectId,
                                 async: false,
                                 success: function (res) {
-                                    data[i].practicalProjectName = res.practicalProjectName
+                                    console.log(res)
+                                    data[i].practicalProjectName = res.name
                                 }
                             })
                             {
@@ -579,8 +580,8 @@
                     $("#memberNumberPop").val(activeItem.memberNumber)
                     $("#memberlevelPop").val(activeItem.memberlevel)
                     $("#customernamePop").val(activeItem.customername)
+                    $("#remarkPop").val(activeItem.remark)
 
-                    console.log(activeItem)
                     var index1 = layer.open({
                         type: 1,
                         title: '待审核详情',
