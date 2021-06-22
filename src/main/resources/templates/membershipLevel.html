@@ -53,7 +53,6 @@
 
 <!-- 添加卡片弹窗 -->
     <div class="s-details" id="addWindow">
-        <div>
             <form action="" autocomplete="off" class="layui-form" id="test">
                 <div class="layui-form-item s-formItem5">
                     <div class="layui-inline">
@@ -112,14 +111,13 @@
                         </div>
                     </div>
                 </div>
+                <div class="s-tabBottomButton">
+                    <button class="layui-btn layui-btn-danger" id="confirmAdd" lay-filter="confirmAdd" lay-submit type="button">
+                        添加
+                    </button>
+                    <button class="layui-btn" id="cancelAdd" type="button">取消</button>
+                </div>
             </form>
-        </div>
-        <div class="s-tabBottomButton">
-            <button class="layui-btn layui-btn-danger" id="confirmAdd" lay-filter="confirmAdd" lay-submit type="button">
-                添加
-            </button>
-            <button class="layui-btn" id="cancelAdd" type="button">取消</button>
-        </div>
     </div>
 <!-- 修改卡片弹窗 -->
 
@@ -180,13 +178,13 @@
                         </div>
                     </div>
                 </div>
+                <div class="s-tabBottomButton">
+                    <button class="layui-btn layui-btn-danger" id="confirmMod" lay-filter="confirmMod" lay-submit type="button">
+                        修改
+                    </button>
+                    <button class="layui-btn" id="cancelMod" type="button">取消</button>
+                </div>
             </form>
-        </div>
-        <div class="s-tabBottomButton">
-            <button class="layui-btn layui-btn-danger" id="confirmMod" lay-filter="confirmMod" lay-submit type="button">
-                修改
-            </button>
-            <button class="layui-btn" id="cancelMod" type="button">取消</button>
         </div>
     </div>
 
@@ -216,7 +214,7 @@
                 closeBtn: false,
                 yes: function () {
                     layer.closeAll();
-                    $("#test").reset();
+                    $('#test').trigger('reset');
                     tableIns.reload();
                 }
             });
@@ -390,25 +388,14 @@
 
         // $("#confirmAdd").unbind("click").click(function () {
         form.on('submit(confirmAdd)', function (data) {
-            var score = $("#type").val();
-            console.log(score);
+            console.log(data)
             data.field.memberUpgradeCon = {
                 score: data.field.score
             }
+            console.log(data)
             $.post({
                 url: "/service/membershipLevel/addMember",
-                data: JSON.stringify(data.field
-                    //     {
-                    //     level: $("#level").val(),
-                    //     name: $("#name").val(),
-                    //     type: $("#cardType").val(),
-                    //     lock: $("#lock").val(),
-                    //     memberUpgradeCon:{
-                    //         score: $("#pointToUpdate").val()
-                    //     },
-                    //     remark: $("#remark").val()
-                    // }
-                ),
+                data: JSON.stringify(data.field),
                 contentType: "application/json",
                 success: function (res) {
                     console.log(res)

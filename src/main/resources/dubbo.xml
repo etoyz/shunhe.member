@@ -46,8 +46,6 @@
                      interface="com.sft.member.obtain.consume.PracticalProjectService" async="false"/>
     <dubbo:reference id="payService"
                      interface="com.sft.member.obtain.pay.PayService" async="false"/>
-    <dubbo:reference id="BrandService"
-                     interface="com.sft.member.obtain.vehicle.BrandService" async="false"/>
-    <dubbo:reference id="CarSeriesService"
-                     interface="com.sft.member.obtain.vehicle.CarSeriesService" async="false"/>
+    <dubbo:reference id="CarService"
+                     interface="carinfo.service.CarDataQuery" async="false"/>
 </beans>

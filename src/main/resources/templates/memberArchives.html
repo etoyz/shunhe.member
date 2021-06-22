@@ -79,9 +79,9 @@
                             </div>
                         </div>
                         <div class="layui-inline">
-                            <label class="layui-form-label"><i>*</i>性别</label>
+                            <label class="layui-form-label">性别</label>
                             <div class="layui-input-inline">
-                                <select id="cGender" lay-filter="gender" name="cGender">
+                                <select id="cGender"  name="cGender">
                                     <option value="">请选择性别</option>
                                     <option value="1">男</option>
                                     <option value="2">女</option>
@@ -107,9 +107,9 @@
                             </div>
                         </div>
                         <div class="layui-inline">
-                            <label class="layui-form-label"><i>*</i>证件号</label>
+                            <label class="layui-form-label">证件号</label>
                             <div class="layui-input-inline">
-                                <input autocomplete="off" class="layui-input" id="cCard" lay-verify="required" name="cCard"
+                                <input autocomplete="off" class="layui-input" id="cCard"  name="cCard"
                                        type="text">
                             </div>
                         </div>
@@ -224,7 +224,7 @@
 <!--                                <input autocomplete="off" class="layui-input" id="vehiclelabel" lay-verify="required"-->
 <!--                                       name="vehiclelabel"-->
 <!--                                       type="text">-->
-                                <select id="vehiclelabel" lay-verify="required" name="vehiclelabel">
+                                <select id="vehiclelabel" lay-verify="required" lay-filter="vehiclelabel" name="vehiclelabel">
                                     <option value="一汽大众">请选择品牌</option>
                                 </select>
                             </div>
@@ -232,16 +232,22 @@
                         <div class="layui-inline">
                             <label class="layui-form-label"><i>*</i>车系</label>
                             <div class="layui-input-inline">
-                                <input autocomplete="off" class="layui-input" id="vehiclestyle" lay-verify="required"
-                                       name="vehiclestyle"
-                                       type="text">
+<!--                                <input autocomplete="off" class="layui-input" id="vehiclestyle" lay-verify="required"-->
+<!--                                       name="vehiclestyle"-->
+<!--                                       type="text">-->
+                                <select id="vehiclestyle" lay-verify="required" lay-filter="vehiclestyle" name="vehiclestyle">
+                                    <option value="">请选择车系</option>
+                                </select>
                             </div>
                         </div>
                         <div class="layui-inline">
                             <label class="layui-form-label"><i>*</i>车型</label>
                             <div class="layui-input-inline">
-                                <input autocomplete="off" class="layui-input" id="vehiclebrand" lay-verify="required"
-                                       name="vehiclebrand" type="text">
+<!--                                <input autocomplete="off" class="layui-input" id="vehiclebrand" lay-verify="required"-->
+<!--                                       name="vehiclebrand" type="text">-->
+                                <select id="vehiclebrand" lay-verify="required"  name="vehiclebrand">
+                                    <option value="">请选择车型</option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -526,9 +532,9 @@
                             </div>
                         </div>
                         <div class="layui-inline">
-                            <label class="layui-form-label"><i>*</i>性别</label>
+                            <label class="layui-form-label">性别</label>
                             <div class="layui-input-inline">
-                                <select id="cGenderM" lay-filter="gender" name="cGender">
+                                <select id="cGenderM"  name="cGender">
                                     <option value="">请选择性别</option>
                                     <option value="1">男</option>
                                     <option value="2">女</option>
@@ -554,9 +560,9 @@
                             </div>
                         </div>
                         <div class="layui-inline">
-                            <label class="layui-form-label"><i>*</i>证件号</label>
+                            <label class="layui-form-label">证件号</label>
                             <div class="layui-input-inline">
-                                <input autocomplete="off" class="layui-input" id="cCardM" lay-verify="required" name="cCard"
+                                <input autocomplete="off" class="layui-input" id="cCardM"  name="cCard"
                                        type="text">
                             </div>
                         </div>
@@ -672,7 +678,7 @@
 <!--                                <input autocomplete="off" class="layui-input" id="vehiclelabelM" lay-verify="required"-->
 <!--                                       name="vehiclelabel"-->
 <!--                                       type="text">-->
-                                <select id="vehiclelabelM" lay-verify="required" name="vehiclelabel">
+                                <select id="vehiclelabelM" lay-verify="required" lay-filter="vehiclelabelM" name="vehiclelabel">
                                     <option value="">请选择品牌</option>
                                 </select>
                             </div>
@@ -680,16 +686,22 @@
                         <div class="layui-inline">
                             <label class="layui-form-label"><i>*</i>车系</label>
                             <div class="layui-input-inline">
-                                <input autocomplete="off" class="layui-input" id="vehiclestyleM" lay-verify="required"
-                                       name="vehiclestyle"
-                                       type="text">
+<!--                                <input autocomplete="off" class="layui-input" id="vehiclestyleM" lay-verify="required"-->
+<!--                                       name="vehiclestyle"-->
+<!--                                       type="text">-->
+                                <select id="vehiclestyleM" lay-verify="required" lay-filter="vehiclestyleM" name="vehiclestyle">
+                                    <option value="">请选择车系</option>
+                                </select>
                             </div>
                         </div>
                         <div class="layui-inline">
                             <label class="layui-form-label"><i>*</i>车型</label>
                             <div class="layui-input-inline">
-                                <input autocomplete="off" class="layui-input" id="vehiclebrandM" lay-verify="required"
-                                       name="vehiclebrand" type="text">
+<!--                                <input autocomplete="off" class="layui-input" id="vehiclebrandM" lay-verify="required"-->
+<!--                                       name="vehiclebrand" type="text">-->
+                                <select id="vehiclebrandM" lay-verify="required" lay-filter="vehiclebrandM" name="vehiclebrand">
+                                    <option value="">请选择车型</option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -972,7 +984,7 @@
 
         <div class="layui-form-item">
             <div class="layui-input-block s-submitButton5">
-                <button class="layui-btn" id="gadd" lay-filter="save2" lay-submit type="button">确认</button>
+                <button class="layui-btn" id="gadd" lay-filter="gadd" lay-submit type="button">确认</button>
                 <a class="layui-btn layui-btn-danger" id="cancel">取消</a>
             </div>
         </div>
@@ -1004,17 +1016,17 @@
                 elem: '#unbindTime'
             });
         }
-
+//获取品牌
         function pullBrandName(selector, callback) {
             var selectE = $(selector);
             $.post({
-                url: "service/Archives/getCarSeriesNameList",
+                url: "service/Archives/getBrandNameList",
                 timeout: 1000,
                 dataType: "json",
                 success: function (res) {
                     selectE.empty();
                     for (var s of res) {
-                        selectE.append("<option value='" + s.name + "'>" + s.name + "</option>");
+                        selectE.append("<option value='" + s.id + "'>" + s.name + "</option>");
                     }
                     callback();
                     form.render(); //layui的form重新渲染
@@ -1027,50 +1039,50 @@
             })
         }
         //车系
-        // function pullCarSeries(selector, callback) {
-        //     var selectE = $(selector);
-        //     $.post({
-        //         url: "service/Archives/getCarSeriesNameList",
-        //         timeout: 1000,
-        //         dataType: "json",
-        //         success: function (res) {
-        //             selectE.empty();
-        //             for (var s of res) {
-        //                 selectE.append("<option value='" + s.name + "'>" + s.name + "</option>");
-        //             }
-        //             callback();
-        //             form.render(); //layui的form重新渲染
-        //         },
-        //         error: function () {
-        //             selectE.empty();
-        //             selectE.append("<option value='一汽大众'>拉取失败，默认为一汽大众！</option>");
-        //             form.render();
-        //         }
-        //     })
-        // }
+        function pullCarSeriesgroupName(selector,BrandId,callback) {
+            var selectE = $(selector);
+            $.post({
+                url: "service/Archives/getCarSeriesgroupNameList?BrandId="+BrandId,
+                timeout: 1000,
+                dataType: "json",
+                success: function (res) {
+                    selectE.empty();
+                    for (var s of res) {
+                        selectE.append("<option value='" + s.id + "'>" + s.name + "</option>");
+                    }
+                    callback();
+                    form.render(); //layui的form重新渲染
+                },
+                error: function () {
+                    selectE.empty();
+                    selectE.append("<option>拉取失败</option>");
+                    form.render();
+                }
+            })
+        }
 
         //车型
-        // function pullCarType(selector, callback) {
-        //     var selectE = $(selector);
-        //     $.post({
-        //         url: "service/Archives/getCarTypeNameList",
-        //         timeout: 1000,
-        //         dataType: "json",
-        //         success: function (res) {
-        //             selectE.empty();
-        //             for (var s of res) {
-        //                 selectE.append("<option value='" + s.name + "'>" + s.name + "</option>");
-        //             }
-        //             callback();
-        //             form.render(); //layui的form重新渲染
-        //         },
-        //         error: function () {
-        //             selectE.empty();
-        //             selectE.append("<option value='一汽大众'>拉取失败，默认为一汽大众！</option>");
-        //             form.render();
-        //         }
-        //     })
-        // }
+        function pullCarSeriesName(selector,groupid,callback) {
+            var selectE = $(selector);
+            $.post({
+                url: "service/Archives/getAllCarSeriesNameList?GroupId="+groupid,
+                timeout: 1000,
+                dataType: "json",
+                success: function (res) {
+                    selectE.empty();
+                    for (var s of res) {
+                        selectE.append("<option value='" + s.name + "'>" + s.name + "</option>");
+                    }
+                    callback();
+                    form.render(); //layui的form重新渲染
+                },
+                error: function () {
+                    selectE.empty();
+                    selectE.append("<option>拉取失败</option>");
+                    form.render();
+                }
+            })
+        }
 
         function pullMemberlevel(selector, callback) {
             var selectE = $(selector);
@@ -1104,7 +1116,20 @@
                 offset: '20px'
             });
             pullBrandName("#vehiclelabel", () => {
-                //
+                pullCarSeriesgroupName("#vehiclestyle", $('#vehiclelabel').val(), () => {
+                    pullCarSeriesName("#vehiclebrand", $('#vehiclestyle').val(), () => {
+                    });
+                });
+            });
+            form.on('select(vehiclelabel)', function () {
+                    pullCarSeriesgroupName("#vehiclestyle", $('#vehiclelabel').val(), () => {
+                        pullCarSeriesName("#vehiclebrand", $('#vehiclestyle').val(), () => {
+                        });
+                    });
+            });
+            form.on('select(vehiclestyle)', function () {
+                    pullCarSeriesName("#vehiclebrand", $('#vehiclestyle').val(), () => {
+                    });
             });
             $('#cancelAdd').on('click', function () {
                 // 关闭当前弹出层
@@ -1150,7 +1175,7 @@
                 {field: 'city', width: 152, title: '市'},
                 {field: 'district', width: 152, title: '区'},
                 {field: 'userId', width: 210, title: 'id', hide: true},
-                {field: 'vehicleId', width: 210, title: 'vid'},
+                {field: 'vehicleId', width: 210, title: 'vid',hide: true},
                 {field: 'operation', width: 210, title: '操作', toolbar: '#operation', fixed: 'right'}
             ]],
             size: 'sm',
@@ -1158,22 +1183,24 @@
                 let data = res.data
                 for (let i = 0; i < data.length; i++) {
                     data[i].vehicleId=data[i].vehicle.vehicleId
+                    data[i].vin = data[i].vehicle.vin
                     $.post({
                         url: "service/Archives/getUserInfo?userId=" + data[i].userId,
                         async: false,
                         success: function (resp) {
                             //console.log(resp)
-                            data[i].cGender = resp.cGender === 1 ? "男" : "女"
-                            data[i].cBirthday = resp.cBirthday
-                            data[i].phone = resp.phone
-                            data[i].cCard = resp.cCard
-                            data[i].customername = resp.customername
-                            data[i].level = resp.member.level
-                            data[i].vin = resp.vehicle.vin
-                            data[i].platenumber = resp.vehicle.platenumber
-                            data[i].vehiclebrand = resp.vehicle.vehiclebrand
-                            data[i].vehiclelabel = resp.vehicle.vehiclelabel
-                            data[i].vehiclestyle = resp.vehicle.vehiclestyle
+                            try{
+                                data[i].cGender = resp.cGender === 1 ? "男" : "女"
+                                data[i].cBirthday = resp.cBirthday
+                                data[i].phone = resp.phone
+                                data[i].cCard = resp.cCard
+                                data[i].customername = resp.customername
+                                data[i].level = resp.member.level
+                                data[i].platenumber = resp.vehicle.platenumber
+                                data[i].vehiclebrand = resp.vehicle.vehiclebrand
+                                data[i].vehiclelabel = resp.vehicle.vehiclelabel
+                                data[i].vehiclestyle = resp.vehicle.vehiclestyle
+                            } catch (e){}
                         }
                     })
                 }
@@ -1227,15 +1254,36 @@
                         $('#cCardM').val(res.cCard);
                         $('#platenumberM').val(res.vehicle.platenumber);
                         $('#vinM').val(res.vehicle.vin);
-                        $('#vehiclelabelM').val(res.vehicle.vehiclelabel);
-                        $('#vehiclebrandM').val(res.vehicle.vehiclebrand);
-                        $('#vehiclestyleM').val(res.vehicle.vehiclestyle);
+                        // $('#vehiclebrandM').val(res.vehicle.vehiclebrand);
+                        // $('#vehiclestyleM').val(res.vehicle.vehiclestyle);
                         $('#levelM').val(res.member.level);
                         $('#memberNumberM').val(res.memberNumber);
-                        form.render()
+                        pullBrandName("#vehiclelabelM", () => {
+                            pullCarSeriesgroupName("#vehiclestyleM", $('#vehiclelabelM').val(), () => {
+                                pullCarSeriesName("#vehiclebrandM", $('#vehiclestyleM').val(), () => {
+                                    // $('#vehiclelabelM option:selected').text(res.vehicle.vehiclelabel)
+                                    // $('#vehiclelabelM').val(res.vehicle.vehiclelabel);
+                                    // $('#vehiclestyleM').val(res.vehicle.vehiclestyle);
+                                    // $('#vehiclebrandM').val(res.vehicle.vehiclebrand);
+                                });
+                            });
+                        });
+                        // form.render()
+                        form.on('select(vehiclelabelM)', function () {
+                            pullCarSeriesgroupName("#vehiclestyleM", $('#vehiclelabelM').val(), () => {
+                                pullCarSeriesName("#vehiclebrandM", $('#vehiclestyleM').val(), () => {
+                                });
+                            });
+                        });
+                        form.on('select(vehiclestyleM)', function () {
+                            pullCarSeriesName("#vehiclebrandM", $('#vehiclestyleM').val(), () => {
+                            });
+                        });
                     }
                 });
                 form.on('submit(confirmAddM)', function (data) {
+                    data.field.vehiclelabel=$('#vehiclelabelM option:selected').text();
+                    data.field.vehiclestyle=$('#vehiclestyleM option:selected').text();
                     console.log(data)
                     data.field.vehicle = {
                         platenumber: data.field.platenumber,
@@ -1259,7 +1307,7 @@
                             var t
                             data.field.cGender=t=== "1" ? "男" : "女";
                              // console.log(res)
-                            layer.closeAll();
+                             layer.closeAll();
                             obj.update(data.field);
                         }
                     })
@@ -1270,6 +1318,7 @@
                     return false
                 });
             } else if (layEvent === 'grade') { // 会员级别
+
                 var index2 = layer.open({
                     type: 1,
                     title: '会员级别',
@@ -1283,10 +1332,30 @@
                 })
                 //要触发的事件
                 pullMemberlevel("#newLevel", () => {
-                    $("#originalLevel").val()
+                    // $("#originalLevel").val()
                 })
                 $('#originalLevel').val(activedata.level);
                 // 确认
+                form.on('submit(gadd)', function (data) {
+                    // $("#gadd").unbind("click").click(function () {
+                    var str = $("#newLevel").val();
+                    var result = str.split(",");
+                    var id = result[1];
+                    var newLevels=result[0];
+                    //console.log(id);
+                    $.post({
+                        url: "/service/Archives/alertLevel",
+                        data: {
+                            userId: activedata.userId,
+                            id: id
+                        },
+                        success: function (res) {
+                            obj.update({level:newLevels});
+                            layer.closeAll();
+                            // layuiAlert('修改成功！', {icon: 1})
+                        }
+                    })
+                })
             } else if (layEvent === 'delete') { // 删除
                 layer.confirm('确定要删除吗？', {icon: 3, title: '提示'}, function (index) {
                     // 删除对应行（tr）的DOM结构，并更新缓存
@@ -1318,7 +1387,7 @@
                 closeBtn: false,
                 yes: function () {
                     layer.closeAll();
-                    $("#test")[0].reset();
+                    $('#addForm').trigger('reset');
                     tableUserList.reload()
                 }
             });
@@ -1353,6 +1422,8 @@
         });
 
         form.on('submit(confirmAdd)', function (data) {
+            data.field.vehiclelabel=$('#vehiclelabel option:selected').text();
+            data.field.vehiclestyle=$('#vehiclestyle option:selected').text();
             console.log(data.field.platenumber);
             // data.field.cGender=(data.field.cGender="男"?0:1);
             data.field.vehicle = {
@@ -1373,22 +1444,6 @@
                 }
             })
             return false;
-        })
-        $("#gadd").unbind("click").click(function () {
-            var str = $("#newLevel").val();
-            var result = str.split(",");
-            var id = result[1];
-            console.log(id);
-            $.post({
-                url: "/service/Archives/alertLevel",
-                data: {
-                    userId: activedata.userId,
-                    id: id
-                },
-                success: function (res) {
-                    layuiAlert('修改成功！', {icon: 1})
-                }
-            })
         })
         $("#queryBtn").unbind("click").click(function () {
             tableUserList.reload({

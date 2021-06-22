@@ -1,7 +1,9 @@
 package com.sh.cloud.web;
 
-import com.sft.member.bean.Brand;
-import com.sft.member.bean.CarSeries;
+import carinfo.bean.CarBrand;
+import carinfo.bean.CarSeries;
+import carinfo.bean.CarSeriesGroup;
+import carinfo.service.CarDataQuery;
 import com.sft.member.bean.Member;
 import com.sft.member.bean.User;
 import com.sft.member.obtain.member.MemberService;
@@ -25,9 +27,7 @@ public class ArchivesController {
     @Resource
     MemberService memberService;
     @Resource
-    BrandService brandService;
-    @Resource
-    CarSeriesService carSeriesService;
+    CarDataQuery CarService;
     @PostMapping(value = "addArchives")
     public String addUser(@RequestBody User user) {
         String ret = shUserService.addUser(PlatUserUtils.getCurrentLoginPlatUser(), user);
@@ -96,21 +96,21 @@ public class ArchivesController {
         return ret;
     }
     @PostMapping(value = "getBrandNameList")
-    public List<Brand> getBrandNameList() {
-        List<Brand> ret = brandService.getBrandNameList();
+    public List<CarBrand> getBrandNameList() {
+        List<CarBrand> ret = CarService.getAllCarBrand();
+
         return ret;
     }
-//    @PostMapping(value = "getCarSeriesNameList")
-//    public List<CarSeries> getCarSeriesNameList() {
-//        List<CarSeries> ret = carSeriesService.getCarSeriesNameList();
-//        return ret;
-//    }
-//    车型接口没有resource
-//    @PostMapping(value = "getCarTypeNameList")
-//    public List<CarType> getMemberNameList() {
-//        List<Member> ret = memberService.getMemberNameList();
-//        return ret;
-//    }
+    @PostMapping(value = "getCarSeriesgroupNameList")
+    public List<CarSeriesGroup> getCarSeriesgroupNameList(@RequestParam String BrandId) {
+        List<CarSeriesGroup> ret = CarService.getAllCarSeriesGroups(BrandId);
+        return ret;
+    }
+    @PostMapping(value = "getAllCarSeriesNameList")
+    public List<CarSeries> getAllCarSeriesNameList(@RequestParam String GroupId) {
+        List<carinfo.bean.CarSeries> ret = CarService.getAllCarSeries(GroupId);
+        return ret;
+    }
     @PostMapping(value = "alertLevel")
     public String alertLevel(@RequestParam String userId, @RequestParam String id) {
         Member m = new Member();
