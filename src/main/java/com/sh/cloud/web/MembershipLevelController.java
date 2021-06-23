@@ -21,7 +21,8 @@ public class MembershipLevelController {
         //此处获取他们给的原始数据，然后处理业务逻辑，然后返回结果
         Member c = new Member();
         c.id = id;
-        if (memberService.deleteMember(PlatUserUtils.getCurrentLoginPlatUser(), c).equals("true"))
+        String ret=memberService.deleteMember(PlatUserUtils.getCurrentLoginPlatUser(), c);
+        if (ret == null || ret.equals(""))
             return "修改成功";
         else
             return "修改失败";

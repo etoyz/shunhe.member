@@ -1,6 +1,7 @@
 package com.sh.cloud.web;
 
 import carinfo.bean.CarBrand;
+import carinfo.bean.CarInfo;
 import carinfo.bean.CarSeries;
 import carinfo.bean.CarSeriesGroup;
 import carinfo.service.CarDataQuery;
@@ -98,19 +99,20 @@ public class ArchivesController {
         return ret;
     }
     @PostMapping(value = "getBrandNameList")
-    public List<CarBrand> getBrandNameList() {
-        List<CarBrand> ret = CarService.getAllCarBrand();
+    public List<CarSeriesGroup> getBrandNameList() {
+
+        List<CarSeriesGroup> ret = CarService.getAllCarSeriesGroups("14");
 
         return ret;
     }
     @PostMapping(value = "getCarSeriesgroupNameList")
-    public List<CarSeriesGroup> getCarSeriesgroupNameList(@RequestParam String BrandId) {
-        List<CarSeriesGroup> ret = CarService.getAllCarSeriesGroups(BrandId);
+    public List<CarSeries> getCarSeriesgroupNameList(@RequestParam String BrandId) {
+        List<carinfo.bean.CarSeries> ret = CarService.getAllCarSeries(BrandId);
         return ret;
     }
     @PostMapping(value = "getAllCarSeriesNameList")
-    public List<CarSeries> getAllCarSeriesNameList(@RequestParam String GroupId) {
-        List<carinfo.bean.CarSeries> ret = CarService.getAllCarSeries(GroupId);
+    public List<CarInfo> getAllCarSeriesNameList(@RequestParam String GroupId) {
+        List<carinfo.bean.CarInfo> ret = CarService.getAllCarInfo(GroupId);
         return ret;
     }
     @PostMapping(value = "alertLevel")

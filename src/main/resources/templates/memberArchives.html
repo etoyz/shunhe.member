@@ -1176,9 +1176,6 @@
                 {field: 'district', width: 152, title: '区'},
                 {field: 'userId', width: 210, title: 'id', hide: true},
                 {field: 'vehicleId', width: 210, title: 'vid',hide: true},
-                {field: 'vehiclelabelid', width: 210, title: 'vlid',hide: true},
-                {field: 'vehiclestyleid', width: 210, title: 'vsid',hide: true},
-                {field: 'vehiclebrandid', width: 210, title: 'vbid',hide: true},
                 {field: 'operation', width: 210, title: '操作', toolbar: '#operation', fixed: 'right'}
             ]],
             size: 'sm',
@@ -1193,7 +1190,13 @@
                         success: function (resp) {
                             //console.log(resp)
                             try{
-                                data[i].cGender = resp.cGender === 1 ? "男" : "女"
+                                if(resp.cGender==1)
+                                    data[i].cGender="男"
+                                else if(resp.cGender==2)
+                                    data[i].cGender="女"
+                                else
+                                    data[i].cGender="未知"
+                                // data[i].cGender = resp.cGender === 1 ? "男" : "女"
                                 data[i].cBirthday = resp.cBirthday
                                 data[i].phone = resp.phone
                                 data[i].cCard = resp.cCard
