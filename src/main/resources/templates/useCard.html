@@ -255,9 +255,9 @@
                 </div>
             </div>
             <div class="layui-inline">
-                <label class="layui-form-label">充入数量</label>
+                <label class="layui-form-label">数量</label>
                 <div class="layui-input-inline">
-                    <input autocomplete="off" class="layui-input" id="count" lay-verify="required|number" name="count"
+                    <input autocomplete="off" class="layui-input" id="num" lay-verify="required|number" name="num"
                            type="text">
                 </div>
             </div>
@@ -430,16 +430,16 @@
                 },
                 cols: [ [
                     {type: 'numbers'},
-                    {field: 'consumeTypeName', width: 124, title: '消费类型'},
-                    {field: 'consumeProjectName', width: 82, title: '消费项目'},
-                    {field: 'practicalProjectName', width: 80, title: '具体项目'},
-                    {field: 'payStyleName', width: 80, title: '支付方式'}, //单元格内容水平居中
+                    {field: 'consumeTypeName', width: 110, title: '消费类型'},
+                    {field: 'consumeProjectName', width: 110, title: '消费项目'},
+                    {field: 'practicalProjectName', width: 110, title: '具体项目'},
+                    {field: 'payStyleName', width: 110, title: '支付方式'}, //单元格内容水平居中
                     {field: 'timeCost', width: 80, title: '工时费'},
-                    {field: 'matCost', width: 146, title: '材料费'},
-                    {field: 'totalMoney', width: 146, title: '总金额'},
-                    {field: 'ticketID', width: 88, title: '工单号'},
-                    {field: 'mileage', width: 88, title: '行驶里程'},
-                    {field: 'count', width: 88, title: '数量'},
+                    {field: 'matCost', width: 80, title: '材料费'},
+                    {field: 'totalMoney', width: 110, title: '总金额'},
+                    {field: 'ticketID', width: 90, title: '工单号'},
+                    {field: 'mileage', width: 90, title: '行驶里程'},
+                    {field: 'num', width: 100, title: '数量'},
                     {field: 'invoiceID', width: 88, title: '发票号'},
                     {field: 'invoiceNum', width: 88, title: '开票金额'},
                     {field: 'costPrice', width: 88, title: '成本价'},
@@ -457,9 +457,7 @@
                         if (couponReviewList[i].cnt === data.cnt) {
                             console.log(data.cnt)
                             couponReviewList.splice(i, 1)
-                            tableUseCoupons.reload({
-                                data: couponReviewList
-                            })
+                            obj.del()
                         }
                     }
                 }
@@ -477,13 +475,12 @@
                 })
             })
 
-            var uniqueID = Number(Math.random().toString().substr(3, length) + Date.now()).toString(36);
             var cnt = 0;
             form.on('submit(addUseCard)', function (data) {
                 var formData = data.field
                 console.log(formData)
                 formData.userId = activeUser.userId
-                formData.groupId = uniqueID
+                formData.groupId = activeUser.memberNumber
                 formData.cnt = cnt + 1
                 cnt++
                 // 下列字段用于列表显示，接口不需要这些
@@ -492,11 +489,12 @@
                 formData.consumeTypeName = $('#consumeTypeId option:selected').text()
                 formData.practicalProjectName = $('#practicalProjectId option:selected').text()
                 formData.payStyleName = $('#payStyle option:selected').text()
-                if (formData.payStyle === "-1")
-                    formData.practicalProjectId = $("#practicalProjectId").val()
+                formData.practicalProjectId = $("#practicalProjectId").val()
+                if (formData.payStyle === "-1") {
+                    formData.count = $("#num").val()
+                }
                 else if (formData.payStyle === "-2") {
-                    formData.practicalProjectId = $("#practicalProjectId").val()
-                    formData.money = $("#count").val()
+                    formData.money = $("#num").val()
                 }
                 couponReviewList.push(formData)
                 tableUseCoupons.reload({

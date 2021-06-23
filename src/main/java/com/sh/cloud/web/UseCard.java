@@ -9,6 +9,8 @@ import com.sh.cloud.utils.PlatUserUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -28,10 +30,15 @@ public class UseCard {
     @RequestMapping("submitForReview")
     @ResponseBody
     public String submitForReview(@RequestBody List<CouponCheck> list) {
+        SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
+        String groupId = df.format(new Date());
+        // 根据具体项目Id，获取到卡券Id
         for (CouponCheck couponCheck : list) {
             PracticalProject project = new PracticalProject();
             project.practicalProjectId = Integer.parseInt(couponCheck.practicalProjectId);
             couponCheck.couponId = String.valueOf(practicalProjectService.getPracticalProject(project).couponId);
+            couponCheck.groupId = groupId + couponCheck.groupId.substring(couponCheck.groupId.length() - 3);
+            System.out.println(couponCheck.groupId);
         }
         if (payService.addUnCheckRecord(PlatUserUtils.getCurrentLoginPlatUser(), list) == null)
             return "失败！";
