@@ -71,16 +71,18 @@ public class ArchivesController {
     public String deleteArchives(@RequestParam String userId) {
         User c = new User();
         c.userId = userId;
-        if (shUserService.deleteUser(PlatUserUtils.getCurrentLoginPlatUser(), c).equals("true"))
+         String ret = shUserService.deleteUser(PlatUserUtils.getCurrentLoginPlatUser(), c);
+        if (ret == null || ret.equals(""))
             return "删除成功！";
         else
-            return "删除失败！";
+            return ret;
     }
 
     @PostMapping(value = "editArchives")
-    public String editArchives(@RequestBody User user) {
-        shUserService.editUser(PlatUserUtils.getCurrentLoginPlatUser(), user);
-        return "修改成功！";
+    public User editArchives(@RequestBody User user) {
+        User c;
+       c = shUserService.editUser(PlatUserUtils.getCurrentLoginPlatUser(), user);
+        return  c;
     }
 
     @PostMapping(value = "getUserInfo")

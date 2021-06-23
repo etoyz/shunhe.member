@@ -1071,7 +1071,7 @@
                 success: function (res) {
                     selectE.empty();
                     for (var s of res) {
-                        selectE.append("<option value='" + s.name + "'>" + s.name + "</option>");
+                        selectE.append("<option value='" + s.id + "'>" + s.name + "</option>");
                     }
                     callback();
                     form.render(); //layui的form重新渲染
@@ -1176,6 +1176,9 @@
                 {field: 'district', width: 152, title: '区'},
                 {field: 'userId', width: 210, title: 'id', hide: true},
                 {field: 'vehicleId', width: 210, title: 'vid',hide: true},
+                {field: 'vehiclelabelid', width: 210, title: 'vlid',hide: true},
+                {field: 'vehiclestyleid', width: 210, title: 'vsid',hide: true},
+                {field: 'vehiclebrandid', width: 210, title: 'vbid',hide: true},
                 {field: 'operation', width: 210, title: '操作', toolbar: '#operation', fixed: 'right'}
             ]],
             size: 'sm',
@@ -1242,11 +1245,7 @@
                         userId: activedata.userId
                     },
                     success: function (res) {
-                        //   activelevel=res.
-                        // console.log(res)
-                        // for (var resR of res.data.vehicle) {
-                        //   if
-                        // }
+                        console.log(res.vehicle.vehiclelabelid)
                         $('#customernameM').val(res.customername);
                         $('#phoneM').val(res.phone);
                         $('#cBirthdayM').val(res.cBirthday);
@@ -1259,12 +1258,14 @@
                         $('#levelM').val(res.member.level);
                         $('#memberNumberM').val(res.memberNumber);
                         pullBrandName("#vehiclelabelM", () => {
+                            $('#vehiclelabelM').val(res.vehicle.vehiclelabelid);
+                            form.render()
                             pullCarSeriesgroupName("#vehiclestyleM", $('#vehiclelabelM').val(), () => {
+                                $('#vehiclestyleM').val(res.vehicle.vehiclestyleid);
                                 pullCarSeriesName("#vehiclebrandM", $('#vehiclestyleM').val(), () => {
                                     // $('#vehiclelabelM option:selected').text(res.vehicle.vehiclelabel)
-                                    // $('#vehiclelabelM').val(res.vehicle.vehiclelabel);
-                                    // $('#vehiclestyleM').val(res.vehicle.vehiclestyle);
-                                    // $('#vehiclebrandM').val(res.vehicle.vehiclebrand);
+                                    $('#vehiclebrandM').val(res.vehicle.vehiclebrandid);
+
                                 });
                             });
                         });
@@ -1282,17 +1283,21 @@
                     }
                 });
                 form.on('submit(confirmAddM)', function (data) {
-                    data.field.vehiclelabel=$('#vehiclelabelM option:selected').text();
-                    data.field.vehiclestyle=$('#vehiclestyleM option:selected').text();
+                    var textvehiclelabel=$('#vehiclelabelM option:selected').text();
+                    var textvehiclestyle=$('#vehiclestyleM option:selected').text();
+                    var textvehiclebrand=$('#vehiclebrandM option:selected').text();
                     console.log(data)
                     data.field.vehicle = {
                         platenumber: data.field.platenumber,
                         vin: data.field.vin,
                         vehicleId:activedata.vehicleId,
-                        vehiclelabel: data.field.vehiclelabel,
-                        vehiclebrand: data.field.vehiclebrand,
-                        vehiclestyle: data.field.vehiclestyle,
+                        vehiclelabel: textvehiclelabel,
+                        vehiclebrand: textvehiclebrand,
+                        vehiclestyle: textvehiclestyle,
                         customername: data.field.customername,
+                        vehiclelabelid: data.field.vehiclelabel,
+                        vehiclebrandid: data.field.vehiclebrand,
+                        vehiclestyleid: data.field.vehiclestyle,
                     }
                     data.field.member = {
                         level: data.field.level
@@ -1304,9 +1309,12 @@
                         data: JSON.stringify(data.field),
                         contentType: "application/json",
                         success: function (res) {
-                            var t
-                            data.field.cGender=t=== "1" ? "男" : "女";
-                             // console.log(res)
+                            // var t
+                            data.field.cGender=res.cGender=== 1 ? "男" : "女";
+                            data.field.vehiclelabel= res.vehicle.vehiclelabel
+                                data.field.vehiclebrand=res.vehicle.vehiclebrand
+                                    data.field.vehiclestyle= res.vehicle.vehiclestyle
+                             console.log(data.field.vehiclelabel)
                              layer.closeAll();
                             obj.update(data.field);
                         }
@@ -1359,8 +1367,6 @@
             } else if (layEvent === 'delete') { // 删除
                 layer.confirm('确定要删除吗？', {icon: 3, title: '提示'}, function (index) {
                     // 删除对应行（tr）的DOM结构，并更新缓存
-
-                    layer.close(index);
                     // 向服务端发送删除指令
                     $.post({
                         url: "/service/Archives/deleteArchives",
@@ -1368,9 +1374,11 @@
                             userId: activedata.userId
                         },
                         success: function (res) {
-                            form.render()
+                            layuiAlert(res)
                         }
                     });
+
+                    layer.close(index);
                     // 提示窗
                     //     layer.alert('删除成功！', {icon: 1});
                 });
@@ -1422,17 +1430,22 @@
         });
 
         form.on('submit(confirmAdd)', function (data) {
-            data.field.vehiclelabel=$('#vehiclelabel option:selected').text();
-            data.field.vehiclestyle=$('#vehiclestyle option:selected').text();
+          var textvehiclelabel=$('#vehiclelabel option:selected').text();
+          var textvehiclestyle=$('#vehiclestyle option:selected').text();
+          var textvehiclebrand=$('#vehiclebrand option:selected').text();
             console.log(data.field.platenumber);
             // data.field.cGender=(data.field.cGender="男"?0:1);
             data.field.vehicle = {
                 platenumber: data.field.platenumber,
                 vin: data.field.vin,
-                vehiclelabel: data.field.vehiclelabel,
-                vehiclebrand: data.field.vehiclebrand,
-                vehiclestyle: data.field.vehiclestyle,
-                customername: data.field.customername
+                vehiclelabel: textvehiclelabel,
+                vehiclebrand: textvehiclebrand,
+                vehiclestyle: textvehiclestyle,
+                customername: data.field.customername,
+                vehiclelabelid: data.field.vehiclelabel,
+                vehiclebrandid: data.field.vehiclebrand,
+                vehiclestyleid: data.field.vehiclestyle,
+                // customernameid: data.field.customername
             }
             $.post({
                 url: "/service/Archives/addArchives",

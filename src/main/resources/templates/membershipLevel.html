@@ -304,23 +304,26 @@
             if (layEvent === 'delete') {
                 layer.confirm("确认删除？", function () {
                     $.post({
-                        url: "/service/membershipLevel/deleteCard",
+                        url: "/service/membershipLevel/deleteMember",
                         data: {
                             id: activeCardid
                         },
                         success: function (res) {
-                            if (res !== "ok") {
-                                layer.open({
-                                    offset: "auto",//具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
-                                    content: '<div style="padding: 20px 70px;">' + '删除失败:' + res + '</div>',
-                                    btn: '关闭',
-                                    btnAlign: 'c',//按钮居中
-                                    shade: 0, //不显示遮罩
-                                    yes: function () {
-                                        layer.closeAll();
-                                    }
-                                });
-                            }
+                            layer.closeAll();
+                            tableIns.reload()
+                            // if (res !== "ok") {
+                            //     layer.open({
+                            //         offset: "auto",//具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
+                            //         content: '<div style="padding: 20px 70px;">' + '删除失败:' + res + '</div>',
+                            //         btn: '关闭',
+                            //         btnAlign: 'c',//按钮居中
+                            //         shade: 0, //不显示遮罩
+                            //         yes: function () {
+                            //             layer.closeAll();
+                            //         }
+                            //     });
+                            // }
+
                         }
                     });
                 })
