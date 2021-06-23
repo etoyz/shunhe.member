@@ -1,6 +1,7 @@
 package com.sh.cloud.web;
 
 import com.sft.member.bean.ConsumeProject;
+import com.sft.member.bean.PlatUser;
 import com.sft.member.bean.PracticalProject;
 import com.sft.member.obtain.consume.PracticalProjectService;
 import com.sh.cloud.utils.PlatUserUtils;
@@ -40,6 +41,12 @@ public class PracticalProjectController {
     @RequestMapping("addPracticalProject")
     public String addPracticalProject(@RequestBody PracticalProject project) {
         return practicalProjectService.addPracticalProject(PlatUserUtils.getCurrentLoginPlatUser(), project);
+    }
+
+    @RequestMapping("editPracticalProject")
+    public String editPracticalProject(@RequestBody PracticalProject project) {
+        practicalProjectService.editPracticalProject(PlatUserUtils.getCurrentLoginPlatUser(), project);
+        return "修改成功！";
     }
 
     @RequestMapping("deletePracticalProject")

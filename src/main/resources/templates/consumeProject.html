@@ -213,6 +213,7 @@
             <table class="layui-hide" id="speProj" lay-filter="speProjTable"></table>
             <script id="operationSpe" type="text/html">
                 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
+                <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="edit">修改</a>
             </script>
             <div class="s-tabBottomButton">
                 <span class="layui-btn layui-btn-normal" id="addSpeProj">新增具体项目</span>
@@ -221,7 +222,7 @@
     </div>
 </div>
 
-<!-- 新增具体项目弹窗 -->
+<!-- 具体项目详情弹窗 -->
 <div class="s-details" id="addSpeWindow">
     <form action="" autocomplete="off" class="layui-form">
         <div>
@@ -282,7 +283,7 @@
             </div>
         </div>
         <div class="s-tabBottomButton">
-            <button class="layui-btn" lay-filter="confirmAddSpe" lay-submit type="button">新增</button>
+            <button class="layui-btn" lay-filter="confirmAddSpe" lay-submit type="button">确认</button>
             <button class="layui-btn layui-btn-warm" id="cancelAddSpe" type="button">取消</button>
         </div>
     </form>
@@ -315,82 +316,70 @@
             layer = layui.layer,
             table = layui.table,
             element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
-
-        function layuiAlert(msg) {
-            layer.open({
-                offset: "auto",//具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
-                content: '<div style="padding: 20px 70px;">' + msg + '</div>',
-                btn: '关闭',
-                btnAlign: 'c',//按钮居中
-                shade: 0, //不显示遮罩
-                closeBtn: false,
-                yes: function () {
-                    layer.closeAll();
-                }
-            });
-        }
-
-        function pullConsumeTypes(selector, generateAllOption, callback) {
-            var selectE = $(selector);
-            $.post({
-                url: "service/consumeType/getConsumeTypeList?query=&page=1&limit=2147483640",
-                timeout: 1000,
-                dataType: "json",
-                success: function (res) {
-                    res = res.data;
-                    selectE.empty();
-                    if (generateAllOption)
-                        selectE.append("<option value='-1'>" + "全部" + "</option>");
-                    for (var s of res) {
-                        selectE.append("<option value='" + s.consumeTypeId + "'>" + s.name + "</option>");
+        {
+            function layuiAlert(msg) {
+                layer.open({
+                    offset: "auto",//具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
+                    content: '<div style="padding: 20px 70px;">' + msg + '</div>',
+                    btn: '关闭',
+                    btnAlign: 'c',//按钮居中
+                    shade: 0, //不显示遮罩
+                    closeBtn: false,
+                    yes: function () {
+                        layer.closeAll();
                     }
-                    callback();
-                    form.render(); //layui的form重新渲染
-                },
-                error: function () {
-                    selectE.empty();
-                    selectE.append("<option>拉取失败，请刷新！</option>");
-                    form.render();
-                }
-            })
-        }
+                });
+            }
 
-        pullConsumeTypes("#consumeTypeInput", true, () => {
-        });
-
-        $('#cancelAdd').on('click', function () {
-            layer.closeAll();
-            return false;
-        });
-
-        // 显示“新增弹窗”
-        $('body').unbind("click").on('click', '#add', function () {
-            $("#consumeProjectName").val("")
-            $("#invoice").val("")
-            $("#remark").val("")
-            $("#intRatio").val("")
-            pullConsumeTypes("#consumeTypeInputAdd", false, () => {
-            })
-            layer.open({
-                type: 1,
-                title: '新增消费项目',
-                content: $('#addWindow'),
-                area: ['1020px', '700px'],
-            });
-            form.on('submit(confirmAdd)', function (formData) {
-                $.post({
-                    url: "service/consumeProject/addConsumeProject",
-                    data: JSON.stringify(formData.field),
-                    contentType: "application/json",
+            function pullCoupon(selector, callback) {
+                var selectE = $(selector);
+                $.get({
+                    url: "service/coupon/getCouponNameList",
+                    timeout: 1000,
+                    dataType: "json",
                     success: function (res) {
-                        layuiAlert("结果" + res)
-                        tableProj.reload()
+                        res = res.data;
+                        selectE.empty();
+                        selectE.append("<option value='" + -1 + "'>-</option>");
+                        for (var s of res) {
+                            selectE.append("<option value='" + s.couponId + "'>" + s.name + "</option>");
+                        }
+                        callback();
+                        form.render(); //layui的form重新渲染
+                    },
+                    error: function () {
+                        selectE.empty();
+                        selectE.append("<option>拉取失败，请刷新！</option>");
+                        form.render();
                     }
                 })
-                return false
-            })
-            return false
-        });
+            }
+
+            function pullConsumeTypes(selector, generateAllOption, callback) {
+                var selectE = $(selector);
+                $.post({
+                    url: "service/consumeType/getConsumeTypeList?query=&page=1&limit=2147483640",
+                    timeout: 1000,
+                    dataType: "json",
+                    success: function (res) {
+                        res = res.data;
+                        selectE.empty();
+                        if (generateAllOption)
+                            selectE.append("<option value='-1'>" + "全部" + "</option>");
+                        for (var s of res) {
+                            selectE.append("<option value='" + s.consumeTypeId + "'>" + s.name + "</option>");
+                        }
+                        callback();
+                        form.render(); //layui的form重新渲染
+                    },
+                    error: function () {
+                        selectE.empty();
+                        selectE.append("<option>拉取失败，请刷新！</option>");
+                        form.render();
+                    }
+                })
+            }
+        }
 
         // “消费项目表格”渲染
         var tableProj = table.render({
@@ -522,7 +511,6 @@
                                 url: "service/practicalProject/getPracticalProject?practicalProjectId=" + data[i].practicalProjectId,
                                 async: false,
                                 success: function (resp) {
-                                    console.log(resp)
                                     data[i].couponName = resp.couponName
                                 }
                             })
@@ -533,6 +521,8 @@
                 });
                 // 显示“新增具体项目弹窗”
                 $('#addSpeProj').unbind("click").click(function () {
+                    pullCoupon("#speProjCoupon", () => {
+                    })
                     $("#name").val("")
                     $("#remarkSpe").val("")
                     $("#startIntervalDateValue").val("")
@@ -543,10 +533,6 @@
                         title: '新增具体项目',
                         content: $('#addSpeWindow'),
                         area: ['400px', '500px'],
-                    });
-                    $('#cancelAddSpe').on('click', function () {
-                        // 关闭当前弹出层
-                        layer.close(addSpeWind);
                     });
                     form.on('submit(confirmAddSpe)', function (formData) {
                         formData.field.consumeProjectId = data.consumeProjectId;
@@ -571,9 +557,15 @@
                             }
                         })
                     })
+                    $('#cancelAddSpe').on('click', function () {
+                        // 关闭当前弹出层
+                        layer.close(addSpeWind);
+                    });
                 })
 
                 table.on('tool(speProjTable)', function (obj) {
+                    let data = obj.data
+                    console.log(data)
                     if (obj.event === "delete") {
                         layer.confirm("确定删除具体项目【" + data.name + "】?", function () {
                             $.post({
@@ -597,33 +589,50 @@
                             })
                         })
                     }
-                })
-
-                function pullCoupon(selector, callback) {
-                    var selectE = $(selector);
-                    $.get({
-                        url: "service/coupon/getCouponNameList",
-                        timeout: 1000,
-                        dataType: "json",
-                        success: function (res) {
-                            res = res.data;
-                            selectE.empty();
-                            selectE.append("<option value='" + -1 + "'>-</option>");
-                            for (var s of res) {
-                                selectE.append("<option value='" + s.couponId + "'>" + s.name + "</option>");
-                            }
-                            callback();
-                            form.render(); //layui的form重新渲染
-                        },
-                        error: function () {
-                            selectE.empty();
-                            selectE.append("<option>拉取失败，请刷新！</option>");
-                            form.render();
-                        }
-                    })
-                }
-
-                pullCoupon("#speProjCoupon", () => {
+                    else if(obj.event === "edit") {
+                        pullCoupon("#speProjCoupon", () => {
+                            $("#speProjCoupon").val(data.couponId)
+                        })
+                        $("#name").val(data.name)
+                        $("#remarkSpe").val(data.remark)
+                        $("#startIntervalDateValue").val(data.startIntervalDateValue)
+                        $("#indateValue").val(data.indateValue)
+                        $("#count").val(data.count)
+                        var addSpeWind = layer.open({
+                            type: 1,
+                            title: '修改具体项目',
+                            content: $('#addSpeWindow'),
+                            area: ['400px', '500px'],
+                        });
+                        $('#cancelAddSpe').on('click', function () {
+                            // 关闭当前弹出层
+                            layer.close(addSpeWind);
+                        });
+                        form.on('submit(confirmAddSpe)', function (formData) {
+                            formData.field.practicalProjectId = data.practicalProjectId;
+                            formData.field.consumeProjectId = data.consumeProjectId;
+                            $.post({
+                                url: "service/practicalProject/editPracticalProject",
+                                data: JSON.stringify(formData.field),
+                                contentType: "application/json",
+                                success: function (res) {
+                                    var x = layer.open({
+                                        offset: "auto",//具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
+                                        content: '<div style="padding: 20px 70px;">' + res + '</div>',
+                                        btn: '关闭',
+                                        btnAlign: 'c',//按钮居中
+                                        shade: 0, //不显示遮罩
+                                        closeBtn: false,
+                                        yes: function () {
+                                            layer.close(x)
+                                            layer.close(addSpeWind);
+                                            obj.update(formData.field)
+                                        }
+                                    });
+                                }
+                            })
+                        })
+                    }
                 })
             }
             else if (layEvent === "rel") {
@@ -759,15 +768,51 @@
             }
         });
 
-        $("#queryBtn").unbind("click").click(function () {
-            tableProj.reload({
-                url: 'service/consumeProject/getConsumeProjectList?query=' + $("#consumeProjInput").val() + '&consumeType=' + $("#consumeTypeInput").val(),
-                page: {
-                    curr: 1
-                }
-            })
-            return false;
-        });
+        {
+            pullConsumeTypes("#consumeTypeInput", true, () => {
+            });
+            $('#cancelAdd').on('click', function () {
+                layer.closeAll();
+                return false;
+            });
+            // 显示“新增弹窗”
+            $('body').unbind("click").on('click', '#add', function () {
+                $("#consumeProjectName").val("")
+                $("#invoice").val("")
+                $("#remark").val("")
+                $("#intRatio").val("")
+                pullConsumeTypes("#consumeTypeInputAdd", false, () => {
+                })
+                layer.open({
+                    type: 1,
+                    title: '新增消费项目',
+                    content: $('#addWindow'),
+                    area: ['1020px', '700px'],
+                });
+                form.on('submit(confirmAdd)', function (formData) {
+                    $.post({
+                        url: "service/consumeProject/addConsumeProject",
+                        data: JSON.stringify(formData.field),
+                        contentType: "application/json",
+                        success: function (res) {
+                            layuiAlert("结果" + res)
+                            tableProj.reload()
+                        }
+                    })
+                    return false
+                })
+                return false
+            });
+            $("#queryBtn").unbind("click").click(function () {
+                tableProj.reload({
+                    url: 'service/consumeProject/getConsumeProjectList?query=' + $("#consumeProjInput").val() + '&consumeType=' + $("#consumeTypeInput").val(),
+                    page: {
+                        curr: 1
+                    }
+                })
+                return false;
+            });
+        }
     });
 </script>
 </body>
