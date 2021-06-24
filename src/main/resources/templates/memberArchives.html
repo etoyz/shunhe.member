@@ -1205,7 +1205,7 @@
                         url: "service/Archives/getUserInfo?userId=" + data[i].userId,
                         async: false,
                         success: function (resp) {
-                            //console.log(resp)
+                            console.log(resp.cGender)
                             try{
                                 if(resp.cGender==1)
                                     data[i].cGender="男"
@@ -1266,7 +1266,7 @@
                         userId: activedata.userId
                     },
                     success: function (res) {
-                        console.log(res.vehicle.vehiclelabelid)
+                        // console.log(res.vehicle.vehiclelabelid)
                         $('#customernameM').val(res.customername);
                         $('#phoneM').val(res.phone);
                         $('#cBirthdayM').val(res.cBirthday);
@@ -1331,11 +1331,16 @@
                         contentType: "application/json",
                         success: function (res) {
                             // var t
-                            data.field.cGender=res.cGender=== 1 ? "男" : "女";
+                            if(res.cGender==1)
+                                data.field.cGender="男"
+                            else if(res.cGender==2)
+                                data.field.cGender="女"
+                            else
+                                data.field.cGender="未知"
                             data.field.vehiclelabel= res.vehicle.vehiclelabel
                                 data.field.vehiclebrand=res.vehicle.vehiclebrand
                                     data.field.vehiclestyle= res.vehicle.vehiclestyle
-                             console.log(data.field.vehiclelabel)
+                             // console.log(data.field.vehiclelabel)
                              layer.closeAll();
                             obj.update(data.field);
                         }
