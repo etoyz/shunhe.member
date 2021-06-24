@@ -50,8 +50,8 @@
                 <table class="layui-hide" id="consumeProj" lay-filter="consumeTypeTabel"></table>
                 <script id="operation" type="text/html">
                     <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="edit">修改</a>
-                    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="rel">关联消费卡券</a>
-                    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="rel2">关联消费项目</a>
+                    <a class="layui-btn layui-btn-xs" lay-event="rel">关联消费卡券</a>
+                    <a class="layui-btn layui-btn-xs" lay-event="rel2">关联消费项目</a>
                     <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="spe">具体项目</a>
                     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
                 </script>
@@ -289,23 +289,15 @@
     </form>
 </div>
 
-<!-- 关联卡券弹窗 -->
+<!-- 关联弹窗 -->
 <div class="s-details" id="relWindow">
-    <form class="layui-form">
-        <div class="layui-tab layui-tab-brief">
-            <div class="layui-tab-content">
-                <div class="layui-tab-item layui-show">
-                    <div class="s-commonTable">
-                        <table id="relTable"></table>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="s-tabBottomButton">
-            <button class="layui-btn" id="confirmRel" lay-filter="confirmRel" lay-submit type="button">确认关联</button>
-            <button class="layui-btn layui-btn-warm" id="cancelRel" type="button">取消</button>
-        </div>
-    </form>
+    <div class="s-commonTable">
+        <table id="relTable"></table>
+    </div>
+    <div class="s-tabBottomButton">
+        <button class="layui-btn" id="confirmRel" lay-filter="confirmRel" lay-submit type="button">确认关联</button>
+        <button class="layui-btn layui-btn-warm" id="cancelRel" type="button">取消</button>
+    </div>
 </div>
 
 <script src="plugins/layui/layui.js"></script>
@@ -640,8 +632,8 @@
                 var relTable = table.render({
                     id: "relTable",
                     elem: "#relTable",
-                    height: 550,
-                    width: 493,
+                    height: 450,
+                    width: 500,
                     page: false,
                     url: "service/coupon/getCouponNameList",
                     cols: [ [
@@ -705,8 +697,8 @@
                 var relTable2 = table.render({
                     id: "relTable",
                     elem: "#relTable",
-                    height: 550,
-                    width: 493,
+                    height: 450,
+                    width: 500,
                     page: false,
                     url: "service/consumeProject/getConsumeProjectNameList",
                     cols: [ [

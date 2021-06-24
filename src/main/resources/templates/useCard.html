@@ -19,7 +19,7 @@
         <div class="layui-col-md12">
 
             <div class="s-headerSearch">
-                <form action="" autocomplete="off" class="layui-form">
+                <form autocomplete="off" class="layui-form">
 
                     <div class="layui-form-item">
 
@@ -73,7 +73,7 @@
 
 <!-- 用卡弹窗 -->
 <div class="s-details" id="useWindow">
-    <form action="" autocomplete="off" class="layui-form">
+    <form id="useForm" autocomplete="off" class="layui-form">
         <div class="layui-form-item s-formItem6">
             <div class="layui-inline">
                 <label class="layui-form-label">消费日期</label>
@@ -581,6 +581,7 @@
                     tableUseCoupons.reload({
                         data: couponReviewList
                     })
+                    $('#useForm').trigger('reset');
                     $.post({
                         url: "service/Archives/getUserInfo",
                         data: {

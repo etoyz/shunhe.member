@@ -2,6 +2,7 @@ package com.sh.cloud.web;
 
 import com.sft.member.bean.ConsumeProject;
 import com.sft.member.bean.Coupon;
+import com.sft.member.obtain.consume.ConsumeProjectService;
 import com.sft.member.obtain.coupon.CouponService;
 import com.sh.cloud.entity.CouponAndConsumeProjects;
 import com.sh.cloud.utils.PlatUserUtils;
@@ -19,6 +20,8 @@ public class CouponController {
 
     @Resource
     CouponService couponService;
+    @Resource
+    ConsumeProjectService projectService;
 
     @PostMapping("deleteCoupon")
     public String deleteCoupon(@RequestBody Coupon coupon) {
@@ -59,15 +62,7 @@ public class CouponController {
 
     @PostMapping("relateConsumeProject")
     public String relateConsumeItem(@RequestBody CouponAndConsumeProjects couponAndConsumeProjects) {
-//        Coupon c = (Coupon) items.get("selectedCoupon");
-//        List<ConsumeProject> itemsList = (List<ConsumeProject>) items.get("selectedItems");
-//        couponService.updateCouponListByConsumeProject();
-//        List
-        for (ConsumeProject consumeProject : couponAndConsumeProjects.getProjects()) {
-            List<Coupon> li = new ArrayList<>();
-            li.add(couponAndConsumeProjects.getCoupon());
-            couponService.updateCouponListByConsumeProject(PlatUserUtils.getCurrentLoginPlatUser(), consumeProject, li);
-        }
+        projectService.setConsumeProjectByCoupon(PlatUserUtils.getCurrentLoginPlatUser(), couponAndConsumeProjects.getCoupon(), couponAndConsumeProjects.getProjects());
         return "关联成功！";
     }
 
