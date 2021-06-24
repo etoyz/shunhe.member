@@ -61,10 +61,6 @@
                 <li class="layui-this">车主信息</li>
                 <li>车辆信息</li>
                 <li>会员信息</li>
-                <li>消费历史</li>
-                <li>开票历史</li>
-                <li>积分历史</li>
-                <li>操作日志</li>
             </ul>
             <div class="layui-tab-content" style="height: 100px;">
                 <div class="layui-tab-item layui-show">
@@ -494,10 +490,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="layui-tab-item">内容4</div>
-                <div class="layui-tab-item">内容5</div>
-                <div class="layui-tab-item">内容6</div>
-                <div class="layui-tab-item">内容7</div>
+
                 <div class="s-tabBottomButton">
                     <button class="layui-btn" id="confirmAdd" lay-filter="confirmAdd" lay-submit>确认</button>
                     <button class="layui-btn layui-btn-warm" id="cancelAdd">取消</button>
@@ -950,10 +943,34 @@
                     </div>
                     <!--    </form>-->
                 </div>
-                <div class="layui-tab-item">内容4</div>
-                <div class="layui-tab-item">内容5</div>
-                <div class="layui-tab-item">内容6</div>
-                <div class="layui-tab-item">内容7</div>
+                <!--        消费历史         -->
+                <div class="layui-tab-item">
+                    <!-- 展示表格 -->
+                    <div class="s-commonTable">
+                        <table class="layui-hide" id="consumptionHistories" lay-filter="consumptionHistoriesTabel"></table>
+                    </div>
+                </div>
+                <!--        开票历史         -->
+                <div class="layui-tab-item">
+                    <!-- 展示表格 -->
+                    <div class="s-commonTable">
+                        <table class="layui-hide" id="billingHistories" lay-filter="billingHistoriesTabel"></table>
+                    </div>
+                </div>
+                <!--        积分历史         -->
+                <div class="layui-tab-item">
+                    <!-- 展示表格 -->
+                    <div class="s-commonTable">
+                        <table class="layui-hide" id="pointsHistories" lay-filter="pointsHistoriesTabel"></table>
+                    </div>
+                </div>
+                <!--        操作日志         -->
+                <div class="layui-tab-item">
+                    <!-- 展示表格 -->
+                    <div class="s-commonTable">
+                        <table class="layui-hide" id="operationLogs" lay-filter="operationLogsTabel"></table>
+                    </div>
+                </div>
                 <div class="s-tabBottomButton">
                     <button class="layui-btn" id="confirmAddM" lay-filter="confirmAddM" lay-submit>确认</button>
                     <button class="layui-btn layui-btn-warm" id="cancelEdit">取消</button>
@@ -1214,6 +1231,7 @@
                 return res
             }
         });
+
         //监听“会员档案表格”工具条
         var activedata;
         var activelevel;
@@ -1409,6 +1427,159 @@
             });
         }
 
+        // "消费历史表格"
+        {
+            // "消费历史表格"渲染
+            // var tableConsumptionHistories = table.render({
+            table.render({
+                elem: '#consumptionHistories',
+                url: 'service/Archives/getConsumptionHistories',
+                method: "post",
+                where: {
+                    user: {},
+                    couponCheck: {},
+                    groupBy: true
+                },
+                contentType: "application/json",
+                height: 288,
+                page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                    layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
+                    limit: 10,
+                    groups: 3, //只显示 1 个连续页码
+                    first: false, //不显示首页
+                    last: false //不显示尾页
+                },
+                cols: [ [
+                    {type: 'numbers'},
+                    {field: 'time', width: 110, title: '消费日期'},
+                    {field: 'groupId', width: 110, title: '流水号'},
+                    {field: 'customername', width: 110, title: '客户名称'},
+                    {field: 'vin', width: 110, title: '车架号'},
+                    {field: 'consumeTypeName', width: 110, title: '消费类型'},
+                    {field: 'consumeProjectName', width: 110, title: '消费项目'},
+                    {field: 'practicalProjectName', width: 110, title: '具体项目'},
+                    {field: 'payStyleName', width: 110, title: '支付方式'}, //单元格内容水平居中
+                    {field: 'timeCost', width: 80, title: '工时费'},
+                    {field: 'matCost', width: 80, title: '材料费'},
+                    {field: 'totalMoney', width: 110, title: '总金额'},
+                    {field: 'ticketID', width: 90, title: '工单号'},
+                    {field: 'mileage', width: 90, title: '行驶里程'},
+                    {field: 'num', width: 100, title: '数量'},
+                    {field: 'invoiceID', width: 88, title: '发票号'},
+                    {field: 'invoiceNum', width: 88, title: '开票金额'},
+                    {field: 'costPrice', width: 88, title: '成本价'},
+                    {field: '**', width: 88, title: '本次积分'},
+                    {field: 'remark', width: 88, title: '项目备注'},
+                ]],
+                size: 'sm'
+            });
+
+        }
+
+        // "开票历史表格"
+        {
+            // "开票历史表格"渲染
+            // var tableConsumptionHistories = table.render({
+            table.render({
+                elem: '#billingHistories',
+                url: 'service/Archives/getBillingHistories',
+                method: "post",
+                where: {
+                    user: {},
+                    couponCheck: {},
+                    groupBy: true
+                },
+                contentType: "application/json",
+                height: 288,
+                page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                    layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
+                    limit: 10,
+                    groups: 3, //只显示 1 个连续页码
+                    first: false, //不显示首页
+                    last: false //不显示尾页
+                },
+                cols: [ [
+                    {type: 'numbers'},
+                    {field: '***', width: 110, title: '操作日期'},
+                    {field: '***', width: 110, title: '操作员'},
+                    {field: '***', width: 110, title: '消费项目'},
+                    {field: '***', width: 110, title: '发票号'},
+                    {field: '***', width: 110, title: '增加发票'},
+                    {field: '***', width: 110, title: '开票金额'},
+                ]],
+                size: 'sm'
+            });
+
+        }
+
+        // "积分历史表格"
+        {
+            // "积分历史表格"渲染
+            // var tableConsumptionHistories = table.render({
+            table.render({
+                elem: '#pointsHistories',
+                url: 'service/Archives/getPointsHistories',
+                method: "post",
+                where: {
+                    user: {},
+                    couponCheck: {},
+                    groupBy: true
+                },
+                contentType: "application/json",
+                height: 288,
+                page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                    layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
+                    limit: 10,
+                    groups: 3, //只显示 1 个连续页码
+                    first: false, //不显示首页
+                    last: false //不显示尾页
+                },
+                cols: [ [
+                    {type: 'numbers'},
+                    {field: '***', width: 110, title: '操作日期'},
+                    {field: '***', width: 110, title: '操作员'},
+                    {field: '***', width: 110, title: '消费项目'},
+                    {field: '***', width: 110, title: '增加累计积分'},
+                    {field: '***', width: 110, title: '增加可用积分'},
+                    {field: '***', width: 110, title: '使用积分'},
+                ]],
+                size: 'sm'
+            });
+
+        }
+
+        // "操作日志表格"
+        {
+            // "操作日志表格"渲染
+            // var tableConsumptionHistories = table.render({
+            table.render({
+                elem: '#operationLogs',
+                url: 'service/Archives/getOperationLogs',
+                method: "post",
+                where: {
+                    user: {},
+                    couponCheck: {},
+                    groupBy: true
+                },
+                contentType: "application/json",
+                height: 288,
+                page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                    layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
+                    limit: 10,
+                    groups: 3, //只显示 1 个连续页码
+                    first: false, //不显示首页
+                    last: false //不显示尾页
+                },
+                cols: [ [
+                    {type: 'numbers'},
+                    {field: '***', width: 110, title: '操作日期'},
+                    {field: '***', width: 500, title: '操作内容'},
+                ]],
+                size: 'sm'
+            });
+
+        }
+
         // "会员信息表格"渲染
         var tableIns1 = table.render({
             elem: '#memberInfo',
@@ -1438,9 +1609,9 @@
         });
 
         form.on('submit(confirmAdd)', function (data) {
-          var textvehiclelabel=$('#vehiclelabel option:selected').text();
-          var textvehiclestyle=$('#vehiclestyle option:selected').text();
-          var textvehiclebrand=$('#vehiclebrand option:selected').text();
+            var textvehiclelabel=$('#vehiclelabel option:selected').text();
+            var textvehiclestyle=$('#vehiclestyle option:selected').text();
+            var textvehiclebrand=$('#vehiclebrand option:selected').text();
             console.log(data.field.platenumber);
             // data.field.cGender=(data.field.cGender="男"?0:1);
             data.field.vehicle = {
@@ -1466,6 +1637,9 @@
             })
             return false;
         })
+
+
+
         $("#queryBtn").unbind("click").click(function () {
             tableUserList.reload({
                 url: 'service/Archives/getArchivesList?query=' + $("#customerName1").val(),

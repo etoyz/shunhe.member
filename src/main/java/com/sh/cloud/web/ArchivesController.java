@@ -5,12 +5,15 @@ import carinfo.bean.CarInfo;
 import carinfo.bean.CarSeries;
 import carinfo.bean.CarSeriesGroup;
 import carinfo.service.CarDataQuery;
+import com.sft.member.bean.CouponCheck;
 import com.sft.member.bean.Member;
 import com.sft.member.bean.User;
 import com.sft.member.obtain.member.MemberService;
+import com.sft.member.obtain.pay.PayService;
 import com.sft.member.obtain.user.UserService;
 import com.sft.member.obtain.vehicle.BrandService;
 import com.sft.member.obtain.vehicle.CarSeriesService;
+import com.sh.cloud.entity.GetPendingReviewListRequest;
 import com.sh.cloud.entity.GetUserListRequest;
 import com.sh.cloud.utils.PlatUserUtils;
 import org.springframework.web.bind.annotation.*;
@@ -64,6 +67,52 @@ public class ArchivesController {
         List<User> data = shUserService.getUserList(request.getUser(), request.getPage(), request.getLimit());
         ret.put("count", shUserService.getUserList(request.getUser()));
         ret.put("data", data);
+
+        return ret;
+    }
+
+    // 获取"消费历史"表格数据
+    @Resource
+    PayService payService;
+    @RequestMapping("getConsumptionHistories")
+    public Map<String, Object> getConsumptionHistories(@RequestBody GetPendingReviewListRequest request) {
+        CouponCheck couponCheck = request.getCouponCheck();
+        couponCheck.type = "0";
+        Map<String, Object> ret = new HashMap();
+        ret.put("code", 0);
+        ret.put("msg", "");
+        ret.put("data", payService.getUnCheckRecord(request.getUser(), couponCheck, request.getPage(), request.getLimit(), request.getGroupBy()));
+        ret.put("count", payService.getUnCheckRecordCount(request.getUser(), couponCheck, request.getGroupBy()));
+
+        return ret;
+    }
+
+    // 获取"开票历史"表格数据
+    @RequestMapping("getBillingHistories")
+    public Map<String, Object> getBillingHistories(@RequestBody GetPendingReviewListRequest request) {
+        // 木有接口哇┭┮﹏┭┮
+
+        Map<String, Object> ret = new HashMap();
+
+        return ret;
+    }
+
+    // 获取"积分历史"表格数据
+    @RequestMapping("getPointsHistories")
+    public Map<String, Object> getPointsHistories(@RequestBody GetPendingReviewListRequest request) {
+        // 木有接口哇┭┮﹏┭┮
+
+        Map<String, Object> ret = new HashMap();
+
+        return ret;
+    }
+
+    // 获取"操作日志"表格数据
+    @RequestMapping("getOperationLogs")
+    public Map<String, Object> getOperationLogs(@RequestBody GetPendingReviewListRequest request) {
+        // 木有接口哇┭┮﹏┭┮
+
+        Map<String, Object> ret = new HashMap();
 
         return ret;
     }
