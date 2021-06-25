@@ -224,7 +224,7 @@
 
 <!-- 具体项目详情弹窗 -->
 <div class="s-details" id="addSpeWindow">
-    <form action="" autocomplete="off" class="layui-form">
+    <form id="speItemForm" autocomplete="off" class="layui-form">
         <div>
             <div class="layui-form-item s-formItem1">
                 <div class="layui-inline">
@@ -259,7 +259,7 @@
                     <label class="layui-form-label">数量</label>
                     <div class="layui-input-inline">
                         <input autocomplete="off" class="layui-input" id="count"
-                               lay-verify="required|number" name="count" type="text">
+                               lay-verify="number" value="0" name="count" type="text">
                     </div>
                 </div>
             </div>
@@ -268,7 +268,7 @@
                     <label class="layui-form-label">有效期(天)</label>
                     <div class="layui-input-inline">
                         <input autocomplete="off" class="layui-input" id="indateValue"
-                               lay-verify="required|number" name="indateValue" type="text">
+                               lay-verify="number" value="0" name="indateValue" type="text">
                     </div>
                 </div>
             </div>
@@ -277,7 +277,7 @@
                     <label class="layui-form-label">多少天后开始</label>
                     <div class="layui-input-inline">
                         <input autocomplete="off" class="layui-input" id="startIntervalDateValue"
-                               lay-verify="required|number" name="startIntervalDateValue">
+                               lay-verify="number" value="0" name="startIntervalDateValue">
                     </div>
                 </div>
             </div>
@@ -515,11 +515,7 @@
                 $('#addSpeProj').unbind("click").click(function () {
                     pullCoupon("#speProjCoupon", () => {
                     })
-                    $("#name").val("")
-                    $("#remarkSpe").val("")
-                    $("#startIntervalDateValue").val("")
-                    $("#indateValue").val("")
-                    $("#count").val("")
+                    $("#speItemForm").trigger("reset")
                     var addSpeWind = layer.open({
                         type: 1,
                         title: '新增具体项目',

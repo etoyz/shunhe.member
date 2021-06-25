@@ -64,4 +64,10 @@ public class PlatUserManagementController {
         user.platUserId = platUserId;
         return platUserService.getPlatUser(user);
     }
+
+    @RequestMapping("getCurrentLoginUser")
+    @ResponseBody
+    public PlatUser getCurrentLoginUser() {
+        return platUserService.getPlatUser(PlatUserUtils.getCurrentLoginPlatUser());
+    }
 }

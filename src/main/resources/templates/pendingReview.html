@@ -448,7 +448,7 @@
                     {field: 'totalMoney', width: 100, title: '总金额'},
                     {field: '**', width: 100, title: '工单号'},
                     {field: '**', width: 100, title: '行驶里程'},
-                    {field: 'count', width: 100, title: '数量'},
+                    {field: 'num', width: 100, title: '数量'},
                     {field: '**', width: 100, title: '发票号'},
                     {field: '**', width: 100, title: '开票金额'},
                     {field: 'remark', width: 100, title: '项目备注'},
@@ -481,10 +481,14 @@
                                 }
                             })
                             {
-                                if (data[i].payStyle === '-1')
+                                if (data[i].payStyle === '-1') {
                                     data[i].payStyleName = '卡券发放'
-                                else if (data[i].payStyle === '-2')
+                                    data[i].num = data[i].count
+                                }
+                                else if (data[i].payStyle === '-2') {
                                     data[i].payStyleName = '储值'
+                                    data[i].num = data[i].money
+                                }
                                 else {
                                     //TODO 异步请求卡券名称
                                 }

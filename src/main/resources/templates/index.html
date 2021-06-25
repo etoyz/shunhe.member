@@ -30,11 +30,12 @@
     <div class="layui-header">
         <div class="layui-logo">会员系统</div>
         <ul class="layui-nav layui-layout-right kit-nav">
-            <li class="layui-nav-item"><a class="s-headPortrait" href="javascript:">管理员1，欢迎你！</a></li>
+            <li class="layui-nav-item"><a class="s-headPortrait" href="javascript:" id="loginName">正在加载... </a></li>
             <li class="layui-nav-item"><a class="s-logout" href="javascript:" id="changePassword"><i
                     aria-hidden="true" class="fa fa-pencil-square"></i> 修改密码</a></li>
-            <li class="layui-nav-item"><a class="s-logout" href="javascript:"><i aria-hidden="true"
-                                                                                 class="fa fa-sign-out"></i> 注销</a></li>
+            <li class="layui-nav-item">
+                <a class="s-logout" id="logout"><i aria-hidden="true" class="fa fa-sign-out"></i> 注销</a>
+            </li>
         </ul>
     </div>
 
@@ -47,7 +48,8 @@
                     <a class="" href="javascript:"><i aria-hidden="true" class="fa fa-plug"></i><span> 微会员</span></a>
                     <dl class="layui-nav-child">
                         <dd>
-                            <a data-options="{url:'memberArchives.html',icon:'&#xe658;',title:'会员档案',id:'1'}" href="javascript:"
+                            <a data-options="{url:'memberArchives.html',icon:'&#xe658;',title:'会员档案',id:'1'}"
+                               href="javascript:"
                                kit-target><i
                                     class="layui-icon">&#xe658;</i><span> 会员档案</span></a>
                         </dd>
@@ -62,12 +64,14 @@
                                     class="layui-icon">&#xe658;</i><span> 用卡</span></a>
                         </dd>
                         <dd>
-                            <a data-options="{url:'cancelConsume.html',icon:'&#xe658;',title:'反结算',id:'3'}" href="javascript:"
+                            <a data-options="{url:'cancelConsume.html',icon:'&#xe658;',title:'反结算',id:'3'}"
+                               href="javascript:"
                                kit-target><i
                                     class="layui-icon">&#xe658;</i><span> 反结算</span></a>
                         </dd>
                         <dd>
-                            <a data-options="{url:'pendingReview.html',icon:'&#xe658;',title:'待审核',id:'4'}" href="javascript:"
+                            <a data-options="{url:'pendingReview.html',icon:'&#xe658;',title:'待审核',id:'4'}"
+                               href="javascript:"
                                kit-target><i
                                     class="layui-icon">&#xe658;</i><span> 待审核</span></a>
                         </dd>
@@ -82,12 +86,14 @@
                                     class="layui-icon">&#xe658;</i><span> 卡券</span></a>
                         </dd>
                         <dd>
-                            <a data-options="{url:'consumeType.html',icon:'&#xe658;',title:'消费类型',id:'6'}" href="javascript:"
+                            <a data-options="{url:'consumeType.html',icon:'&#xe658;',title:'消费类型',id:'6'}"
+                               href="javascript:"
                                kit-target><i
                                     class="layui-icon">&#xe658;</i><span> 消费类型</span></a>
                         </dd>
                         <dd>
-                            <a data-options="{url:'consumeItem.html',icon:'&#xe658;',title:'消费项目',id:'7'}" href="javascript:"
+                            <a data-options="{url:'consumeItem.html',icon:'&#xe658;',title:'消费项目',id:'7'}"
+                               href="javascript:"
                                kit-target><i
                                     class="layui-icon">&#xe658;</i><span> 消费项目</span></a>
                         </dd>
@@ -101,59 +107,25 @@
                         <!--                            <a href="javascript:;" kit-target data-options="{url:'model.html',icon:'&#xe658;',title:'车型',id:'10'}"><i class="layui-icon">&#xe658;</i><span> 车型</span></a>-->
                         <!--                        </dd>-->
                         <dd>
-                            <a data-options="{url:'insuranceCompany.html',icon:'&#xe658;',title:'保险公司',id:'11'}" href="javascript:"
+                            <a data-options="{url:'insuranceCompany.html',icon:'&#xe658;',title:'保险公司',id:'11'}"
+                               href="javascript:"
                                kit-target><i
                                     class="layui-icon">&#xe658;</i><span> 保险公司</span></a>
                         </dd>
                         <dd>
-                            <a data-options="{url:'insuranceType.html',icon:'&#xe658;',title:'险种',id:'12'}" href="javascript:"
+                            <a data-options="{url:'insuranceType.html',icon:'&#xe658;',title:'险种',id:'12'}"
+                               href="javascript:"
                                kit-target><i
                                     class="layui-icon">&#xe658;</i><span> 险种</span></a>
                         </dd>
                         <dd>
-                            <a data-options="{url:'membershipLevel.html',icon:'&#xe658;',title:'会员级别',id:'13'}" href="javascript:"
+                            <a data-options="{url:'membershipLevel.html',icon:'&#xe658;',title:'会员级别',id:'13'}"
+                               href="javascript:"
                                kit-target><i
                                     class="layui-icon">&#xe658;</i><span> 会员级别</span></a>
                         </dd>
                     </dl>
                 </li>
-                <!--                <li class="layui-nav-item">-->
-                <!--                    <a class="" href="javascript:;"><i class="fa fa-plug" aria-hidden="true"></i><span> 微信后台</span></a>-->
-                <!--                    <dl class="layui-nav-child">-->
-                <!--                        <dd>-->
-                <!--                            <a href="javascript:;" kit-target data-options="{url:'card.html',icon:'&#xe658;',title:'关注回复',id:'14'}"><i class="layui-icon">&#xe658;</i><span> 关注回复</span></a>-->
-                <!--                        </dd>-->
-                <!--                        <dd>-->
-                <!--                            <a href="javascript:;" kit-target data-options="{url:'memberArchives1.html',icon:'&#xe658;',title:'微信粉丝',id:'15'}"><i class="layui-icon">&#xe658;</i><span> 微信粉丝</span></a>-->
-                <!--                        </dd>-->
-                <!--                        <dd>-->
-                <!--                            <a href="javascript:;" kit-target data-options="{url:'memberArchives1.html',icon:'&#xe658;',title:'图文消息定义',id:'16'}"><i class="layui-icon">&#xe658;</i><span> 图文消息定义</span></a>-->
-                <!--                        </dd>-->
-                <!--                        <dd>-->
-                <!--                            <a href="javascript:;" kit-target data-options="{url:'memberArchives1.html',icon:'&#xe658;',title:'微转盘定义',id:'17'}"><i class="layui-icon">&#xe658;</i><span> 微转盘定义</span></a>-->
-                <!--                        </dd>-->
-                <!--                    </dl>-->
-                <!--                </li>-->
-                <!--                <li class="layui-nav-item">-->
-                <!--                    <a class="" href="javascript:;"><i class="fa fa-plug" aria-hidden="true"></i><span> 商城管理</span></a>-->
-                <!--                    <dl class="layui-nav-child">-->
-                <!--                        <dd>-->
-                <!--                            <a href="javascript:;" kit-target data-options="{url:'card.html',icon:'&#xe658;',title:'商城板块',id:'18'}"><i class="layui-icon">&#xe658;</i><span> 商城板块</span></a>-->
-                <!--                        </dd>-->
-                <!--                        <dd>-->
-                <!--                            <a href="javascript:;" kit-target data-options="{url:'memberArchives1.html',icon:'&#xe658;',title:'商品定义',id:'19'}"><i class="layui-icon">&#xe658;</i><span> 商品定义</span></a>-->
-                <!--                        </dd>-->
-                <!--                        <dd>-->
-                <!--                            <a href="javascript:;" kit-target data-options="{url:'memberArchives1.html',icon:'&#xe658;',title:'订单管理',id:'20'}"><i class="layui-icon">&#xe658;</i><span> 订单管理</span></a>-->
-                <!--                        </dd>-->
-                <!--                        <dd>-->
-                <!--                            <a href="javascript:;" kit-target data-options="{url:'memberArchives1.html',icon:'&#xe658;',title:'入库管理',id:'21'}"><i class="layui-icon">&#xe658;</i><span> 入库管理</span></a>-->
-                <!--                        </dd>-->
-                <!--                        <dd>-->
-                <!--                            <a href="javascript:;" kit-target data-options="{url:'memberArchives1.html',icon:'&#xe658;',title:'出库管理',id:'22'}"><i class="layui-icon">&#xe658;</i><span> 出库管理</span></a>-->
-                <!--                        </dd>-->
-                <!--                    </dl>-->
-                <!--                </li>-->
                 <li class="layui-nav-item">
                     <a class="" href="javascript:"><i aria-hidden="true" class="fa fa-plug"></i><span> 报表中心</span></a>
                     <dl class="layui-nav-child">
@@ -163,27 +135,32 @@
                                     class="layui-icon">&#xe658;</i><span> 用卡历史</span></a>
                         </dd>
                         <dd>
-                            <a data-options="{url:'memberArchives1.html',icon:'&#xe658;',title:'反结算历史',id:'24'}" href="javascript:"
+                            <a data-options="{url:'memberArchives1.html',icon:'&#xe658;',title:'反结算历史',id:'24'}"
+                               href="javascript:"
                                kit-target><i
                                     class="layui-icon">&#xe658;</i><span> 反结算历史</span></a>
                         </dd>
                         <dd>
-                            <a data-options="{url:'couponStatistical.html',icon:'&#xe658;',title:'卡券统计',id:'25'}" href="javascript:"
+                            <a data-options="{url:'couponStatistical.html',icon:'&#xe658;',title:'卡券统计',id:'25'}"
+                               href="javascript:"
                                kit-target><i
                                     class="layui-icon">&#xe658;</i><span> 卡券统计</span></a>
                         </dd>
                         <dd>
-                            <a data-options="{url:'memberArchives1.html',icon:'&#xe658;',title:'储值统计',id:'26'}" href="javascript:"
+                            <a data-options="{url:'memberArchives1.html',icon:'&#xe658;',title:'储值统计',id:'26'}"
+                               href="javascript:"
                                kit-target><i
                                     class="layui-icon">&#xe658;</i><span> 储值统计</span></a>
                         </dd>
                         <dd>
-                            <a data-options="{url:'memberArchives1.html',icon:'&#xe658;',title:'群发统计',id:'27'}" href="javascript:"
+                            <a data-options="{url:'memberArchives1.html',icon:'&#xe658;',title:'群发统计',id:'27'}"
+                               href="javascript:"
                                kit-target><i
                                     class="layui-icon">&#xe658;</i><span> 群发统计</span></a>
                         </dd>
                         <dd>
-                            <a data-options="{url:'memberArchives1.html',icon:'&#xe658;',title:'抽奖统计',id:'28'}" href="javascript:"
+                            <a data-options="{url:'memberArchives1.html',icon:'&#xe658;',title:'抽奖统计',id:'28'}"
+                               href="javascript:"
                                kit-target><i
                                     class="layui-icon">&#xe658;</i><span> 抽奖统计</span></a>
                         </dd>
@@ -198,17 +175,20 @@
                                     class="layui-icon">&#xe658;</i><span> 经销商定义</span></a>
                         </dd>
                         <dd>
-                            <a data-options="{url:'memberArchives1.html',icon:'&#xe658;',title:'系统日志',id:'30'}" href="javascript:"
+                            <a data-options="{url:'memberArchives1.html',icon:'&#xe658;',title:'系统日志',id:'30'}"
+                               href="javascript:"
                                kit-target><i
                                     class="layui-icon">&#xe658;</i><span> 系统日志</span></a>
                         </dd>
                         <dd>
-                            <a data-options="{url:'memberArchives1.html',icon:'&#xe658;',title:'权限管理',id:'31'}" href="javascript:"
+                            <a data-options="{url:'memberArchives1.html',icon:'&#xe658;',title:'权限管理',id:'31'}"
+                               href="javascript:"
                                kit-target><i
                                     class="layui-icon">&#xe658;</i><span> 权限管理</span></a>
                         </dd>
                         <dd>
-                            <a data-options="{url:'userManagement.html',icon:'&#xe658;',title:'用户管理',id:'32'}" href="javascript:"
+                            <a data-options="{url:'userManagement.html',icon:'&#xe658;',title:'用户管理',id:'32'}"
+                               href="javascript:"
                                kit-target><i
                                     class="layui-icon">&#xe658;</i><span> 用户管理</span></a>
                         </dd>
@@ -222,9 +202,6 @@
         <div style="padding: 15px;">主体内容加载中,请稍等...</div>
         <div><p></p></div>
     </div>
-
-    <!-- 底部固定区域 -->
-    <!--    <div class="layui-footer">© 2018 山东贝格新能源科技有限公司 版权所有</div>-->
 </div>
 
 <!-- 修改密码弹窗 -->
@@ -268,6 +245,16 @@
         var $ = layui.jquery,
             form = layui.form,
             layer = layui.layer;
+
+        $.get({
+            url: "service/platUserManage/getCurrentLoginUser",
+            success: function (res) {
+                $("#loginName").html(res.name + " ")
+            }
+        })
+        $("#logout").unbind("click").click(function (){
+            
+        })
 
         // 自定义各种表单验证规则
         form.verify({
@@ -321,5 +308,4 @@
     });
 </script>
 </body>
-
 </html>
