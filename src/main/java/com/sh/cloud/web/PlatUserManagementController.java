@@ -45,6 +45,13 @@ public class PlatUserManagementController {
         return "成功！";
     }
 
+    @RequestMapping("editUser")
+    @ResponseBody
+    public String editUser(@RequestBody PlatUser user) {
+        platUserService.editPlatUser(PlatUserUtils.getCurrentLoginPlatUser(), user);
+        return "修改成功！";
+    }
+
     @RequestMapping("resetPassword")
     @ResponseBody
     public String resetPassword(@RequestParam String platUserId) {

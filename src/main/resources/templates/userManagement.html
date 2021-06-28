@@ -49,88 +49,87 @@
             <div class="s-commonTable">
                 <table class="layui-hide" id="user" lay-filter="userTable"></table>
                 <script id="operation" type="text/html">
-                    <a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="modify">重置密码</a>
+                    <a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="edit">修改</a>
+                    <a class="layui-btn layui-btn-xs" lay-event="resetPw">重置密码</a>
                 </script>
             </div>
         </div>
     </div>
 </div>
 
-<!-- 新增用户弹窗 -->
+<!-- 用户弹窗 -->
 <div class="s-details" id="addWindow">
-    <form action="" autocomplete="off" class="layui-form">
-        <div>
-            <div class="layui-form-item s-formItem1">
-                <div class="layui-inline">
-                    <label class="layui-form-label">用户名称</label>
-                    <div class="layui-input-inline">
-                        <input autocomplete="off" class="layui-input" id="name"
-                               lay-verify="required" name="name" type="text">
-                    </div>
-                </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">联系电话</label>
-                    <div class="layui-input-inline">
-                        <input autocomplete="off" class="layui-input" id="phoneNum"
-                               lay-verify="required|number" name="phoneNum" type="text">
-                    </div>
+    <form id="platUserForm" autocomplete="off" class="layui-form">
+        <div class="layui-form-item s-formItem1">
+            <div class="layui-inline">
+                <label class="layui-form-label">用户名称</label>
+                <div class="layui-input-inline">
+                    <input autocomplete="off" class="layui-input" id="name"
+                           lay-verify="required" name="name" type="text">
                 </div>
             </div>
-            <div class="layui-form-item s-formItem1">
-                <div class="layui-inline">
-                    <label class="layui-form-label">登录用户名</label>
-                    <div class="layui-input-inline">
-                        <input autocomplete="off" class="layui-input" id="username"
-                               lay-verify="required" name="username" type="text">
-                    </div>
-                </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">登录密码</label>
-                    <div class="layui-input-inline">
-                        <input autocomplete="off" class="layui-input" id="password"
-                               lay-verify="required" name="password" type="text">
-                    </div>
-                </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">所属职位</label>
-                    <div class="layui-input-inline">
-                        <select autocomplete="off" class="layui-input" id="post" name="post" type="text">
-                            <option>---</option>
-                            <option>销售顾问</option>
-                            <option>服务顾问</option>
-                            <option>业务员</option>
-                            <option>管理员</option>
-                            <option>招揽专员</option>
-                            <option>保客主管</option>
-                            <option>保客专员</option>
-                        </select>
-                    </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">联系电话</label>
+                <div class="layui-input-inline">
+                    <input autocomplete="off" class="layui-input" id="phoneNum"
+                           lay-verify="number" value="0" name="phoneNum" type="text">
                 </div>
             </div>
-            <div class="layui-form-item s-formItem1">
-                <div class="layui-inline">
-                    <label class="layui-form-label">操作类型</label>
-                    <div class="layui-input-inline">
-                        <select autocomplete="off" class="layui-input" id="operateType" name="operateType" type="text">
-                            <option>---</option>
-                            <option>本店</option>
-                            <option>个人</option>
-                            <option>全部</option>
-                        </select>
-                    </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">所属门店</label>
+                <div class="layui-input-inline">
+                    <select autocomplete="off" class="layui-input" id="dealerId" name="dealerId" type="text">
+                        <option value="0">烟台顺合广汽本田</option>
+                    </select>
                 </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">所属门店</label>
-                    <div class="layui-input-inline">
-                        <select autocomplete="off" class="layui-input" id="dealerId" name="dealerId" type="text">
-                            <option value="0">烟台顺合广汽本田</option>
-                        </select>
-                    </div>
+            </div>
+        </div>
+        <div class="layui-form-item s-formItem1">
+            <div class="layui-inline">
+                <label class="layui-form-label">登录用户名</label>
+                <div class="layui-input-inline">
+                    <input autocomplete="off" class="layui-input" id="username"
+                           lay-verify="required" name="username" type="text">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">登录密码</label>
+                <div class="layui-input-inline">
+                    <input autocomplete="off" class="layui-input" id="password"
+                           lay-verify="required" name="password" type="text">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">所属职位</label>
+                <div class="layui-input-inline">
+                    <select autocomplete="off" class="layui-input" id="post" name="post" type="text">
+                        <option>---</option>
+                        <option>销售顾问</option>
+                        <option>服务顾问</option>
+                        <option>业务员</option>
+                        <option>管理员</option>
+                        <option>招揽专员</option>
+                        <option>保客主管</option>
+                        <option>保客专员</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item s-formItem1">
+            <div class="layui-inline">
+                <label class="layui-form-label">操作类型</label>
+                <div class="layui-input-inline">
+                    <select autocomplete="off" class="layui-input" id="operateType" name="operateType" type="text">
+                        <option>---</option>
+                        <option>本店</option>
+                        <option>个人</option>
+                        <option>全部</option>
+                    </select>
                 </div>
             </div>
         </div>
         <div class="s-tabBottomButton">
-            <button class="layui-btn" id="confirmAdd" lay-filter="confirmAdd" lay-submit type="button">新增</button>
+            <button class="layui-btn" id="confirmAdd" lay-filter="confirmAdd" lay-submit type="button">确认</button>
             <button class="layui-btn layui-btn-warm" id="cancelAdd" type="button">取消</button>
         </div>
     </form>
@@ -176,17 +175,11 @@
                 {field: 'operateType', width: '80', title: '操作类型'},
                 {field: 'dealerId', width: '150', title: '所属门店'},
                 {field: '-', width: '100', title: '指定IP登入'},
+                {field: 'platUserId', hide: true},
                 // {field: 'lastEditTime', width: '14%', title: '最后编辑时间'},
-                {field: 'operation', width: '100', title: '操作', toolbar: '#operation'}
+                {field: 'operation', width: '200', title: '操作', toolbar: '#operation', fixed: 'right'}
             ]],
-            size: 'sm',
-            parseData: function (res) {
-                if (res.data)
-                    for (var i = 0; i < res.data.length; i++) {
-                        res.data[i].dealerId = "烟台顺合广汽本田";
-                    }
-                return res
-            }
+            size: 'sm'
         });
 
         function layuiAlert(msg) {
@@ -204,51 +197,81 @@
         }
 
         //监听“用户表格”工具条
-        var activeLine
+        var activeUser
         table.on('tool(userTable)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
-            activeLine = obj.data; //获得当前行数据
+            activeUser = obj.data; //获得当前行数据
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值f）
-            if (layEvent === 'modify') {
-                console.log(activeLine)
-                layer.confirm("确认重置用户【" + activeLine.name + "】的密码?", {icon: 3, title: '提示'}, function () {
+            if (layEvent === 'resetPw') {
+                console.log(activeUser)
+                layer.confirm("确认重置用户【" + activeUser.name + "】的密码?", {icon: 3, title: '提示'}, function () {
                     $.post({
-                        url: "service/platUserManage/resetPassword?platUserId=" + activeLine.platUserId,
+                        url: "service/platUserManage/resetPassword?platUserId=" + activeUser.platUserId,
                         success: function (res) {
                             layuiAlert("修改结果：" + res)
                         }
                     })
                 });
+            } else if (layEvent === "edit") {
+                $("#name").val(activeUser.name)
+                $("#phoneNum").val(0) //待接口返回再做处理
+                $("#username").val(activeUser.username)
+                $("#username").attr('disabled', true)
+                $("#password").attr('disabled', true)
+                $("#password").val("******")
+                $("#post").val(activeUser.post)
+                $("#operateType").val(activeUser.operateType)
+                $("#dealerId").val(activeUser.dealerId)
+                form.render("select")
+                layer.open({
+                    type: 1,
+                    title: '修改用户',
+                    content: $('#addWindow'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                    area: ['1022px', '500px']
+                });
+                form.on('submit(confirmAdd)', function (formData) {
+                    formData.field.platUserId = activeUser.platUserId
+                    $.post({
+                        url: "service/platUserManage/editUser",
+                        data: JSON.stringify(formData.field),
+                        contentType: "application/json",
+                        success: function (res) {
+                            if(res === "修改成功！") {
+                                layuiAlert("修改成功！")
+                                obj.update(formData.field)
+                            } else
+                                layuiAlert("修改失败！")
+                        }
+                    })
+                })
             }
         });
 
         $("#addBtn").unbind("click").click(function () {
-            $("#name").val("")
-            $("#phoneNum").val("")
-            $("#username").val("")
-            $("#password").val("")
+            $("#platUserForm").trigger("reset")
+            $("#username").attr('disabled', false)
+            $("#password").attr('disabled', false)
             layer.open({
                 type: 1,
                 title: '新增用户',
                 content: $('#addWindow'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
                 area: ['1022px', '500px']
             });
+            form.on('submit(confirmAdd)', function (data) {
+                $.post({
+                    url: "service/platUserManage/addUser",
+                    data: JSON.stringify(data.field),
+                    contentType: "application/json",
+                    success: function (res) {
+                        layuiAlert("信息:" + res)
+                        tablePlatUser.reload()
+                    }
+                })
+            })
             return false;
         })
 
         $("#cancelAdd, #cancelMod, #cancelRel").unbind("click").click(function () {
             layer.closeAll()
-        })
-
-        form.on('submit(confirmAdd)', function (data) {
-            $.post({
-                url: "service/platUserManage/addUser",
-                data: JSON.stringify(data.field),
-                contentType: "application/json",
-                success: function (res) {
-                    layuiAlert("信息:" + res)
-                    tablePlatUser.reload()
-                }
-            })
         })
 
         $("#queryBtn").unbind("click").click(function () {

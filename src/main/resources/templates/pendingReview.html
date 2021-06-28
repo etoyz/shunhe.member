@@ -413,6 +413,10 @@
         {// “待审核表格”渲染
             var tableReview = table.render({
                 elem: '#reviewList',
+                initSort: {
+                    field: 'time' //排序字段，对应 cols 设定的各字段名
+                    ,type: 'desc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
+                },
                 url: 'service/review/getPendingReviewList',
                 method: "post",
                 where: {
