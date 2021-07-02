@@ -249,19 +249,25 @@
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">支付方式</label>
-                <div class="layui-input-inline" style="width: 250px">
+                <div class="layui-input-inline" style="width: 233px">
                     <select autocomplete="off" id="payStyle" name="payStyle">
                     </select>
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">数量</label>
-                <div class="layui-input-inline">
+                <div class="layui-input-inline" style="width: 233px">
                     <input autocomplete="off" class="layui-input" id="num" lay-verify="required|number" name="num"
                            type="text">
                 </div>
             </div>
-
+<!--            <div class="layui-inline">-->
+<!--                <label class="layui-form-label">操作类型</label>-->
+<!--                <div class="layui-input-inline">-->
+<!--                    <input autocomplete="off" class="layui-input" id="type" disabled name="type"-->
+<!--                           type="text">-->
+<!--                </div>-->
+<!--            </div>-->
         </div>
         <div class="layui-btn-container s-tabBottomButton">
             <span class="layui-btn layui-btn-warm" id="submitForReview">
@@ -384,9 +390,7 @@
                         selectE2.append('<option value="-1">卡券下发</option>');
                         selectE2.append('<option value="-2">储值</option>');
                         for (var s in res) {
-                            console.log(s)
-                            console.log(res[s])
-                            selectE2.append("<option value='" + s + "'>" + res[s].coupon.name + "(剩余" + res[s].money + "元)" + "</option>");
+                            selectE2.append("<option value='" + s + "," + res[s].coupon.type + "'>" + res[s].coupon.name + "(剩余" + res[s].money + "元)" + "</option>");
                         }
                         callback();
                         form.render(); //layui的form重新渲染
@@ -432,10 +436,10 @@
                 },
                 cols: [ [
                     {type: 'numbers'},
-                    {field: 'consumeTypeName', width: 110, title: '消费类型'},
-                    {field: 'consumeProjectName', width: 110, title: '消费项目'},
-                    {field: 'practicalProjectName', width: 110, title: '具体项目'},
-                    {field: 'payStyleName', width: 110, title: '支付方式'}, //单元格内容水平居中
+                    {field: 'consumeTypeName', width: 150, title: '消费类型'},
+                    {field: 'consumeProjectName', width: 170, title: '消费项目'},
+                    {field: 'practicalProjectName', width: 170, title: '具体项目'},
+                    {field: 'payStyleName', width: 170, title: '支付方式'}, //单元格内容水平居中
                     {field: 'timeCost', width: 80, title: '工时费'},
                     {field: 'matCost', width: 80, title: '材料费'},
                     {field: 'totalMoney', width: 110, title: '总金额'},
@@ -480,10 +484,25 @@
             form.on('submit(addUseCard)', function (data) {
                 var formData = data.field
                 console.log(formData)
+                // 下列字段用于接口传值
                 formData.userId = activeUser.userId
                 formData.groupId = activeUser.memberNumber
                 formData.cnt = cnt + 1
                 cnt++
+                if (formData.payStyle === "-1") {
+                    formData.count = $("#num").val()
+                }
+                else if (formData.payStyle === "-2") {
+                    formData.money = $("#num").val()
+                }
+                else {
+                    let type = formData.payStyle.split(",")[1]
+                    if(type === "1")
+                        formData.totalMoney = $("#num").val()
+                    else {
+                        //TODO 通过代金券数量和单价计算出totalMoney，并赋值
+                    }
+                }
                 // 下列字段用于列表显示，接口不需要这些
                 formData.vehicleId = activeUser.vehicle.vehicleId;
                 formData.consumeProjectName = $('#consumeProjectId option:selected').text()
@@ -491,12 +510,6 @@
                 formData.practicalProjectName = $('#practicalProjectId option:selected').text()
                 formData.payStyleName = $('#payStyle option:selected').text()
                 formData.practicalProjectId = $("#practicalProjectId").val()
-                if (formData.payStyle === "-1") {
-                    formData.count = $("#num").val()
-                }
-                else if (formData.payStyle === "-2") {
-                    formData.money = $("#num").val()
-                }
                 couponReviewList.push(formData)
                 tableUseCoupons.reload({
                     data: couponReviewList
