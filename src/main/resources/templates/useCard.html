@@ -249,7 +249,7 @@
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">支付方式</label>
-                <div class="layui-input-inline">
+                <div class="layui-input-inline" style="width: 250px">
                     <select autocomplete="off" id="payStyle" name="payStyle">
                     </select>
                 </div>
@@ -379,13 +379,15 @@
                     timeout: 1000,
                     dataType: "json",
                     success: function (res) {
+                        console.log(res)
                         selectE2.empty()
                         selectE2.append('<option value="-1">卡券下发</option>');
                         selectE2.append('<option value="-2">储值</option>');
-                        if (res)
-                            for (var s of res) {
-                                selectE2.append("<option value='" + s.couponId + "'>" + s.coupon.name + "</option>");
-                            }
+                        for (var s in res) {
+                            console.log(s)
+                            console.log(res[s])
+                            selectE2.append("<option value='" + s + "'>" + res[s].coupon.name + "(剩余" + res[s].money + "元)" + "</option>");
+                        }
                         callback();
                         form.render(); //layui的form重新渲染
                     },
@@ -455,7 +457,6 @@
                 if (obj.event === 'delete') {
                     for (let i = 0; i < couponReviewList.length; i++) {
                         if (couponReviewList[i].cnt === data.cnt) {
-                            console.log(data.cnt)
                             couponReviewList.splice(i, 1)
                             obj.del()
                         }

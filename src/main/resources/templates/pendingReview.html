@@ -248,8 +248,6 @@
                 <label class="layui-form-label">支付方式</label>
                 <div class="layui-input-inline">
                     <select autocomplete="off" id="payStyle" name="payStyle" disabled>
-                        <option value="-1">卡券下发</option>
-                        <option value="-2">储值</option>
                     </select>
                 </div>
             </div>
@@ -378,11 +376,15 @@
                     timeout: 1000,
                     dataType: "json",
                     success: function (res) {
-                        res = res.data;
-                        if (res)
-                            for (var s of res) {
-                                selectE2.append("<option value='" + s.consumeProjectId + "'>" + s.name + "</option>");
-                            }
+                        console.log(res)
+                        selectE2.empty()
+                        selectE2.append('<option value="-1">卡券下发</option>');
+                        selectE2.append('<option value="-2">储值</option>');
+                        for (var s in res) {
+                            console.log(s)
+                            console.log(res[s])
+                            selectE2.append("<option value='" + s + "'>" + res[s].coupon.name + "(剩余" + res[s].money + "元)" + "</option>");
+                        }
                         callback();
                         form.render(); //layui的form重新渲染
                     },

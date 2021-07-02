@@ -252,8 +252,13 @@
                 $("#loginName").html(res.name + " ")
             }
         })
-        $("#logout").unbind("click").click(function (){
-            
+        $("#logout").unbind("click").click(function () {
+            $.post({
+                url: "logout",
+                success: function (res) {
+                    location.href(res)
+                }
+            })
         })
 
         // 自定义各种表单验证规则
