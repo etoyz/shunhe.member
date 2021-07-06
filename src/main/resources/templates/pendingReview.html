@@ -254,7 +254,7 @@
             <div class="layui-inline">
                 <label class="layui-form-label">数量</label>
                 <div class="layui-input-inline">
-                    <input autocomplete="off" class="layui-input" id="count" lay-verify="required|number" name="count"
+                    <input autocomplete="off" class="layui-input" id="num" lay-verify="required|number" name="num"
                            disabled type="text">
                 </div>
             </div>
@@ -376,13 +376,10 @@
                     timeout: 1000,
                     dataType: "json",
                     success: function (res) {
-                        console.log(res)
                         selectE2.empty()
                         selectE2.append('<option value="-1">卡券下发</option>');
                         selectE2.append('<option value="-2">储值</option>');
                         for (var s in res) {
-                            console.log(s)
-                            console.log(res[s])
                             selectE2.append("<option value='" + s + "'>" + res[s].coupon.name + "(剩余" + res[s].money + "元)" + "</option>");
                         }
                         callback();
@@ -470,7 +467,6 @@
                                 url: "service/Archives/getUserInfo?userId=" + data[i].userId,
                                 async: false,
                                 success: function (res) {
-                                    console.log(res)
                                     data[i].customername = res.customername
                                     data[i].memberNumber = res.memberNumber
                                     data[i].vin = res.vehicle.vin
@@ -482,7 +478,6 @@
                                 url: "service/practicalProject/getPracticalProject?practicalProjectId=" + data[i].practicalProjectId,
                                 async: false,
                                 success: function (res) {
-                                    console.log(res)
                                     data[i].practicalProjectName = res.name
                                 }
                             })
@@ -501,6 +496,8 @@
                             }
                         }
                     }
+                    resp.data = data
+                    return resp
                 }
             });
         }
@@ -513,7 +510,6 @@
                 activeItem = obj.data; //获得当前行数据
                 var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
                 if (layEvent === 'detail') {
-                    console.log(activeItem)
                     pullConsumeTypes("#consumeTypeId", () => {
                         pullConsumeItems("#consumeProjectId", $("#consumeTypeId").val(), () => {
                             pullPracticalItemIds("#practicalProjectId", $("#consumeProjectId").val(), () => {
@@ -559,15 +555,18 @@
                                         size: 'sm',
                                         parseData: function (res) {
                                             let data = res.data
+                                            console.log(data)
                                             for (var i = 0; i < data.length; i++) {
                                                 if(data[i].payStyle === "-1") {
                                                     data[i].payStyleName = "卡券下发";
+                                                    data[i].num = data[i].count
                                                 } else if(data[i].payStyle === "-2") {
                                                     data[i].payStyleName = "储值";
-                                                    data[i].count = data[i].money
+                                                }
+                                                else {
+                                                    // TODO 代金券类型
                                                 }
                                             }
-                                            console.log(data)
                                             res.data = data
                                             return res
                                         }
