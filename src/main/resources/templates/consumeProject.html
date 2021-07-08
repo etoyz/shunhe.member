@@ -332,7 +332,7 @@
                     success: function (res) {
                         res = res.data;
                         selectE.empty();
-                        // selectE.append("<option value='" + -1 + "'>-</option>");
+                        selectE.append("<option value='" + -1 + "'>-</option>");
                         for (var s of res) {
                             selectE.append("<option value='" + s.couponId + "'>" + s.name + "</option>");
                         }
