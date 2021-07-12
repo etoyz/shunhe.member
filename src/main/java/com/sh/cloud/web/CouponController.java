@@ -99,4 +99,11 @@ public class CouponController {
     public List<Coupon> getConsumeProjectListByCoupon(@RequestBody ConsumeProject project) {
         return couponService.getCouponListByConsumeProject(project);
     }
+
+    @RequestMapping("getCoupon")
+    Coupon getCoupon(@RequestParam int couponId) {
+        Coupon coupon = new Coupon();
+        coupon.couponId = couponId;
+        return couponService.getCoupon(coupon);
+    }
 }

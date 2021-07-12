@@ -26,18 +26,23 @@ public class UseCard {
     @ResponseBody
     public Hashtable<Integer, UserCoupon> getEnablePayCoupon(@RequestParam String userid, @RequestParam String consumeProjectId) {
         List<UserCoupon> srcList = payService.getEnablePayCoupon(userid, consumeProjectId);
-        Hashtable<Integer, UserCoupon> dstTable = new Hashtable<Integer, UserCoupon>();
+        Hashtable<Integer, UserCoupon> dstTable = new Hashtable<>();
         for (UserCoupon uc : srcList) {
             // 卡券的类型  0:代金券  1:储值
             int type = uc.coupon.type;
-            if (type == 1) {
+            if (type == 1) {  // ID一样的"储值型代金券"合并
                 if (!dstTable.containsKey(Integer.valueOf(uc.couponId)))
                     dstTable.put(Integer.valueOf(uc.couponId), uc);
                 else {
                     dstTable.get(Integer.valueOf(uc.couponId)).money = String.valueOf(Integer.parseInt(dstTable.get(Integer.valueOf(uc.couponId)).money) + Integer.parseInt(uc.money));
                 }
             } else if (type == 0) {
-
+                if (!dstTable.containsKey(Integer.valueOf(uc.couponId))) {
+                    uc.money = "1";
+                    dstTable.put(Integer.valueOf(uc.couponId), uc);
+                } else {
+                    dstTable.get(Integer.valueOf(uc.couponId)).money = String.valueOf(Integer.parseInt(dstTable.get(Integer.valueOf(uc.couponId)).money) + 1);
+                }
             }
         }
         return dstTable;

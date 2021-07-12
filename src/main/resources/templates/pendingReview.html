@@ -556,29 +556,28 @@
                                         size: 'sm',
                                         parseData: function (res) {
                                             let data = res.data
-                                            console.log(data)
                                             for (var i = 0; i < data.length; i++) {
                                                 if(data[i].payStyle === "-1") {
                                                     data[i].payStyleName = "卡券下发";
                                                     data[i].num = data[i].count
-                                                    data[i].totalMoney = data[i].count
+                                                    // data[i].totalMoney = data[i].count
                                                 } else if(data[i].payStyle === "-2") {
                                                     data[i].payStyleName = "储值";
                                                     data[i].num = data[i].money;
-                                                    data[i].totalMoney = data[i].money;
+                                                    // data[i].totalMoney = data[i].money;
                                                 }
                                                 else {
-                                                    // TODO 代金券类型
                                                     $.post({
-                                                        url: "service/practicalProject/getPracticalProject?practicalProjectId=" + data[i].practicalProjectId,
+                                                        url: "service/coupon/getCoupon?couponId=" + data[i].payStyle,
                                                         async: false,
                                                         success: function (res) {
                                                             console.log(res)
-                                                            data[i].payStyleName = res.couponName
+                                                            data[i].payStyleName = res.name
+                                                            data[i].num = data[i].totalMoney;
                                                         }
                                                     })
-
                                                 }
+                                                data[i].totalMoney = ""
                                             }
                                             res.data = data
                                             return res

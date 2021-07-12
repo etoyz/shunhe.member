@@ -389,8 +389,11 @@
                         selectE2.empty()
                         selectE2.append('<option value="-1">卡券下发</option>');
                         selectE2.append('<option value="-2">储值</option>');
-                        for (var s in res) {
-                            selectE2.append("<option value='" + s + "," + res[s].coupon.type + "'>" + res[s].coupon.name + "(剩余" + res[s].money + "元)" + "</option>");
+                        for (var s in res) { // value = "couponId, couponType"
+                            if(res[s].coupon.type === "1")
+                                selectE2.append("<option value='" + s + "," + res[s].coupon.type + "'>" + res[s].coupon.name + "(剩余" + res[s].money + "元)" + "</option>");
+                            else if(res[s].coupon.type === "0")
+                                selectE2.append("<option value='" + s + "," + res[s].coupon.type + "'>" + res[s].coupon.name + "(剩余" + res[s].money + "张)" + "</option>");
                         }
                         callback();
                         form.render(); //layui的form重新渲染
@@ -497,10 +500,13 @@
                 }
                 else {
                     let type = formData.payStyle.split(",")[1]
-                    if(type === "1")
-                        formData.totalMoney = $("#num").val()
+                    if(type === "1") {
+                        formData.totalMoney = $("#num").val();
+                        formData.money = $("#num").val()
+                    }
                     else {
                         //TODO 通过代金券数量和单价计算出totalMoney，并赋值
+                        formData.count = $("#num").val()
                     }
                 }
                 // 下列字段用于列表显示，接口不需要这些
