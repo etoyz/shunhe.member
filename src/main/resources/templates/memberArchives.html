@@ -1455,6 +1455,10 @@
                 elem: '#consumptionHistories',
                 url: 'service/Archives/getConsumptionHistories',
                 method: "post",
+                initSort: {
+                    field: 'time' //排序字段，对应 cols 设定的各字段名
+                    ,type: 'desc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
+                },
                 where: {
                     user: {},
                     couponCheck: {},
@@ -1464,16 +1468,16 @@
                 height: 288,
                 page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                     layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
-                    limit: 10,
+                    limit: 15,
                     groups: 3, //只显示 1 个连续页码
                     first: false, //不显示首页
                     last: false //不显示尾页
                 },
                 cols: [ [
                     {type: 'numbers'},
-                    {field: 'time', width: 110, title: '消费日期'},
-                    {field: 'groupId', width: 110, title: '流水号'},
-                    {field: 'customername', width: 110, title: '客户名称'},
+                    {field: 'time', width: 150, title: '消费日期'},
+                    {field: 'groupId', width: 150, title: '流水号'},
+                    {field: 'customername', width: 150, title: '客户名称'},
                     {field: 'vin', width: 110, title: '车架号'},
                     {field: 'consumeTypeName', width: 110, title: '消费类型'},
                     {field: 'consumeProjectName', width: 110, title: '消费项目'},
@@ -1493,7 +1497,6 @@
                 ]],
                 size: 'sm'
             });
-
         }
 
         // "开票历史表格"

@@ -77,7 +77,7 @@ public class ArchivesController {
     @RequestMapping("getConsumptionHistories")
     public Map<String, Object> getConsumptionHistories(@RequestBody GetPendingReviewListRequest request) {
         CouponCheck couponCheck = request.getCouponCheck();
-        couponCheck.type = "0";
+        couponCheck.type = "1";
         Map<String, Object> ret = new HashMap();
         ret.put("code", 0);
         ret.put("msg", "");
