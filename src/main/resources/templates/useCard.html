@@ -385,14 +385,14 @@
                     timeout: 1000,
                     dataType: "json",
                     success: function (res) {
-                        console.log(res)
                         selectE2.empty()
                         selectE2.append('<option value="-1">卡券下发</option>');
                         selectE2.append('<option value="-2">储值</option>');
                         for (var s in res) { // value = "couponId, couponType"
-                            if(res[s].coupon.type === "1")
-                                selectE2.append("<option value='" + s + "," + res[s].coupon.type + "'>" + res[s].coupon.name + "(剩余" + res[s].money + "元)" + "</option>");
-                            else if(res[s].coupon.type === "0")
+                            console.log(res[s])
+                            if(res[s].coupon.type === 1)
+                                selectE2.append("<option value='" + s + "," + res[s].coupon.type + "'>" + res[s].coupon.name + "(剩余" + parseFloat(res[s].money).toFixed(2) + "元)" + "</option>");
+                            else if(res[s].coupon.type === 0)
                                 selectE2.append("<option value='" + s + "," + res[s].coupon.type + "'>" + res[s].coupon.name + "(剩余" + res[s].money + "张)" + "</option>");
                         }
                         callback();
@@ -493,23 +493,27 @@
                 formData.cnt = cnt + 1
                 cnt++
                 if (formData.payStyle === "-1") {
+                    $("#num").val(parseFloat($("#num").val()).toFixed(0))
                     formData.count = $("#num").val()
                 }
                 else if (formData.payStyle === "-2") {
+                    $("#num").val(parseFloat($("#num").val()).toFixed(2))
                     formData.money = $("#num").val()
                 }
                 else {
                     let type = formData.payStyle.split(",")[1]
                     if(type === "1") {
+                        $("#num").val(parseFloat($("#num").val()).toFixed(2))
                         formData.totalMoney = $("#num").val();
                         formData.money = $("#num").val()
                     }
                     else {
-                        //TODO 通过代金券数量和单价计算出totalMoney，并赋值
+                        $("#num").val(parseFloat($("#num").val()).toFixed(0))
                         formData.count = $("#num").val()
                     }
                 }
                 // 下列字段用于列表显示，接口不需要这些
+                formData.num = $("#num").val();
                 formData.vehicleId = activeUser.vehicle.vehicleId;
                 formData.consumeProjectName = $('#consumeProjectId option:selected').text()
                 formData.consumeTypeName = $('#consumeTypeId option:selected').text()

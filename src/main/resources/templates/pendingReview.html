@@ -559,11 +559,11 @@
                                             for (var i = 0; i < data.length; i++) {
                                                 if(data[i].payStyle === "-1") {
                                                     data[i].payStyleName = "卡券下发";
-                                                    data[i].num = data[i].count
+                                                    data[i].num = parseInt(data[i].count).toFixed(0)
                                                     // data[i].totalMoney = data[i].count
                                                 } else if(data[i].payStyle === "-2") {
                                                     data[i].payStyleName = "储值";
-                                                    data[i].num = data[i].money;
+                                                    data[i].num = parseFloat(data[i].money).toFixed(2);
                                                     // data[i].totalMoney = data[i].money;
                                                 }
                                                 else {
@@ -571,9 +571,8 @@
                                                         url: "service/coupon/getCoupon?couponId=" + data[i].payStyle,
                                                         async: false,
                                                         success: function (res) {
-                                                            console.log(res)
                                                             data[i].payStyleName = res.name
-                                                            data[i].num = data[i].totalMoney;
+                                                            data[i].num = parseFloat(data[i].totalMoney).toFixed(2);
                                                         }
                                                     })
                                                 }
