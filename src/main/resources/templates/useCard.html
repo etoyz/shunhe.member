@@ -499,10 +499,11 @@
                 else if (formData.payStyle === "-2") {
                     $("#num").val(parseFloat($("#num").val()).toFixed(2))
                     formData.money = $("#num").val()
+                    formData.totalMoney = $("#num").val()
                 }
                 else {
                     let type = formData.payStyle.split(",")[1]
-                    if(type === "1") {
+                    if(type === "1") { //储值型代金券
                         $("#num").val(parseFloat($("#num").val()).toFixed(2))
                         formData.totalMoney = $("#num").val();
                         formData.money = $("#num").val()
