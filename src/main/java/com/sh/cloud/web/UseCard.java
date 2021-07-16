@@ -34,14 +34,14 @@ public class UseCard {
                 if (!dstTable.containsKey(Integer.valueOf(uc.couponId)))
                     dstTable.put(Integer.valueOf(uc.couponId), uc);
                 else {
-                    dstTable.get(Integer.valueOf(uc.couponId)).money = String.valueOf(Integer.parseInt(dstTable.get(Integer.valueOf(uc.couponId)).money) + Integer.parseInt(uc.money));
+                    dstTable.get(Integer.valueOf(uc.couponId)).money = String.valueOf(Float.parseFloat(dstTable.get(Integer.valueOf(uc.couponId)).money) + Float.parseFloat(uc.money));
                 }
             } else if (type == 0) {
                 if (!dstTable.containsKey(Integer.valueOf(uc.couponId))) {
                     uc.money = "1";
                     dstTable.put(Integer.valueOf(uc.couponId), uc);
                 } else {
-                    dstTable.get(Integer.valueOf(uc.couponId)).money = String.valueOf(Integer.parseInt(dstTable.get(Integer.valueOf(uc.couponId)).money) + 1);
+                    dstTable.get(Integer.valueOf(uc.couponId)).money = String.valueOf(Float.parseFloat(dstTable.get(Integer.valueOf(uc.couponId)).money) + 1);
                 }
             }
         }
