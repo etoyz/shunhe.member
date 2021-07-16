@@ -482,10 +482,12 @@
                                 }
                             })
                             {
-                                if (data[i].payStyle === '-1')
+                                if (data[i].payStyle === '-1') {
                                     data[i].payStyleName = '卡券发放'
-                                else if (data[i].payStyle === '-2')
+                                }
+                                else if (data[i].payStyle === '-2') {
                                     data[i].payStyleName = '储值'
+                                }
                                 else {
                                     $.post({
                                         url: "service/coupon/getCoupon?couponId=" + data[i].payStyle,
@@ -498,6 +500,8 @@
                                     })
                                 }
                             }
+                            data[i].count = parseInt(data[i].count)
+                            data[i].totalMoney = parseFloat(data[i].totalMoney).toFixed(2)
                         }
                     }
                     resp.data = data

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -26,7 +27,25 @@ public class PendingReviewController {
         Map<String, Object> ret = new HashMap();
         ret.put("code", 0);
         ret.put("msg", "");
-        ret.put("data", payService.getUnCheckRecord(request.getUser(), couponCheck, request.getPage(), request.getLimit(), request.getGroupBy()));
+        List<CouponCheck> data;
+        if (request.getGroupBy()) {
+            data = payService.getUnCheckRecord(request.getUser(), couponCheck, request.getPage(), request.getLimit(), true);
+            for (CouponCheck c : data) {
+                couponCheck.groupId = c.groupId;
+                Float totalM = 0f;
+                Integer cnt = 0;
+                List<CouponCheck> t = payService.getUnCheckRecord(request.getUser(), couponCheck, request.getPage(), request.getLimit(), false);
+                for (CouponCheck ct : t) {
+                    totalM += Float.parseFloat(ct.totalMoney);
+                    cnt += Integer.parseInt(ct.count);
+                }
+                c.totalMoney = String.valueOf(totalM);
+                c.count = String.valueOf(cnt);
+            }
+        } else {
+            data = payService.getUnCheckRecord(request.getUser(), couponCheck, request.getPage(), request.getLimit(), false);
+        }
+        ret.put("data", data);
         ret.put("count", payService.getUnCheckRecordCount(request.getUser(), couponCheck, request.getGroupBy()));
 
         return ret;
