@@ -515,7 +515,7 @@
                 <li>车辆信息</li>
                 <li>会员信息</li>
                 <li>消费历史</li>
-                <li>开票历史</li>
+<!--                <li>开票历史</li>-->
                 <li>积分历史</li>
                 <li>操作日志</li>
             </ul>
@@ -964,13 +964,13 @@
                         <table class="layui-hide" id="consumptionHistories" lay-filter="consumptionHistoriesTabel"></table>
                     </div>
                 </div>
-                <!--        开票历史         -->
-                <div class="layui-tab-item">
-                    <!-- 展示表格 -->
-                    <div class="s-commonTable">
-                        <table class="layui-hide" id="billingHistories" lay-filter="billingHistoriesTabel"></table>
-                    </div>
-                </div>
+<!--                &lt;!&ndash;        开票历史         &ndash;&gt;-->
+<!--                <div class="layui-tab-item">-->
+<!--                    &lt;!&ndash; 展示表格 &ndash;&gt;-->
+<!--                    <div class="s-commonTable">-->
+<!--                        <table class="layui-hide" id="billingHistories" lay-filter="billingHistoriesTabel"></table>-->
+<!--                    </div>-->
+<!--                </div>-->
                 <!--        积分历史         -->
                 <div class="layui-tab-item">
                     <!-- 展示表格 -->
@@ -1492,41 +1492,41 @@
             });
         }
 
-        // "开票历史表格"
-        {
-            // "开票历史表格"渲染
-            // var tableConsumptionHistories = table.render({
-            table.render({
-                elem: '#billingHistories',
-                url: 'service/Archives/getBillingHistories',
-                method: "post",
-                where: {
-                    user: {},
-                    couponCheck: {},
-                    groupBy: true
-                },
-                contentType: "application/json",
-                height: 288,
-                page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
-                    layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
-                    limit: 10,
-                    groups: 3, //只显示 1 个连续页码
-                    first: false, //不显示首页
-                    last: false //不显示尾页
-                },
-                cols: [ [
-                    {type: 'numbers'},
-                    {field: '***', width: 110, title: '操作日期'},
-                    {field: '***', width: 110, title: '操作员'},
-                    {field: '***', width: 110, title: '消费项目'},
-                    {field: '***', width: 110, title: '发票号'},
-                    {field: '***', width: 110, title: '增加发票'},
-                    {field: '***', width: 110, title: '开票金额'},
-                ]],
-                size: 'sm'
-            });
-
-        }
+        // // "开票历史表格"
+        // {
+        //     // "开票历史表格"渲染
+        //     // var tableConsumptionHistories = table.render({
+        //     table.render({
+        //         elem: '#billingHistories',
+        //         url: 'service/Archives/getBillingHistories',
+        //         method: "post",
+        //         where: {
+        //             user: {},
+        //             couponCheck: {},
+        //             groupBy: true
+        //         },
+        //         contentType: "application/json",
+        //         height: 288,
+        //         page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+        //             layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
+        //             limit: 10,
+        //             groups: 3, //只显示 1 个连续页码
+        //             first: false, //不显示首页
+        //             last: false //不显示尾页
+        //         },
+        //         cols: [ [
+        //             {type: 'numbers'},
+        //             {field: '***', width: 110, title: '操作日期'},
+        //             {field: '***', width: 110, title: '操作员'},
+        //             {field: '***', width: 110, title: '消费项目'},
+        //             {field: '***', width: 110, title: '发票号'},
+        //             {field: '***', width: 110, title: '增加发票'},
+        //             {field: '***', width: 110, title: '开票金额'},
+        //         ]],
+        //         size: 'sm'
+        //     });
+        //
+        // }
 
         // "积分历史表格"
         {

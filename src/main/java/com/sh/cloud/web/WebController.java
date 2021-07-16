@@ -98,7 +98,7 @@ public class WebController {
     // 反结算历史
     @RequestMapping("/cancelConsumeHistory")
     public String cancelConsumeHistory() {
-        return "cancelConsumeeHistory";
+        return "cancelConsumeHistory";
     }
 
     // 卡券统计
@@ -108,22 +108,22 @@ public class WebController {
     }
 
     // 储值统计
-    @RequestMapping("/depositStatistical")
+    @RequestMapping("/balanceStatistical")
     public String depositStatistical() {
-        return "depositStatistical";
+        return "balanceStatistical";
     }
 
-    // 群发统计
-    @RequestMapping("/massStatistical")
-    public String massStatistical() {
-        return "massStatistical";
-    }
-
-    // 抽奖统计
-    @RequestMapping("/raffleStatistical")
-    public String raffleStatistical() {
-        return "raffleStatistical";
-    }
+//    // 群发统计
+//    @RequestMapping("/massStatistical")
+//    public String massStatistical() {
+//        return "massStatistical";
+//    }
+//
+//    // 抽奖统计
+//    @RequestMapping("/raffleStatistical")
+//    public String raffleStatistical() {
+//        return "raffleStatistical";
+//    }
     // ----------------------------------------
 
     // ------------- Menu: System management -------------
