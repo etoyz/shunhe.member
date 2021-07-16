@@ -48,4 +48,8 @@
                      interface="com.sft.member.obtain.pay.PayService" async="false"/>
     <dubbo:reference id="CarService"
                      interface="carinfo.service.CarDataQuery" async="false"/>
+    <dubbo:reference id="statisticsService"
+                     interface="com.sft.member.obtain.statistics.StatisticsService" async="false"/>
+    <dubbo:reference id="scoreService"
+                     interface="com.sft.member.obtain.score.ScoreService" async="false"/>
 </beans>
