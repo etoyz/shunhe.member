@@ -634,6 +634,7 @@
                     dataType: "json",
                     success: function (res) {
                         selectE.empty();
+                        selectE.append("<option value='" + -1 + "'>" + "---" + "</option>");
                         for (var s of res) {
                             selectE.append("<option value='" + s.id + "'>" + s.name + "</option>");
                         }
@@ -656,6 +657,7 @@
                     success: function (res) {
                         console.log(res)
                         selectE.empty();
+                        selectE.append("<option value='" + -1 + "'>" + "---" + "</option>");
                         for (var s of res) {
                             selectE.append("<option value='" + s.id + "'>" + s.name + "</option>");
                         }
