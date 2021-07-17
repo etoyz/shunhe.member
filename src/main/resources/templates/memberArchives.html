@@ -105,20 +105,20 @@
                             </div>
                         </div>
                     </div>
-                    <div class="layui-form-item s-formItem5">
+                    <div class="layui-form-item s-formItem5" id="area-picker">
                         <label class="layui-form-label">省市区</label>
                         <div class="layui-input-inline">
-                            <select id="province" lay-filter="province" name="province">
+                            <select id="province" class="province-selector" data-value="山东省" lay-filter="province" name="province">
                                 <option value="">请选择省</option>
                             </select>
                         </div>
                         <div class="layui-input-inline">
-                            <select id="city" lay-filter="city" name="city">
+                            <select id="city" lay-filter="city" data-value="烟台市" class="city-selector" name="city">
                                 <option value="">请选择市</option>
                             </select>
                         </div>
                         <div class="layui-input-inline">
-                            <select id="area" lay-filter="area" name="area">
+                            <select id="area" class="county-selector" data-value="莱山区" lay-filter="area" name="area">
                                 <option value="">请选择县/区</option>
                             </select>
                         </div>
@@ -532,7 +532,10 @@
 
 <script src="plugins/layui/layui.js"></script>
 <script>
-    layui.use(['form', 'laydate', 'table', 'layer', 'element'], function () {
+    layui.config({  // 省市区联动选择
+        base: 'build/js/'
+        , version : "1.0"
+    }).use(['form', 'laydate', 'table', 'layer', 'element', 'layarea'], function () {
         // utils
         {
             var $ = layui.jquery,
@@ -540,7 +543,15 @@
                 laydate = layui.laydate,
                 layer = layui.layer,
                 table = layui.table,
+                layarea = layui.layarea,
                 element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+
+            let area = layarea.render({
+                elem: '#area-picker',
+                change: function (res) {
+                    console.log(res);
+                }
+            })
 
             //日期
             lay('.date-render').each(function(){
@@ -654,6 +665,9 @@
         // 显示“新增弹窗”
         $("#add").unbind("click").click(function () {
             $('#addForm').trigger('reset');
+            $('select[name="province"]').siblings("div.layui-form-select").find('dl dd[lay-value=' + "山东省" + ']').click();
+            $('select[name="city"]').siblings("div.layui-form-select").find('dl dd[lay-value=' + "烟台市" + ']').click();
+            $('select[name="area"]').siblings("div.layui-form-select").find('dl dd[lay-value=' + "莱山区" + ']').click();
             var index = layer.open({
                 type: 1,
                 title: '新增会员信息',
@@ -700,7 +714,6 @@
 
             },
             toolbar: true, //仅开启工具栏，不显示左侧模板
-            // defaultToolbar: ['exports'], //头部工具栏右侧图标
             defaultToolbar: ['filter', 'print', 'exports'],
             cols: [ [
                 {type: 'checkbox'},
@@ -719,7 +732,7 @@
                 {field: 'vehiclebrand', width: 210, title: '车型'},
                 {field: 'province', width: 152, title: '省'},
                 {field: 'city', width: 152, title: '市'},
-                {field: 'district', width: 152, title: '区'},
+                {field: 'area', width: 152, title: '区'},
                 {field: 'userId', width: 210, title: 'id', hide: true},
                 {field: 'vehicleId', width: 210, title: 'vid',hide: true},
                 {field: 'operation', width: 210, title: '操作', toolbar: '#operation', fixed: 'right'}
@@ -752,6 +765,9 @@
                                 data[i].vehiclebrand = resp.vehicle.vehiclebrand
                                 data[i].vehiclelabel = resp.vehicle.vehiclelabel
                                 data[i].vehiclestyle = resp.vehicle.vehiclestyle
+                                data[i].province = resp.province
+                                data[i].city = resp.city
+                                data[i].area = resp.area
                             } catch (e){}
                         }
                     })
@@ -772,7 +788,6 @@
                 layer.confirm('确定要重置用户账号：[' + user + ']密码吗？', {icon: 3, title: '提示'}, function (index) {
                     layer.close(index);
                     //向服务端发送删除指令
-
                     // 提示窗
                     layer.alert('重置密码成功！初始密码为：123456', {icon: 1});
                 });
@@ -799,19 +814,21 @@
                         $('#cCard').val(res.cCard);
                         $('#platenumber').val(res.vehicle.platenumber);
                         $('#vin').val(res.vehicle.vin);
-                        // $('#vehiclebrandM').val(res.vehicle.vehiclebrand);
-                        // $('#vehiclestyleM').val(res.vehicle.vehiclestyle);
                         $('#level').val(res.member.level);
                         $('#memberNumber').val(res.memberNumber);
+                        $('#province').val(res.province);
+                        $('select[name="province"]').siblings("div.layui-form-select").find('dl dd[lay-value=' + res.province + ']').click();
+                        $('#city').val(res.city);
+                        $('select[name="city"]').siblings("div.layui-form-select").find('dl dd[lay-value=' + res.city + ']').click();
+                        $('#area').val(res.area);
                         pullBrandName("#vehiclelabel", () => {
                             $('#vehiclelabel').val(res.vehicle.vehiclelabelid);
-                            form.render()
                             pullCarSeriesgroupName("#vehiclestyle", $('#vehiclelabel').val(), () => {
                                 $('#vehiclestyle').val(res.vehicle.vehiclestyleid);
                                 pullCarSeriesName("#vehiclebrand", $('#vehiclestyle').val(), () => {
                                     // $('#vehiclelabelM option:selected').text(res.vehicle.vehiclelabel)
                                     $('#vehiclebrand').val(res.vehicle.vehiclebrandid);
-
+                                    form.render()
                                 });
                             });
                         });
@@ -946,19 +963,23 @@
                         data: JSON.stringify(data.field),
                         contentType: "application/json",
                         success: function (res) {
-                            // var t
-                            if(res.cGender==1)
-                                data.field.cGender="男"
-                            else if(res.cGender==2)
-                                data.field.cGender="女"
-                            else
-                                data.field.cGender="未知"
-                            data.field.vehiclelabel= res.vehicle.vehiclelabel
-                                data.field.vehiclebrand=res.vehicle.vehiclebrand
-                                    data.field.vehiclestyle= res.vehicle.vehiclestyle
-                             // console.log(data.field.vehiclelabel)
-                             layer.closeAll();
-                            obj.update(data.field);
+                            if(res) {
+                                // var t
+                                if (res.cGender == 1)
+                                    data.field.cGender = "男"
+                                else if (res.cGender == 2)
+                                    data.field.cGender = "女"
+                                else
+                                    data.field.cGender = "未知"
+                                data.field.vehiclelabel = res.vehicle.vehiclelabel
+                                data.field.vehiclebrand = res.vehicle.vehiclebrand
+                                data.field.vehiclestyle = res.vehicle.vehiclestyle
+                                // console.log(data.field.vehiclelabel)
+                                layuiAlert("修改成功！");
+                                obj.update(data.field);
+                            } else
+                                // layuiAlert(res);
+                                layuiAlert("修改失败！");
                         }
                     })
                     return false
@@ -1180,22 +1201,7 @@
             })
             return false;
         })
-    }).config({  // 省市区联动选择
-        base: './build/js/'
-    }).use(['jquery', 'areaThreeLevel'], function () {
-        var $ = layui.jquery,
-            areaThreeLevel = layui.areaThreeLevel;
-
-        // 2.省市区三级联动选择
-        areaThreeLevel.set({
-            s1: 'province',
-            s2: 'city',
-            s3: 'area',
-            v1: '',
-            v2: '',
-            v3: ''
-        }).treeSelect();
-    });
+    })
 </script>
 </body>
 </html>
