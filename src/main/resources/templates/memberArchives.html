@@ -352,16 +352,13 @@
                         <div class="layui-inline">
                             <label class="layui-form-label">商业险投保公司</label>
                             <div class="layui-input-inline">
-                                <select autocomplete="off" class="layui-input" id="businessRisksbCompany"
-                                        name="businessRisksbCompany" type="text"></select>
+                                <select autocomplete="off" class="layui-input" id="businessRisksbCompany" name="businessRisksbCompany" type="text"></select>
                             </div>
                         </div>
                         <div class="layui-inline">
                             <label class="layui-form-label">商业险保单号</label>
                             <div class="layui-input-inline">
-                                <input autocomplete="off" class="layui-input"
-                                       id="businessRisksNo"
-                                       name="businessRisksNo" type="text">
+                                <input autocomplete="off" class="layui-input" id="businessRisksNo" name="businessRisksNo" type="text">
                             </div>
                         </div>
                     </div>
@@ -671,14 +668,20 @@
                     }
                 })
             }
+
+            function pullAll(){
+                pullInsuranceCompany("#insuranceCompany")
+                pullInsuranceCompany("#businessRisksbCompany")
+                pullInsuranceTypeName("#insuranceTypeName")
+            }
         }
 
         // 显示“新增弹窗”
         $("#add").unbind("click").click(function () {
             $('#addForm').trigger('reset');
-            $('select[name="province"]').siblings("div.layui-form-select").find('dl dd[lay-value=' + "山东省" + ']').click();
-            $('select[name="city"]').siblings("div.layui-form-select").find('dl dd[lay-value=' + "烟台市" + ']').click();
-            $('select[name="area"]').siblings("div.layui-form-select").find('dl dd[lay-value=' + "莱山区" + ']').click();
+            $('select[name="province"]').siblings("div.layui-form-select").find('dl dd[ lay-value=' + "山东省" + ']').click();
+            $('select[name="city"]').siblings("div.layui-form-select").find('dl dd[ lay-value=' + "烟台市" + ']').click();
+            $('select[name="area"]').siblings("div.layui-form-select").find('dl dd[ lay-value=' + "莱山区" + ']').click();
             var index = layer.open({
                 type: 1,
                 title: '新增会员信息',
@@ -686,15 +689,39 @@
                 area: ['1100px', '650px'],
                 offset: '20px'
             });
+            form.on('submit(confirmAdd)', function (data) {
+                var textvehiclelabel=$('#vehiclelabel option:selected').text();
+                var textvehiclestyle=$('#vehiclestyle option:selected').text();
+                var textvehiclebrand=$('#vehiclebrand option:selected').text();
+                data.field.vehicle = {
+                    platenumber: data.field.platenumber,
+                    vin: data.field.vin,
+                    vehiclelabel: textvehiclelabel,
+                    vehiclebrand: textvehiclebrand,
+                    vehiclestyle: textvehiclestyle,
+                    customername: data.field.customername,
+                    vehiclelabelid: data.field.vehiclelabel,
+                    vehiclebrandid: data.field.vehiclebrand,
+                    vehiclestyleid: data.field.vehiclestyle,
+                }
+                $.post({
+                    url: "/service/Archives/addArchives",
+                    data: JSON.stringify(data.field),
+                    contentType: "application/json",
+                    success: function (res) {
+                        layuiAlert("信息:" + res)
+                        tableUserList.reload()
+                    }
+                })
+                return false;
+            })
             pullBrandName("#vehiclelabel", () => {
                 pullCarSeriesgroupName("#vehiclestyle", $('#vehiclelabel').val(), () => {
                     pullCarSeriesName("#vehiclebrand", $('#vehiclestyle').val(), () => {
                     });
                 });
             });
-            pullInsuranceCompany("#insuranceCompany")
-            pullInsuranceCompany("#businessRisksbCompany")
-            pullInsuranceTypeName("#insuranceTypeName");
+            pullAll()
             form.on('select(vehiclelabel)', function () {
                     pullCarSeriesgroupName("#vehiclestyle", $('#vehiclelabel').val(), () => {
                         pullCarSeriesName("#vehiclebrand", $('#vehiclestyle').val(), () => {
@@ -761,7 +788,6 @@
                         url: "service/Archives/getUserInfo?userId=" + data[i].userId,
                         async: false,
                         success: function (resp) {
-                            console.log(resp.cGender)
                             try{
                                 if(resp.cGender==1)
                                     data[i].cGender="男"
@@ -811,6 +837,7 @@
                     content: $('#memberPopup'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
                     area: ['1100px', '650px']
                 });
+                pullAll()
                 $.post({
                     url: "/service/Archives/getUserInfo",
                     data: {
@@ -824,6 +851,9 @@
                         $('#cCard').val(res.cCard);
                         $('#platenumber').val(res.vehicle.platenumber);
                         $('#vin').val(res.vehicle.vin);
+                        $('#insuranceTypeName').val(res.vehicle.insuranceTypeName);
+                        $('#insuranceCompany').val(res.vehicle.insuranceCompany);
+                        $('#businessRisksbCompany').val(res.vehicle.businessRisksbCompany);
                         $('#level').val(res.member.level);
                         $('#memberNumber').val(res.memberNumber);
                         $('#province').val(res.province);
@@ -858,6 +888,7 @@
                 $.post({
                     url: "service/Archives/getUserCost?userid=" + activedata.userId,
                     success: function (res){
+                        //TODO 卡券总价值
                         console.log(res)
                     }
                 })
@@ -956,7 +987,6 @@
                     var textvehiclelabel=$('#vehiclelabel option:selected').text();
                     var textvehiclestyle=$('#vehiclestyle option:selected').text();
                     var textvehiclebrand=$('#vehiclebrand option:selected').text();
-                    console.log(data)
                     data.field.vehicle = {
                         platenumber: data.field.platenumber,
                         vin: data.field.vin,
@@ -968,12 +998,14 @@
                         vehiclelabelid: data.field.vehiclelabel,
                         vehiclebrandid: data.field.vehiclebrand,
                         vehiclestyleid: data.field.vehiclestyle,
+                        businessRisksbCompany: data.field.businessRisksbCompany,
+                        insuranceCompany: data.field.insuranceCompany,
+                        insuranceTypeName: data.field.insuranceTypeName,
                     }
                     data.field.member = {
                         level: data.field.level
                     }
                     data.field.userId = activedata.userId
-                    // data.field.userId : data.userId;
                     $.post({
                         url: "/service/Archives/editArchives",
                         data: JSON.stringify(data.field),
@@ -990,11 +1022,9 @@
                                 data.field.vehiclelabel = res.vehicle.vehiclelabel
                                 data.field.vehiclebrand = res.vehicle.vehiclebrand
                                 data.field.vehiclestyle = res.vehicle.vehiclestyle
-                                // console.log(data.field.vehiclelabel)
                                 layuiAlert("修改成功！");
                                 obj.update(data.field);
                             } else
-                                // layuiAlert(res);
                                 layuiAlert("修改失败！");
                         }
                     })
@@ -1051,6 +1081,7 @@
                         },
                         success: function (res) {
                             layuiAlert(res)
+                            tableUserList.reload()
                         }
                     });
 
@@ -1070,7 +1101,6 @@
                 yes: function () {
                     layer.closeAll();
                     $('#addForm').trigger('reset');
-                    tableUserList.reload()
                 }
             });
         }
@@ -1144,7 +1174,7 @@
         }
 
         // "会员信息表格"渲染
-        var tableIns1 = table.render({
+        table.render({
             elem: '#memberInfo',
             url: './datas/memberInfo.json',
             height: 400,
@@ -1170,35 +1200,6 @@
             ]],
             size: 'sm'
         });
-
-        form.on('submit(confirmAdd)', function (data) {
-            var textvehiclelabel=$('#vehiclelabel option:selected').text();
-            var textvehiclestyle=$('#vehiclestyle option:selected').text();
-            var textvehiclebrand=$('#vehiclebrand option:selected').text();
-            data.field.vehicle = {
-                platenumber: data.field.platenumber,
-                vin: data.field.vin,
-                vehiclelabel: textvehiclelabel,
-                vehiclebrand: textvehiclebrand,
-                vehiclestyle: textvehiclestyle,
-                customername: data.field.customername,
-                vehiclelabelid: data.field.vehiclelabel,
-                vehiclebrandid: data.field.vehiclebrand,
-                vehiclestyleid: data.field.vehiclestyle,
-                // customernameid: data.field.customername
-            }
-            console.log(data.field)
-            $.post({
-                url: "/service/Archives/addArchives",
-                data: JSON.stringify(data.field),
-                contentType: "application/json",
-                success: function (res) {
-                    console.log(res)
-                    layuiAlert("信息:" + res)
-                }
-            })
-            return false;
-        })
 
         $('#cancelAdd').on('click', function () {
             // 关闭当前弹出层
