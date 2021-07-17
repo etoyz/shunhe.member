@@ -393,7 +393,7 @@
                             if(res[s].coupon.type === 1)
                                 selectE2.append("<option value='" + s + "," + res[s].coupon.type + "'>" + res[s].coupon.name + "(剩余" + parseFloat(res[s].money).toFixed(2) + "元)" + "</option>");
                             else if(res[s].coupon.type === 0)
-                                selectE2.append("<option value='" + s + "," + res[s].coupon.type + "'>" + res[s].coupon.name + "(剩余" + res[s].money + "张)" + "</option>");
+                                selectE2.append("<option value='" + s + "," + res[s].coupon.type + "'>" + res[s].coupon.name + "(剩余 " + parseInt(res[s].money) + " 张)" + "</option>");
                         }
                         callback();
                         form.render(); //layui的form重新渲染

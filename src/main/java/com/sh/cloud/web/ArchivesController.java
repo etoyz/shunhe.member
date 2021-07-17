@@ -1,6 +1,5 @@
 package com.sh.cloud.web;
 
-import carinfo.bean.CarBrand;
 import carinfo.bean.CarInfo;
 import carinfo.bean.CarSeries;
 import carinfo.bean.CarSeriesGroup;
@@ -11,8 +10,6 @@ import com.sft.member.bean.User;
 import com.sft.member.obtain.member.MemberService;
 import com.sft.member.obtain.pay.PayService;
 import com.sft.member.obtain.user.UserService;
-import com.sft.member.obtain.vehicle.BrandService;
-import com.sft.member.obtain.vehicle.CarSeriesService;
 import com.sh.cloud.entity.GetPendingReviewListRequest;
 import com.sh.cloud.entity.GetUserListRequest;
 import com.sh.cloud.utils.PlatUserUtils;
@@ -32,6 +29,7 @@ public class ArchivesController {
     MemberService memberService;
     @Resource
     CarDataQuery CarService;
+
     @PostMapping(value = "addArchives")
     public String addUser(@RequestBody User user) {
         String ret = shUserService.addUser(PlatUserUtils.getCurrentLoginPlatUser(), user);
@@ -74,6 +72,7 @@ public class ArchivesController {
     // 获取"消费历史"表格数据
     @Resource
     PayService payService;
+
     @RequestMapping("getConsumptionHistories")
     public Map<String, Object> getConsumptionHistories(@RequestBody GetPendingReviewListRequest request) {
         CouponCheck couponCheck = request.getCouponCheck();
@@ -121,7 +120,7 @@ public class ArchivesController {
     public String deleteArchives(@RequestParam String userId) {
         User c = new User();
         c.userId = userId;
-         String ret = shUserService.deleteUser(PlatUserUtils.getCurrentLoginPlatUser(), c);
+        String ret = shUserService.deleteUser(PlatUserUtils.getCurrentLoginPlatUser(), c);
         if (ret == null || ret.equals(""))
             return "删除成功！";
         else
@@ -131,8 +130,8 @@ public class ArchivesController {
     @PostMapping(value = "editArchives")
     public User editArchives(@RequestBody User user) {
         User c;
-       c = shUserService.editUser(PlatUserUtils.getCurrentLoginPlatUser(), user);
-        return  c;
+        c = shUserService.editUser(PlatUserUtils.getCurrentLoginPlatUser(), user);
+        return c;
     }
 
     @PostMapping(value = "getUserInfo")
@@ -147,6 +146,7 @@ public class ArchivesController {
         List<Member> ret = memberService.getMemberNameList();
         return ret;
     }
+
     @PostMapping(value = "getBrandNameList")
     public List<CarSeriesGroup> getBrandNameList() {
 
@@ -154,16 +154,19 @@ public class ArchivesController {
 
         return ret;
     }
+
     @PostMapping(value = "getCarSeriesgroupNameList")
     public List<CarSeries> getCarSeriesgroupNameList(@RequestParam String BrandId) {
         List<carinfo.bean.CarSeries> ret = CarService.getAllCarSeries(BrandId);
         return ret;
     }
+
     @PostMapping(value = "getAllCarSeriesNameList")
     public List<CarInfo> getAllCarSeriesNameList(@RequestParam String GroupId) {
         List<carinfo.bean.CarInfo> ret = CarService.getAllCarInfo(GroupId);
         return ret;
     }
+
     @PostMapping(value = "alertLevel")
     public String alertLevel(@RequestParam String userId, @RequestParam String id) {
         Member m = new Member();
