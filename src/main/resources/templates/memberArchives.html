@@ -326,8 +326,8 @@
                         <div class="layui-inline">
                             <label class="layui-form-label">交强险投保公司</label>
                             <div class="layui-input-inline">
-                                <input autocomplete="off" class="layui-input" id="insuranceCompany"
-                                       name="insuranceCompany" type="text">
+                                <select autocomplete="off" class="layui-input" id="insuranceCompany"
+                                        name="insuranceCompany" type="text"></select>
                             </div>
                         </div>
                         <div class="layui-inline">
@@ -352,8 +352,8 @@
                         <div class="layui-inline">
                             <label class="layui-form-label">商业险投保公司</label>
                             <div class="layui-input-inline">
-                                <input autocomplete="off" class="layui-input" id="businessRisksbCompany"
-                                       name="businessRisksbCompany" type="text">
+                                <select autocomplete="off" class="layui-input" id="businessRisksbCompany"
+                                        name="businessRisksbCompany" type="text"></select>
                             </div>
                         </div>
                         <div class="layui-inline">
@@ -369,8 +369,7 @@
                         <div class="layui-inline">
                             <label class="layui-form-label">险种</label>
                             <div class="layui-input-inline">
-                                <input autocomplete="off" class="layui-input" id="insuranceTypeName" name="insuranceTypeName"
-                                       type="text">
+                                <select autocomplete="off" class="layui-input" id="insuranceTypeName" name="insuranceTypeName" type="text"></select>
                             </div>
                         </div>
                     </div>
@@ -542,18 +541,6 @@
                     ,trigger: 'click'
                 });
             });
-            // laydate.render({
-            //     elem: '#cBirthday'
-            // });
-            // laydate.render({
-            //     elem: '#cBirthdayM'
-            // });
-            // laydate.render({
-            //     elem: '#bindTime'
-            // });
-            // laydate.render({
-            //     elem: '#unbindTime'
-            // });
             function pullBrandName(selector, callback) {
                 var selectE = $(selector);
                 $.post({
@@ -575,7 +562,7 @@
                     }
                 })
             }
-            //车系
+
             function pullCarSeriesgroupName(selector,BrandId,callback) {
                 var selectE = $(selector);
                 $.post({
@@ -598,7 +585,6 @@
                 })
             }
 
-            //车型
             function pullCarSeriesName(selector,groupid,callback) {
                 var selectE = $(selector);
                 $.post({
@@ -642,6 +628,49 @@
                     }
                 })
             }
+
+            function pullInsuranceCompany(selector){
+                var selectE = $(selector);
+                $.post({
+                    url: "service/insuranceCompany/getInsuranceCompanyNameList",
+                    timeout: 1000,
+                    dataType: "json",
+                    success: function (res) {
+                        selectE.empty();
+                        for (var s of res) {
+                            selectE.append("<option value='" + s.id + "'>" + s.name + "</option>");
+                        }
+                        form.render(); //layui的form重新渲染
+                    },
+                    error: function () {
+                        selectE.empty();
+                        selectE.append("<option>拉取失败，请刷新！</option>");
+                        form.render();
+                    }
+                })
+            }
+
+            function pullInsuranceTypeName(selector){
+                var selectE = $(selector);
+                $.post({
+                    url: "service/insuranceType/getInsuranceTypeNameList",
+                    timeout: 1000,
+                    dataType: "json",
+                    success: function (res) {
+                        console.log(res)
+                        selectE.empty();
+                        for (var s of res) {
+                            selectE.append("<option value='" + s.id + "'>" + s.name + "</option>");
+                        }
+                        form.render(); //layui的form重新渲染
+                    },
+                    error: function () {
+                        selectE.empty();
+                        selectE.append("<option>拉取失败，请刷新！</option>");
+                        form.render();
+                    }
+                })
+            }
         }
 
         // 显示“新增弹窗”
@@ -663,6 +692,9 @@
                     });
                 });
             });
+            pullInsuranceCompany("#insuranceCompany")
+            pullInsuranceCompany("#businessRisksbCompany")
+            pullInsuranceTypeName("#insuranceTypeName");
             form.on('select(vehiclelabel)', function () {
                     pullCarSeriesgroupName("#vehiclestyle", $('#vehiclelabel').val(), () => {
                         pullCarSeriesName("#vehiclebrand", $('#vehiclestyle').val(), () => {
@@ -769,8 +801,6 @@
                 console.log(tableUserList.config.page.limit);
                 layer.confirm('确定要重置用户账号：[' + user + ']密码吗？', {icon: 3, title: '提示'}, function (index) {
                     layer.close(index);
-                    //向服务端发送删除指令
-                    // 提示窗
                     layer.alert('重置密码成功！初始密码为：123456', {icon: 1});
                 });
             }
@@ -787,7 +817,6 @@
                         userId: activedata.userId
                     },
                     success: function (res) {
-                        // console.log(res.vehicle.vehiclelabelid)
                         $('#customername').val(res.customername);
                         $('#phone').val(res.phone);
                         $('#cBirthday').val(res.cBirthday);
