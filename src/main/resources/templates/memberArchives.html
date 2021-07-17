@@ -60,7 +60,6 @@
             </ul>
             <div class="layui-tab-content" style="height: 100px;">
                 <div class="layui-tab-item layui-show">
-                    <!--                <form class="layui-form" action="" autocomplete="off">-->
                     <div class="layui-form-item s-formItem5">
                         <div class="layui-inline">
                             <label class="layui-form-label"><i>*</i>客户姓名</label>
@@ -106,29 +105,37 @@
                         </div>
                     </div>
                     <div class="layui-form-item s-formItem5" id="area-picker">
-                        <label class="layui-form-label">省市区</label>
-                        <div class="layui-input-inline">
-                            <select id="province" class="province-selector" data-value="山东省" lay-filter="province" name="province">
-                                <option value="">请选择省</option>
-                            </select>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">省</label>
+                            <div class="layui-input-inline">
+                                <select id="province" class="province-selector" data-value="山东省" lay-filter="province" name="province">
+                                    <option value="">请选择省</option>
+                                </select>
+                            </div>
                         </div>
-                        <div class="layui-input-inline">
-                            <select id="city" lay-filter="city" data-value="烟台市" class="city-selector" name="city">
-                                <option value="">请选择市</option>
-                            </select>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">市</label>
+                            <div class="layui-input-inline">
+                                <select id="city" lay-filter="city" data-value="烟台市" class="city-selector" name="city">
+                                    <option value="">请选择市</option>
+                                </select>
+                            </div>
                         </div>
-                        <div class="layui-input-inline">
-                            <select id="area" class="county-selector" data-value="莱山区" lay-filter="area" name="area">
-                                <option value="">请选择县/区</option>
-                            </select>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">区</label>
+                            <div class="layui-input-inline">
+                                <select id="area" class="county-selector" data-value="莱山区" lay-filter="area" name="area">
+                                    <option value="">请选择县/区</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
 
+                    </div>
                     <div class="layui-form-item s-formItem5">
                         <label class="layui-form-label">地址</label>
                         <div class="layui-input-block">
-                            <input autocomplete="off" class="layui-input" id="detailedAddress" name="detailedAddress"
-                                   placeholder="请输入"
+                            <input class="layui-input" id="detailedAddress" name="detailedAddress"
+                                   placeholder="请输入详细地址" style="width: 800px"
                                    type="text">
                         </div>
                     </div>
@@ -152,14 +159,14 @@
                         <div class="layui-inline">
                             <label class="layui-form-label">微信关注日期</label>
                             <div class="layui-input-inline">
-                                <input autocomplete="off" class="layui-input" disabled id="focusTime" name="focusTime"
+                                <input autocomplete="off" class="layui-input date-render" disabled id="focusTime" name="focusTime"
                                        placeholder="yyyy-MM-dd" type="text">
                             </div>
                         </div>
                         <div class="layui-inline">
                             <label class="layui-form-label">微信解除关注日期</label>
                             <div class="layui-input-inline">
-                                <input autocomplete="off" class="layui-input" disabled id="unFocusTime" name="unFocusTime"
+                                <input autocomplete="off" class="layui-input date-render" disabled id="unFocusTime" name="unFocusTime"
                                        placeholder="yyyy-MM-dd" type="text">
                             </div>
                         </div>
@@ -168,14 +175,14 @@
                         <div class="layui-inline">
                             <label class="layui-form-label">微信绑定日期</label>
                             <div class="layui-input-inline">
-                                <input autocomplete="off" class="layui-input" disabled id="bindTime" name="bindTime"
+                                <input autocomplete="off" class="layui-input date-render" disabled id="bindTime" name="bindTime"
                                        placeholder="yyyy-MM-dd" type="text">
                             </div>
                         </div>
                         <div class="layui-inline">
                             <label class="layui-form-label">微信解除关注日期</label>
                             <div class="layui-input-inline">
-                                <input autocomplete="off" class="layui-input" disabled id="unbindTime" name="unbindTime"
+                                <input autocomplete="off" class="layui-input date-render" disabled id="unbindTime" name="unbindTime"
                                        placeholder="yyyy-MM-dd" type="text">
                             </div>
                         </div>
@@ -184,13 +191,12 @@
                         <label class="layui-form-label">备注</label>
                         <div class="layui-input-block">
                             <input autocomplete="off" class="layui-input" name="remark" placeholder="请输入"
-                                   type="text">
+                                   style="width: 800px" type="text">
                         </div>
                     </div>
                     <!--                </form>-->
                 </div>
                 <div class="layui-tab-item ">
-                    <!--                <form class="layui-form" action="" autocomplete="off">-->
                     <div class="layui-form-item s-formItem5">
                         <div class="layui-inline">
                             <label class="layui-form-label"><i>*</i>车架号</label>
@@ -212,9 +218,6 @@
                         <div class="layui-inline">
                             <label class="layui-form-label"><i>*</i>品牌</label>
                             <div class="layui-input-inline">
-<!--                                <input autocomplete="off" class="layui-input" id="vehiclelabel" lay-verify="required"-->
-<!--                                       name="vehiclelabel"-->
-<!--                                       type="text">-->
                                 <select id="vehiclelabel" lay-verify="required" lay-filter="vehiclelabel" name="vehiclelabel">
                                     <option value="一汽大众">请选择品牌</option>
                                 </select>
@@ -253,7 +256,7 @@
                         <div class="layui-inline">
                             <label class="layui-form-label">购车日期</label>
                             <div class="layui-input-inline">
-                                <input autocomplete="off" class="layui-input" id="buyDate" name="buyDate"
+                                <input autocomplete="off" class="layui-input date-render" id="buyDate" name="buyDate"
                                        placeholder="yyyy-MM-dd" type="text">
                             </div>
                         </div>
@@ -315,24 +318,24 @@
                         <div class="layui-inline">
                             <label class="layui-form-label">交强险购买日期</label>
                             <div class="layui-input-inline">
-                                <input autocomplete="off" class="layui-input" id="strongInsurancePurchaseDate"
-                                       name="strongInsurancePurchaseDate" placeholder="yyyy-MM-dd"
+                                <input autocomplete="off" class="layui-input date-render" id="insuranceDate"
+                                       name="insuranceDate" placeholder="yyyy-MM-dd"
                                        type="text">
                             </div>
                         </div>
                         <div class="layui-inline">
                             <label class="layui-form-label">交强险投保公司</label>
                             <div class="layui-input-inline">
-                                <input autocomplete="off" class="layui-input" id="CompletionInsuranceCompany"
-                                       name="CompletionInsuranceCompany" type="text">
+                                <input autocomplete="off" class="layui-input" id="insuranceCompany"
+                                       name="insuranceCompany" type="text">
                             </div>
                         </div>
                         <div class="layui-inline">
                             <label class="layui-form-label">交强险保单号</label>
                             <div class="layui-input-inline">
                                 <input autocomplete="off" class="layui-input"
-                                       id="CompulsoryInsurancePolicyNumber"
-                                       name="CompulsoryInsurancePolicyNumber" type="text">
+                                       id="insuranceNo"
+                                       name="insuranceNo" type="text">
                             </div>
                         </div>
                     </div>
@@ -340,8 +343,8 @@
                         <div class="layui-inline">
                             <label class="layui-form-label">商业险购买日期</label>
                             <div class="layui-input-inline">
-                                <input autocomplete="off" class="layui-input"
-                                       id="dateOfPurchaseOfCommercialInsurance" name="dateOfPurchaseOfCommercialInsurance"
+                                <input autocomplete="off" class="layui-input date-render"
+                                       id="businessRisksDate" name="businessRisksDate"
                                        placeholder="yyyy-MM-dd"
                                        type="text">
                             </div>
@@ -349,24 +352,24 @@
                         <div class="layui-inline">
                             <label class="layui-form-label">商业险投保公司</label>
                             <div class="layui-input-inline">
-                                <input autocomplete="off" class="layui-input" id="commercialInsuranceCompany"
-                                       name="commercialInsuranceCompany" type="text">
+                                <input autocomplete="off" class="layui-input" id="businessRisksbCompany"
+                                       name="businessRisksbCompany" type="text">
                             </div>
                         </div>
                         <div class="layui-inline">
                             <label class="layui-form-label">商业险保单号</label>
                             <div class="layui-input-inline">
                                 <input autocomplete="off" class="layui-input"
-                                       id="CommercialInsurancePolicyNumber"
-                                       name="CommercialInsurancePolicyNumber" type="text">
+                                       id="businessRisksNo"
+                                       name="businessRisksNo" type="text">
                             </div>
                         </div>
                     </div>
                     <div class="layui-form-item s-formItem5">
                         <div class="layui-inline">
                             <label class="layui-form-label">险种</label>
-                            <div class="layui-input-block">
-                                <input autocomplete="off" class="layui-input" id="typeOfInsurance" name="typeOfInsurance"
+                            <div class="layui-input-inline">
+                                <input autocomplete="off" class="layui-input" id="insuranceTypeName" name="insuranceTypeName"
                                        type="text">
                             </div>
                         </div>
@@ -375,10 +378,6 @@
                         <div class="layui-inline">
                             <label class="layui-form-label">保客主管</label>
                             <div class="layui-input-inline">
-<!--                                <select lay-filter="director" name="director">-->
-<!--                                    <option>-</option>-->
-<!--                                    <option>who</option>-->
-<!--                                </select>-->
                                 <input autocomplete="off" class="layui-input" id="director" name="director"
                                        type="text">
                             </div>
@@ -386,10 +385,6 @@
                         <div class="layui-inline">
                             <label class="layui-form-label">保客专员</label>
                             <div class="layui-input-inline">
-<!--                                <select lay-filter="customerCommissioner" name="attache">-->
-<!--                                    <option>-</option>-->
-<!--                                    <option>who</option>-->
-<!--                                </select>-->
                                 <input autocomplete="off" class="layui-input" id="attache" name="attache"
                                        type="text">
                             </div>
@@ -399,10 +394,6 @@
                         <div class="layui-inline">
                             <label class="layui-form-label">服务顾问</label>
                             <div class="layui-input-inline">
-<!--                                <select lay-filter="theServiceAdvisor" name="serviceConsultant">-->
-<!--                                    <option>-</option>-->
-<!--                                    <option>who</option>-->
-<!--                                </select>-->
                                 <input autocomplete="off" class="layui-input" id="serviceConsultant" name="serviceConsultant"
                                        type="text">
                             </div>
@@ -410,19 +401,13 @@
                         <div class="layui-inline">
                             <label class="layui-form-label">销售顾问</label>
                             <div class="layui-input-inline">
-<!--                                <select lay-filter="customerCommissioner" name="saleConsultant">-->
-<!--                                    <option>-</option>-->
-<!--                                    <option>who</option>-->
-<!--                                </select>-->
                                 <input autocomplete="off" class="layui-input" id="saleConsultant" name="saleConsultant"
                                        type="text">
                             </div>
                         </div>
                     </div>
-                    <!--                </form>-->
                 </div>
                 <div class="layui-tab-item">
-                    <!--                <form class="layui-form" action="" autocomplete="off">-->
                     <div class="layui-form-item s-formItem5">
                         <div class="layui-inline">
                             <label class="layui-form-label">会员卡号:</label>
@@ -546,11 +531,8 @@
                 layarea = layui.layarea,
                 element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
 
-            let area = layarea.render({
-                elem: '#area-picker',
-                change: function (res) {
-                    console.log(res);
-                }
+            layarea.render({
+                elem: '#area-picker'
             })
 
             //日期
@@ -672,7 +654,7 @@
                 type: 1,
                 title: '新增会员信息',
                 content: $('#memberPopup'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
-                area: ['1050px', '650px'],
+                area: ['1100px', '650px'],
                 offset: '20px'
             });
             pullBrandName("#vehiclelabel", () => {
@@ -793,12 +775,11 @@
                 });
             }
             else if (layEvent === 'edit') { // 编辑
-                var index1 = layer.open({
+                layer.open({
                     type: 1,
                     title: '修改会员信息',
                     content: $('#memberPopup'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
-                    area: ['1050px', '650px'],
-                    offset: '20px'
+                    area: ['1100px', '650px']
                 });
                 $.post({
                     url: "/service/Archives/getUserInfo",
@@ -845,6 +826,12 @@
                         });
                     }
                 });
+                $.post({
+                    url: "service/Archives/getUserCost?userid=" + activedata.userId,
+                    success: function (res){
+                        console.log(res)
+                    }
+                })
                 // "消费历史表格"渲染
                 table.render({
                     elem: '#consumptionHistories',
