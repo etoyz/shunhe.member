@@ -374,12 +374,13 @@
         }
 
         // “消费项目表格”渲染
-        var tableProj = table.render({
+        let itemCnt;
+        let tableProj = table.render({
             elem: '#consumeProj',
             url: 'service/consumeProject/getConsumeProjectList?query=&consumeType=',
             page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                 layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
-                limit: 15,
+                limit: 10,
                 groups: 3, //只显示 1 个连续页码
                 first: false, //不显示首页
                 last: false //不显示尾页
@@ -400,6 +401,7 @@
             size: 'sm',
             parseData: function (res) {
                 let data = res.data
+                itemCnt = data.length
                 for (let i = 0; i < data.length; i++) {
                     $.post({
                         url: "service/platUserManage/getUserInfo?platUserId=" + data[i].createId,
@@ -469,8 +471,22 @@
                         },
                         success: function (res) {
                             layuiAlert(res)
-                            if("删除成功！" === res)
+                            if("删除成功！" === res){
                                 obj.del()
+                                itemCnt--
+                                if(itemCnt === 0) { //当前页的Item为0
+                                    let nextPage;
+                                    if(tableProj.config.page.curr === 1) //当前为第一页，则删除后还是第一页
+                                        nextPage = tableProj.config.page.curr;
+                                    else //删除后是前一页
+                                        nextPage = tableProj.config.page.curr - 1;
+                                    tableProj.reload({
+                                        page: {
+                                            curr: nextPage
+                                        },
+                                    })
+                                }
+                            }
                         },
                     });
                 });

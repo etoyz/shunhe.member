@@ -62,15 +62,6 @@
                     </div>
                 </div>
             </div>
-            <!--            <div class="layui-form-item s-formItem1">-->
-            <!--                <div class="layui-inline">-->
-            <!--                    <label class="layui-form-label">顺序号</label>-->
-            <!--                    <div class="layui-input-inline">-->
-            <!--                        <input type="text" id="indexID" autocomplete="off"-->
-            <!--                               class="layui-input">-->
-            <!--                    </div>-->
-            <!--                </div>-->
-            <!--            </div>-->
             <div class="layui-form-item s-formItem1">
                 <div class="layui-inline">
                     <label class="layui-form-label">备注</label>
@@ -101,15 +92,6 @@
                     </div>
                 </div>
             </div>
-            <!--            <div class="layui-form-item s-formItem1">-->
-            <!--                <div class="layui-inline">-->
-            <!--                    <label class="layui-form-label">顺序号</label>-->
-            <!--                    <div class="layui-input-inline">-->
-            <!--                        <input type="text" name="indexID" autocomplete="off"-->
-            <!--                               class="layui-input">-->
-            <!--                    </div>-->
-            <!--                </div>-->
-            <!--            </div>-->
             <div class="layui-form-item s-formItem1">
                 <div class="layui-inline">
                     <label class="layui-form-label">备注</label>
@@ -133,8 +115,7 @@
         var $ = layui.jquery,
             form = layui.form,
             layer = layui.layer,
-            table = layui.table,
-            element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+            table = layui.table;
 
         function layuiAlert(msg) {
             layer.open({
@@ -186,12 +167,13 @@
 
 
         // “会员档案表格”渲染
-        var tableIns = table.render({
+        let itemCnt
+        let tableIns = table.render({
             elem: '#insuranceCompanies',
             url: 'service/insuranceCompany/getInsuranceCompanyList?query=',
             page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                 layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
-                limit: 15,
+                limit: 10,
                 groups: 3, //只显示 1 个连续页码
                 first: false, //不显示首页
                 last: false //不显示尾页
@@ -200,9 +182,7 @@
             height: 'full-100',
             defaultToolbar: ['filter', 'print', 'exports'],
             cols: [ [
-                // {type: 'checkbox'},qq
                 {field: 'name', width: 140, title: '保险公司'},
-                // {field: 'indexID', width: 80, title: '顺序号'},
                 {field: 'createName', width: 100, title: '创建人名称'},
                 {field: 'createTime', width: 150, title: '创建时间'},
                 {field: 'lastEditId', width: 100, title: '最后编辑人'},
@@ -212,6 +192,7 @@
             size: 'sm',
             parseData: function (res) {
                 let data = res.data
+                itemCnt = data.length
                 for (let i = 0; i < data.length; i++) {
                     $.post({
                         url: "service/platUserManage/getUserInfo?platUserId=" + data[i].createId,
@@ -274,8 +255,22 @@
                         },
                         success: function (res) {
                             layuiAlert(res)
-                            if(res === "删除成功！")
+                            if(res === "删除成功！"){
                                 obj.del()
+                                itemCnt--
+                                if(itemCnt === 0) { //当前页的Item为0
+                                    let nextPage;
+                                    if(tableIns.config.page.curr === 1) //当前为第一页，则删除后还是第一页
+                                        nextPage = tableIns.config.page.curr;
+                                    else //删除后是前一页
+                                        nextPage = tableIns.config.page.curr - 1;
+                                    tableIns.reload({
+                                        page: {
+                                            curr: nextPage
+                                        },
+                                    })
+                                }
+                            }
                         }
                     })
                 });

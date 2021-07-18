@@ -97,8 +97,7 @@
         var $ = layui.jquery,
             form = layui.form,
             layer = layui.layer,
-            table = layui.table,
-            element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+            table = layui.table;
 
         function layuiAlert(msg) {
             layer.open({
@@ -144,12 +143,13 @@
         });
 
         // “会员档案表格”渲染
-        var tableTypes = table.render({
+        let itemCnt;
+        let tableTypes = table.render({
             elem: '#consumeTypes',
             url: 'service/consumeType/getConsumeTypeList?query=',
             page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                 layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
-                limit: 15,
+                limit: 10,
                 groups: 3, //只显示 1 个连续页码
                 first: false, //不显示首页
                 last: false //不显示尾页
@@ -171,6 +171,7 @@
             size: 'sm',
             parseData: function (res) {
                 let data = res.data
+                itemCnt = data.length
                 for (let i = 0; i < data.length; i++) {
                     $.post({
                         url: "service/platUserManage/getUserInfo?platUserId=" + data[i].createId,
@@ -222,7 +223,8 @@
                     layer.close(index1);
                     return false;
                 });
-            } else if (layEvent === 'delete') {
+            }
+            else if (layEvent === 'delete') {
                 layer.confirm('确认删除消费类型【' + consumeTypeName + '】？', {icon: 3, title: '提示'}, function (index) {
                     $.post({
                         url: "service/consumeType/deleteConsumeType",
@@ -231,8 +233,25 @@
                         },
                         success: function (res) {
                             layuiAlert(res)
-                            if("删除成功！" === res)
+                            if("删除成功！" === res) {
                                 obj.del()
+                                if("删除成功！" === res) {
+                                    obj.del()
+                                    itemCnt--
+                                    if(itemCnt === 0) { //当前页的Item为0
+                                        let nextPage;
+                                        if(tableTypes.config.page.curr === 1) //当前为第一页，则删除后还是第一页
+                                            nextPage = tableTypes.config.page.curr;
+                                        else //删除后是前一页
+                                            nextPage = tableTypes.config.page.curr - 1;
+                                        tableTypes.reload({
+                                            page: {
+                                                curr: nextPage
+                                            },
+                                        })
+                                    }
+                                }
+                            }
                         }
                     })
                 });
