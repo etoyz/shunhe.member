@@ -232,7 +232,7 @@
                 })
             }
 
-            function layuiAlert(msg) {
+            function layuiAlert(msg, callback) {
                 layer.open({
                     offset: "auto",//具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
                     content: '<div style="padding: 20px 70px;">' + msg + '</div>',
@@ -242,6 +242,7 @@
                     closeBtn: false,
                     yes: function () {
                         layer.closeAll();
+                        callback()
                     }
                 });
             }
@@ -327,23 +328,24 @@
                         data: JSON.stringify(activeLine),
                         contentType: "application/json",
                         success: function (res) {
-                            layuiAlert(res)
-                            if("删除成功！" === res) {
-                                obj.del()
-                                itemCnt--
-                                if(itemCnt === 0) { //当前页的Item为0
-                                    let nextPage;
-                                    if(couponTable.config.page.curr === 1) //当前为第一页，则删除后还是第一页
-                                        nextPage = couponTable.config.page.curr;
-                                    else //删除后是前一页
-                                        nextPage = couponTable.config.page.curr - 1;
-                                    couponTable.reload({
-                                        page: {
-                                            curr: nextPage
-                                        },
-                                    })
+                            layuiAlert(res, ()=>{
+                                if("删除成功！" === res) {
+                                    obj.del()
+                                    itemCnt--
+                                    if(itemCnt === 0) { //当前页的Item为0
+                                        let nextPage;
+                                        if(couponTable.config.page.curr === 1) //当前为第一页，则删除后还是第一页
+                                            nextPage = couponTable.config.page.curr;
+                                        else //删除后是前一页
+                                            nextPage = couponTable.config.page.curr - 1;
+                                        couponTable.reload({
+                                            page: {
+                                                curr: nextPage
+                                            },
+                                        })
+                                    }
                                 }
-                            }
+                            })
                         }
                     });
                 })
@@ -370,8 +372,10 @@
                         data: JSON.stringify(data.field),
                         contentType: "application/json",
                         success: function (res) {
-                            layuiAlert("修改结果：" + res)
-                            obj.update(data.field);
+                            layuiAlert("修改结果：" + res, ()=>{
+                                obj.update(data.field);
+                            })
+
                         },
                         error: function () {
                             layuiAlert("修改失败")
@@ -446,8 +450,9 @@
                 data: JSON.stringify(data.field),
                 contentType: "application/json",
                 success: function (res) {
-                    layuiAlert("信息:" + res)
-                    couponTable.reload()
+                    layuiAlert("信息:" + res, ()=>{
+                        couponTable.reload()
+                    })
                 }
             })
         })

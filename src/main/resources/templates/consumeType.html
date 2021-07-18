@@ -99,7 +99,7 @@
             layer = layui.layer,
             table = layui.table;
 
-        function layuiAlert(msg) {
+        function layuiAlert(msg, callback) {
             layer.open({
                 offset: "auto",//具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
                 content: '<div style="padding: 20px 70px;">' + msg + '</div>',
@@ -109,6 +109,7 @@
                 closeBtn: false,
                 yes: function () {
                     layer.closeAll();
+                    callback()
                 }
             });
         }
@@ -133,8 +134,9 @@
                     data: JSON.stringify(data.field),
                     contentType: "application/json",
                     success: function (res) {
-                        layuiAlert("成功！")
-                        tableTypes.reload();
+                        layuiAlert("成功！", ()=>{
+                            tableTypes.reload()
+                        })
                     }
                 })
                 return false;
@@ -212,8 +214,9 @@
                         data: JSON.stringify(formData.field),
                         contentType: "application/json",
                         success: function (res) {
-                            layuiAlert(res)
-                            obj.update(formData.field)
+                            layuiAlert(res, ()=>{
+                                obj.update(formData.field)
+                            })
                         }
                     })
                     return false;
@@ -232,26 +235,27 @@
                             id: data.consumeTypeId
                         },
                         success: function (res) {
-                            layuiAlert(res)
-                            if("删除成功！" === res) {
-                                obj.del()
+                            layuiAlert(res, ()=>{
                                 if("删除成功！" === res) {
                                     obj.del()
-                                    itemCnt--
-                                    if(itemCnt === 0) { //当前页的Item为0
-                                        let nextPage;
-                                        if(tableTypes.config.page.curr === 1) //当前为第一页，则删除后还是第一页
-                                            nextPage = tableTypes.config.page.curr;
-                                        else //删除后是前一页
-                                            nextPage = tableTypes.config.page.curr - 1;
-                                        tableTypes.reload({
-                                            page: {
-                                                curr: nextPage
-                                            },
-                                        })
+                                    if("删除成功！" === res) {
+                                        obj.del()
+                                        itemCnt--
+                                        if(itemCnt === 0) { //当前页的Item为0
+                                            let nextPage;
+                                            if(tableTypes.config.page.curr === 1) //当前为第一页，则删除后还是第一页
+                                                nextPage = tableTypes.config.page.curr;
+                                            else //删除后是前一页
+                                                nextPage = tableTypes.config.page.curr - 1;
+                                            tableTypes.reload({
+                                                page: {
+                                                    curr: nextPage
+                                                },
+                                            })
+                                        }
                                     }
                                 }
-                            }
+                            })
                         }
                     })
                 });

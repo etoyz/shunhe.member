@@ -117,7 +117,7 @@
             layer = layui.layer,
             table = layui.table;
 
-        function layuiAlert(msg) {
+        function layuiAlert(msg, callback) {
             layer.open({
                 offset: "auto",//具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
                 content: '<div style="padding: 20px 70px;">' + msg + '</div>',
@@ -126,7 +126,8 @@
                 shade: 0, //不显示遮罩
                 closeBtn: false,
                 yes: function () {
-                    layer.closeAll();
+                    layer.closeAll()
+                    callback()
                 }
             });
         }
@@ -145,7 +146,6 @@
                 return false;
             });
             form.on('submit(confirmAdd)', function (data) {
-                //$("#confirmAdd").unbind("click").click(function () {
                 $.post({
                     url: "service/insuranceCompany/addInsuranceCompany",
                     data: JSON.stringify({
@@ -153,12 +153,13 @@
                     }),
                     contentType: "application/json",
                     success: function (res) {
-                        layuiAlert("结果：" + res)
-                        tableIns.reload({
-                            page: {
-                                curr: 1
-                            }
-                        });
+                        layuiAlert("结果：" + res, () => {
+                            tableIns.reload({
+                                page: {
+                                    curr: 1
+                                }
+                            });
+                        })
                     }
                 })
             })
@@ -234,8 +235,9 @@
                         data: JSON.stringify(formData.field),
                         contentType: "application/json",
                         success: function (res) {
-                            layuiAlert(res)
-                            obj.update(formData.field);
+                            layuiAlert(res, () => {
+                                obj.update(formData.field)
+                            })
                         }
                     })
                     return false;
@@ -254,23 +256,24 @@
                             id: data.id
                         },
                         success: function (res) {
-                            layuiAlert(res)
-                            if(res === "删除成功！"){
-                                obj.del()
-                                itemCnt--
-                                if(itemCnt === 0) { //当前页的Item为0
-                                    let nextPage;
-                                    if(tableIns.config.page.curr === 1) //当前为第一页，则删除后还是第一页
-                                        nextPage = tableIns.config.page.curr;
-                                    else //删除后是前一页
-                                        nextPage = tableIns.config.page.curr - 1;
-                                    tableIns.reload({
-                                        page: {
-                                            curr: nextPage
-                                        },
-                                    })
+                            layuiAlert(res, () => {
+                                if(res === "删除成功！"){
+                                    obj.del()
+                                    itemCnt--
+                                    if(itemCnt === 0) { //当前页的Item为0
+                                        let nextPage;
+                                        if(tableIns.config.page.curr === 1) //当前为第一页，则删除后还是第一页
+                                            nextPage = tableIns.config.page.curr;
+                                        else //删除后是前一页
+                                            nextPage = tableIns.config.page.curr - 1;
+                                        tableIns.reload({
+                                            page: {
+                                                curr: nextPage
+                                            },
+                                        })
+                                    }
                                 }
-                            }
+                            })
                         }
                     })
                 });
