@@ -120,20 +120,18 @@
             where: {
                 user: {},
                 couponCheck: {},
-                groupBy: true
+                groupBy: false
             },
             contentType: "application/json",
             height: 'full-140',
             page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                 layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
                 limit: 15,
-                //,curr: 5 //设定初始在第 5 页
                 groups: 3, //只显示 1 个连续页码
                 first: false, //不显示首页
                 last: false //不显示尾页
             },
             toolbar: true, //仅开启工具栏，不显示左侧模板
-            // defaultToolbar: ['exports'], //头部工具栏右侧图标
             defaultToolbar: ['filter', 'print', 'exports'],
             cols: [ [
                 {field: 'time', width: 150, title: '消费日期'},

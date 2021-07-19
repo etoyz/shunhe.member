@@ -56,7 +56,10 @@
             <ul class="layui-tab-title">
                 <li class="layui-this">车主信息</li>
                 <li>车辆信息</li>
-                <li>会员信息</li>
+                <li class="editMod">会员信息</li>
+                <li class="editMod">消费历史</li>
+<!--                <li class="editMod">积分历史</li>-->
+<!--                <li class="editMod">操作日志</li>-->
             </ul>
             <div class="layui-tab-content" style="height: 100px;">
                 <div class="layui-tab-item layui-show">
@@ -134,7 +137,7 @@
                     <div class="layui-form-item s-formItem5">
                         <label class="layui-form-label">地址</label>
                         <div class="layui-input-block">
-                            <input class="layui-input" id="detailedAddress" name="detailedAddress"
+                            <input class="layui-input" id="address" name="address"
                                    placeholder="请输入详细地址" style="width: 800px"
                                    type="text">
                         </div>
@@ -194,7 +197,6 @@
                                    style="width: 800px" type="text">
                         </div>
                     </div>
-                    <!--                </form>-->
                 </div>
                 <div class="layui-tab-item ">
                     <div class="layui-form-item s-formItem5">
@@ -491,7 +493,21 @@
                         </div>
                     </div>
                 </div>
-
+                <div class="layui-tab-item">
+                    <div class="s-commonTable">
+                        <table class="layui-hide" id="consumptionHistories" lay-filter="consumptionHistoriesTabel"></table>
+                    </div>
+                </div>
+                <div class="layui-tab-item">
+                    <div class="s-commonTable">
+                        <table class="layui-hide" id="pointsHistories" lay-filter="pointsHistoriesTabel"></table>
+                    </div>
+                </div>
+                <div class="layui-tab-item">
+                    <div class="s-commonTable">
+                        <table class="layui-hide" id="operationLogs" lay-filter="operationLogsTabel"></table>
+                    </div>
+                </div>
                 <div class="s-tabBottomButton">
                     <button class="layui-btn" id="confirmAdd" lay-filter="confirmAdd" lay-submit>确认</button>
                     <button class="layui-btn layui-btn-warm" id="cancelAdd">取消</button>
@@ -643,7 +659,7 @@
                 })
             }
 
-            function pullInsuranceCompany(selector){
+            function pullInsuranceCompany(selector, callback){
                 var selectE = $(selector);
                 $.post({
                     url: "service/insuranceCompany/getInsuranceCompanyNameList",
@@ -656,6 +672,7 @@
                             selectE.append("<option value='" + s.id + "'>" + s.name + "</option>");
                         }
                         form.render(); //layui的form重新渲染
+                        callback()
                     },
                     error: function () {
                         selectE.empty();
@@ -665,7 +682,7 @@
                 })
             }
 
-            function pullInsuranceTypeName(selector){
+            function pullInsuranceTypeName(selector, callback){
                 var selectE = $(selector);
                 $.post({
                     url: "service/insuranceType/getInsuranceTypeNameList",
@@ -678,6 +695,7 @@
                             selectE.append("<option value='" + s.id + "'>" + s.name + "</option>");
                         }
                         form.render(); //layui的form重新渲染
+                        callback()
                     },
                     error: function () {
                         selectE.empty();
@@ -687,16 +705,30 @@
                 })
             }
 
-            function pullAll(){
-                pullInsuranceCompany("#insuranceCompany")
-                pullInsuranceCompany("#businessRisksbCompany")
-                pullInsuranceTypeName("#insuranceTypeName")
+            function pullAll(callback){
+                let cnt = 0;
+                function call() {
+                    cnt++;
+                    if(cnt === 3) // 三次call，才执行callback
+                        callback()
+                }
+                pullInsuranceCompany("#insuranceCompany", () => {
+                    call()
+                })
+                pullInsuranceCompany("#businessRisksbCompany", () => {
+                    call()
+                })
+                pullInsuranceTypeName("#insuranceTypeName", () => {
+                    call()
+                })
+
             }
         }
 
         // 显示“新增弹窗”
         $("#add").unbind("click").click(function () {
             $('#addForm').trigger('reset');
+            $(".editMod").hide()
             $('select[name="province"]').siblings("div.layui-form-select").find('dl dd[ lay-value=' + "山东省" + ']').click();
             $('select[name="city"]').siblings("div.layui-form-select").find('dl dd[ lay-value=' + "烟台市" + ']').click();
             $('select[name="area"]').siblings("div.layui-form-select").find('dl dd[ lay-value=' + "莱山区" + ']').click();
@@ -704,8 +736,7 @@
                 type: 1,
                 title: '新增会员信息',
                 content: $('#memberPopup'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
-                area: ['1100px', '650px'],
-                offset: '20px'
+                area: ['1100px', '650px']
             });
             form.on('submit(confirmAdd)', function (data) {
                 var textvehiclelabel=$('#vehiclelabel option:selected').text();
@@ -842,14 +873,24 @@
         table.on('tool(memberArchivesTabel)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
             activedata = obj.data; //获得当前行数据
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
-            if (layEvent === 'edit') { // 编辑
-                layer.open({
-                    type: 1,
-                    title: '修改会员信息',
-                    content: $('#memberPopup'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
-                    area: ['1100px', '650px']
-                });
-                pullAll()
+            if (layEvent === 'edit') {
+                layer.msg("正在加载...")
+                let cnt = 0;
+                function showPopup() {
+                    cnt++
+                    if(cnt === 4){
+                        $(".editMod").show()
+                        layer.open({
+                            type: 1,
+                            title: '修改会员信息',
+                            content: $('#memberPopup'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                            area: ['1100px', '650px']
+                        });
+                    }
+                }
+                pullAll(() => {
+                    showPopup()
+                })
                 $.post({
                     url: "/service/Archives/getUserInfo",
                     data: {
@@ -873,11 +914,18 @@
                         $('#businessRisksNo').val(res.vehicle.businessRisksNo);
                         $('#level').val(res.member.level);
                         $('#memberNumber').val(res.memberNumber);
+                        if (res.province === "")
+                            res.province = "---"
+                        if(res.city === "")
+                            res.city = "---"
+                        if(res.area === "")
+                            res.area = "---"
                         $('#province').val(res.province);
                         $('select[name="province"]').siblings("div.layui-form-select").find('dl dd[lay-value=' + res.province + ']').click();
                         $('#city').val(res.city);
                         $('select[name="city"]').siblings("div.layui-form-select").find('dl dd[lay-value=' + res.city + ']').click();
                         $('#area').val(res.area);
+                        $('#address').val(res.address);
                         pullBrandName("#vehiclelabel", () => {
                             $('#vehiclelabel').val(res.vehicle.vehiclelabelid);
                             pullCarSeriesgroupName("#vehiclestyle", $('#vehiclelabel').val(), () => {
@@ -886,10 +934,10 @@
                                     // $('#vehiclelabelM option:selected').text(res.vehicle.vehiclelabel)
                                     $('#vehiclebrand').val(res.vehicle.vehiclebrandid);
                                     form.render()
+                                    showPopup()
                                 });
                             });
                         });
-                        // form.render()
                         form.on('select(vehiclelabel)', function () {
                             pullCarSeriesgroupName("#vehiclestyle", $('#vehiclelabel').val(), () => {
                                 pullCarSeriesName("#vehiclebrand", $('#vehiclestyle').val(), () => {
@@ -913,6 +961,7 @@
                         $('#remainderCouponCount').val(res.remainderCouponCount);
                         $('#usedCouponCost').val(res.usedCouponCost);
                         $('#usedCouponCount').val(res.usedCouponCount);
+                        showPopup()
                     }
                 })
                 // "消费历史表格"渲染
@@ -1004,6 +1053,9 @@
                                 data[i].totalMoney = parseFloat(data[i].totalMoney).toFixed(2)
                             }
                         }
+                    },
+                    done: function () {
+                        showPopup()
                     }
                 });
                 form.on('submit(confirmAdd)', function (data) {

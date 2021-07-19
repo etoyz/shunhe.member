@@ -202,14 +202,22 @@
             activeUser = obj.data; //获得当前行数据
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值f）
             if (layEvent === 'resetPw') {
-                console.log(activeUser)
-                layer.confirm("确认重置用户【" + activeUser.name + "】的密码?", {icon: 3, title: '提示'}, function () {
+                layer.prompt({
+                    formType: 3,
+                    value: '123456',
+                    title: '请输入新密码',
+                }, function(newPasswd, index){
                     $.post({
-                        url: "service/platUserManage/resetPassword?platUserId=" + activeUser.platUserId,
+                        url: "service/platUserManage/resetPassword",
+                        data: {
+                            platUserId: activeUser.platUserId,
+                            passwd: newPasswd
+                        },
                         success: function (res) {
                             layuiAlert("修改结果：" + res)
                         }
                     })
+                    layer.close(index);
                 });
             } else if (layEvent === "edit") {
                 $("#name").val(activeUser.name)
