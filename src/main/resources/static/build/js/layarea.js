@@ -32,6 +32,7 @@ layui.define(['layer', 'form', 'laytpl'], function (exports) {
   
     let areaList = {
       province_list: {
+        100000: '---',
         110000: '北京市',
         120000: '天津市',
         130000: '河北省',
@@ -69,6 +70,7 @@ layui.define(['layer', 'form', 'laytpl'], function (exports) {
         900000: '海外'
       },
       city_list: {
+        100000: '---',
         110100: '北京市',
         120100: '天津市',
         130100: '石家庄市',
@@ -445,6 +447,7 @@ layui.define(['layer', 'form', 'laytpl'], function (exports) {
         984000: '美国'
       },
       county_list: {
+        100000: '---',
         110101: '东城区',
         110102: '西城区',
         110105: '朝阳区',

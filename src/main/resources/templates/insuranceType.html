@@ -133,10 +133,9 @@
         var $ = layui.jquery,
             form = layui.form,
             layer = layui.layer,
-            table = layui.table,
-            element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+            table = layui.table;
 
-        function layuiAlert(msg) {
+        function layuiAlert(msg, callback) {
             layer.open({
                 offset: "auto",//具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
                 content: '<div style="padding: 20px 70px;">' + msg + '</div>',
@@ -146,6 +145,7 @@
                 closeBtn: false,
                 yes: function () {
                     layer.closeAll();
+                    callback()
                 }
             });
         }
@@ -171,8 +171,9 @@
                     }),
                     contentType: "application/json",
                     success: function (res) {
-                        layuiAlert("结果：" + res)
-                        tableIns.reload();
+                        layuiAlert("结果：" + res, () => {
+                            tableIns.reload();
+                        })
                     }
                 })
             })
@@ -180,7 +181,8 @@
         });
 
         // “会员档案表格”渲染
-        var tableIns = table.render({
+        let itemCnt;
+        let tableIns = table.render({
             elem: '#insuranceCompanies',
             url: 'service/insuranceType/getInsuranceTypeList?query=',
             page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
@@ -194,9 +196,7 @@
             height: 'full-100',
             defaultToolbar: ['filter', 'print', 'exports'],
             cols: [ [
-                // {type: 'checkbox'},
                 {field: 'name', width: 140, title: '险种'},
-                // {field: 'indexID', width: 80, title: '顺序号'},
                 {field: 'createName', width: 100, title: '创建人名称'},
                 {field: 'createTime', width: 150, title: '创建时间'},
                 {field: 'lastEditId', width: 100, title: '最后编辑人'},
@@ -206,6 +206,7 @@
             size: 'sm',
             parseData: function (res) {
                 let data = res.data
+                itemCnt = data.length
                 for (let i = 0; i < data.length; i++) {
                     $.post({
                         url: "service/platUserManage/getUserInfo?platUserId=" + data[i].createId,
@@ -247,8 +248,9 @@
                         data: JSON.stringify(formData.field),
                         contentType: "application/json",
                         success: function (res) {
-                            layuiAlert(res)
-                            obj.update(formData.field);
+                            layuiAlert(res, () => {
+                                obj.update(formData.field)
+                            })
                         }
                     })
                     return false;
@@ -268,9 +270,24 @@
                             id: data.id
                         },
                         success: function (res) {
-                            layuiAlert(res)
-                            if(res === "删除成功！")
-                                obj.del()
+                            layuiAlert(res, () => {
+                                if(res === "删除成功！"){
+                                    obj.del()
+                                    itemCnt--
+                                    if(itemCnt === 0) { //当前页的Item为0
+                                        let nextPage;
+                                        if(tableIns.config.page.curr === 1) //当前为第一页，则删除后还是第一页
+                                            nextPage = tableIns.config.page.curr;
+                                        else //删除后是前一页
+                                            nextPage = tableIns.config.page.curr - 1;
+                                        tableIns.reload({
+                                            page: {
+                                                curr: nextPage
+                                            },
+                                        })
+                                    }
+                                }
+                            })
                         }
                     })
                 });

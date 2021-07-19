@@ -54,10 +54,10 @@ public class PlatUserManagementController {
 
     @RequestMapping("resetPassword")
     @ResponseBody
-    public String resetPassword(@RequestParam String platUserId) {
+    public String resetPassword(@RequestParam String platUserId, @RequestParam String passwd) {
         PlatUser user = new PlatUser();
         user.platUserId = platUserId;
-        String ret = platUserService.resetPassword(PlatUserUtils.getCurrentLoginPlatUser(), user, "111111");
+        String ret = platUserService.resetPassword(PlatUserUtils.getCurrentLoginPlatUser(), user, passwd);
         if (ret == null)
             return "成功";
         else

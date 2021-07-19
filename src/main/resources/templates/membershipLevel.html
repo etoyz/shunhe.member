@@ -195,8 +195,7 @@
             form = layui.form,
             laydate = layui.laydate,
             layer = layui.layer,
-            table = layui.table,
-            element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+            table = layui.table;
 
         //日期
         laydate.render({
@@ -204,7 +203,7 @@
         });
 
 
-        function layuiAlert(msg) {
+        function layuiAlert(msg, callback) {
             layer.open({
                 offset: "auto",//具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
                 content: '<div style="padding: 20px 70px;">' + msg + '</div>',
@@ -214,14 +213,15 @@
                 closeBtn: false,
                 yes: function () {
                     layer.closeAll();
+                    callback()
                     $('#test').trigger('reset');
-                    tableIns.reload();
                 }
             });
         }
 
         // “主体表格”渲染
-        var tableIns = table.render({
+        let itemCnt;
+        let tableIns = table.render({
             elem: '#card',
             url: 'service/membershipLevel/getMemberList?query=',
             height: 'full-100',
@@ -253,6 +253,7 @@
             parseData: function (res) {
                 var cType = ["可升级卡", "不可升级卡"];
                 var cLock = ["是", "否"];
+                itemCnt = res.data.length
                 for (var i = 0; i < res.data.length; i++) {
                     res.data[i].type = cType[res.data[i].type];
                     res.data[i].lock = cLock[res.data[i].lock];
@@ -309,27 +310,30 @@
                             id: activeCardid
                         },
                         success: function (res) {
-                            layer.closeAll();
-                            tableIns.reload()
-                            // if (res !== "ok") {
-                            //     layer.open({
-                            //         offset: "auto",//具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
-                            //         content: '<div style="padding: 20px 70px;">' + '删除失败:' + res + '</div>',
-                            //         btn: '关闭',
-                            //         btnAlign: 'c',//按钮居中
-                            //         shade: 0, //不显示遮罩
-                            //         yes: function () {
-                            //             layer.closeAll();
-                            //         }
-                            //     });
-                            // }
-
+                            layuiAlert(res, () => {
+                                if(res === "修改成功") {
+                                    obj.del()
+                                    itemCnt--
+                                    if(itemCnt === 0) { //当前页的Item为0
+                                        let nextPage;
+                                        if(tableIns.config.page.curr === 1) //当前为第一页，则删除后还是第一页
+                                            nextPage = tableIns.config.page.curr;
+                                        else //删除后是前一页
+                                            nextPage = tableIns.config.page.curr - 1;
+                                        tableIns.reload({
+                                            page: {
+                                                curr: nextPage
+                                            },
+                                        })
+                                    }
+                                }
+                            })
                         }
                     });
                 })
             }
             if (layEvent === 'modify') {
-                var index2 = layer.open({
+                layer.open({
                     type: 1,
                     title: '修改信息',
                     content: $('#modWindow'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
@@ -355,13 +359,11 @@
                         data: JSON.stringify(data.field),
                         contentType: "application/json",
                         success: function (res) {
-                            // console.log(res)
                             var m,n
                             data.field.type=m=== "0" ? "可升级卡" : "不可升级卡";
                             data.field.lock=n=== "0" ? "是" : "否";
                             layer.closeAll();
                             obj.update(data.field);
-                            // layuiAlert("信息:" + res)
                         }
                     })
                 })
@@ -371,7 +373,6 @@
         var addWind;
         $("#addBtn").unbind("click").click(function () {
             $('#test').trigger('reset');
-             // $('test').reset();
             addWind = layer.open({
                 type: 1,
                 title: '添加信息',
@@ -383,36 +384,29 @@
 
         $("#cancelAdd, #cancelMod, #cancelRel").unbind("click").click(function () {
             $('#test').trigger('reset');
-            // $('test').reset();
             console.log("cancel")
             layer.closeAll()
         })
-        // var score=$("#pointToUpdate").val();
 
-        // $("#confirmAdd").unbind("click").click(function () {
         form.on('submit(confirmAdd)', function (data) {
-            console.log(data)
             data.field.memberUpgradeCon = {
                 score: data.field.score
             }
-            console.log(data)
             $.post({
                 url: "/service/membershipLevel/addMember",
                 data: JSON.stringify(data.field),
                 contentType: "application/json",
                 success: function (res) {
-                    console.log(res)
-                    layuiAlert("信息:" + res)
+                    layuiAlert("信息:" + res, () => {
+                        tableIns.reload()
+                    })
                 },
                 error: function (res) {
-                    console.log(res)
                     layuiAlert("新增失败" + res)
                 }
             })
         })
 
-        var modWind;
-        // $("#confirmMod").unbind("click").click(function () {
         $("#queryBtn").unbind("click").click(function () {
             tableIns.reload({
                 url: 'service/membershipLevel/getMemberList?query=' + $("#cardNameInput").val(),

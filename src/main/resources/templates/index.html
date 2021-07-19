@@ -207,14 +207,14 @@
 <!-- 修改密码弹窗 -->
 <div class="s-details" id="changePasswordWin">
     <form action="" autocomplete="off" class="layui-form">
-        <div class="layui-form-item s-formItem4">
-            <label class="layui-form-label">旧密码</label>
-            <div class="layui-input-block">
-                <input autocomplete="off" class="layui-input" lay-verify="required" name="oldPassword"
-                       placeholder="请输入旧密码"
-                       type="password">
-            </div>
-        </div>
+<!--        <div class="layui-form-item s-formItem4">-->
+<!--            <label class="layui-form-label">旧密码</label>-->
+<!--            <div class="layui-input-block">-->
+<!--                <input autocomplete="off" class="layui-input" lay-verify="required" name="oldPassword"-->
+<!--                       placeholder="请输入旧密码"-->
+<!--                       type="password">-->
+<!--            </div>-->
+<!--        </div>-->
         <div class="layui-form-item s-formItem4">
             <label class="layui-form-label">新密码</label>
             <div class="layui-input-block">
@@ -246,9 +246,11 @@
             form = layui.form,
             layer = layui.layer;
 
+        let currentUserid;
         $.get({
             url: "service/platUserManage/getCurrentLoginUser",
             success: function (res) {
+                currentUserid = res.platUserId
                 $("#loginName").html(res.name + " ")
             }
         })
@@ -260,7 +262,6 @@
                 }
             })
         })
-
         // 自定义各种表单验证规则
         form.verify({
 
@@ -290,14 +291,21 @@
                 content: $('#changePasswordWin'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
                 area: '300px'
             });
-            $('#cancel').on('click', function () {
+            form.on('submit(save)', function (data) {
+                $.post({
+                    url: "service/platUserManage/resetPassword",
+                    data: {
+                        platUserId: currentUserid,
+                        passwd: data.field.password
+                    },
+                    success: function (res) {
+                        layer.alert(res, {icon: 1});
+                    }
+                })
                 // 关闭当前弹出层
                 layer.close(index);
             });
-            // 确认
-            form.on('submit(save)', function (data) {
-                // 提示窗
-                layer.alert('修改成功！', {icon: 1});
+            $('#cancel').on('click', function () {
                 // 关闭当前弹出层
                 layer.close(index);
             });

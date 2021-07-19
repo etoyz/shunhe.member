@@ -56,11 +56,13 @@
             <ul class="layui-tab-title">
                 <li class="layui-this">车主信息</li>
                 <li>车辆信息</li>
-                <li>会员信息</li>
+                <li class="editMod">会员信息</li>
+                <li class="editMod">消费历史</li>
+<!--                <li class="editMod">积分历史</li>-->
+<!--                <li class="editMod">操作日志</li>-->
             </ul>
             <div class="layui-tab-content" style="height: 100px;">
                 <div class="layui-tab-item layui-show">
-                    <!--                <form class="layui-form" action="" autocomplete="off">-->
                     <div class="layui-form-item s-formItem5">
                         <div class="layui-inline">
                             <label class="layui-form-label"><i>*</i>客户姓名</label>
@@ -106,29 +108,37 @@
                         </div>
                     </div>
                     <div class="layui-form-item s-formItem5" id="area-picker">
-                        <label class="layui-form-label">省市区</label>
-                        <div class="layui-input-inline">
-                            <select id="province" class="province-selector" data-value="山东省" lay-filter="province" name="province">
-                                <option value="">请选择省</option>
-                            </select>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">省</label>
+                            <div class="layui-input-inline">
+                                <select id="province" class="province-selector" data-value="山东省" lay-filter="province" name="province">
+                                    <option value="">请选择省</option>
+                                </select>
+                            </div>
                         </div>
-                        <div class="layui-input-inline">
-                            <select id="city" lay-filter="city" data-value="烟台市" class="city-selector" name="city">
-                                <option value="">请选择市</option>
-                            </select>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">市</label>
+                            <div class="layui-input-inline">
+                                <select id="city" lay-filter="city" data-value="烟台市" class="city-selector" name="city">
+                                    <option value="">请选择市</option>
+                                </select>
+                            </div>
                         </div>
-                        <div class="layui-input-inline">
-                            <select id="area" class="county-selector" data-value="莱山区" lay-filter="area" name="area">
-                                <option value="">请选择县/区</option>
-                            </select>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">区</label>
+                            <div class="layui-input-inline">
+                                <select id="area" class="county-selector" data-value="莱山区" lay-filter="area" name="area">
+                                    <option value="">请选择县/区</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
 
+                    </div>
                     <div class="layui-form-item s-formItem5">
                         <label class="layui-form-label">地址</label>
                         <div class="layui-input-block">
-                            <input autocomplete="off" class="layui-input" id="detailedAddress" name="detailedAddress"
-                                   placeholder="请输入"
+                            <input class="layui-input" id="address" name="address"
+                                   placeholder="请输入详细地址" style="width: 800px"
                                    type="text">
                         </div>
                     </div>
@@ -152,14 +162,14 @@
                         <div class="layui-inline">
                             <label class="layui-form-label">微信关注日期</label>
                             <div class="layui-input-inline">
-                                <input autocomplete="off" class="layui-input" disabled id="focusTime" name="focusTime"
+                                <input autocomplete="off" class="layui-input date-render" disabled id="focusTime" name="focusTime"
                                        placeholder="yyyy-MM-dd" type="text">
                             </div>
                         </div>
                         <div class="layui-inline">
                             <label class="layui-form-label">微信解除关注日期</label>
                             <div class="layui-input-inline">
-                                <input autocomplete="off" class="layui-input" disabled id="unFocusTime" name="unFocusTime"
+                                <input autocomplete="off" class="layui-input date-render" disabled id="unFocusTime" name="unFocusTime"
                                        placeholder="yyyy-MM-dd" type="text">
                             </div>
                         </div>
@@ -168,14 +178,14 @@
                         <div class="layui-inline">
                             <label class="layui-form-label">微信绑定日期</label>
                             <div class="layui-input-inline">
-                                <input autocomplete="off" class="layui-input" disabled id="bindTime" name="bindTime"
+                                <input autocomplete="off" class="layui-input date-render" disabled id="bindTime" name="bindTime"
                                        placeholder="yyyy-MM-dd" type="text">
                             </div>
                         </div>
                         <div class="layui-inline">
                             <label class="layui-form-label">微信解除关注日期</label>
                             <div class="layui-input-inline">
-                                <input autocomplete="off" class="layui-input" disabled id="unbindTime" name="unbindTime"
+                                <input autocomplete="off" class="layui-input date-render" disabled id="unbindTime" name="unbindTime"
                                        placeholder="yyyy-MM-dd" type="text">
                             </div>
                         </div>
@@ -184,13 +194,11 @@
                         <label class="layui-form-label">备注</label>
                         <div class="layui-input-block">
                             <input autocomplete="off" class="layui-input" name="remark" placeholder="请输入"
-                                   type="text">
+                                   style="width: 800px" type="text">
                         </div>
                     </div>
-                    <!--                </form>-->
                 </div>
                 <div class="layui-tab-item ">
-                    <!--                <form class="layui-form" action="" autocomplete="off">-->
                     <div class="layui-form-item s-formItem5">
                         <div class="layui-inline">
                             <label class="layui-form-label"><i>*</i>车架号</label>
@@ -212,9 +220,6 @@
                         <div class="layui-inline">
                             <label class="layui-form-label"><i>*</i>品牌</label>
                             <div class="layui-input-inline">
-<!--                                <input autocomplete="off" class="layui-input" id="vehiclelabel" lay-verify="required"-->
-<!--                                       name="vehiclelabel"-->
-<!--                                       type="text">-->
                                 <select id="vehiclelabel" lay-verify="required" lay-filter="vehiclelabel" name="vehiclelabel">
                                     <option value="一汽大众">请选择品牌</option>
                                 </select>
@@ -253,7 +258,7 @@
                         <div class="layui-inline">
                             <label class="layui-form-label">购车日期</label>
                             <div class="layui-input-inline">
-                                <input autocomplete="off" class="layui-input" id="buyDate" name="buyDate"
+                                <input autocomplete="off" class="layui-input date-render" id="buyCarDate" name="buyCarDate"
                                        placeholder="yyyy-MM-dd" type="text">
                             </div>
                         </div>
@@ -315,24 +320,24 @@
                         <div class="layui-inline">
                             <label class="layui-form-label">交强险购买日期</label>
                             <div class="layui-input-inline">
-                                <input autocomplete="off" class="layui-input" id="strongInsurancePurchaseDate"
-                                       name="strongInsurancePurchaseDate" placeholder="yyyy-MM-dd"
+                                <input autocomplete="off" class="layui-input date-render" id="insuranceDate"
+                                       name="insuranceDate" placeholder="yyyy-MM-dd"
                                        type="text">
                             </div>
                         </div>
                         <div class="layui-inline">
                             <label class="layui-form-label">交强险投保公司</label>
                             <div class="layui-input-inline">
-                                <input autocomplete="off" class="layui-input" id="CompletionInsuranceCompany"
-                                       name="CompletionInsuranceCompany" type="text">
+                                <select autocomplete="off" class="layui-input" id="insuranceCompany"
+                                        name="insuranceCompany" type="text"></select>
                             </div>
                         </div>
                         <div class="layui-inline">
                             <label class="layui-form-label">交强险保单号</label>
                             <div class="layui-input-inline">
                                 <input autocomplete="off" class="layui-input"
-                                       id="CompulsoryInsurancePolicyNumber"
-                                       name="CompulsoryInsurancePolicyNumber" type="text">
+                                       id="insuranceNo"
+                                       name="insuranceNo" type="text">
                             </div>
                         </div>
                     </div>
@@ -340,8 +345,8 @@
                         <div class="layui-inline">
                             <label class="layui-form-label">商业险购买日期</label>
                             <div class="layui-input-inline">
-                                <input autocomplete="off" class="layui-input"
-                                       id="dateOfPurchaseOfCommercialInsurance" name="dateOfPurchaseOfCommercialInsurance"
+                                <input autocomplete="off" class="layui-input date-render"
+                                       id="businessRisksDate" name="businessRisksDate"
                                        placeholder="yyyy-MM-dd"
                                        type="text">
                             </div>
@@ -349,25 +354,21 @@
                         <div class="layui-inline">
                             <label class="layui-form-label">商业险投保公司</label>
                             <div class="layui-input-inline">
-                                <input autocomplete="off" class="layui-input" id="commercialInsuranceCompany"
-                                       name="commercialInsuranceCompany" type="text">
+                                <select autocomplete="off" class="layui-input" id="businessRisksbCompany" name="businessRisksbCompany" type="text"></select>
                             </div>
                         </div>
                         <div class="layui-inline">
                             <label class="layui-form-label">商业险保单号</label>
                             <div class="layui-input-inline">
-                                <input autocomplete="off" class="layui-input"
-                                       id="CommercialInsurancePolicyNumber"
-                                       name="CommercialInsurancePolicyNumber" type="text">
+                                <input autocomplete="off" class="layui-input" id="businessRisksNo" name="businessRisksNo" type="text">
                             </div>
                         </div>
                     </div>
                     <div class="layui-form-item s-formItem5">
                         <div class="layui-inline">
                             <label class="layui-form-label">险种</label>
-                            <div class="layui-input-block">
-                                <input autocomplete="off" class="layui-input" id="typeOfInsurance" name="typeOfInsurance"
-                                       type="text">
+                            <div class="layui-input-inline">
+                                <select autocomplete="off" class="layui-input" id="insuranceTypeName" name="insuranceTypeName" type="text"></select>
                             </div>
                         </div>
                     </div>
@@ -375,10 +376,6 @@
                         <div class="layui-inline">
                             <label class="layui-form-label">保客主管</label>
                             <div class="layui-input-inline">
-<!--                                <select lay-filter="director" name="director">-->
-<!--                                    <option>-</option>-->
-<!--                                    <option>who</option>-->
-<!--                                </select>-->
                                 <input autocomplete="off" class="layui-input" id="director" name="director"
                                        type="text">
                             </div>
@@ -386,10 +383,6 @@
                         <div class="layui-inline">
                             <label class="layui-form-label">保客专员</label>
                             <div class="layui-input-inline">
-<!--                                <select lay-filter="customerCommissioner" name="attache">-->
-<!--                                    <option>-</option>-->
-<!--                                    <option>who</option>-->
-<!--                                </select>-->
                                 <input autocomplete="off" class="layui-input" id="attache" name="attache"
                                        type="text">
                             </div>
@@ -399,10 +392,6 @@
                         <div class="layui-inline">
                             <label class="layui-form-label">服务顾问</label>
                             <div class="layui-input-inline">
-<!--                                <select lay-filter="theServiceAdvisor" name="serviceConsultant">-->
-<!--                                    <option>-</option>-->
-<!--                                    <option>who</option>-->
-<!--                                </select>-->
                                 <input autocomplete="off" class="layui-input" id="serviceConsultant" name="serviceConsultant"
                                        type="text">
                             </div>
@@ -410,19 +399,13 @@
                         <div class="layui-inline">
                             <label class="layui-form-label">销售顾问</label>
                             <div class="layui-input-inline">
-<!--                                <select lay-filter="customerCommissioner" name="saleConsultant">-->
-<!--                                    <option>-</option>-->
-<!--                                    <option>who</option>-->
-<!--                                </select>-->
                                 <input autocomplete="off" class="layui-input" id="saleConsultant" name="saleConsultant"
                                        type="text">
                             </div>
                         </div>
                     </div>
-                    <!--                </form>-->
                 </div>
                 <div class="layui-tab-item">
-                    <!--                <form class="layui-form" action="" autocomplete="off">-->
                     <div class="layui-form-item s-formItem5">
                         <div class="layui-inline">
                             <label class="layui-form-label">会员卡号:</label>
@@ -434,7 +417,7 @@
                         <div class="layui-inline">
                             <label class="layui-form-label">会员级别:</label>
                             <div class="layui-input-inline">
-                                <input autocomplete="off" class="layui-input" disabled id="memberLevel" name="memberLevel"
+                                <input autocomplete="off" class="layui-input" disabled id="level" name="level"
                                        type="text">
                             </div>
                         </div>
@@ -443,15 +426,32 @@
                         <div class="layui-inline">
                             <label class="layui-form-label">使用卡券价值</label>
                             <div class="layui-input-inline">
-                                <input autocomplete="off" class="layui-input" disabled id="useCouponValue" name="useCouponValue"
+                                <input autocomplete="off" class="layui-input" disabled id="usedCouponCost" name="usedCouponCost"
                                        type="text">
                             </div>
                         </div>
                         <div class="layui-inline">
                             <label class="layui-form-label">剩余卡券价值:</label>
                             <div class="layui-input-inline">
-                                <input autocomplete="off" class="layui-input" disabled id="remainCouponValue"
-                                       name="remainCouponValue"
+                                <input autocomplete="off" class="layui-input" disabled id="remainderCouponCost"
+                                       name="remainderCouponCost"
+                                       type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-form-item s-formItem5">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">使用卡券数量:</label>
+                            <div class="layui-input-inline">
+                                <input autocomplete="off" class="layui-input" disabled id="usedCouponCount" name="usedCouponCount"
+                                       type="text">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">剩余卡券数量:</label>
+                            <div class="layui-input-inline">
+                                <input autocomplete="off" class="layui-input" disabled id="remainderCouponCount"
+                                       name="remainderCouponCount"
                                        type="text">
                             </div>
                         </div>
@@ -460,16 +460,16 @@
                         <div class="layui-inline">
                             <label class="layui-form-label">过期卡券价值:</label>
                             <div class="layui-input-inline">
-                                <input autocomplete="off" class="layui-input" disabled id="expiredCouponValue"
-                                       name="expiredCouponValue"
+                                <input autocomplete="off" class="layui-input" disabled id="invalidCouponCost"
+                                       name="invalidCouponCost"
                                        type="text">
                             </div>
                         </div>
                         <div class="layui-inline">
-                            <label class="layui-form-label">卡券总价值:</label>
+                            <label class="layui-form-label">过期卡券数量:</label>
                             <div class="layui-input-inline">
-                                <input autocomplete="off" class="layui-input" disabled id="totalCouponValue"
-                                       name="totalCouponValue"
+                                <input autocomplete="off" class="layui-input" disabled id="invalidCouponCount"
+                                       name="invalidCouponCount"
                                        type="text">
                             </div>
                         </div>
@@ -478,22 +478,36 @@
                         <div class="layui-inline">
                             <label class="layui-form-label">可用积分:</label>
                             <div class="layui-input-inline">
-                                <input autocomplete="off" class="layui-input" disabled id="availableIntegral"
-                                       name="availableIntegral"
+                                <input autocomplete="off" class="layui-input" disabled id="availableScore"
+                                       name="availableScore"
                                        type="text">
                             </div>
                         </div>
                         <div class="layui-inline">
                             <label class="layui-form-label">累计积分:</label>
                             <div class="layui-input-inline">
-                                <input autocomplete="off" class="layui-input" disabled id="accumulativeIntegral"
-                                       name="accumulativeIntegral"
+                                <input autocomplete="off" class="layui-input" disabled id="accumulativeScore"
+                                       name="accumulativeScore"
                                        type="text">
                             </div>
                         </div>
                     </div>
                 </div>
-
+                <div class="layui-tab-item">
+                    <div class="s-commonTable">
+                        <table class="layui-hide" id="consumptionHistories" lay-filter="consumptionHistoriesTabel"></table>
+                    </div>
+                </div>
+                <div class="layui-tab-item">
+                    <div class="s-commonTable">
+                        <table class="layui-hide" id="pointsHistories" lay-filter="pointsHistoriesTabel"></table>
+                    </div>
+                </div>
+                <div class="layui-tab-item">
+                    <div class="s-commonTable">
+                        <table class="layui-hide" id="operationLogs" lay-filter="operationLogsTabel"></table>
+                    </div>
+                </div>
                 <div class="s-tabBottomButton">
                     <button class="layui-btn" id="confirmAdd" lay-filter="confirmAdd" lay-submit>确认</button>
                     <button class="layui-btn layui-btn-warm" id="cancelAdd">取消</button>
@@ -546,11 +560,8 @@
                 layarea = layui.layarea,
                 element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
 
-            let area = layarea.render({
-                elem: '#area-picker',
-                change: function (res) {
-                    console.log(res);
-                }
+            layarea.render({
+                elem: '#area-picker'
             })
 
             //日期
@@ -560,18 +571,6 @@
                     ,trigger: 'click'
                 });
             });
-            // laydate.render({
-            //     elem: '#cBirthday'
-            // });
-            // laydate.render({
-            //     elem: '#cBirthdayM'
-            // });
-            // laydate.render({
-            //     elem: '#bindTime'
-            // });
-            // laydate.render({
-            //     elem: '#unbindTime'
-            // });
             function pullBrandName(selector, callback) {
                 var selectE = $(selector);
                 $.post({
@@ -593,7 +592,7 @@
                     }
                 })
             }
-            //车系
+
             function pullCarSeriesgroupName(selector,BrandId,callback) {
                 var selectE = $(selector);
                 $.post({
@@ -616,7 +615,6 @@
                 })
             }
 
-            //车型
             function pullCarSeriesName(selector,groupid,callback) {
                 var selectE = $(selector);
                 $.post({
@@ -660,27 +658,121 @@
                     }
                 })
             }
+
+            function pullInsuranceCompany(selector, callback){
+                var selectE = $(selector);
+                $.post({
+                    url: "service/insuranceCompany/getInsuranceCompanyNameList",
+                    timeout: 1000,
+                    dataType: "json",
+                    success: function (res) {
+                        selectE.empty();
+                        selectE.append("<option value='" + -1 + "'>" + "---" + "</option>");
+                        for (var s of res) {
+                            selectE.append("<option value='" + s.id + "'>" + s.name + "</option>");
+                        }
+                        form.render(); //layui的form重新渲染
+                        callback()
+                    },
+                    error: function () {
+                        selectE.empty();
+                        selectE.append("<option>拉取失败，请刷新！</option>");
+                        form.render();
+                    }
+                })
+            }
+
+            function pullInsuranceTypeName(selector, callback){
+                var selectE = $(selector);
+                $.post({
+                    url: "service/insuranceType/getInsuranceTypeNameList",
+                    timeout: 1000,
+                    dataType: "json",
+                    success: function (res) {
+                        selectE.empty();
+                        selectE.append("<option value='" + -1 + "'>" + "---" + "</option>");
+                        for (var s of res) {
+                            selectE.append("<option value='" + s.id + "'>" + s.name + "</option>");
+                        }
+                        form.render(); //layui的form重新渲染
+                        callback()
+                    },
+                    error: function () {
+                        selectE.empty();
+                        selectE.append("<option>拉取失败，请刷新！</option>");
+                        form.render();
+                    }
+                })
+            }
+
+            function pullAll(callback){
+                let cnt = 0;
+                function call() {
+                    cnt++;
+                    if(cnt === 3) // 三次call，才执行callback
+                        callback()
+                }
+                pullInsuranceCompany("#insuranceCompany", () => {
+                    call()
+                })
+                pullInsuranceCompany("#businessRisksbCompany", () => {
+                    call()
+                })
+                pullInsuranceTypeName("#insuranceTypeName", () => {
+                    call()
+                })
+
+            }
         }
 
         // 显示“新增弹窗”
         $("#add").unbind("click").click(function () {
             $('#addForm').trigger('reset');
-            $('select[name="province"]').siblings("div.layui-form-select").find('dl dd[lay-value=' + "山东省" + ']').click();
-            $('select[name="city"]').siblings("div.layui-form-select").find('dl dd[lay-value=' + "烟台市" + ']').click();
-            $('select[name="area"]').siblings("div.layui-form-select").find('dl dd[lay-value=' + "莱山区" + ']').click();
+            $(".editMod").hide()
+            $('select[name="province"]').siblings("div.layui-form-select").find('dl dd[ lay-value=' + "山东省" + ']').click();
+            $('select[name="city"]').siblings("div.layui-form-select").find('dl dd[ lay-value=' + "烟台市" + ']').click();
+            $('select[name="area"]').siblings("div.layui-form-select").find('dl dd[ lay-value=' + "莱山区" + ']').click();
             var index = layer.open({
                 type: 1,
                 title: '新增会员信息',
                 content: $('#memberPopup'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
-                area: ['1050px', '650px'],
-                offset: '20px'
+                area: ['1100px', '650px']
             });
+            form.on('submit(confirmAdd)', function (data) {
+                var textvehiclelabel=$('#vehiclelabel option:selected').text();
+                var textvehiclestyle=$('#vehiclestyle option:selected').text();
+                var textvehiclebrand=$('#vehiclebrand option:selected').text();
+                data.field.vehicle = {
+                    platenumber: data.field.platenumber,
+                    vin: data.field.vin,
+                    vehiclelabel: textvehiclelabel,
+                    vehiclebrand: textvehiclebrand,
+                    vehiclestyle: textvehiclestyle,
+                    customername: data.field.customername,
+                    vehiclelabelid: data.field.vehiclelabel,
+                    vehiclebrandid: data.field.vehiclebrand,
+                    vehiclestyleid: data.field.vehiclestyle,
+                    insuranceDate: data.field.vehiclestyle,
+                    businessRisksDate: data.field.vehiclestyle,
+                }
+                $.post({
+                    url: "/service/Archives/addArchives",
+                    data: JSON.stringify(data.field),
+                    contentType: "application/json",
+                    success: function (res) {
+                        layuiAlert("信息:" + res)
+                        tableUserList.reload()
+                    }
+                })
+                return false;
+            })
             pullBrandName("#vehiclelabel", () => {
                 pullCarSeriesgroupName("#vehiclestyle", $('#vehiclelabel').val(), () => {
                     pullCarSeriesName("#vehiclebrand", $('#vehiclestyle').val(), () => {
                     });
                 });
             });
+            pullAll()
             form.on('select(vehiclelabel)', function () {
                     pullCarSeriesgroupName("#vehiclestyle", $('#vehiclelabel').val(), () => {
                         pullCarSeriesName("#vehiclebrand", $('#vehiclestyle').val(), () => {
@@ -747,7 +839,6 @@
                         url: "service/Archives/getUserInfo?userId=" + data[i].userId,
                         async: false,
                         success: function (resp) {
-                            console.log(resp.cGender)
                             try{
                                 if(resp.cGender==1)
                                     data[i].cGender="男"
@@ -782,31 +873,30 @@
         table.on('tool(memberArchivesTabel)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
             activedata = obj.data; //获得当前行数据
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
-            if (layEvent === 'resetPasswords') { // 重置密码
-                console.log(tableUserList.config.page.curr);
-                console.log(tableUserList.config.page.limit);
-                layer.confirm('确定要重置用户账号：[' + user + ']密码吗？', {icon: 3, title: '提示'}, function (index) {
-                    layer.close(index);
-                    //向服务端发送删除指令
-                    // 提示窗
-                    layer.alert('重置密码成功！初始密码为：123456', {icon: 1});
-                });
-            }
-            else if (layEvent === 'edit') { // 编辑
-                var index1 = layer.open({
-                    type: 1,
-                    title: '修改会员信息',
-                    content: $('#memberPopup'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
-                    area: ['1050px', '650px'],
-                    offset: '20px'
-                });
+            if (layEvent === 'edit') {
+                layer.msg("正在加载...")
+                let cnt = 0;
+                function showPopup() {
+                    cnt++
+                    if(cnt === 4){
+                        $(".editMod").show()
+                        layer.open({
+                            type: 1,
+                            title: '修改会员信息',
+                            content: $('#memberPopup'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                            area: ['1100px', '650px']
+                        });
+                    }
+                }
+                pullAll(() => {
+                    showPopup()
+                })
                 $.post({
                     url: "/service/Archives/getUserInfo",
                     data: {
                         userId: activedata.userId
                     },
                     success: function (res) {
-                        // console.log(res.vehicle.vehiclelabelid)
                         $('#customername').val(res.customername);
                         $('#phone').val(res.phone);
                         $('#cBirthday').val(res.cBirthday);
@@ -814,13 +904,28 @@
                         $('#cCard').val(res.cCard);
                         $('#platenumber').val(res.vehicle.platenumber);
                         $('#vin').val(res.vehicle.vin);
+                        $('#insuranceTypeName').val(res.vehicle.insuranceTypeName);
+                        $('#insuranceCompany').val(res.vehicle.insuranceCompany);
+                        $('#businessRisksbCompany').val(res.vehicle.businessRisksbCompany);
+                        $('#businessRisksDate').val(res.vehicle.businessRisksDate);
+                        $('#insuranceDate').val(res.vehicle.insuranceDate);
+                        $('#buyCarDate').val(res.vehicle.buyCarDate);
+                        $('#insuranceNo').val(res.vehicle.insuranceNo);
+                        $('#businessRisksNo').val(res.vehicle.businessRisksNo);
                         $('#level').val(res.member.level);
                         $('#memberNumber').val(res.memberNumber);
+                        if (res.province === "")
+                            res.province = "---"
+                        if(res.city === "")
+                            res.city = "---"
+                        if(res.area === "")
+                            res.area = "---"
                         $('#province').val(res.province);
                         $('select[name="province"]').siblings("div.layui-form-select").find('dl dd[lay-value=' + res.province + ']').click();
                         $('#city').val(res.city);
                         $('select[name="city"]').siblings("div.layui-form-select").find('dl dd[lay-value=' + res.city + ']').click();
                         $('#area').val(res.area);
+                        $('#address').val(res.address);
                         pullBrandName("#vehiclelabel", () => {
                             $('#vehiclelabel').val(res.vehicle.vehiclelabelid);
                             pullCarSeriesgroupName("#vehiclestyle", $('#vehiclelabel').val(), () => {
@@ -829,10 +934,10 @@
                                     // $('#vehiclelabelM option:selected').text(res.vehicle.vehiclelabel)
                                     $('#vehiclebrand').val(res.vehicle.vehiclebrandid);
                                     form.render()
+                                    showPopup()
                                 });
                             });
                         });
-                        // form.render()
                         form.on('select(vehiclelabel)', function () {
                             pullCarSeriesgroupName("#vehiclestyle", $('#vehiclelabel').val(), () => {
                                 pullCarSeriesName("#vehiclebrand", $('#vehiclestyle').val(), () => {
@@ -845,6 +950,20 @@
                         });
                     }
                 });
+                $.post({
+                    url: "service/Archives/getUserCost?userid=" + activedata.userId,
+                    success: function (res){
+                        $('#accumulativeScore').val(res.accumulativeScore);
+                        $('#availableScore').val(res.availableScore);
+                        $('#invalidCouponCost').val(res.invalidCouponCost);
+                        $('#invalidCouponCount').val(res.invalidCouponCount);
+                        $('#remainderCouponCost').val(res.remainderCouponCost);
+                        $('#remainderCouponCount').val(res.remainderCouponCount);
+                        $('#usedCouponCost').val(res.usedCouponCost);
+                        $('#usedCouponCount').val(res.usedCouponCount);
+                        showPopup()
+                    }
+                })
                 // "消费历史表格"渲染
                 table.render({
                     elem: '#consumptionHistories',
@@ -934,13 +1053,15 @@
                                 data[i].totalMoney = parseFloat(data[i].totalMoney).toFixed(2)
                             }
                         }
+                    },
+                    done: function () {
+                        showPopup()
                     }
                 });
                 form.on('submit(confirmAdd)', function (data) {
                     var textvehiclelabel=$('#vehiclelabel option:selected').text();
                     var textvehiclestyle=$('#vehiclestyle option:selected').text();
                     var textvehiclebrand=$('#vehiclebrand option:selected').text();
-                    console.log(data)
                     data.field.vehicle = {
                         platenumber: data.field.platenumber,
                         vin: data.field.vin,
@@ -952,12 +1073,19 @@
                         vehiclelabelid: data.field.vehiclelabel,
                         vehiclebrandid: data.field.vehiclebrand,
                         vehiclestyleid: data.field.vehiclestyle,
+                        businessRisksbCompany: data.field.businessRisksbCompany,
+                        insuranceCompany: data.field.insuranceCompany,
+                        insuranceTypeName: data.field.insuranceTypeName,
+                        insuranceDate: data.field.insuranceDate,
+                        businessRisksDate: data.field.businessRisksDate,
+                        buyCarDate: data.field.buyCarDate,
+                        businessRisksNo: data.field.businessRisksNo,
+                        insuranceNo: data.field.insuranceNo,
                     }
                     data.field.member = {
                         level: data.field.level
                     }
                     data.field.userId = activedata.userId
-                    // data.field.userId : data.userId;
                     $.post({
                         url: "/service/Archives/editArchives",
                         data: JSON.stringify(data.field),
@@ -974,11 +1102,9 @@
                                 data.field.vehiclelabel = res.vehicle.vehiclelabel
                                 data.field.vehiclebrand = res.vehicle.vehiclebrand
                                 data.field.vehiclestyle = res.vehicle.vehiclestyle
-                                // console.log(data.field.vehiclelabel)
                                 layuiAlert("修改成功！");
                                 obj.update(data.field);
                             } else
-                                // layuiAlert(res);
                                 layuiAlert("修改失败！");
                         }
                     })
@@ -1035,6 +1161,7 @@
                         },
                         success: function (res) {
                             layuiAlert(res)
+                            tableUserList.reload()
                         }
                     });
 
@@ -1054,7 +1181,6 @@
                 yes: function () {
                     layer.closeAll();
                     $('#addForm').trigger('reset');
-                    tableUserList.reload()
                 }
             });
         }
@@ -1128,7 +1254,7 @@
         }
 
         // "会员信息表格"渲染
-        var tableIns1 = table.render({
+        table.render({
             elem: '#memberInfo',
             url: './datas/memberInfo.json',
             height: 400,
@@ -1154,35 +1280,6 @@
             ]],
             size: 'sm'
         });
-
-        form.on('submit(confirmAdd)', function (data) {
-            var textvehiclelabel=$('#vehiclelabel option:selected').text();
-            var textvehiclestyle=$('#vehiclestyle option:selected').text();
-            var textvehiclebrand=$('#vehiclebrand option:selected').text();
-            data.field.vehicle = {
-                platenumber: data.field.platenumber,
-                vin: data.field.vin,
-                vehiclelabel: textvehiclelabel,
-                vehiclebrand: textvehiclebrand,
-                vehiclestyle: textvehiclestyle,
-                customername: data.field.customername,
-                vehiclelabelid: data.field.vehiclelabel,
-                vehiclebrandid: data.field.vehiclebrand,
-                vehiclestyleid: data.field.vehiclestyle,
-                // customernameid: data.field.customername
-            }
-            console.log(data.field)
-            $.post({
-                url: "/service/Archives/addArchives",
-                data: JSON.stringify(data.field),
-                contentType: "application/json",
-                success: function (res) {
-                    console.log(res)
-                    layuiAlert("信息:" + res)
-                }
-            })
-            return false;
-        })
 
         $('#cancelAdd').on('click', function () {
             // 关闭当前弹出层

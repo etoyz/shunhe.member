@@ -7,6 +7,7 @@ import carinfo.service.CarDataQuery;
 import com.sft.member.bean.CouponCheck;
 import com.sft.member.bean.Member;
 import com.sft.member.bean.User;
+import com.sft.member.bean.UserCost;
 import com.sft.member.obtain.member.MemberService;
 import com.sft.member.obtain.pay.PayService;
 import com.sft.member.obtain.user.UserService;
@@ -29,6 +30,13 @@ public class ArchivesController {
     MemberService memberService;
     @Resource
     CarDataQuery CarService;
+    @Resource
+    PayService payService;
+
+    @RequestMapping("getUserCost")
+    public UserCost getUserCost(@RequestParam String userid) {
+        return payService.getUserCost(String.valueOf(userid));
+    }
 
     @PostMapping(value = "addArchives")
     public String addUser(@RequestBody User user) {
@@ -68,10 +76,6 @@ public class ArchivesController {
 
         return ret;
     }
-
-    // 获取"消费历史"表格数据
-    @Resource
-    PayService payService;
 
     @RequestMapping("getConsumptionHistories")
     public Map<String, Object> getConsumptionHistories(@RequestBody GetPendingReviewListRequest request) {

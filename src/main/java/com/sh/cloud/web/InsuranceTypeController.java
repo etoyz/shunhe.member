@@ -35,6 +35,12 @@ public class InsuranceTypeController {
         return ret;
     }
 
+    @RequestMapping("getInsuranceTypeNameList")
+    @ResponseBody
+    public List<InsuranceType> getInsuranceCompanyNameList() {
+        return insuranceTypeService.getInsuranceTypeList(new InsuranceType(), 1, Integer.MAX_VALUE);
+    }
+
     @RequestMapping("addInsuranceType")
     @ResponseBody
     public String addInsuranceType(@RequestBody InsuranceType insuranceType) {

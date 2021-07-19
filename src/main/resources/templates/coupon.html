@@ -38,7 +38,7 @@
 
             <!-- 展示表格 -->
             <div class="s-commonTable">
-                <table class="layui-hide" id="coupon" lay-filter="couponTabel"></table>
+                <table class="layui-hide" id="coupon" lay-filter="couponTable"></table>
                 <script id="operation" type="text/html">
                     <a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="modify">修改</a>
                     <a class="layui-btn layui-btn-xs" lay-event="relate">关联消费项目</a>
@@ -184,42 +184,91 @@
 <script src="plugins/layui/layui.js"></script>
 <script>
     layui.use(['form', 'laydate', 'table', 'layer', 'element'], function () {
-        var $ = layui.jquery,
-            form = layui.form,
-            laydate = layui.laydate,
-            layer = layui.layer,
-            table = layui.table,
-            element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+        // utils
+        {
+            var $ = layui.jquery,
+                form = layui.form,
+                laydate = layui.laydate,
+                layer = layui.layer,
+                table = layui.table,
+                element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
 
-        //日期
-        laydate.render({
-            elem: '#date'
-        });
+            //日期
+            laydate.render({
+                elem: '#date'
+            });
 
+            //从服务端拉取全部卡券类型
+            function pullCouponTypes(selector, callback) {
+                let selectE = $(selector);
+
+                function errorAction() {
+                    selectE.empty();
+                    selectE.append("<option>拉取失败，请刷新！</option>");
+                    form.render();
+                }
+
+                $.post({
+                    url: "service/coupon/getCouponTypes",
+                    timeout: 1000,
+                    dataType: "json",
+                    success: function (res) {
+                        if (res.status !== "ok") {
+                            errorAction();
+                        } else {
+                            selectE.empty();
+                            let count = 0;
+                            for (let s of res.types) {
+                                selectE.append("<option value='" + count + "'>" + s + "</option>");
+                                count += 1;
+                            }
+                            callback();
+                            form.render();
+                        }
+                    },
+                    error: function () {
+                        errorAction();
+                    }
+                })
+            }
+
+            function layuiAlert(msg, callback) {
+                layer.open({
+                    offset: "auto",//具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
+                    content: '<div style="padding: 20px 70px;">' + msg + '</div>',
+                    btn: '关闭',
+                    btnAlign: 'c',//按钮居中
+                    shade: 0, //不显示遮罩
+                    closeBtn: false,
+                    yes: function () {
+                        layer.closeAll();
+                        callback()
+                    }
+                });
+            }
+        }
+        
         // “卡券表格”渲染
-        var couponTable = table.render({
+        let itemCnt;
+        let couponTable = table.render({
             elem: '#coupon',
             url: 'service/coupon/getCouponList?query=',
             toolbar: true, //仅开启工具栏，不显示左侧模板
-            // defaultToolbar: ['exports'], //头部工具栏右侧图标
             defaultToolbar: ['filter', 'print', 'exports'],
             height: 'full-100',
-            page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+            page: {
                 layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
                 limit: 10,
-                //,curr: 5 //设定初始在第 5 页
                 groups: 3, //只显示 1 个连续页码
                 first: false, //不显示首页
                 last: false //不显示尾页
             },
             cols: [ [
-                // {type: 'checkbox'},
                 {field: 'name', width: '8%', title: '卡券名称'},
                 {field: 'type', width: '8%', title: '卡券类型'},
                 {field: 'unitPrice', width: '6%', title: '单价'},
                 {field: 'costPrice', width: '7%', title: '成本价'},
                 {field: 'remark', width: '6%', title: '备注'},
-                // {field: 'orderID', width: '7%', title: '顺序号'},
                 {field: 'createName', width: '7%', title: '创建人'},
                 {field: 'createTime', width: '14%', title: '创建时间'},
                 {field: 'lastEditName', width: '7%', title: '最后编辑人'},
@@ -230,6 +279,7 @@
             size: 'sm',
             parseData: function (res) {
                 let data = res.data
+                itemCnt = data.length
                 for (let i = 0; i < data.length; i++) {
                     data[i].type = data[i].type === 1 ? "储值" : "代金券"
                     $.post({
@@ -252,54 +302,6 @@
             }
         });
 
-        //从服务端拉取全部卡券类型
-        function pullCouponTypes(selector, callback) {
-            let selectE = $(selector);
-
-            function errorAction() {
-                selectE.empty();
-                selectE.append("<option>拉取失败，请刷新！</option>");
-                form.render();
-            }
-
-            $.post({
-                url: "service/coupon/getCouponTypes",
-                timeout: 1000,
-                dataType: "json",
-                success: function (res) {
-                    if (res.status !== "ok") {
-                        errorAction();
-                    } else {
-                        selectE.empty();
-                        let count = 0;
-                        for (let s of res.types) {
-                            selectE.append("<option value='" + count + "'>" + s + "</option>");
-                            count += 1;
-                        }
-                        callback();
-                        form.render();
-                    }
-                },
-                error: function () {
-                    errorAction();
-                }
-            })
-        }
-
-        function layuiAlert(msg) {
-            layer.open({
-                offset: "auto",//具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
-                content: '<div style="padding: 20px 70px;">' + msg + '</div>',
-                btn: '关闭',
-                btnAlign: 'c',//按钮居中
-                shade: 0, //不显示遮罩
-                closeBtn: false,
-                yes: function () {
-                    layer.closeAll();
-                }
-            });
-        }
-
         var projectsTable = table.render({
             id: "relTable",
             elem: "#relTable",
@@ -315,12 +317,10 @@
 
         //监听“卡券表格”工具条
         var activeLine
-        table.on('tool(couponTabel)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+        table.on('tool(couponTable)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
             activeLine = obj.data; //获得当前行数据
             activeLine.type = activeLine.type === "储值" ? 1 : 0;
-            // var page = data.page;
-            // var limit = data.limit;
-            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值f）
+            var layEvent = obj.event;
             if (layEvent === 'delete') { // 用卡
                 layer.confirm("确认删除卡券【" + activeLine.name + "】?", {icon: 3, title: '提示'}, function () {
                     $.post({
@@ -328,9 +328,24 @@
                         data: JSON.stringify(activeLine),
                         contentType: "application/json",
                         success: function (res) {
-                            layuiAlert(res)
-                            if("删除成功！" === res)
-                                obj.del()
+                            layuiAlert(res, ()=>{
+                                if("删除成功！" === res) {
+                                    obj.del()
+                                    itemCnt--
+                                    if(itemCnt === 0) { //当前页的Item为0
+                                        let nextPage;
+                                        if(couponTable.config.page.curr === 1) //当前为第一页，则删除后还是第一页
+                                            nextPage = couponTable.config.page.curr;
+                                        else //删除后是前一页
+                                            nextPage = couponTable.config.page.curr - 1;
+                                        couponTable.reload({
+                                            page: {
+                                                curr: nextPage
+                                            },
+                                        })
+                                    }
+                                }
+                            })
                         }
                     });
                 })
@@ -357,8 +372,10 @@
                         data: JSON.stringify(data.field),
                         contentType: "application/json",
                         success: function (res) {
-                            layuiAlert("修改结果：" + res)
-                            obj.update(data.field);
+                            layuiAlert("修改结果：" + res, ()=>{
+                                obj.update(data.field);
+                            })
+
                         },
                         error: function () {
                             layuiAlert("修改失败")
@@ -433,8 +450,9 @@
                 data: JSON.stringify(data.field),
                 contentType: "application/json",
                 success: function (res) {
-                    layuiAlert("信息:" + res)
-                    couponTable.reload()
+                    layuiAlert("信息:" + res, ()=>{
+                        couponTable.reload()
+                    })
                 }
             })
         })
