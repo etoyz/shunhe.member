@@ -1,193 +1,172 @@
 <!DOCTYPE html>
 <html lang="zh_CN">
 <head>
-  <meta charset="utf-8">
-  <title>反结算历史</title>
-  <meta content="webkit" name="renderer">
-  <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
-  <link href="plugins/layui/css/layui.css" media="all" rel="stylesheet">
-  <link href="plugins/font-awesome/css/font-awesome.min.css" media="all" rel="stylesheet">
-  <link href="plugins/adjust/css/adjustLayui.css" media="all" rel="stylesheet">
-  <link href="css/table.css" media="all" rel="stylesheet">
-  <link href="css/form.css" media="all" rel="stylesheet">
-  <link href="css/common.css" media="all" rel="stylesheet">
+    <meta charset="utf-8">
+    <title>反结算历史</title>
+    <meta content="webkit" name="renderer">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
+    <link href="plugins/layui/css/layui.css" media="all" rel="stylesheet">
+    <link href="plugins/font-awesome/css/font-awesome.min.css" media="all" rel="stylesheet">
+    <link href="plugins/adjust/css/adjustLayui.css" media="all" rel="stylesheet">
+    <link href="css/table.css" media="all" rel="stylesheet">
+    <link href="css/form.css" media="all" rel="stylesheet">
+    <link href="css/common.css" media="all" rel="stylesheet">
 </head>
 
 <body>
 <div class="layui-fluid main">
-  <div class="layui-row">
-    <div class="layui-col-md12">
-      <div class="s-headerSearch">
-        <form action="" autocomplete="off" class="layui-form">
-          <div class="layui-form-item">
-            <div class="layui-inline s-layuiInline">
-              <label class="layui-form-label">消费日期：</label>
-              <div class="layui-input-inline">
-                <input class="layui-input" id="time" name="time" placeholder="请选择消费日期范围" type="text">
-              </div>
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="s-headerSearch">
+                <form action="" autocomplete="off" class="layui-form">
+                    <div class="layui-form-item">
+                        <div class="layui-inline s-layuiInline">
+                            <label class="layui-form-label">消费日期：</label>
+                            <div class="layui-input-inline">
+                                <input class="layui-input" id="time" name="time" placeholder="请选择消费日期范围" type="text">
+                            </div>
+                        </div>
+                        <div class="layui-inline s-layuiInline">
+                            <label class="layui-form-label">车牌号：</label>
+                            <div class="layui-input-inline">
+                                <input autocomplete="off" class="layui-input" id="platenumber" name="platenumber"
+                                       placeholder="请输入车牌号"
+                                       type="text">
+                            </div>
+                        </div>
+                        <div class="layui-inline s-layuiInline">
+                            <label class="layui-form-label">车架号：</label>
+                            <div class="layui-input-inline">
+                                <input autocomplete="off" class="layui-input" id="vin" name="vin" placeholder="请输入车架号"
+                                       type="text">
+                            </div>
+                        </div>
+                        <div class="layui-inline s-layuiInline">
+                            <label class="layui-form-label">客户名称：</label>
+                            <div class="layui-input-inline">
+                                <input autocomplete="off" class="layui-input" id="customername" name="customername"
+                                       placeholder="请输入客户名称"
+                                       type="text">
+                            </div>
+                        </div>
+                        <div class="layui-inline s-layuiInline">
+                            <label class="layui-form-label">会员卡号：</label>
+                            <div class="layui-input-inline">
+                                <input autocomplete="off" class="layui-input" id="memberNumber" name="memberNumber"
+                                       placeholder="请输入会员卡号"
+                                       type="text">
+                            </div>
+                        </div>
+                        <div class="layui-inline s-layuiInline">
+                            <button class="layui-btn layui-btn-warm" id="queryBtn">查询</button>
+                        </div>
+<!--                        <div class="layui-inline s-layuiInline">-->
+<!--                            <button class="layui-btn layui-btn-warm" id="advancedQueryBtn">高级查询</button>-->
+<!--                        </div>-->
+                    </div>
+                </form>
             </div>
-            <div class="layui-inline s-layuiInline">
-              <label class="layui-form-label">车牌号：</label>
-              <div class="layui-input-inline">
-                <input autocomplete="off" class="layui-input" name="platenumber" placeholder="请输入车牌号"
-                       type="text">
-              </div>
+            <!-- 展示表格 -->
+            <div class="s-commonTable">
+                <table class="layui-hide" id="tableMain" lay-filter="tableMain"></table>
             </div>
-            <div class="layui-inline s-layuiInline">
-              <label class="layui-form-label">车架号：</label>
-              <div class="layui-input-inline">
-                <input autocomplete="off" class="layui-input" name="vin" placeholder="请输入车架号"
-                       type="text">
-              </div>
-            </div>
-            <div class="layui-inline s-layuiInline">
-              <label class="layui-form-label">客户名称：</label>
-              <div class="layui-input-inline">
-                <input autocomplete="off" class="layui-input" name="userName" placeholder="请输入客户名称"
-                       type="text">
-              </div>
-            </div>
-            <div class="layui-inline s-layuiInline">
-              <label class="layui-form-label">会员卡号：</label>
-              <div class="layui-input-inline">
-                <input autocomplete="off" class="layui-input" name="userId" placeholder="请输入会员卡号"
-                       type="text">
-              </div>
-            </div>
-            <div class="layui-inline s-layuiInline">
-              <button class="layui-btn layui-btn-warm" id="queryBtn">查询</button>
-            </div>
-            <div class="layui-inline s-layuiInline">
-              <button class="layui-btn layui-btn-warm" id="advancedQueryBtn">高级查询</button>
-            </div>
-          </div>
-        </form>
-      </div>
-      <!-- 展示表格 -->
-      <div class="s-commonTable">
-        <table class="layui-hide" id="tableMain" lay-filter="tableMain"></table>
-      </div>
+        </div>
     </div>
-  </div>
 </div>
-
-
 
 
 <script src="plugins/layui/layui.js"></script>
 <script>
-  layui.use(['table', 'laydate'], function() {
-    // tableMain表格
-    var tableMain = layui.table,
+    layui.use(['form', 'table', 'laydate'], function () {
+        // tableMain表格
+        var $ = layui.jquery,
+            form = layui.form,
+            tableMain = layui.table,
             laydate = layui.laydate;
-    laydate.render({
-      elem: '#time'
-      , type: 'date'
-      , range: '@'
-      , format: 'yyyy-MM-dd'
+        laydate.render({
+            elem: '#time'
+            ,type: 'date'
+            ,range: '@'
+            ,format: 'yyyy-MM-dd'
+        });
+        // 表格渲染
+        var tableIns = tableMain.render({
+             elem: '#tableMain'
+            ,height: 'full-180'
+            ,size: 'sm' //小尺寸的表格
+            ,url: 'service/cancelConsumeHistory/getCancelConsumeHistoryList' //数据接口
+            ,method: "post"
+            ,contentType: "application/json"
+            ,where: {
+                couponCheck: {},
+                user: {
+                    vehicle: {},
+                },
+                groupBy: false
+            }
+            ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
+                limit: 15,
+                //,curr: 5 //设定初始在第 5 页
+                groups: 3, //只显示 1 个连续页码
+                first: false, //不显示首页
+                last: false //不显示尾页
+            }
+            ,toolbar: true //仅开启工具栏，不显示左侧模板
+            ,defaultToolbar: ['filter', 'print', 'exports'] //头部工具栏右侧图标
+            ,cols: [ [ //表头，两个中括号之间一定要加空格不然会出错，有冲突
+                 {type: 'checkbox', fixed: 'left'}
+                ,{field: 'time', title: '消费日期', width:110, sort: true}
+                ,{field: 'groupId', title: '流水号', width:100, sort: true}
+                ,{field: 'customername', title: '客户名称', width:110, sort: true}
+                ,{field: 'memberNumber', title: '会员卡号', width:110, sort: true}
+                ,{field: 'vin', title: '车架号', width:100, sort: true}
+                ,{field: 'platenumber', title: '车牌号', width:100, sort: true}
+                ,{field: 'consumeTypeName', title: '消费类型', width: 110, sort: true}
+                ,{field: 'consumeProjectName', title: '消费项目', width: 110, sort: true}
+                ,{field: 'practicalProjectName', title: '具体项目', width: 110, sort: true}
+                ,{field: 'payStyleName', title: '支付方式', width: 110, sort: true}
+                ,{field: 'timeCost', title: '工时费', width: 100, sort: true}
+                ,{field: 'matCost', title: '材料费', width: 100, sort: true}
+                ,{field: 'totalMoney', title: '总金额', width: 100, sort: true}
+                ,{field: 'ticketID', title: '工单号', width: 100, sort: true}
+                ,{field: 'mileage', title: '行驶里程', width: 110, sort: true}
+                ,{field: 'count', title: '数量', width: 80, sort: true}
+                ,{field: 'invoiceID', title: '发票号', width: 100, sort: true}
+                ,{field: 'invoiceNum', title: '开票金额', width: 110, sort: true}
+                ,{field: 'costPrice', title: '成本价', width: 100, sort: true}
+                ,{field: 'remark', title: '项目备注', width: 110, sort: true}
+            ] ]
+
+        });
+
+        $("#queryBtn").unbind("click").click(function () {
+            tableIns.reload({
+                url: 'service/cancelConsumeHistory/getCancelConsumeHistoryList',
+                where: {
+                    couponCheck: {
+                        time: $("#time").val()
+                    },
+                    user: {
+                        vehicle: {
+                            platenumber: $("#platenumber").val(),
+                            vin: $("#vin").val()
+                        },
+                        customername: $("#customername").val(),
+                        memberNumber: $("#memberNumber").val()
+                    },
+                    groupBy: false
+                },
+                page: {
+                    curr: 1
+                }
+            })
+            return false;
+        })
+
+
     });
-
-    // 表格渲染
-    tableIns = tableMain.render({
-      elem: '#tableMain'
-      ,height: 312
-      ,url: 'service/cancelConsumeHistory/xxx' //数据接口
-      ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
-        layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
-        limit: 15,
-        //,curr: 5 //设定初始在第 5 页
-        groups: 3, //只显示 1 个连续页码
-        first: false, //不显示首页
-        last: false //不显示尾页
-      }
-      ,toolbar: true //仅开启工具栏，不显示左侧模板
-      ,defaultToolbar: ['filter', 'print', 'exports'] //头部工具栏右侧图标
-      ,cols: [ [ //表头，两个中括号之间一定要加空格不然会出错，有冲突
-        // {field: 'id', title: '', width:80, sort: true, fixed: 'left'}
-        ,{field: 'time', title: '消费日期', width:110, sort: true}
-        ,{field: 'groupId', title: '流水号', width:100, sort: true}
-        ,{field: 'userName', title: '客户名称', width:110, sort: true}
-        ,{field: 'memberNumber', title: '会员卡号', width:110, sort: true}
-        ,{field: 'vin', title: '车架号', width:100, sort: true}
-        ,{field: 'platenumber', title: '车牌号', width:100, sort: true}
-        ,{field: 'consumeTypeName', title: '消费类型', width: 110, sort: true}
-        ,{field: 'consumeProjectName', title: '消费项目', width: 110, sort: true}
-        ,{field: 'practicalProjectName', title: '具体项目', width: 110, sort: true}
-        ,{field: 'payStyleName', title: '支付方式', width: 110, sort: true}
-        ,{field: 'timeCost', title: '工时费', width: 100, sort: true}
-        ,{field: 'matCost', title: '材料费', width: 100, sort: true}
-        ,{field: 'totalMoney', title: '总金额', width: 100, sort: true}
-        ,{field: 'ticketID', title: '工单号', width: 100, sort: true}
-        ,{field: 'mileage', title: '行驶里程', width: 110, sort: true}
-        ,{field: 'count', title: '数量', width: 80, sort: true}
-        ,{field: 'invoiceID', title: '发票号', width: 100, sort: true}
-        ,{field: 'invoiceNum', title: '开票金额', width: 110, sort: true}
-        ,{field: 'costPrice', title: '成本价', width: 100, sort: true}
-        ,{field: 'remark', title: '项目备注', width: 110, sort: true}
-      ] ]
-    });
-
-    // // formMain表单
-    // var formMain = layui.form;
-    // //监听提交
-    // form.on('submit(formMain)', function(data){
-    //   layer.msg(JSON.stringify(data.field));
-    //   return false;
-    // });
-
-    // 监听查询按钮
-    $("#queryBtn").unbind("click").click(function () {
-      tableIns.reload({
-        url: 'service/cancelConsumeHistory/xxx',
-        where: {
-          user: {
-            customername: $("#userName").val(),
-            memberNumber: $("#userId").val(),
-            vehicle: {
-              vin: $("#vin").val(),
-              platenumber: $("#platenumber").val()
-            },
-          },
-          couponCheck: {
-            time: $("#time").val(),
-          },
-          groupBy: true
-        },
-        page: {
-          curr: 1
-        }
-      })
-      return false;
-    })
-
-    // 监听高级查询按钮
-    $("#advancedQueryBtn").unbind("click").click(function () {
-      tableIns.reload({
-        url: 'service/cancelConsumeHistory/xxx',
-        where: {
-          user: {
-            customername: $("#userName").val(),
-            memberNumber: $("#userId").val(),
-            vehicle: {
-              vin: $("#vin").val(),
-              platenumber: $("#platenumber").val()
-            },
-          },
-          couponCheck: {
-            time: $("#time").val(),
-          },
-          groupBy: true
-        },
-        page: {
-          curr: 1
-        }
-      })
-      return false;
-    })
-
-
-  });
 </script>
 </body>
 </html>
