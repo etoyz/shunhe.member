@@ -30,39 +30,40 @@
                         <div class="layui-inline s-layuiInline">
                             <label class="layui-form-label">车牌号：</label>
                             <div class="layui-input-inline">
-                                <input autocomplete="off" class="layui-input" name="platenumber" placeholder="请输入车牌号"
+                                <input autocomplete="off" class="layui-input" id="platenumber" name="platenumber" placeholder="请输入车牌号"
                                        type="text">
                             </div>
                         </div>
                         <div class="layui-inline s-layuiInline">
                             <label class="layui-form-label">车架号：</label>
                             <div class="layui-input-inline">
-                                <input autocomplete="off" class="layui-input" name="vin" placeholder="请输入车架号"
+                                <input autocomplete="off" class="layui-input" id="vin" name="vin" placeholder="请输入车架号"
                                        type="text">
                             </div>
                         </div>
                         <div class="layui-inline s-layuiInline">
                             <label class="layui-form-label">客户名称：</label>
                             <div class="layui-input-inline">
-                                <input autocomplete="off" class="layui-input" name="userName" placeholder="请输入客户名称"
+                                <input autocomplete="off" class="layui-input" id="customername" name="customername" placeholder="请输入客户名称"
                                        type="text">
                             </div>
                         </div>
                         <div class="layui-inline s-layuiInline">
                             <label class="layui-form-label">会员卡号：</label>
                             <div class="layui-input-inline">
-                                <input autocomplete="off" class="layui-input" name="userId" placeholder="请输入会员卡号"
+                                <input autocomplete="off" class="layui-input" id="memberNumber" name="memberNumber" placeholder="请输入会员卡号"
                                        type="text">
                             </div>
                         </div>
-                        <div class="layui-inline s-layuiInline">
-                            <label class="layui-form-label">卡券：</label>
-                            <div class="layui-input-inline">
-                                <select autocomplete="off" class="layui-input" id="couponType" name="type" type="text">
-                                    <option id="selectHead">正在拉取...</option>
-                                </select>
-                            </div>
-                        </div>
+<!--                        接口有意忽略卡券的检索条件，故注释。-->
+<!--                        <div class="layui-inline s-layuiInline">-->
+<!--                            <label class="layui-form-label">卡券：</label>-->
+<!--                            <div class="layui-input-inline">-->
+<!--                                <select autocomplete="off" class="layui-input" id="couponType" name="type" type="text">-->
+<!--                                    <option id="selectHead">正在拉取...</option>-->
+<!--                                </select>-->
+<!--                            </div>-->
+<!--                        </div>-->
                         <div class="layui-inline s-layuiInline">
                             <button class="layui-btn layui-btn-warm" id="queryBtn">查询</button>
                         </div>
@@ -82,9 +83,11 @@
 
 <script src="plugins/layui/layui.js"></script>
 <script>
-    layui.use(['table', 'laydate'], function() {
+    layui.use(['form', 'table', 'laydate'], function() {
         // tableMain表格
-        var tableMain = layui.table,
+        var $ = layui.jquery,
+            form = layui.form,
+            tableMain = layui.table,
             laydate = layui.laydate;
         laydate.render({
             elem: '#time'
@@ -95,9 +98,19 @@
 
         // 表格渲染
         var tableIns = tableMain.render({
-            elem: '#tableMain'
-            ,height: 312
-            ,url: 'service/couponStatistical/xxx' //数据接口
+             elem: '#tableMain'
+            ,height: 'full-180'
+            ,size: 'sm' //小尺寸的表格
+            ,url: 'service/couponStatistical/getCouponStatisticalList' //数据接口
+            ,method: "post"
+            ,contentType: "application/json"
+            ,where: {
+                couponCheck: {},
+                user: {
+                    vehicle: {},
+                },
+                groupBy: false
+            }
             ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                     layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
                     limit: 15,
@@ -109,40 +122,32 @@
             ,toolbar: true //仅开启工具栏，不显示左侧模板
             ,defaultToolbar: ['filter', 'print', 'exports'] //头部工具栏右侧图标
             ,cols: [ [ //表头，两个中括号之间一定要加空格不然会出错，有冲突
-                // {field: 'id', title: '', width:80, sort: true, fixed: 'left'}
-                ,{field: 'userName', title: '客户名称', width:150, sort: true}
+                 {type: 'checkbox', fixed: 'left'}
+                ,{field: 'customername', title: '客户名称', width:150, sort: true}
                 ,{field: 'memberNumber', title: '会员卡号', width:200, sort: true}
                 ,{field: 'vin', title: '车架号', width:200, sort: true}
                 ,{field: 'platenumber', title: '车牌号', width:150, sort: true}
-                ,{field: 'couponType', title: '卡券', width: 80, sort: true}
+                ,{field: 'couponName', title: '卡券', width: 150, sort: true}
                 ,{field: 'rechargeTimes', title: '充值次数', width: 150, sort: true}
                 ,{field: 'usageTimes', title: '使用次数', width: 150, sort: true}
                 ,{field: 'remainingTimes', title: '剩余次数', width: 150, sort: true}
             ] ]
         });
 
-        // // formMain表单
-        // var formMain = layui.form;
-        // //监听提交
-        // form.on('submit(formMain)', function(data){
-        //     layer.msg(JSON.stringify(data.field));
-        //     return false;
-        // });
-
         $("#queryBtn").unbind("click").click(function () {
             tableIns.reload({
-                url: 'service/couponStatistical/xxx',
+                url: 'service/couponStatistical/getCouponStatisticalList',
                 where: {
-                    user: {
-                        customername: $("#userName").val(),
-                        memberNumber: $("#userId").val(),
-                        vehicle: {
-                            vin: $("#vin").val(),
-                            platenumber: $("#platenumber").val()
-                        },
-                    },
                     couponCheck: {
-                        time: $("#time").val(),
+                        time: $("#time").val()
+                    },
+                    user: {
+                        vehicle: {
+                            platenumber: $("#platenumber").val(),
+                            vin: $("#vin").val()
+                        },
+                        customername: $("#customername").val(),
+                        memberNumber: $("#memberNumber").val()
                     },
                     groupBy: true
                 },
@@ -151,6 +156,8 @@
                 }
             })
             return false;
+
+
         })
 
 
