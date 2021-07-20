@@ -161,6 +161,7 @@
             $('#cancelAdd').on('click', function () {
                 // 关闭当前弹出层
                 layer.close(index);
+                return false;
             });
             form.on('submit(confirmAdd)', function (data) {
                 //$("#confirmAdd").unbind("click").click(function () {
@@ -171,11 +172,12 @@
                     }),
                     contentType: "application/json",
                     success: function (res) {
-                        layuiAlert("结果：" + res, () => {
+                        layuiAlert("成功！" + res, () => {
                             tableIns.reload();
                         })
                     }
                 })
+                return false;
             })
             return false;
         });

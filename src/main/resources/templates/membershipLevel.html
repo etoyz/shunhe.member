@@ -58,15 +58,15 @@
                     <div class="layui-inline">
                         <label class="layui-form-label"><i>*</i>会员级别</label>
                         <div class="layui-input-inline">
-                            <input autocomplete="off" class="layui-input" id="level"
-                                   name="level" type="text">
+                            <input autocomplete="off" class="layui-input" lay-verify="required|number"
+                                   id="level" name="level" type="text">
                         </div>
                     </div>
                     <div class="layui-inline">
                         <label class="layui-form-label"><i>*</i>卡片名称</label>
                         <div class="layui-input-inline">
-                            <input autocomplete="off" class="layui-input" id="name"
-                                   name="name" type="text">
+                            <input autocomplete="off" class="layui-input" lay-verify="required"
+                                   id="name" name="name" type="text">
                             <!--                        <select type="text" id="cardType" name="cardType" autocomplete="off" class="layui-input">-->
                             <!--                            <option id="selectHead">正在拉取...</option>-->
                             <!--                        </select>-->
@@ -90,7 +90,7 @@
                 </div>
                 <div class="layui-form-item s-formItem5">
                     <div class="layui-inline">
-                        <label class="layui-form-label"><i>*</i>升级锁定</label>
+                        <label class="layui-form-label">升级锁定</label>
                         <div class="layui-input-inline">
                             <select autocomplete="off" class="layui-input" id="lock" name="lock" type="text">
                                 <option value="0">是</option>
@@ -101,7 +101,7 @@
                     <div class="layui-inline">
                         <label class="layui-form-label"><i>*</i>升级所需积分</label>
                         <div class="layui-input-inline">
-                            <input autocomplete="off" class="layui-input" id="score" name="score" type="text">
+                            <input autocomplete="off" class="layui-input" lay-verify="number|required" id="score" name="score" type="text">
                         </div>
                     </div>
                     <div class="layui-inline">
@@ -128,15 +128,15 @@
                     <div class="layui-inline">
                         <label class="layui-form-label"><i>*</i>会员级别</label>
                         <div class="layui-input-inline">
-                            <input autocomplete="off" class="layui-input" id="levelM"
-                                   name="level" type="text">
+                            <input autocomplete="off" class="layui-input" lay-verify="number|required"
+                                   id="levelM" name="level" type="text">
                         </div>
                     </div>
                     <div class="layui-inline">
                         <label class="layui-form-label"><i>*</i>卡片名称</label>
                         <div class="layui-input-inline">
-                            <input autocomplete="off" class="layui-input" id="nameM"
-                                   name="name" type="text">
+                            <input autocomplete="off" class="layui-input" lay-verify="required"
+                                   id="nameM" name="name" type="text">
                         </div>
                     </div>
                     <!--                <div class="layui-inline">-->
@@ -157,7 +157,7 @@
                 </div>
                 <div class="layui-form-item s-formItem5">
                     <div class="layui-inline">
-                        <label class="layui-form-label"><i>*</i>升级锁定</label>
+                        <label class="layui-form-label">升级锁定</label>
                         <div class="layui-input-inline">
                             <select autocomplete="off" class="layui-input" id="lockM" name="lock" type="text">
                                 <option value="0">是</option>
@@ -168,7 +168,7 @@
                     <div class="layui-inline">
                         <label class="layui-form-label"><i>*</i>升级所需积分</label>
                         <div class="layui-input-inline">
-                            <input autocomplete="off" class="layui-input" id="scoreM" name="score" type="text">
+                            <input autocomplete="off" class="layui-input" lay-verify="number|required" id="scoreM" name="score" type="text">
                         </div>
                     </div>
                     <div class="layui-inline">
@@ -310,8 +310,10 @@
                             id: activeCardid
                         },
                         success: function (res) {
-                            layuiAlert(res, () => {
-                                if(res === "修改成功") {
+                            // console.log(res);
+                            if (res == "修改成功") {
+                                // console.log("非空成功！");
+                                layuiAlert("删除成功！", () => {
                                     obj.del()
                                     itemCnt--
                                     if(itemCnt === 0) { //当前页的Item为0
@@ -326,8 +328,18 @@
                                             },
                                         })
                                     }
-                                }
-                            })
+                                })
+                            }
+                            else {
+                                // console.log("为空失败！");
+                                layuiAlert("删除失败！", () => {
+                                    // obj.reload(data);
+                                })
+                            }
+
+
+
+
                         }
                     });
                 })
@@ -363,7 +375,22 @@
                             data.field.type=m=== "0" ? "可升级卡" : "不可升级卡";
                             data.field.lock=n=== "0" ? "是" : "否";
                             layer.closeAll();
-                            obj.update(data.field);
+                            // console.log(res);
+                            if (Object.keys(res).length != 0) {
+                                // console.log("非空修改成功！");
+                                layuiAlert("修改成功！", () => {
+                                    obj.update(data.field);
+                                })
+                            }
+                            else {
+                                // console.log("为空修改失败！");
+                                layuiAlert("修改失败！", () => {
+                                    // obj.reload(data);
+                                })
+                            }
+
+
+
                         }
                     })
                 })
