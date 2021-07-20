@@ -62,17 +62,17 @@
     <form id="platUserForm" autocomplete="off" class="layui-form">
         <div class="layui-form-item s-formItem1">
             <div class="layui-inline">
-                <label class="layui-form-label">用户名称</label>
+                <label class="layui-form-label"><i>*</i>用户名称</label>
                 <div class="layui-input-inline">
                     <input autocomplete="off" class="layui-input" id="name"
                            lay-verify="required" name="name" type="text">
                 </div>
             </div>
             <div class="layui-inline">
-                <label class="layui-form-label">联系电话</label>
+                <label class="layui-form-label"><i>*</i>联系电话</label>
                 <div class="layui-input-inline">
                     <input autocomplete="off" class="layui-input" id="phoneNum"
-                           lay-verify="number" value="0" name="phoneNum" type="text">
+                           lay-verify="number" name="phoneNum" type="text">
                 </div>
             </div>
             <div class="layui-inline">
@@ -86,14 +86,14 @@
         </div>
         <div class="layui-form-item s-formItem1">
             <div class="layui-inline">
-                <label class="layui-form-label">登录用户名</label>
+                <label class="layui-form-label"><i>*</i>登录用户名</label>
                 <div class="layui-input-inline">
                     <input autocomplete="off" class="layui-input" id="username"
                            lay-verify="required" name="username" type="text">
                 </div>
             </div>
             <div class="layui-inline">
-                <label class="layui-form-label">登录密码</label>
+                <label class="layui-form-label"><i>*</i>登录密码</label>
                 <div class="layui-input-inline">
                     <input autocomplete="off" class="layui-input" id="password"
                            lay-verify="required" name="password" type="text">
@@ -205,8 +205,8 @@
                 layer.prompt({
                     formType: 3,
                     value: '123456',
-                    title: '请输入新密码',
-                }, function(newPasswd, index){
+                    title: '请输入新密码'
+                }, function(newPasswd, index) {
                     $.post({
                         url: "service/platUserManage/resetPassword",
                         data: {
