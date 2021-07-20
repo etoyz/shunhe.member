@@ -52,9 +52,9 @@
 <!-- 会员信息弹窗 -->
 <div class="s-details" id="memberPopup">
     <form action="" autocomplete="off" class="layui-form" id="addForm">
-        <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+        <div class="layui-tab layui-tab-brief" lay-filter="memberTabs">
             <ul class="layui-tab-title">
-                <li class="layui-this">车主信息</li>
+                <li class="layui-this" lay-id="index">车主信息</li>
                 <li>车辆信息</li>
                 <li class="editMod">会员信息</li>
                 <li class="editMod">消费历史</li>
@@ -368,7 +368,7 @@
                         <div class="layui-inline">
                             <label class="layui-form-label">险种</label>
                             <div class="layui-input-inline">
-                                <select autocomplete="off" class="layui-input" id="insuranceTypeName" name="insuranceTypeName" type="text"></select>
+                                <div class="xm-select-demo" id="insuranceTypeName" style="width: 850px"></div>
                             </div>
                         </div>
                     </div>
@@ -548,8 +548,9 @@
 <script>
     layui.config({  // 省市区联动选择
         base: 'build/js/'
-        , version : "1.0"
-    }).use(['form', 'laydate', 'table', 'layer', 'element', 'layarea'], function () {
+    }).extend({
+        xmSelect: 'xm-select'
+    }).use(['form', 'laydate', 'table', 'layer', 'element', 'layarea', 'xmSelect'], function () {
         // utils
         {
             var $ = layui.jquery,
@@ -558,7 +559,8 @@
                 layer = layui.layer,
                 table = layui.table,
                 layarea = layui.layarea,
-                element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+                element = layui.element, //Tab的切换功能，切换事件监听等，需要依赖element模块
+                xmSelect = layui.xmSelect;
 
             layarea.render({
                 elem: '#area-picker'
@@ -682,25 +684,23 @@
                 })
             }
 
+            var insType // 险种
             function pullInsuranceTypeName(selector, callback){
-                var selectE = $(selector);
                 $.post({
                     url: "service/insuranceType/getInsuranceTypeNameList",
                     timeout: 1000,
                     dataType: "json",
                     success: function (res) {
-                        selectE.empty();
-                        selectE.append("<option value='" + -1 + "'>" + "---" + "</option>");
-                        for (var s of res) {
-                            selectE.append("<option value='" + s.id + "'>" + s.name + "</option>");
-                        }
-                        form.render(); //layui的form重新渲染
+                        console.log(res)
+                        insType = xmSelect.render({
+                            el: selector,
+                            prop: {
+                                name: 'name',
+                                value: 'id',
+                            },
+                            data: res
+                        })
                         callback()
-                    },
-                    error: function () {
-                        selectE.empty();
-                        selectE.append("<option>拉取失败，请刷新！</option>");
-                        form.render();
                     }
                 })
             }
@@ -732,6 +732,7 @@
             $('select[name="province"]').siblings("div.layui-form-select").find('dl dd[ lay-value=' + "山东省" + ']').click();
             $('select[name="city"]').siblings("div.layui-form-select").find('dl dd[ lay-value=' + "烟台市" + ']').click();
             $('select[name="area"]').siblings("div.layui-form-select").find('dl dd[ lay-value=' + "莱山区" + ']').click();
+            element.tabChange("memberTabs", "index")
             var index = layer.open({
                 type: 1,
                 title: '新增会员信息',
@@ -745,6 +746,7 @@
                 data.field.vehicle = {
                     platenumber: data.field.platenumber,
                     vin: data.field.vin,
+                    vehicleId:activedata.vehicleId,
                     vehiclelabel: textvehiclelabel,
                     vehiclebrand: textvehiclebrand,
                     vehiclestyle: textvehiclestyle,
@@ -752,8 +754,14 @@
                     vehiclelabelid: data.field.vehiclelabel,
                     vehiclebrandid: data.field.vehiclebrand,
                     vehiclestyleid: data.field.vehiclestyle,
-                    insuranceDate: data.field.vehiclestyle,
-                    businessRisksDate: data.field.vehiclestyle,
+                    businessRisksbCompany: data.field.businessRisksbCompany,
+                    insuranceCompany: data.field.insuranceCompany,
+                    insuranceTypeName: JSON.stringify(insType.getValue()), // 序列化存储险种
+                    insuranceDate: data.field.insuranceDate,
+                    businessRisksDate: data.field.businessRisksDate,
+                    buyCarDate: data.field.buyCarDate,
+                    businessRisksNo: data.field.businessRisksNo,
+                    insuranceNo: data.field.insuranceNo,
                 }
                 $.post({
                     url: "/service/Archives/addArchives",
@@ -772,7 +780,7 @@
                     });
                 });
             });
-            pullAll()
+            pullAll(() => {})
             form.on('select(vehiclelabel)', function () {
                     pullCarSeriesgroupName("#vehiclestyle", $('#vehiclelabel').val(), () => {
                         pullCarSeriesName("#vehiclebrand", $('#vehiclestyle').val(), () => {
@@ -875,6 +883,7 @@
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
             if (layEvent === 'edit') {
                 layer.msg("正在加载...")
+                element.tabChange("memberTabs", "index")
                 let cnt = 0;
                 function showPopup() {
                     cnt++
@@ -904,7 +913,7 @@
                         $('#cCard').val(res.cCard);
                         $('#platenumber').val(res.vehicle.platenumber);
                         $('#vin').val(res.vehicle.vin);
-                        $('#insuranceTypeName').val(res.vehicle.insuranceTypeName);
+                        insType.setValue(JSON.parse(res.vehicle.insuranceTypeName))
                         $('#insuranceCompany').val(res.vehicle.insuranceCompany);
                         $('#businessRisksbCompany').val(res.vehicle.businessRisksbCompany);
                         $('#businessRisksDate').val(res.vehicle.businessRisksDate);
@@ -1075,7 +1084,7 @@
                         vehiclestyleid: data.field.vehiclestyle,
                         businessRisksbCompany: data.field.businessRisksbCompany,
                         insuranceCompany: data.field.insuranceCompany,
-                        insuranceTypeName: data.field.insuranceTypeName,
+                        insuranceTypeName: JSON.stringify(insType.getValue()),
                         insuranceDate: data.field.insuranceDate,
                         businessRisksDate: data.field.businessRisksDate,
                         buyCarDate: data.field.buyCarDate,
