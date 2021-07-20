@@ -21,6 +21,15 @@ import java.util.Map;
 @RestController
 @RequestMapping("service/balanceStatistical")
 public class BalanceStatisticalController {
+    /*
+    * "UserService"接口如果生成名字为"userService"的服务的话，会产生冲突，从而导致项目无法运行。
+    * 报错：
+    *       "Disconnected from the target VM, address: '127.0.0.1:57229', transport: 'socket'
+    *        Process finished with exit code 1"
+    * 解决方案：
+    *       法一：修改生成名字为其他比如"shUserService"。
+    *       法二：替换"@Resource"为"@Autowired"。
+    * */
     @Resource
     StatisticsService statisticsService; // 统计相关接口
     @Resource
