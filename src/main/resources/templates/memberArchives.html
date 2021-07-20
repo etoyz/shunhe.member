@@ -664,7 +664,6 @@
                     timeout: 1000,
                     dataType: "json",
                     success: function (res) {
-                        console.log(res)
                         insType = xmSelect.render({
                             el: selector,
                             prop: {
@@ -855,13 +854,14 @@
             activedata = obj.data; //获得当前行数据
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
             if (layEvent === 'edit') {
-                layer.msg("正在加载...")
+                let msg = layer.msg("正在加载...")
                 element.tabChange("memberTabs", "index")
                 let cnt = 0;
                 function showPopup() {
                     cnt++
                     if(cnt === 4){
                         $(".editMod").show()
+                        layer.close(msg)
                         layer.open({
                             type: 1,
                             title: '修改会员信息',
@@ -886,6 +886,8 @@
                         $('#cCard').val(res.cCard);
                         $('#platenumber').val(res.vehicle.platenumber);
                         $('#vin').val(res.vehicle.vin);
+                        if(res.vehicle.insuranceTypeName === "")
+                            res.vehicle.insuranceTypeName = null
                         insType.setValue(JSON.parse(res.vehicle.insuranceTypeName))
                         $('#insuranceCompany').val(res.vehicle.insuranceCompany);
                         $('#businessRisksbCompany').val(res.vehicle.businessRisksbCompany);
