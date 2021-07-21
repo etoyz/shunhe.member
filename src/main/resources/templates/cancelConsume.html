@@ -93,23 +93,8 @@
             , format: 'yyyy-MM-dd'
         });
 
-        function layuiAlert(msg) {
-            layer.open({
-                offset: "auto",//具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
-                content: '<div style="padding: 20px 70px;">' + msg + '</div>',
-                btn: '关闭',
-                btnAlign: 'c',//按钮居中
-                shade: 0, //不显示遮罩
-                closeBtn: false,
-                yes: function () {
-                    layer.closeAll();
-                }
-            });
-        }
-
-
         // “表格”渲染
-        var tableIns = table.render({
+        var tableCancelConsume = table.render({
             elem: '#consumeList',
             url: 'service/cancelConsume/getConsumeList',
             method: "post",
@@ -207,20 +192,16 @@
             if (layEvent === 'rollBack') {
                 console.log(data)
                 layer.confirm('确认反结算客户【' + data.customername + '】的账单？', {icon: 3, title: '提示'}, function (index) {
-                    // 确定要反结算该消费单记录？
                     $.post({
                         url: "service/cancelConsume/rollBack",
                         data: {
                             id: data.id
                         },
                         success: function (res) {
-                            layuiAlert(res)
-                            tableIns.reload()
-                        },
-                        error: function () {
-                            tableIns.empty();
-                            tableIns.append("<option>反结算失败，请稍后再试！</option>");
-                            form.render();
+                            if(res === "成功！")
+                                layer.alert(res, {icon: 1}, () => { layer.closeAll(); tableCancelConsume.reload() })
+                            else
+                                layer.alert(res, {icon: 2})
                         }
                     })
                 });
@@ -228,7 +209,7 @@
         });
 
         $("#queryBtn").unbind("click").click(function () {
-            tableIns.reload({
+            tableCancelConsume.reload({
                 url: 'service/cancelConsume/getConsumeList',
                 where: {
                     user: {
