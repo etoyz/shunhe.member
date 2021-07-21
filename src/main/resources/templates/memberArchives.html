@@ -56,7 +56,7 @@
                 <li class="layui-this" lay-id="index">车主信息</li>
                 <li>车辆信息</li>
                 <li class="editMod">会员信息</li>
-                <li class="editMod">消费历史</li>
+                <li class="editMod" id="consumptionHistoriesLabelId">消费历史</li>
 <!--                <li class="editMod">积分历史</li>-->
 <!--                <li class="editMod">操作日志</li>-->
             </ul>
@@ -483,6 +483,7 @@
                 <div class="s-tabBottomButton">
                     <button class="layui-btn" id="confirmAdd" lay-filter="confirmAdd" lay-submit>确认</button>
                     <button class="layui-btn layui-btn-warm" id="cancelAdd">取消</button>
+                    <button class="layui-btn layui-btn-warm" id="Test">测试</button>
                 </div>
             </div>
         </div>
@@ -951,6 +952,7 @@
                 // "消费历史表格"渲染
                 table.render({
                     elem: '#consumptionHistories',
+                    id: 'consumptionHistoriesId',
                     url: 'service/Archives/getConsumptionHistories',
                     method: "post",
                     initSort: {
@@ -965,7 +967,7 @@
                         groupBy: true
                     },
                     contentType: "application/json",
-                    height: 288,
+                    height: 410,
                     page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                         layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
                         limit: 15,
@@ -993,7 +995,7 @@
                         {field: 'invoiceNum', width: 100, title: '开票金额'},
                         {field: 'remark', width: 100, title: '项目备注'},
                         {field: 'id', width: 100, title: 'id', hide: true},
-                    ]],
+                    ] ],
                     size: 'sm',
                     parseData: function (resp) {
                         let data = resp.data;
@@ -1257,6 +1259,17 @@
             layer.closeAll();
             return false;
         });
+
+        $('#consumptionHistoriesLabelId').on('click', function () {
+            // table.resize('consumptionHistoriesId');
+
+            setTimeout(function() {
+                    table.resize('consumptionHistoriesId');
+                    // console.log("Nice！");
+                }, 1);
+
+            // console.log("TestClicked");
+        })
 
         $("#queryBtn").unbind("click").click(function () {
             tableUserList.reload({
