@@ -42,7 +42,6 @@
                     <a class="layui-btn layui-btn-xs" lay-event="edit">修改</a>
                     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
                     <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="grade">会员级别</a>
-                    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">解绑</a>
                 </script>
             </div>
         </div>
@@ -496,7 +495,7 @@
         <div class="layui-form-item s-formItem3">
             <label class="layui-form-label">原会员级别</label>
             <div class="layui-input-inline">
-                <input autocomplete="off" class="layui-input" id="originalLevel" name="originalLevel" placeholder="1"
+                <input autocomplete="off" disabled class="layui-input" id="originalLevel" name="originalLevel" placeholder="1"
                        type="text">
             </div>
         </div>
@@ -718,7 +717,6 @@
                 data.field.vehicle = {
                     platenumber: data.field.platenumber,
                     vin: data.field.vin,
-                    vehicleId:activedata.vehicleId,
                     vehiclelabel: textvehiclelabel,
                     vehiclebrand: textvehiclebrand,
                     vehiclestyle: textvehiclestyle,
@@ -740,8 +738,10 @@
                     data: JSON.stringify(data.field),
                     contentType: "application/json",
                     success: function (res) {
-                        layuiAlert("信息:" + res)
-                        tableUserList.reload()
+                        if(res === "成功！")
+                            layer.alert("添加成功！", {icon: 1}, ()=>{layer.closeAll();tableUserList.reload()})
+                        else
+                            layer.alert(res, {icon: 2})
                     }
                 })
                 return false;
@@ -807,7 +807,7 @@
                 {field: 'area', width: 152, title: '区'},
                 {field: 'userId', width: 210, title: 'id', hide: true},
                 {field: 'vehicleId', width: 210, title: 'vid',hide: true},
-                {field: 'operation', width: 210, title: '操作', toolbar: '#operation', fixed: 'right'}
+                {field: 'operation', width: 170, title: '操作', toolbar: '#operation', fixed: 'right'}
             ]],
             size: 'sm',
             parseData: function (res) {
@@ -1086,10 +1086,9 @@
                                 data.field.vehiclelabel = res.vehicle.vehiclelabel
                                 data.field.vehiclebrand = res.vehicle.vehiclebrand
                                 data.field.vehiclestyle = res.vehicle.vehiclestyle
-                                layuiAlert("修改成功！");
-                                obj.update(data.field);
+                                layer.alert("修改成功！", {icon: 1}, ()=>{layer.closeAll();obj.update(data.field)})
                             } else
-                                layuiAlert("修改失败！");
+                                layer.alert("修改失败！", {icon: 2})
                         }
                     })
                     return false
@@ -1100,7 +1099,7 @@
                     type: 1,
                     title: '会员级别',
                     content: $('#grade'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
-                    area: '327px'
+                    area: ['350px', '400px']
                 });
                 $('#cancel').on('click', function () {
                     // 关闭当前弹出层
@@ -1127,28 +1126,27 @@
                             id: id
                         },
                         success: function (res) {
-                            if (res == "添加成功") {
-                                obj.update({level:newLevels});
-                                layer.closeAll();
-                                layuiAlert('会员级别修改成功！')
+                            if (res === "添加成功") {
+                                layer.alert("会员级别修改成功！", {icon: 1}, ()=>{layer.closeAll(); obj.update({level:newLevels});})
+                            } else {
+                                layer.alert(res, {icon: 2})
                             }
-
                         }
                     })
                 })
             }
             else if (layEvent === 'delete') { // 删除
-                layer.confirm('确定要删除吗？', {icon: 3, title: '提示'}, function (index) {
-                    // 删除对应行（tr）的DOM结构，并更新缓存
-                    // 向服务端发送删除指令
+                layer.confirm('确定要删除客户【'+activedata.customername+'】吗？', {icon: 3, title: '提示'}, function (index) {
                     $.post({
                         url: "/service/Archives/deleteArchives",
                         data: {
                             userId: activedata.userId
                         },
                         success: function (res) {
-                            layuiAlert(res)
-                            tableUserList.reload()
+                            if(res === "删除成功！")
+                                layer.alert(res, {icon: 1}, ()=>{layer.closeAll();tableUserList.reload()})
+                            else
+                                layer.alert(res, {icon: 2})
                         }
                     });
 

@@ -392,20 +392,6 @@
                     }
                 })
             }
-
-            function layuiAlert(msg) {
-                layer.open({
-                    offset: "auto",//具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
-                    content: '<div style="padding: 20px 70px;">' + msg + '</div>',
-                    btn: '关闭',
-                    btnAlign: 'c',//按钮居中
-                    shade: 0, //不显示遮罩
-                    closeBtn: false,
-                    yes: function () {
-                        layer.closeAll();
-                    }
-                });
-            }
         }
 
         //primary
@@ -625,22 +611,30 @@
             });
 
             $("#checkCoupon").unbind("click").click(function () {
-                $.get({
-                    url: "service/review/checkCoupon?groupId=" + activeItem.groupId,
-                    success: function (res) {
-                        layuiAlert(res)
-                        tableReview.reload()
-                    }
+                layer.confirm("确认审核？", {icon: 3}, () => {
+                    $.get({
+                        url: "service/review/checkCoupon?groupId=" + activeItem.groupId,
+                        success: function (res) {
+                            if(res === "成功！")
+                                layer.alert(res, {icon: 1}, () => {layer.closeAll();tableReview.reload()})
+                            else
+                                layer.alert(res, {icon: 2})
+                        }
+                    })
                 })
             })
 
             $("#reject").unbind("click").click(function () {
-                $.ajax({
-                    url: "service/review/cancelRecord?groupId=" + activeItem.groupId,
-                    success: function (res) {
-                        layuiAlert(res)
-                        tableReview.reload()
-                    }
+                layer.confirm("确认驳回？", {icon: 3}, () => {
+                    $.ajax({
+                        url: "service/review/cancelRecord?groupId=" + activeItem.groupId,
+                        success: function (res) {
+                            if(res === "成功！")
+                                layer.alert(res, {icon: 1}, () => {layer.closeAll();tableReview.reload()})
+                            else
+                                layer.alert(res, {icon: 2})
+                        }
+                    })
                 })
             })
 

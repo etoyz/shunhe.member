@@ -405,27 +405,6 @@
                     }
                 })
             }
-
-            function layuiAlert(msg, isCloseAll) {
-                layer.open({
-                    offset: "auto",//具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
-                    content: '<div style="padding: 20px 70px;">' + msg + '</div>',
-                    btn: '关闭',
-                    btnAlign: 'c',//按钮居中
-                    shade: 0, //不显示遮罩
-                    closeBtn: false,
-                    yes: function (index, layero) {
-                        // console.log(layero);
-                        // console.log(isCloseAll);
-
-                        // isCloseAll为真，关闭大窗。
-                        if (isCloseAll)
-                            layer.closeAll();
-                        else
-                            layer.close(index);
-                    }
-                });
-            }
         }
 
         //popup
@@ -437,13 +416,7 @@
                 elem: '#tableUseCoupons',
                 data: couponReviewList,
                 height: 288,
-                page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
-                    layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
-                    limit: 10,
-                    groups: 3, //只显示 1 个连续页码
-                    first: false, //不显示首页
-                    last: false //不显示尾页
-                },
+                limit: Number.MAX_VALUE,
                 cols: [ [
                     {type: 'numbers'},
                     {field: 'consumeTypeName', width: 150, title: '消费类型'},
@@ -461,7 +434,7 @@
                     {field: 'costPrice', width: 88, title: '成本价'},
                     {field: '???', width: 88, title: '本次积分'},
                     {field: 'remark', width: 88, title: '项目备注'},
-                    {field: 'operation', width: 210, title: '操作', toolbar: '#operationUseCardTable', fixed: 'right'}
+                    {field: 'operation', width: 70, title: '操作', toolbar: '#operationUseCardTable', fixed: 'right'}
                 ]],
                 size: 'sm'
             });
@@ -479,23 +452,24 @@
             })
 
             $("#submitForReview").unbind("click").click(function () {
-                // console.log(couponReviewList.length);
-                if (couponReviewList.length != 0) {
+                if (couponReviewList.length !== 0) {
                     $.post({
                         url: "service/useCard/submitForReview",
                         data: JSON.stringify(couponReviewList),
                         contentType: "application/json",
                         success: function (res) {
-                            layuiAlert(res, true)
-                            // tableUseCoupons.reload()
+                            if(res === "成功！")
+                                layer.alert(res, {icon: 1}, ()=>{
+                                    layer.closeAll()
+                                })
+                            else
+                                layer.alert(res, {icon: 2})
                         }
                     })
                 }
                 else {
-                    layuiAlert("明细为空提交审核失败！", false)
+                    layer.alert("提交审核失败！（明细为空）", {icon: 2});
                 }
-
-
             })
 
             var cnt = 0;
@@ -552,14 +526,11 @@
                 page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                     layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
                     limit: 15,
-                    //,curr: 5 //设定初始在第 5 页
                     groups: 3, //只显示 1 个连续页码
                     first: false, //不显示首页
                     last: false //不显示尾页
-
                 },
                 toolbar: true, //仅开启工具栏，不显示左侧模板
-                // defaultToolbar: ['exports'], //头部工具栏右侧图标
                 defaultToolbar: ['filter', 'print', 'exports'],
                 cols: [ [
                     {type: 'checkbox'},
@@ -580,7 +551,7 @@
                     {field: 'city', width: 152, title: '市'},
                     {field: 'district', width: 152, title: '区'},
                     {field: 'userId', width: 210, title: 'id', hide: true},
-                    {field: 'operation', width: 210, title: '操作', toolbar: '#operation', fixed: 'right'}
+                    {field: 'operation', width: 70, title: '操作', toolbar: '#operation', fixed: 'right'}
                 ]],
                 size: 'sm',
                 parseData: function (res) {
@@ -601,7 +572,7 @@
                                     data[i].vehiclebrand = resp.vehicle.vehiclebrand
                                     data[i].vehiclelabel = resp.vehicle.vehiclelabel
                                     data[i].vehiclestyle = resp.vehicle.vehiclestyle
-                                }catch (e){}
+                                } catch (e){}
                             }
                         })
                     }

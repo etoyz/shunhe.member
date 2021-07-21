@@ -42,7 +42,7 @@ public class ArchivesController {
     public String addUser(@RequestBody User user) {
         String ret = shUserService.addUser(PlatUserUtils.getCurrentLoginPlatUser(), user);
         if (ret == null || ret.equals(""))
-            return "添加成功";
+            return "成功！";
         else
             return ret;
     }
