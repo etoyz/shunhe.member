@@ -870,15 +870,20 @@
                         });
                     }
                 }
-                pullAll(() => {
-                    showPopup()
-                })
                 $.post({
                     url: "/service/Archives/getUserInfo",
                     data: {
                         userId: activedata.userId
                     },
                     success: function (res) {
+                        pullAll(() => { // 下拉框渲染完成后，再进行赋值操作
+                            $('#insuranceCompany').val(res.vehicle.insuranceCompany);
+                            $('#businessRisksbCompany').val(res.vehicle.businessRisksbCompany);
+                            if(res.vehicle.insuranceTypeName === "")
+                                res.vehicle.insuranceTypeName = null
+                            insType.setValue(JSON.parse(res.vehicle.insuranceTypeName))
+                            showPopup()
+                        })
                         $('#customername').val(res.customername);
                         $('#phone').val(res.phone);
                         $('#cBirthday').val(res.cBirthday);
@@ -886,11 +891,6 @@
                         $('#cCard').val(res.cCard);
                         $('#platenumber').val(res.vehicle.platenumber);
                         $('#vin').val(res.vehicle.vin);
-                        if(res.vehicle.insuranceTypeName === "")
-                            res.vehicle.insuranceTypeName = null
-                        insType.setValue(JSON.parse(res.vehicle.insuranceTypeName))
-                        $('#insuranceCompany').val(res.vehicle.insuranceCompany);
-                        $('#businessRisksbCompany').val(res.vehicle.businessRisksbCompany);
                         $('#businessRisksDate').val(res.vehicle.businessRisksDate);
                         $('#insuranceDate').val(res.vehicle.insuranceDate);
                         $('#buyCarDate').val(res.vehicle.buyCarDate);
