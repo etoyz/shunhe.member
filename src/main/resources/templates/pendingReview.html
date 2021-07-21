@@ -504,7 +504,7 @@
                 activeItem = obj.data; //获得当前行数据
                 var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
                 if (layEvent === 'detail') {
-                    layer.msg("正在加载...")
+                    let loadMsg = layer.load(2)
                     pullConsumeTypes("#consumeTypeId", () => {
                         pullConsumeItems("#consumeProjectId", $("#consumeTypeId").val(), () => {
                             pullPracticalItemIds("#practicalProjectId", $("#consumeProjectId").val(), () => {
@@ -582,6 +582,7 @@
                                                 content: $('#reviewWindow'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
                                                 area: ['100%', '100%']
                                             });
+                                            layer.close(loadMsg)
                                             $('#exit1').on('click', function () {
                                                 // 关闭当前弹出层
                                                 layer.close(index1);

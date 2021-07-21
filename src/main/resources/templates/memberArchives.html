@@ -854,14 +854,14 @@
             activedata = obj.data; //获得当前行数据
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
             if (layEvent === 'edit') {
-                let msg = layer.msg("正在加载...")
+                let loadMsg = layer.load(2)
                 element.tabChange("memberTabs", "index")
                 let cnt = 0;
                 function showPopup() {
                     cnt++
                     if(cnt === 4){
                         $(".editMod").show()
-                        layer.close(msg)
+                        layer.close(loadMsg)
                         layer.open({
                             type: 1,
                             title: '修改会员信息',

@@ -384,7 +384,7 @@
                 })
             }
             if (layEvent === 'relate') {
-                var progressNotice = layer.msg('正在加载...')
+                let loadMsg = layer.load(2)
                 projectsTable.reload({
                     done: function (resAll, page, count) {
                         $.post({
@@ -405,14 +405,13 @@
                                     }
                                     i++;
                                 }
-                                // layer.close(progressNotice);
-                                layer.msg('加载完成', {time: 1000})
                                 layer.open({
                                     type: 1,
                                     title: '关联消费项目',
                                     content: $('#relWindow'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
                                     area: ['530px', '620px']
                                 });
+                                layer.close(loadMsg)
                             },
                             error: function () {
                                 layer.msg('加载失败！请刷新!', {time: 10000})
