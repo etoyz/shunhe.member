@@ -40,7 +40,11 @@ public class PracticalProjectController {
 
     @RequestMapping("addPracticalProject")
     public String addPracticalProject(@RequestBody PracticalProject project) {
-        return practicalProjectService.addPracticalProject(PlatUserUtils.getCurrentLoginPlatUser(), project);
+        String ret = practicalProjectService.addPracticalProject(PlatUserUtils.getCurrentLoginPlatUser(), project);
+        if(ret == null)
+            return "成功！";
+        else
+            return ret;
     }
 
     @RequestMapping("editPracticalProject")

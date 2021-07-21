@@ -47,7 +47,7 @@
             </div>
             <!-- 展示表格 -->
             <div class="s-commonTable">
-                <table class="layui-hide" id="consumeProj" lay-filter="consumeTypeTabel"></table>
+                <table class="layui-hide" id="consumeProj" lay-filter="consumeTypeTable"></table>
                 <script id="operation" type="text/html">
                     <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="edit">修改</a>
                     <a class="layui-btn layui-btn-xs" lay-event="rel">关联消费卡券</a>
@@ -411,7 +411,7 @@
 
         //监听“会员档案表格”工具条
         var activeProject;
-        table.on('tool(consumeTypeTabel)', function (obj) {
+        table.on('tool(consumeTypeTable)', function (obj) {
             var data = obj.data; //获得当前行数据
             activeProject = data
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
@@ -441,6 +441,7 @@
                             if(res === "成功！")
                                 layer.alert(res, {icon: 1},() => {
                                     obj.update(formData.field);
+                                    layer.closeAll()
                                 })
                             else layer.alert(res, {icon: 2})
                         }
@@ -534,24 +535,14 @@
                             data: JSON.stringify(formData.field),
                             contentType: "application/json",
                             success: function (res) {
-                                var x = layer.open({
-                                    offset: "auto",//具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
-                                    content: '<div style="padding: 20px 70px;">' + '成功！' + '</div>',
-                                    btn: '关闭',
-                                    btnAlign: 'c',//按钮居中
-                                    shade: 0, //不显示遮罩
-                                    closeBtn: false,
-                                    yes: function () {
-                                        layer.close(x)
-                                        layer.close(addSpeWind);
-                                        tableSpe.reload()
-                                    }
-                                });
+                                if(res === "成功！")
+                                    layer.alert(res, {icon: 1}, (x) => {layer.close(x);layer.close(addSpeWind);tableSpe.reload()})
+                                else
+                                    layer.alert(res, {icon: 2})
                             }
                         })
                     })
                     $('#cancelAddSpe').on('click', function () {
-                        // 关闭当前弹出层
                         layer.close(addSpeWind);
                     });
                 })
@@ -590,7 +581,6 @@
                             area: ['400px', '500px'],
                         });
                         $('#cancelAddSpe').on('click', function () {
-                            // 关闭当前弹出层
                             layer.close(addSpeWind);
                         });
                         form.on('submit(confirmAddSpe)', function (formData) {
@@ -646,7 +636,7 @@
                                     i++;
                                 }
                                 layer.msg('加载完成', {time: 1000})
-                                var relWindow = layer.open({
+                                layer.open({
                                     type: 1,
                                     title: '关联消费卡券',
                                     content: $('#relWindow'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
