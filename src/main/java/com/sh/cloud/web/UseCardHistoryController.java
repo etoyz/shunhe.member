@@ -7,7 +7,6 @@ import com.sft.member.obtain.coupon.CouponService;
 import com.sft.member.obtain.pay.PayService;
 import com.sft.member.obtain.statistics.StatisticsService;
 import com.sft.member.obtain.user.UserService;
-import com.sh.cloud.entity.GetPendingReviewListRequest;
 import com.sh.cloud.entity.GetRequestPacket;
 import com.sh.cloud.utils.ReturnHistoryJson;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,7 +95,7 @@ public class UseCardHistoryController {
     @RequestMapping("getShowBillList")
     public Map<String, Object> getShowBillList(@RequestBody GetRequestPacket request) {
         CouponCheck couponCheck = request.getCouponCheck();
-        couponCheck.type = "-1";
+        couponCheck.type = "1";
         Map<String, Object> ret = new HashMap();
         ret.put("code", 0);
         ret.put("msg", "");

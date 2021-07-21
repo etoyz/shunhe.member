@@ -7,8 +7,9 @@ import lombok.Setter;
 
 /*
  *
- * 如果存在数据冗余问题，加条件，来特定生成。
- * 适用用于：好多好多。
+ * 现适用用于：CancelConsumeController、UseCardHistoryController、CancelConsumeHistoryController、CouponStatisticalController、BalanceStatisticalController。
+ * 也可用于：PendingReviewController、ArchivesController等。
+ *
  *
  * */
 
