@@ -56,7 +56,7 @@
                 <li class="layui-this" lay-id="index">车主信息</li>
                 <li>车辆信息</li>
                 <li class="editMod">会员信息</li>
-                <li class="editMod" id="consumptionHistoriesLabelId">消费历史</li>
+                <li class="editMod">消费历史</li>
 <!--                <li class="editMod">积分历史</li>-->
 <!--                <li class="editMod">操作日志</li>-->
             </ul>
@@ -1041,6 +1041,7 @@
                     },
                     done: function () {
                         showPopup()
+                        table.resize('consumptionHistoriesId');
                     }
                 });
                 form.on('submit(confirmAdd)', function (data) {
@@ -1258,17 +1259,6 @@
             layer.closeAll();
             return false;
         });
-
-        $('#consumptionHistoriesLabelId').on('click', function () {
-            // table.resize('consumptionHistoriesId');
-
-            setTimeout(function() {
-                    table.resize('consumptionHistoriesId');
-                    // console.log("Nice！");
-                }, 1);
-
-            // console.log("TestClicked");
-        })
 
         $("#queryBtn").unbind("click").click(function () {
             tableUserList.reload({
