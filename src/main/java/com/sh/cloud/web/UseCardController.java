@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("service/useCard")
-public class UseCard {
+public class UseCardController {
     @Resource
     PayService payService;
     @Resource
