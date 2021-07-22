@@ -179,34 +179,25 @@
                 // {field: 'lastEditTime', width: '14%', title: '最后编辑时间'},
                 {field: 'operation', width: '200', title: '操作', toolbar: '#operation', fixed: 'right'}
             ]],
-            size: 'sm'
+            size: 'sm',
+            parseData: (res) => {
+                // TODO 因为只有唯一的值“烟台顺合广汽本田”，暂不做处理
+                for(let i = 0; i < res.data.length; i++){
+                    res.data[i].dealerId = "烟台顺合广汽本田"
+                }
+            }
         });
 
-        function layuiAlert(msg) {
-            layer.open({
-                offset: "auto",//具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
-                content: '<div style="padding: 20px 70px;">' + msg + '</div>',
-                btn: '关闭',
-                btnAlign: 'c',//按钮居中
-                shade: 0, //不显示遮罩
-                closeBtn: false,
-                yes: function () {
-                    layer.closeAll();
-                }
-            });
-        }
-
-        //监听“用户表格”工具条
         var activeUser
         table.on('tool(userTable)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
             activeUser = obj.data; //获得当前行数据
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值f）
             if (layEvent === 'resetPw') {
                 layer.prompt({
-                    formType: 3,
-                    value: '123456',
+                    formType: 1,
                     title: '请输入新密码'
                 }, function(newPasswd, index) {
+                    let loadMsg = layer.load(1)
                     $.post({
                         url: "service/platUserManage/resetPassword",
                         data: {
@@ -214,7 +205,11 @@
                             passwd: newPasswd
                         },
                         success: function (res) {
-                            layuiAlert("修改结果：" + res)
+                            layer.close(loadMsg)
+                            if(res === "成功")
+                                layer.alert(res, {icon: 1}, () => {layer.closeAll()})
+                            else
+                                layer.alert(res, {icon: 2}, () => {layer.closeAll()})
                         }
                     })
                     layer.close(index);
@@ -244,10 +239,9 @@
                         contentType: "application/json",
                         success: function (res) {
                             if(res === "修改成功！") {
-                                layuiAlert("修改成功！")
-                                obj.update(formData.field)
+                                layer.alert("修改成功！", {icon: 1}, () => {layer.closeAll();obj.update(formData.field)})
                             } else
-                                layuiAlert("修改失败！")
+                                layer.alert(res, {icon: 2}, () => {layer.closeAll()})
                         }
                     })
                 })
@@ -270,7 +264,7 @@
                     data: JSON.stringify(data.field),
                     contentType: "application/json",
                     success: function (res) {
-                        layuiAlert("信息:" + res)
+                        layer.alert("信息:" + res)
                         tablePlatUser.reload()
                     }
                 })
