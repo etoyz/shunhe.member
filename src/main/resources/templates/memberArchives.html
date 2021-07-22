@@ -951,7 +951,6 @@
                 // "消费历史表格"渲染
                 table.render({
                     elem: '#consumptionHistories',
-                    id: 'consumptionHistoriesId',
                     url: 'service/Archives/getConsumptionHistories',
                     method: "post",
                     initSort: {
@@ -969,7 +968,7 @@
                     height: 410,
                     page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                         layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
-                        limit: 15,
+                        limit: 10,
                         groups: 3, //只显示 1 个连续页码
                         first: false, //不显示首页
                         last: false //不显示尾页
@@ -993,7 +992,7 @@
                         {field: 'invoiceID', width: 100, title: '发票号'},
                         {field: 'invoiceNum', width: 100, title: '开票金额'},
                         {field: 'remark', width: 100, title: '项目备注'},
-                        {field: 'id', width: 100, title: 'id', hide: true},
+                        {field: 'id', hide: true},
                     ] ],
                     size: 'sm',
                     parseData: function (resp) {
@@ -1041,7 +1040,6 @@
                     },
                     done: function () {
                         showPopup()
-                        table.resize('consumptionHistoriesId');
                     }
                 });
                 form.on('submit(confirmAdd)', function (data) {
