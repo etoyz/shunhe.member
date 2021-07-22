@@ -264,8 +264,7 @@
                     data: JSON.stringify(data.field),
                     contentType: "application/json",
                     success: function (res) {
-                        layer.alert("信息:" + res)
-                        tablePlatUser.reload()
+                        layer.alert(res, ()=>{layer.closeAll();tablePlatUser.reload();})
                     }
                 })
             })
