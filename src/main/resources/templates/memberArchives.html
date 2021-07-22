@@ -56,7 +56,7 @@
                 <li class="layui-this" lay-id="index">车主信息</li>
                 <li>车辆信息</li>
                 <li class="editMod">会员信息</li>
-                <li class="editMod">消费历史</li>
+                <li class="editMod" id="consumptionHistoriesLabelId">消费历史</li>
 <!--                <li class="editMod">积分历史</li>-->
 <!--                <li class="editMod">操作日志</li>-->
             </ul>
@@ -1041,7 +1041,8 @@
                     },
                     done: function () {
                         showPopup()
-                        table.resize('consumptionHistoriesId');
+                        // 如果在这里重载表格尺寸来解决，横向滚动条拉到底时，表格不对齐问题的话，需要设置异步，并且延时3000毫秒左右。
+                        // table.resize('consumptionHistoriesId');
                     }
                 });
                 form.on('submit(confirmAdd)', function (data) {
@@ -1259,6 +1260,20 @@
             layer.closeAll();
             return false;
         });
+
+
+        // 解决横向滚动条拉到底时表格不对齐问题。
+        $('#consumptionHistoriesLabelId').on('click', function () {
+            // table.resize('consumptionHistoriesId');
+
+            // 必须使用异步调用
+            setTimeout(function() {
+                table.resize('consumptionHistoriesId');
+                // console.log("Nice！");
+            }, 1);
+
+            // console.log("TestClicked");
+        })
 
         $("#queryBtn").unbind("click").click(function () {
             tableUserList.reload({
