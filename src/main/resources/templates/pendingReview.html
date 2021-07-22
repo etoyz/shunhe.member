@@ -460,13 +460,6 @@
                                     data[i].memberlevel = res.member.level
                                 }
                             })
-                            $.post({
-                                url: "service/practicalProject/getPracticalProject?practicalProjectId=" + data[i].practicalProjectId,
-                                async: false,
-                                success: function (res) {
-                                    data[i].practicalProjectName = res.name
-                                }
-                            })
                             {
                                 if (data[i].payStyle === '-1') {
                                     data[i].payStyleName = '卡券发放'
