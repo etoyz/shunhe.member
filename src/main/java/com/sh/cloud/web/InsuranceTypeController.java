@@ -44,7 +44,11 @@ public class InsuranceTypeController {
     @RequestMapping("addInsuranceType")
     @ResponseBody
     public String addInsuranceType(@RequestBody InsuranceType insuranceType) {
-        return insuranceTypeService.addInsuranceType(PlatUserUtils.getCurrentLoginPlatUser(), insuranceType);
+        String ret = insuranceTypeService.addInsuranceType(PlatUserUtils.getCurrentLoginPlatUser(), insuranceType);
+        if(ret == null)
+            return "成功！";
+        else
+            return ret;
     }
 
     @RequestMapping("editInsuranceType")

@@ -98,13 +98,16 @@
             form.on('submit(confirmSub)', function (formData) {
                 $.post({
                     url: "service/insuranceType/addInsuranceType",
-                    data: JSON.stringify(formData),
+                    data: JSON.stringify(formData.field),
                     contentType: "application/json",
                     success: function (res) {
-                        layer.alert("成功！" + res, {icon: 1},() => {
-                            layer.closeAll()
-                            tableIns.reload();
-                        })
+                        if(res === "成功！")
+                            layer.alert("成功！", {icon: 1}, () => {
+                                layer.closeAll()
+                                tableIns.reload();
+                            })
+                        else
+                            layer.alert(res, {icon: 2})
                     }
                 })
                 return false;
@@ -169,7 +172,7 @@
                 $("#remark").val(data.remark);
                 layer.open({
                     type: 1,
-                    title: '编辑',
+                    title: '编辑险种',
                     content: $('#popUp'),
                     area: ['400px', '225px'],
                 });
@@ -180,17 +183,19 @@
                         data: JSON.stringify(formData.field),
                         contentType: "application/json",
                         success: function (res) {
-                            layer.alert(res, {icon: 1},() => {
-                                layer.closeAll()
-                                obj.update(formData.field)
-                            })
+                            if(res === "成功！")
+                                layer.alert(res, {icon: 1},() => {
+                                    layer.closeAll()
+                                    obj.update(formData.field)
+                                })
+                            else
+                                layer.alert(res, {icon: 2})
                         }
                     })
                     return false;
                 })
             }
             else if (layEvent === 'delete') {
-                console.log(data)
                 layer.confirm('确认删除险种【' + data.name + '】？', {icon: 3, title: '提示'}, function (index) {
                     $.post({
                         url: "service/insuranceType/deleteInsuranceType",
@@ -198,8 +203,9 @@
                             id: data.id
                         },
                         success: function (res) {
-                            layer.alert(res,{icon: 1}, () => {
-                                if(res === "删除成功！"){
+                            if("删除成功！" === res)
+                                layer.alert(res, {icon: 1}, (index) => {
+                                    layer.close(index)
                                     obj.del()
                                     itemCnt--
                                     if(itemCnt === 0) { //当前页的Item为0
@@ -214,8 +220,9 @@
                                             },
                                         })
                                     }
-                                }
-                            })
+                                })
+                            else
+                                layer.alert("失败", {icon: 2});
                         }
                     })
                 });
