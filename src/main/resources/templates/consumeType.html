@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh_CN"
->
+<html lang="zh_CN">
 
 <head>
     <meta charset="utf-8">
@@ -26,7 +25,8 @@
                         <div class="layui-inline s-layuiInline">
                             <label class="layui-form-label">消费类型</label>
                             <div class="layui-input-inline">
-                                <input autocomplete="off" class="layui-input" id="consumeTypeInput" placeholder="请输入消费类型"
+                                <input autocomplete="off" class="layui-input" id="consumeTypeInput"
+                                       placeholder="请输入消费类型"
                                        type="text">
                             </div>
                         </div>
@@ -39,7 +39,7 @@
             </div>
             <!-- 展示表格 -->
             <div class="s-commonTable">
-                <table class="layui-hide" id="consumeTypes" lay-filter="consumeTypeTabel"></table>
+                <table class="layui-hide" id="consumeTypes" lay-filter="consumeTypeTable"></table>
                 <script id="operation" type="text/html">
                     <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="edit">修改</a>
                     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
@@ -49,8 +49,8 @@
     </div>
 </div>
 
-<!-- 新增弹窗 -->
-<div class="s-details" id="addWindow">
+<!-- 消费类型弹窗 -->
+<div class="s-details" id="popUp">
     <form action="" autocomplete="off" class="layui-form">
         <div>
             <div class="layui-form-item s-formItem1">
@@ -64,29 +64,8 @@
             </div>
         </div>
         <div class="s-tabBottomButton">
-            <button class="layui-btn" id="confirmAdd" lay-filter="confirmAdd" lay-submit>新增</button>
-            <button class="layui-btn layui-btn-warm" id="cancelAdd">取消</button>
-        </div>
-    </form>
-</div>
-
-<!-- 修改弹窗 -->
-<div class="s-details" id="editWindow">
-    <form action="" autocomplete="off" class="layui-form">
-        <div>
-            <div class="layui-form-item s-formItem1">
-                <div class="layui-inline">
-                    <label class="layui-form-label"><i>*</i>消费类型</label>
-                    <div class="layui-input-inline">
-                        <input autocomplete="off" class="layui-input" id="consumeTypeName" lay-verify="required" name="name"
-                               type="text">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="s-tabBottomButton">
-            <button class="layui-btn layui-btn-warm" lay-filter="confirmMod" lay-submit>确认修改</button>
-            <button class="layui-btn" id="cancelMod">取消</button>
+            <button class="layui-btn" id="confirmSub" lay-filter="confirmSub" lay-submit>确认</button>
+            <button class="layui-btn layui-btn-warm" id="cancelSub">取消</button>
         </div>
     </form>
 </div>
@@ -99,44 +78,29 @@
             layer = layui.layer,
             table = layui.table;
 
-        function layuiAlert(msg, callback) {
-            layer.open({
-                offset: "auto",//具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
-                content: '<div style="padding: 20px 70px;">' + msg + '</div>',
-                btn: '关闭',
-                btnAlign: 'c',//按钮居中
-                shade: 0, //不显示遮罩
-                closeBtn: false,
-                yes: function () {
-                    layer.closeAll();
-                    callback()
-                }
-            });
-        }
-
-        // 显示“新增弹窗”
         $('#add').unbind("click").click(function () {
             $("#name").val("")
-            var index = layer.open({
+            layer.open({
                 type: 1,
                 title: '新增消费类型',
-                content: $('#addWindow'),
+                content: $('#popUp'),
                 area: ['400px', '200px'],
             });
-            $('#cancelAdd').unbind("click").click(function () {
-                // 关闭当前弹出层
-                layer.close(index);
-                return false;
-            });
-            form.on('submit(confirmAdd)', function (data) {
+            form.on('submit(confirmSub)', function (data) {
                 $.post({
                     url: "service/consumeType/addConsumeType",
                     data: JSON.stringify(data.field),
                     contentType: "application/json",
                     success: function (res) {
-                        layuiAlert("成功！", ()=>{
-                            tableTypes.reload()
-                        })
+                        if(res === "")
+                            layer.alert("成功！", {icon: 1},() => {
+                                layer.closeAll()
+                                tableTypes.reload()
+                            })
+                        else
+                            layer.alert(res, {icon: 2},() => {
+                                layer.closeAll()
+                            })
                     }
                 })
                 return false;
@@ -144,7 +108,6 @@
             return false;
         });
 
-        // “会员档案表格”渲染
         let itemCnt;
         let tableTypes = table.render({
             elem: '#consumeTypes',
@@ -157,19 +120,16 @@
                 last: false //不显示尾页
             },
             toolbar: true, //仅开启工具栏，不显示左侧模板
-            // defaultToolbar: ['exports'], //头部工具栏右侧图标
             defaultToolbar: ['filter', 'print', 'exports'],
             height: 'full-100',
-            cols: [ [
-                // {type: 'checkbox'},
+            cols: [[
                 {field: 'name', width: 140, title: '消费类型'},
-                // {field: 'indexID', width: 80, title: '顺序号'},
                 {field: 'createName', width: 100, title: '创建人'},
                 {field: 'createTime', width: 150, title: '创建时间'},
                 {field: 'lastEditName', width: 100, title: '最后编辑人'},
                 {field: 'lastEditTime', width: 150, title: '最后编辑时间'},
                 {field: 'operation', width: 110, title: '操作', toolbar: '#operation', fixed: 'right'}
-            ]],
+            ] ],
             size: 'sm',
             parseData: function (res) {
                 let data = res.data
@@ -195,72 +155,73 @@
             }
         });
         //监听“会员档案表格”工具条
-        table.on('tool(consumeTypeTabel)', function (obj) {
+        table.on('tool(consumeTypeTable)', function (obj) {
             var data = obj.data; //获得当前行数据
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
-            var consumeTypeName = data.name;
             if (layEvent === 'edit') {
-                $("#consumeTypeName").val(data.name);
-                var index1 = layer.open({
+                $("#name").val(data.name);
+                layer.open({
                     type: 1,
                     title: '编辑',
-                    content: $('#editWindow'),
+                    content: $('#popUp'),
                     area: ['400px', '225px'],
                 });
-                form.on('submit(confirmMod)', function (formData) {
+                form.on('submit(confirmSub)', function (formData) {
                     formData.field['consumeTypeId'] = data.consumeTypeId;
                     $.post({
                         url: "service/consumeType/editConsumeType",
                         data: JSON.stringify(formData.field),
                         contentType: "application/json",
                         success: function (res) {
-                            layuiAlert(res, ()=>{
+                            layer.alert("成功！", () => {
+                                layer.closeAll()
                                 obj.update(formData.field)
                             })
                         }
                     })
                     return false;
                 })
-                $('#cancelMod').on('click', function () {
-                    // 关闭当前弹出层
-                    layer.close(index1);
-                    return false;
-                });
             }
             else if (layEvent === 'delete') {
-                layer.confirm('确认删除消费类型【' + consumeTypeName + '】？', {icon: 3, title: '提示'}, function (index) {
+                layer.confirm('确认删除消费类型【' + data.name + '】？', {icon: 3, title: '提示'}, function () {
                     $.post({
                         url: "service/consumeType/deleteConsumeType",
                         data: {
                             id: data.consumeTypeId
                         },
                         success: function (res) {
-                            layuiAlert(res, ()=>{
-                                if("删除成功！" === res) {
+                            if ("删除成功！" === res) {
+                                layer.alert(res, {icon: 1}, () => {
+                                    layer.closeAll()
                                     obj.del()
-                                    if("删除成功！" === res) {
-                                        obj.del()
-                                        itemCnt--
-                                        if(itemCnt === 0) { //当前页的Item为0
-                                            let nextPage;
-                                            if(tableTypes.config.page.curr === 1) //当前为第一页，则删除后还是第一页
-                                                nextPage = tableTypes.config.page.curr;
-                                            else //删除后是前一页
-                                                nextPage = tableTypes.config.page.curr - 1;
-                                            tableTypes.reload({
-                                                page: {
-                                                    curr: nextPage
-                                                },
-                                            })
-                                        }
+                                    itemCnt--
+                                    if (itemCnt === 0) { //当前页的Item为0
+                                        let nextPage;
+                                        if (tableTypes.config.page.curr === 1) //当前为第一页，则删除后还是第一页
+                                            nextPage = tableTypes.config.page.curr;
+                                        else //删除后是前一页
+                                            nextPage = tableTypes.config.page.curr - 1;
+                                        tableTypes.reload({
+                                            page: {
+                                                curr: nextPage
+                                            },
+                                        })
                                     }
-                                }
-                            })
+                                })
+                            } else
+                                layer.alert(res, {icon: 2}, () => {
+                                    layer.closeAll()
+                                })
                         }
                     })
-                });
+                })
             }
         });
+
+        $("#cancelSub").unbind("click").click(function () {
+            layer.closeAll()
+            return false
+        })
 
         $("#queryBtn").unbind("click").click(function () {
             tableTypes.reload({
@@ -271,7 +232,8 @@
             })
             return false;
         })
-    });
+    })
+    ;
 </script>
 </body>
 

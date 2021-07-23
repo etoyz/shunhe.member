@@ -54,9 +54,8 @@ public class ConsumeTypeController {
 
     @RequestMapping("editConsumeType")
     @ResponseBody
-    public String editConsumeType(@RequestBody ConsumeType consumeType) {
-        consumeTypeService.editConsumeType(PlatUserUtils.getCurrentLoginPlatUser(), consumeType);
-        return "成功！";
+    public ConsumeType editConsumeType(@RequestBody ConsumeType consumeType) {
+        return consumeTypeService.editConsumeType(PlatUserUtils.getCurrentLoginPlatUser(), consumeType);
     }
 
     @RequestMapping("getConsumeType")
