@@ -50,7 +50,11 @@ public class InsuranceCompanyController {
     @RequestMapping("addInsuranceCompany")
     @ResponseBody
     public String addInsuranceCompany(@RequestBody InsuranceCompany insuranceCompany) {
-        return insuranceCompanyService.addInsuranceCompany(PlatUserUtils.getCurrentLoginPlatUser(), insuranceCompany);
+        String ret = insuranceCompanyService.addInsuranceCompany(PlatUserUtils.getCurrentLoginPlatUser(), insuranceCompany);
+        if(ret == null)
+            return "成功！";
+        else
+            return ret;
     }
 
     @RequestMapping("editInsuranceCompany")

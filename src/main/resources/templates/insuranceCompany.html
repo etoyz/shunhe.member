@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh_CN"
->
+<html lang="zh_CN">
 
 <head>
     <meta charset="utf-8">
@@ -26,7 +25,8 @@
                         <div class="layui-inline s-layuiInline">
                             <label class="layui-form-label">保险公司名称</label>
                             <div class="layui-input-inline">
-                                <input autocomplete="off" class="layui-input" id="insuranceCompanyInput" placeholder="请输入保险公司名称"
+                                <input autocomplete="off" class="layui-input" id="insuranceCompanyInput"
+                                       placeholder="请输入保险公司名称"
                                        type="text">
                             </div>
                         </div>
@@ -39,7 +39,7 @@
             </div>
             <!-- 展示表格 -->
             <div class="s-commonTable">
-                <table class="layui-hide" id="insuranceCompanies" lay-filter="insuranceCompanyTabel"></table>
+                <table class="layui-hide" id="insuranceCompanies" lay-filter="insuranceCompanyTable"></table>
                 <script id="operation" type="text/html">
                     <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="mod">修改</a>
                     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
@@ -49,62 +49,32 @@
     </div>
 </div>
 
-<!-- 新增弹窗 -->
-<div class="s-details" id="addWindow">
-    <form action="" autocomplete="off" class="layui-form">
+<!-- 保险公司弹窗 -->
+<div class="s-details" id="popUp">
+    <form action="" autocomplete="off" class="layui-form" id="popUpForm">
         <div>
-            <div class="layui-form-item s-formItem1">
+            <div class="layui-form-item s-formItem5">
                 <div class="layui-inline">
                     <label class="layui-form-label"><i>*</i>保险公司名称</label>
                     <div class="layui-input-inline">
-                        <input autocomplete="off" class="layui-input" id="insuranceCompanyName" lay-verify="required"
-                               type="text">
+                        <input autocomplete="off" class="layui-input" id="name" lay-verify="required"
+                               name="name" type="text">
                     </div>
                 </div>
             </div>
-            <div class="layui-form-item s-formItem1">
+            <div class="layui-form-item s-formItem5">
                 <div class="layui-inline">
                     <label class="layui-form-label">备注</label>
                     <div class="layui-input-inline">
-                        <input autocomplete="off" class="layui-input" id="remarks"
-                               type="text">
+                        <input autocomplete="off" class="layui-input" id="remark"
+                               name="remark" type="text">
                     </div>
                 </div>
             </div>
         </div>
         <div class="s-tabBottomButton">
-            <button class="layui-btn" id="confirmAdd" lay-filter="confirmAdd" lay-submit>新增</button>
-            <button class="layui-btn layui-btn-warm" id="cancelAdd">取消</button>
-        </div>
-    </form>
-</div>
-
-<!-- 修改弹窗 -->
-<div class="s-details" id="modWindow">
-    <form action="" autocomplete="off" class="layui-form">
-        <div>
-            <div class="layui-form-item s-formItem1">
-                <div class="layui-inline">
-                    <label class="layui-form-label"><i>*</i>保险公司名称</label>
-                    <div class="layui-input-inline">
-                        <input autocomplete="off" class="layui-input" lay-verify="required" name="name" id="insuranceCompanyNameMod"
-                               type="text">
-                    </div>
-                </div>
-            </div>
-            <div class="layui-form-item s-formItem1">
-                <div class="layui-inline">
-                    <label class="layui-form-label">备注</label>
-                    <div class="layui-input-inline">
-                        <input autocomplete="off" class="layui-input" id="remarksMod"
-                               type="text">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="s-tabBottomButton">
-            <button class="layui-btn" lay-filter="confirmMod" lay-submit>确认</button>
-            <button class="layui-btn layui-btn-warm" id="cancelMod">取消</button>
+            <button class="layui-btn" id="confirmAdd" lay-filter="confirmSub" lay-submit>确认</button>
+            <button class="layui-btn layui-btn-warm" id="cancelSub">取消</button>
         </div>
     </form>
 </div>
@@ -117,49 +87,34 @@
             layer = layui.layer,
             table = layui.table;
 
-        function layuiAlert(msg, callback) {
-            layer.open({
-                offset: "auto",//具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
-                content: '<div style="padding: 20px 70px;">' + msg + '</div>',
-                btn: '关闭',
-                btnAlign: 'c',//按钮居中
-                shade: 0, //不显示遮罩
-                closeBtn: false,
-                yes: function () {
-                    layer.closeAll()
-                    callback()
-                }
-            });
-        }
-
         // 显示“新增弹窗”
         $('#add').unbind("click").click(function () {
-            var index = layer.open({
+            $("#popUpForm").trigger("reset")
+            layer.open({
                 type: 1,
                 title: '新增保险公司',
-                content: $('#addWindow'),
+                content: $('#popUp'),
                 area: ['400px', '250px'],
             });
-            $('#cancelAdd').on('click', function () {
-                // 关闭当前弹出层
-                layer.close(index);
-                return false;
-            });
-            form.on('submit(confirmAdd)', function (data) {
+            form.on('submit(confirmSub)', function (formData) {
                 $.post({
                     url: "service/insuranceCompany/addInsuranceCompany",
-                    data: JSON.stringify({
-                        name: $("#insuranceCompanyName").val()
-                    }),
+                    data: JSON.stringify(formData.field),
                     contentType: "application/json",
                     success: function (res) {
-                        layuiAlert("成功！" + res, () => {
-                            tableIns.reload({
-                                page: {
-                                    curr: 1
-                                }
-                            });
-                        })
+                        if (res === "成功！")
+                            layer.alert("成功！", {icon: 1}, () => {
+                                layer.closeAll()
+                                tableIns.reload({
+                                    page: {
+                                        curr: 1
+                                    }
+                                });
+                            })
+                        else
+                            layer.alert(res, {icon: 2}, () => {
+                                layer.closeAll()
+                            })
                     }
                 })
                 return false;
@@ -183,14 +138,14 @@
             toolbar: true, //仅开启工具栏，不显示左侧模板
             height: 'full-100',
             defaultToolbar: ['filter', 'print', 'exports'],
-            cols: [ [
+            cols: [[
                 {field: 'name', width: 140, title: '保险公司'},
                 {field: 'createName', width: 100, title: '创建人名称'},
                 {field: 'createTime', width: 150, title: '创建时间'},
-                {field: 'lastEditId', width: 100, title: '最后编辑人'},
+                {field: 'lastEditName', width: 100, title: '最后编辑人'},
                 {field: 'lastEditTime', width: 150, title: '最后编辑时间'},
                 {field: 'operation', width: 110, title: '操作', toolbar: '#operation', fixed: 'right'}
-            ]],
+            ] ],
             size: 'sm',
             parseData: function (res) {
                 let data = res.data
@@ -216,54 +171,51 @@
             }
         });
         //监听“会员档案表格”工具条
-        table.on('tool(insuranceCompanyTabel)', function (obj) {
+        table.on('tool(insuranceCompanyTable)', function (obj) {
             var data = obj.data; //获得当前行数据
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
-            var insuranceCompanyName = data.name;
             if (layEvent === 'mod') {
-                $("#insuranceCompanyNameMod").val(data.name);
-                $("#remarksMod").val(data.remark);
-                var index1 = layer.open({
+                $("#popUpForm").trigger("reset")
+                $("#name").val(data.name);
+                $("#remark").val(data.remark);
+                layer.open({
                     type: 1,
-                    title: '编辑保险公司信息',
-                    content: $('#modWindow'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                    title: '编辑保险公司',
+                    content: $('#popUp'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
                     area: ['400px', '225px']
                 });
-                form.on('submit(confirmMod)', function (formData) {
+                form.on('submit(confirmSub)', function (formData) {
                     formData.field['id'] = data.id;
                     $.post({
                         url: "service/insuranceCompany/editInsuranceCompany",
                         data: JSON.stringify(formData.field),
                         contentType: "application/json",
                         success: function (res) {
-                            layuiAlert(res, () => {
+                            layer.alert(res, () => {
+                                layer.closeAll()
                                 obj.update(formData.field)
                             })
                         }
                     })
                     return false;
                 })
-                $('#cancelMod').on('click', function () {
-                    // 关闭当前弹出层
-                    layer.close(index1);
-                    return false;
-                });
             } else if (layEvent === 'delete') {
                 console.log(data)
-                layer.confirm('确认删除保险公司【' + insuranceCompanyName + '】？', {icon: 3, title: '提示'}, function (index) {
+                layer.confirm('确认删除保险公司【' + data.name + '】？', {icon: 3, title: '提示'}, function (index) {
                     $.post({
                         url: "service/insuranceCompany/deleteInsuranceCompany",
                         data: {
                             id: data.id
                         },
                         success: function (res) {
-                            layuiAlert(res, () => {
-                                if(res === "删除成功！"){
+                            if (res === "删除成功！")
+                                layer.alert(res, {icon: 1}, () => {
+                                    layer.closeAll()
                                     obj.del()
                                     itemCnt--
-                                    if(itemCnt === 0) { //当前页的Item为0
+                                    if (itemCnt === 0) { //当前页的Item为0
                                         let nextPage;
-                                        if(tableIns.config.page.curr === 1) //当前为第一页，则删除后还是第一页
+                                        if (tableIns.config.page.curr === 1) //当前为第一页，则删除后还是第一页
                                             nextPage = tableIns.config.page.curr;
                                         else //删除后是前一页
                                             nextPage = tableIns.config.page.curr - 1;
@@ -273,13 +225,21 @@
                                             },
                                         })
                                     }
-                                }
-                            })
+                                })
+                            else
+                                layer.alert(res, {icon: 2}, () => {
+                                    layer.closeAll()
+                                })
                         }
                     })
                 });
             }
         });
+
+        $("#cancelSub").unbind("click").click(function () {
+            layer.closeAll()
+            return false
+        })
 
         $("#queryBtn").unbind("click").click(function () {
             tableIns.reload({
