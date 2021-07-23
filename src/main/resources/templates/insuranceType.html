@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh_CN"
->
+<html lang="zh_CN">
 
 <head>
     <meta charset="utf-8">
@@ -39,7 +38,7 @@
             </div>
             <!-- 展示表格 -->
             <div class="s-commonTable">
-                <table class="layui-hide" id="insuranceCompanies" lay-filter="insuranceTypeTabel"></table>
+                <table class="layui-hide" id="insuranceCompanies" lay-filter="insuranceTypeTable"></table>
                 <script id="operation" type="text/html">
                     <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="mod">修改</a>
                     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
@@ -49,80 +48,32 @@
     </div>
 </div>
 
-<!-- 新增弹窗 -->
-<div class="s-details" id="addWindow">
-    <form action="" autocomplete="off" class="layui-form">
+<!-- 险种弹窗 -->
+<div class="s-details" id="popUp">
+    <form action="" id="popUpForm" autocomplete="off" class="layui-form">
         <div>
             <div class="layui-form-item s-formItem1">
                 <div class="layui-inline">
                     <label class="layui-form-label"><i>*</i>险种名称</label>
                     <div class="layui-input-inline">
-                        <input autocomplete="off" class="layui-input" id="insuranceTypeName" lay-verify="required"
+                        <input autocomplete="off" class="layui-input" id="name" name="name" lay-verify="required"
                                type="text">
                     </div>
                 </div>
             </div>
-            <!--            <div class="layui-form-item s-formItem1">-->
-            <!--                <div class="layui-inline">-->
-            <!--                    <label class="layui-form-label">顺序号</label>-->
-            <!--                    <div class="layui-input-inline">-->
-            <!--                        <input type="text" id="indexID" autocomplete="off"-->
-            <!--                               class="layui-input">-->
-            <!--                    </div>-->
-            <!--                </div>-->
-            <!--            </div>-->
             <div class="layui-form-item s-formItem1">
                 <div class="layui-inline">
                     <label class="layui-form-label">备注</label>
                     <div class="layui-input-inline">
-                        <input autocomplete="off" class="layui-input" id="remarks"
+                        <input autocomplete="off" class="layui-input" id="remark" name="remark"
                                type="text">
                     </div>
                 </div>
             </div>
         </div>
         <div class="s-tabBottomButton">
-            <button class="layui-btn" id="confirmAdd" lay-filter="confirmAdd" lay-submit>新增</button>
-            <button class="layui-btn layui-btn-warm" id="cancelAdd">取消</button>
-        </div>
-    </form>
-</div>
-
-<!-- 修改弹窗 -->
-<div class="s-details" id="modWindow">
-    <form action="" autocomplete="off" class="layui-form">
-        <div>
-            <div class="layui-form-item s-formItem1">
-                <div class="layui-inline">
-                    <label class="layui-form-label"><i>*</i>险种名称</label>
-                    <div class="layui-input-inline">
-                        <input autocomplete="off" class="layui-input" lay-verify="required" name="name" id="insuranceTypeNameMod"
-                               type="text">
-                    </div>
-                </div>
-            </div>
-            <!--            <div class="layui-form-item s-formItem1">-->
-            <!--                <div class="layui-inline">-->
-            <!--                    <label class="layui-form-label">顺序号</label>-->
-            <!--                    <div class="layui-input-inline">-->
-            <!--                        <input type="text" name="indexID" autocomplete="off"-->
-            <!--                               class="layui-input">-->
-            <!--                    </div>-->
-            <!--                </div>-->
-            <!--            </div>-->
-            <div class="layui-form-item s-formItem1">
-                <div class="layui-inline">
-                    <label class="layui-form-label">备注</label>
-                    <div class="layui-input-inline">
-                        <input autocomplete="off" class="layui-input" id="remarksMod"
-                               type="text">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="s-tabBottomButton">
-            <button class="layui-btn" id="confirm" lay-filter="confirmMod" lay-submit>确认</button>
-            <button class="layui-btn layui-btn-warm" id="cancelMod">取消</button>
+            <button class="layui-btn" id="confirmSub" lay-filter="confirmSub" lay-submit>确认</button>
+            <button class="layui-btn layui-btn-warm" id="cancelSub">取消</button>
         </div>
     </form>
 </div>
@@ -135,44 +86,23 @@
             layer = layui.layer,
             table = layui.table;
 
-        function layuiAlert(msg, callback) {
-            layer.open({
-                offset: "auto",//具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
-                content: '<div style="padding: 20px 70px;">' + msg + '</div>',
-                btn: '关闭',
-                btnAlign: 'c',//按钮居中
-                shade: 0, //不显示遮罩
-                closeBtn: false,
-                yes: function () {
-                    layer.closeAll();
-                    callback()
-                }
-            });
-        }
-
         // 显示“新增弹窗”
         $('#add').unbind("click").click(function () {
-            var index = layer.open({
+            $("#popUpForm").trigger("reset")
+            layer.open({
                 type: 1,
                 title: '新增险种',
-                content: $('#addWindow'),
+                content: $('#popUp'),
                 area: ['400px', '225px'],
             });
-            $('#cancelAdd').on('click', function () {
-                // 关闭当前弹出层
-                layer.close(index);
-                return false;
-            });
-            form.on('submit(confirmAdd)', function (data) {
-                //$("#confirmAdd").unbind("click").click(function () {
+            form.on('submit(confirmSub)', function (formData) {
                 $.post({
                     url: "service/insuranceType/addInsuranceType",
-                    data: JSON.stringify({
-                        name: $("#insuranceTypeName").val()
-                    }),
+                    data: JSON.stringify(formData),
                     contentType: "application/json",
                     success: function (res) {
-                        layuiAlert("成功！" + res, () => {
+                        layer.alert("成功！" + res, {icon: 1},() => {
+                            layer.closeAll()
                             tableIns.reload();
                         })
                     }
@@ -201,7 +131,7 @@
                 {field: 'name', width: 140, title: '险种'},
                 {field: 'createName', width: 100, title: '创建人名称'},
                 {field: 'createTime', width: 150, title: '创建时间'},
-                {field: 'lastEditId', width: 100, title: '最后编辑人'},
+                {field: 'lastEditName', width: 100, title: '最后编辑人'},
                 {field: 'lastEditTime', width: 150, title: '最后编辑时间'},
                 {field: 'operation', width: 110, title: '操作', toolbar: '#operation', fixed: 'right'}
             ]],
@@ -230,49 +160,45 @@
             }
         });
         //监听“会员档案表格”工具条
-        table.on('tool(insuranceTypeTabel)', function (obj) {
+        table.on('tool(insuranceTypeTable)', function (obj) {
             var data = obj.data; //获得当前行数据
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
-            var insuranceTypeName = data.name;
             if (layEvent === 'mod') {
-                $("#insuranceTypeNameMod").val(data.name);
-                $("#remarksMod").val(data.remark);
-                var index1 = layer.open({
+                $("#popUpForm").trigger("reset")
+                $("#name").val(data.name);
+                $("#remark").val(data.remark);
+                layer.open({
                     type: 1,
                     title: '编辑',
-                    content: $('#modWindow'),
+                    content: $('#popUp'),
                     area: ['400px', '225px'],
                 });
-                form.on('submit(confirmMod)', function (formData) {
+                form.on('submit(confirmSub)', function (formData) {
                     formData.field['id'] = data.id;
                     $.post({
                         url: "service/insuranceType/editInsuranceType",
                         data: JSON.stringify(formData.field),
                         contentType: "application/json",
                         success: function (res) {
-                            layuiAlert(res, () => {
+                            layer.alert(res, {icon: 1},() => {
+                                layer.closeAll()
                                 obj.update(formData.field)
                             })
                         }
                     })
                     return false;
                 })
-                $('#cancelMod').on('click', function () {
-                    // 关闭当前弹出层
-                    layer.close(index1);
-                    return false;
-                });
             }
             else if (layEvent === 'delete') {
                 console.log(data)
-                layer.confirm('确认删除险种【' + insuranceTypeName + '】？', {icon: 3, title: '提示'}, function (index) {
+                layer.confirm('确认删除险种【' + data.name + '】？', {icon: 3, title: '提示'}, function (index) {
                     $.post({
                         url: "service/insuranceType/deleteInsuranceType",
                         data: {
                             id: data.id
                         },
                         success: function (res) {
-                            layuiAlert(res, () => {
+                            layer.alert(res,{icon: 1}, () => {
                                 if(res === "删除成功！"){
                                     obj.del()
                                     itemCnt--
@@ -295,6 +221,11 @@
                 });
             }
         });
+
+        $("#cancelSub").unbind("click").click(()=>{
+            layer.closeAll()
+            return false
+        })
 
         $("#queryBtn").unbind("click").click(function () {
             tableIns.reload({

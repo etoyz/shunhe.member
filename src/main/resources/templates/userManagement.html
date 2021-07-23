@@ -224,7 +224,7 @@
                 $("#password").val("******")
                 $("#post").val(activeUser.post)
                 $("#operateType").val(activeUser.operateType)
-                $("#dealerId").val(activeUser.dealerId)
+                $("#dealerId").val(0)
                 form.render("select")
                 layer.open({
                     type: 1,
@@ -240,7 +240,11 @@
                         contentType: "application/json",
                         success: function (res) {
                             if(res === "修改成功！") {
-                                layer.alert("修改成功！", {icon: 1}, () => {layer.closeAll();obj.update(formData.field)})
+                                layer.alert("修改成功！", {icon: 1}, () => {
+                                    layer.closeAll();
+                                    formData.field.dealerId = "烟台顺合广汽本田"
+                                    obj.update(formData.field)
+                                })
                             } else
                                 layer.alert(res, {icon: 2}, () => {layer.closeAll()})
                         }
