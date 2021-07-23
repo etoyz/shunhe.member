@@ -71,8 +71,8 @@
             <div class="layui-inline">
                 <label class="layui-form-label"><i>*</i>联系电话</label>
                 <div class="layui-input-inline">
-                    <input autocomplete="off" class="layui-input" id="phoneNum"
-                           lay-verify="number" name="phoneNum" type="text">
+                    <input autocomplete="off" class="layui-input" id="phone"
+                           lay-verify="number" name="phone">
                 </div>
             </div>
             <div class="layui-inline">
@@ -214,9 +214,10 @@
                     })
                     layer.close(index);
                 });
-            } else if (layEvent === "edit") {
+            }
+            else if (layEvent === "edit") {
                 $("#name").val(activeUser.name)
-                $("#phoneNum").val(0) //待接口返回再做处理
+                $("#phone").val(activeUser.phone) //待接口返回再做处理
                 $("#username").val(activeUser.username)
                 $("#username").attr('disabled', true)
                 $("#password").attr('disabled', true)
