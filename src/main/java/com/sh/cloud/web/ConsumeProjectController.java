@@ -64,8 +64,7 @@ public class ConsumeProjectController {
     @PostMapping("addConsumeProject")
     @ResponseBody
     public String addConsumeProject(@RequestBody ConsumeProject project) {
-        consumeProjectService.addConsumeProject(PlatUserUtils.getCurrentLoginPlatUser(), project);
-        return "成功！";
+        return consumeProjectService.addConsumeProject(PlatUserUtils.getCurrentLoginPlatUser(), project);
     }
 
     @PostMapping("editConsumeProject")
