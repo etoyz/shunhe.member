@@ -479,16 +479,16 @@
                 formData.groupId = activeUser.memberNumber
                 formData.cnt = cnt + 1
                 cnt++
+                $.post({
+                    url: "service/practicalProject/getPracticalProject?practicalProjectId=" + formData.practicalProjectId,
+                    async: false,
+                    success: function (res) {
+                        formData.couponId = res.couponId
+                    }
+                })
                 if (formData.payStyle === "-1") {
                     $("#num").val(parseFloat($("#num").val()).toFixed(0))
                     formData.count = $("#num").val()
-                    $.post({
-                        url: "service/practicalProject/getPracticalProject?practicalProjectId=" + formData.practicalProjectId,
-                        async: false,
-                        success: function (res) {
-                            formData.couponId = res.couponId
-                        }
-                    })
                     $.post({
                         url: "service/coupon/getCoupon?couponId=" + formData.couponId,
                         timeout: 1000,
