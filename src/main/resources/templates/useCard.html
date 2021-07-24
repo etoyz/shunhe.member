@@ -250,7 +250,7 @@
             <div class="layui-inline">
                 <label class="layui-form-label">支付方式</label>
                 <div class="layui-input-inline" style="width: 233px">
-                    <select autocomplete="off" id="payStyle" name="payStyle">
+                    <select autocomplete="off" id="payStyle" name="payStyle" lay-filter="payStyle">
                     </select>
                 </div>
             </div>
@@ -478,6 +478,7 @@
 
             var cnt = 0; // 用于唯一标识
             var cntAvail = 0, isCalCntAvail = false; // 用于标记余额
+            var activePayStyle = "", changePayStyle = false
             form.on('submit(addUseCard)', function (data) {
                 var formData = data.field
                 // 下列字段用于接口传值
@@ -545,9 +546,15 @@
                 formData.practicalProjectId = $("#practicalProjectId").val()
                 // 初始校验
                 if($("#payStyle").val() !== "-1" && $("#payStyle").val() !== "-2"){ // 既不是卡券下发，也不是储值，则进行校验
+                    activePayStyle = $("#payStyle").val()
                     if(!isCalCntAvail) {
                         cntAvail = parseFloat($("#payStyle option:selected").text().match(/(?<=剩余 )([0-9.]+)(?!= [张元])/)[0])
                         isCalCntAvail = true
+                    }
+                    if(changePayStyle){ // 支付方式更改
+                        cntAvail += parseFloat($("#payStyle option:selected").text().match(/(?<=剩余 )([0-9.]+)(?!= [张元])/)[0])
+                        activePayStyle = $("#payStyle").val()
+                        changePayStyle = false
                     }
                     if(cntAvail < parseFloat($("#num").val())) {
                         layer.alert("添加明细失败！（余额不足）", {icon: 2})
@@ -556,6 +563,7 @@
                         cntAvail -= parseFloat($("#num").val())
                     }
                 }
+                // 表格重载
                 couponReviewList.push(formData)
                 tableUseCoupons.reload({
                     data: couponReviewList
@@ -682,6 +690,12 @@
                         pullPay("#payStyle", data.userId, $("#consumeProjectId").val(), () => {
                         });
                     });
+                    form.on('select(payStyle)', function () {
+                        if(activePayStyle !== $("#payStyle").val() && activePayStyle !== "") // 更改支付方式
+                            changePayStyle = true
+                        else
+                            changePayStyle = false
+                    })
                     $('#exit1').on('click', function () {
                         // 关闭当前弹出层
                         layer.close(index1);
