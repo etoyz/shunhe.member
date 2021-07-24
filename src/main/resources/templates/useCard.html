@@ -389,7 +389,6 @@
                         selectE2.append('<option value="-1">卡券下发</option>');
                         selectE2.append('<option value="-2">储值</option>');
                         for (var s in res) { // value = "couponId, couponType"
-                            console.log(res[s])
                             if(res[s].coupon.type === 1)
                                 selectE2.append("<option value='" + s + "," + res[s].coupon.type + "'>" + res[s].coupon.name + "(剩余" + parseFloat(res[s].money).toFixed(2) + "元)" + "</option>");
                             else if(res[s].coupon.type === 0)
@@ -423,7 +422,7 @@
                     {field: 'consumeProjectName', width: 170, title: '消费项目'},
                     {field: 'practicalProjectName', width: 170, title: '具体项目'},
                     {field: 'payStyleName', width: 170, title: '支付方式'}, //单元格内容水平居中
-                    {field: 'num', width: 100, title: '数量'},
+                    {field: 'count', width: 100, title: '数量'},
                     {field: 'totalMoney', width: 110, title: '总金额'},
                     {field: 'timeCost', width: 80, title: '工时费'},
                     {field: 'matCost', width: 80, title: '材料费'},
@@ -475,7 +474,6 @@
             var cnt = 0;
             form.on('submit(addUseCard)', function (data) {
                 var formData = data.field
-                console.log(formData)
                 // 下列字段用于接口传值
                 formData.userId = activeUser.userId
                 formData.groupId = activeUser.memberNumber
@@ -484,6 +482,22 @@
                 if (formData.payStyle === "-1") {
                     $("#num").val(parseFloat($("#num").val()).toFixed(0))
                     formData.count = $("#num").val()
+                    $.post({
+                        url: "service/practicalProject/getPracticalProject?practicalProjectId=" + formData.practicalProjectId,
+                        async: false,
+                        success: function (res) {
+                            formData.couponId = res.couponId
+                        }
+                    })
+                    $.post({
+                        url: "service/coupon/getCoupon?couponId=" + formData.couponId,
+                        timeout: 1000,
+                        async: false,
+                        dataType: "json",
+                        success: function (res) {
+                            formData.totalMoney = res.unitPrice * formData.count
+                        },
+                    })
                 }
                 else if (formData.payStyle === "-2") {
                     $("#num").val(parseFloat($("#num").val()).toFixed(2))
@@ -494,16 +508,29 @@
                     let type = formData.payStyle.split(",")[1]
                     if(type === "1") { //储值型代金券
                         $("#num").val(parseFloat($("#num").val()).toFixed(2))
-                        formData.totalMoney = $("#num").val();
                         formData.money = $("#num").val()
+                        formData.totalMoney = $("#num").val();
                     }
                     else {
                         $("#num").val(parseFloat($("#num").val()).toFixed(0))
                         formData.count = $("#num").val()
+                        $.post({
+                            url: "service/coupon/getCoupon?couponId=" + formData.payStyle.split(",")[0],
+                            timeout: 1000,
+                            async: false,
+                            dataType: "json",
+                            success: function (res) {
+                                formData.totalMoney = res.unitPrice * formData.count
+                            },
+                        })
                     }
                 }
+                if(formData.totalMoney === "") {
+                    formData.totalMoney = 0.00
+                } else {
+                    formData.totalMoney = parseFloat(formData.totalMoney).toFixed(2)
+                }
                 // 下列字段用于列表显示，接口不需要这些
-                formData.num = $("#num").val();
                 formData.vehicleId = activeUser.vehicle.vehicleId;
                 formData.consumeProjectName = $('#consumeProjectId option:selected').text()
                 formData.consumeTypeName = $('#consumeTypeId option:selected').text()

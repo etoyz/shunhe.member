@@ -53,11 +53,7 @@ public class UseCardController {
     public String submitForReview(@RequestBody List<CouponCheck> list) {
         SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
         String groupId = df.format(new Date());
-        // 根据具体项目Id，获取到卡券Id and other process
         for (CouponCheck couponCheck : list) {
-            PracticalProject project = new PracticalProject();
-            project.practicalProjectId = Integer.parseInt(couponCheck.practicalProjectId);
-            couponCheck.couponId = String.valueOf(practicalProjectService.getPracticalProject(project).couponId);
             couponCheck.groupId = groupId + couponCheck.groupId.substring(couponCheck.groupId.length() - 3);
             couponCheck.payStyle = couponCheck.payStyle.split(",")[0];
         }

@@ -528,7 +528,7 @@
                                             {field: 'consumeProjectName', width: 170, title: '消费项目'},
                                             {field: 'practicalProjectName', width: 170, title: '具体项目'},
                                             {field: 'payStyleName', width: 170, title: '支付方式'}, //单元格内容水平居中
-                                            {field: 'num', width: 100, title: '数量'},
+                                            {field: 'count', width: 100, title: '数量'},
                                             {field: 'totalMoney', width: 110, title: '总金额'},
                                             {field: 'timeCost', width: 80, title: '工时费'},
                                             {field: 'matCost', width: 80, title: '材料费'},
@@ -544,14 +544,12 @@
                                         parseData: function (res) {
                                             let data = res.data
                                             for (var i = 0; i < data.length; i++) {
+                                                data[i].count = parseInt(data[i].count)
+                                                data[i].totalMoney = parseFloat(data[i].totalMoney).toFixed(2)
                                                 if(data[i].payStyle === "-1") {
                                                     data[i].payStyleName = "卡券下发";
-                                                    data[i].num = parseInt(data[i].count).toFixed(0)
-                                                    // data[i].totalMoney = data[i].count
                                                 } else if(data[i].payStyle === "-2") {
                                                     data[i].payStyleName = "储值";
-                                                    data[i].num = parseFloat(data[i].money).toFixed(2);
-                                                    // data[i].totalMoney = data[i].money;
                                                 }
                                                 else {
                                                     $.post({
@@ -559,11 +557,9 @@
                                                         async: false,
                                                         success: function (res) {
                                                             data[i].payStyleName = res.name
-                                                            data[i].num = parseFloat(data[i].totalMoney).toFixed(2);
                                                         }
                                                     })
                                                 }
-                                                data[i].totalMoney = ""
                                             }
                                             res.data = data
                                             return res
