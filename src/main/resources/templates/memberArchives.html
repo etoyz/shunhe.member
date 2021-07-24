@@ -37,7 +37,7 @@
             </div>
             <!-- 展示表格 -->
             <div class="s-commonTable">
-                <table class="layui-hide" id="memberArchives" lay-filter="memberArchivesTabel"></table>
+                <table class="layui-hide" id="memberArchives" lay-filter="memberArchivesTable"></table>
                 <script id="operation" type="text/html">
                     <a class="layui-btn layui-btn-xs" lay-event="edit">修改</a>
                     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
@@ -220,9 +220,6 @@
                         <div class="layui-inline">
                             <label class="layui-form-label"><i>*</i>车系</label>
                             <div class="layui-input-inline">
-<!--                                <input autocomplete="off" class="layui-input" id="vehiclestyle" lay-verify="required"-->
-<!--                                       name="vehiclestyle"-->
-<!--                                       type="text">-->
                                 <select id="vehiclestyle" lay-verify="required" lay-filter="vehiclestyle" name="vehiclestyle">
                                     <option value="">请选择车系</option>
                                 </select>
@@ -231,8 +228,6 @@
                         <div class="layui-inline">
                             <label class="layui-form-label"><i>*</i>车型</label>
                             <div class="layui-input-inline">
-<!--                                <input autocomplete="off" class="layui-input" id="vehiclebrand" lay-verify="required"-->
-<!--                                       name="vehiclebrand" type="text">-->
                                 <select id="vehiclebrand" lay-verify="required"  name="vehiclebrand">
                                     <option value="">请选择车型</option>
                                 </select>
@@ -416,6 +411,13 @@
                                        name="remainderCouponCost" type="text">
                             </div>
                         </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">过期卡券价值:</label>
+                            <div class="layui-input-inline">
+                                <input autocomplete="off" class="layui-input" disabled id="invalidCouponCost"
+                                       name="invalidCouponCost" type="text">
+                            </div>
+                        </div>
                     </div>
                     <div class="layui-form-item s-formItem5">
                         <div class="layui-inline">
@@ -429,15 +431,6 @@
                             <div class="layui-input-inline">
                                 <input autocomplete="off" class="layui-input" disabled id="remainderCouponCount"
                                        name="remainderCouponCount" type="text">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="layui-form-item s-formItem5">
-                        <div class="layui-inline">
-                            <label class="layui-form-label">过期卡券价值:</label>
-                            <div class="layui-input-inline">
-                                <input autocomplete="off" class="layui-input" disabled id="invalidCouponCost"
-                                       name="invalidCouponCost" type="text">
                             </div>
                         </div>
                         <div class="layui-inline">
@@ -464,6 +457,7 @@
                             </div>
                         </div>
                     </div>
+                    <table class="layui-hide" id="tableUserCoupons" lay-filter="tableUserCoupons"></table>
                 </div>
                 <div class="layui-tab-item">
                     <div class="s-commonTable">
@@ -849,9 +843,9 @@
         });
 
         //监听“会员档案表格”工具条
-        var activedata;
-        table.on('tool(memberArchivesTabel)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
-            activedata = obj.data; //获得当前行数据
+        var activeUser;
+        table.on('tool(memberArchivesTable)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+            activeUser = obj.data; //获得当前行数据
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
             if (layEvent === 'edit') {
                 let loadMsg = layer.load(2)
@@ -859,7 +853,7 @@
                 let cnt = 0;
                 function showPopup() {
                     cnt++
-                    if(cnt === 4){
+                    if(cnt === 5){
                         $(".editMod").show()
                         layer.close(loadMsg)
                         layer.open({
@@ -873,9 +867,10 @@
                 $.post({
                     url: "/service/Archives/getUserInfo",
                     data: {
-                        userId: activedata.userId
+                        userId: activeUser.userId
                     },
                     success: function (res) {
+                        activeUser = res
                         pullAll(() => { // 下拉框渲染完成后，再进行赋值操作
                             $('#insuranceCompany').val(res.vehicle.insuranceCompany);
                             $('#businessRisksbCompany').val(res.vehicle.businessRisksbCompany);
@@ -935,7 +930,7 @@
                     }
                 });
                 $.post({
-                    url: "service/Archives/getUserCost?userid=" + activedata.userId,
+                    url: "service/Archives/getUserCost?userid=" + activeUser.userId,
                     success: function (res){
                         $('#accumulativeScore').val(res.accumulativeScore);
                         $('#availableScore').val(res.availableScore);
@@ -948,6 +943,46 @@
                         showPopup()
                     }
                 })
+                // "会员信息表格"渲染
+                table.render({
+                    elem: '#tableUserCoupons',
+                    url: 'service/Archives/getUserCoupon?userId=' + activeUser.userId,
+                    page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                        layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
+                        limit: 8,
+                        groups: 3, //只显示 1 个连续页码
+                        first: false, //不显示首页
+                        last: false //不显示尾页
+                    },
+                    cols: [ [
+                        {type: 'numbers'},
+                        {field: 'couponName', width: 124, title: '卡券名称'},
+                        {field: 'typeName', width: 82, title: '卡券类型'},
+                        {field: 'quantity', width: 80, title: '购买数量'},
+                        {field: 'usageQuantity', width: 80, title: '使用数量'}, //单元格内容水平居中
+                        {field: 'remainingQuantity', width: 80, title: '剩余数量'},
+                        {field: 'createTime', width: 150, title: '发放日期'},
+                        {field: 'startEffectiveTime', width: 150, title: '生效日期'},
+                        {field: 'endEffectiveTime', width: 150, title: '失效日期'},
+                        {field: 'consumeProjectName', width: 88, title: '项目名称'}
+                    ]],
+                    size: 'sm',
+                    parseData: (res) => {
+                        console.log(res)
+                        let data = res.data
+                        for(let d of data){
+                            d.couponName = d.coupon.name
+                            if(d.coupon.type === 0)
+                                d.typeName = "代金券"
+                            else
+                                d.typeName = "储值"
+                            d.consumeProjectName = d.consumeProject.name
+                        }
+                    },
+                    done: function () {
+                        showPopup()
+                    }
+                });
                 // "消费历史表格"渲染
                 table.render({
                     elem: '#consumptionHistories',
@@ -959,7 +994,7 @@
                     },
                     where: {
                         user: {
-                            userId: activedata.userId
+                            userId: activeUser.userId
                         },
                         couponCheck: {},
                         groupBy: false
@@ -999,16 +1034,10 @@
                         let data = resp.data;
                         if (data) {
                             for (let i = 0; i < data.length; i++) {
-                                $.post({
-                                    url: "service/Archives/getUserInfo?userId=" + data[i].userId,
-                                    async: false,
-                                    success: function (res) {
-                                        data[i].customername = res.customername
-                                        data[i].memberNumber = res.memberNumber
-                                        data[i].vin = res.vehicle.vin
-                                        data[i].platenumber = res.vehicle.platenumber
-                                    }
-                                })
+                                data[i].customername = activeUser.customername
+                                data[i].memberNumber = activeUser.memberNumber
+                                data[i].vin = activeUser.vehicle.vin
+                                data[i].platenumber = activeUser.vehicle.platenumber
                                 {
                                     if (data[i].payStyle === '-1')
                                         data[i].payStyleName = '卡券发放'
@@ -1042,7 +1071,7 @@
                     data.field.vehicle = {
                         platenumber: data.field.platenumber,
                         vin: data.field.vin,
-                        vehicleId:activedata.vehicleId,
+                        vehicleId:activeUser.vehicleId,
                         vehiclelabel: textvehiclelabel,
                         vehiclebrand: textvehiclebrand,
                         vehiclestyle: textvehiclestyle,
@@ -1062,7 +1091,7 @@
                     data.field.member = {
                         level: data.field.level
                     }
-                    data.field.userId = activedata.userId
+                    data.field.userId = activeUser.userId
                     $.post({
                         url: "/service/Archives/editArchives",
                         data: JSON.stringify(data.field),
@@ -1103,7 +1132,7 @@
                 pullMemberlevel("#newLevel", () => {
                     // $("#originalLevel").val()
                 })
-                $('#originalLevel').val(activedata.level);
+                $('#originalLevel').val(activeUser.level);
                 // 确认
                 form.on('submit(gadd)', function (data) {
                     // $("#gadd").unbind("click").click(function () {
@@ -1115,7 +1144,7 @@
                     $.post({
                         url: "/service/Archives/alertLevel",
                         data: {
-                            userId: activedata.userId,
+                            userId: activeUser.userId,
                             id: id
                         },
                         success: function (res) {
@@ -1129,11 +1158,11 @@
                 })
             }
             else if (layEvent === 'delete') { // 删除
-                layer.confirm('确定要删除客户【'+activedata.customername+'】吗？', {icon: 3, title: '提示'}, function (index) {
+                layer.confirm('确定要删除客户【'+activeUser.customername+'】吗？', {icon: 3, title: '提示'}, function (index) {
                     $.post({
                         url: "/service/Archives/deleteArchives",
                         data: {
-                            userId: activedata.userId
+                            userId: activeUser.userId
                         },
                         success: function (res) {
                             if(res === "删除成功！")
@@ -1215,34 +1244,6 @@
             });
 
         }
-
-        // "会员信息表格"渲染
-        table.render({
-            elem: '#memberInfo',
-            url: './datas/memberInfo.json',
-            height: 400,
-            page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
-                layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
-                limit: 15,
-                //,curr: 5 //设定初始在第 5 页
-                groups: 3, //只显示 1 个连续页码
-                first: false, //不显示首页
-                last: false //不显示尾页
-
-            },
-            cols: [ [
-                {type: 'numbers'},
-                {field: 'cardName', width: 124, title: '卡券名称'},
-                {field: 'cardType', width: 82, title: '卡券类型'},
-                {field: 'quantity', width: 80, title: '购买数量'},
-                {field: 'usageQuantity', width: 80, title: '使用数量'}, //单元格内容水平居中
-                {field: 'remainingQuantity', width: 80, title: '剩余数量'},
-                {field: 'effectiveDate', width: 146, title: '生效日期'},
-                {field: 'expiryDate', width: 146, title: '失效日期'},
-                {field: 'projectName', width: 88, title: '项目名称'}
-            ]],
-            size: 'sm'
-        });
 
         $('#cancelAdd').on('click', function () {
             // 关闭当前弹出层

@@ -8,6 +8,7 @@ import com.sft.member.bean.CouponCheck;
 import com.sft.member.bean.Member;
 import com.sft.member.bean.User;
 import com.sft.member.bean.UserCost;
+import com.sft.member.obtain.coupon.CouponService;
 import com.sft.member.obtain.member.MemberService;
 import com.sft.member.obtain.pay.PayService;
 import com.sft.member.obtain.user.UserService;
@@ -32,6 +33,8 @@ public class ArchivesController {
     CarDataQuery CarService;
     @Resource
     PayService payService;
+    @Resource
+    CouponService couponService;
 
     @RequestMapping("getUserCost")
     public UserCost getUserCost(@RequestParam String userid) {
@@ -184,6 +187,18 @@ public class ArchivesController {
             return "添加成功";
         else
             return ret;
+    }
+
+    @RequestMapping("getUserCoupon")
+    public Map<String, Object> getUserCoupon(@RequestParam String userId, @RequestParam int page, @RequestParam int limit){
+        Map<String, Object> ret = new HashMap<>();
+        ret.put("code", 0);
+        ret.put("msg", "");
+
+        ret.put("data", couponService.getUserCouponList(userId, page, limit));
+        ret.put("count", couponService.getUserCouponListCount(userId));
+
+        return ret;
     }
 }
 
