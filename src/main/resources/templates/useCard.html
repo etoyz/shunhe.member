@@ -390,7 +390,7 @@
                         selectE2.append('<option value="-2">储值</option>');
                         for (var s in res) { // value = "couponId, couponType"
                             if(res[s].coupon.type === 1)
-                                selectE2.append("<option value='" + s + "," + res[s].coupon.type + "'>" + res[s].coupon.name + "(剩余" + parseFloat(res[s].money).toFixed(2) + "元)" + "</option>");
+                                selectE2.append("<option value='" + s + "," + res[s].coupon.type + "'>" + res[s].coupon.name + "(剩余 " + parseFloat(res[s].money).toFixed(2) + " 元)" + "</option>");
                             else if(res[s].coupon.type === 0)
                                 selectE2.append("<option value='" + s + "," + res[s].coupon.type + "'>" + res[s].coupon.name + "(剩余 " + parseInt(res[s].money) + " 张)" + "</option>");
                         }
@@ -434,7 +434,7 @@
                     {field: '???', width: 88, title: '本次积分'},
                     {field: 'remark', width: 88, title: '项目备注'},
                     {field: 'operation', width: 70, title: '操作', toolbar: '#operationUseCardTable', fixed: 'right'}
-                ]],
+                ] ],
                 size: 'sm'
             });
 
@@ -443,6 +443,10 @@
                 if (obj.event === 'delete') {
                     for (let i = 0; i < couponReviewList.length; i++) {
                         if (couponReviewList[i].cnt === data.cnt) {
+                            if(obj.data.count)
+                                cntAvail += parseInt(obj.data.count)
+                            else
+                                cntAvail += parseFloat(obj.data.totalMoney)
                             couponReviewList.splice(i, 1)
                             obj.del()
                         }
@@ -451,7 +455,11 @@
             })
 
             $("#submitForReview").unbind("click").click(function () {
-                if (couponReviewList.length !== 0) {
+                if (couponReviewList.length === 0) {
+                    layer.alert("提交审核失败！（明细为空）", {icon: 2});
+                // } else if(){
+
+                } else {
                     $.post({
                         url: "service/useCard/submitForReview",
                         data: JSON.stringify(couponReviewList),
@@ -466,12 +474,10 @@
                         }
                     })
                 }
-                else {
-                    layer.alert("提交审核失败！（明细为空）", {icon: 2});
-                }
             })
 
-            var cnt = 0;
+            var cnt = 0; // 用于唯一标识
+            var cntAvail = 0, isCalCntAvail = false; // 用于标记余额
             form.on('submit(addUseCard)', function (data) {
                 var formData = data.field
                 // 下列字段用于接口传值
@@ -537,6 +543,19 @@
                 formData.practicalProjectName = $('#practicalProjectId option:selected').text()
                 formData.payStyleName = $('#payStyle option:selected').text()
                 formData.practicalProjectId = $("#practicalProjectId").val()
+                // 初始校验
+                if($("#payStyle").val() !== "-1" && $("#payStyle").val() !== "-2"){ // 既不是卡券下发，也不是储值，则进行校验
+                    if(!isCalCntAvail) {
+                        cntAvail = parseFloat($("#payStyle option:selected").text().match(/(?<=剩余 )([0-9.]+)(?!= [张元])/)[0])
+                        isCalCntAvail = true
+                    }
+                    if(cntAvail < parseFloat($("#num").val())) {
+                        layer.alert("添加明细失败！（余额不足）", {icon: 2})
+                        return
+                    } else {
+                        cntAvail -= parseFloat($("#num").val())
+                    }
+                }
                 couponReviewList.push(formData)
                 tableUseCoupons.reload({
                     data: couponReviewList
@@ -579,7 +598,7 @@
                     {field: 'district', width: 152, title: '区'},
                     {field: 'userId', width: 210, title: 'id', hide: true},
                     {field: 'operation', width: 70, title: '操作', toolbar: '#operation', fixed: 'right'}
-                ]],
+                ] ],
                 size: 'sm',
                 parseData: function (res) {
                     let data = res.data
@@ -620,6 +639,7 @@
                         data: couponReviewList
                     })
                     $('#useForm').trigger('reset');
+                    cntAvail = 0;isCalCntAvail = false;
                     $.post({
                         url: "service/Archives/getUserInfo",
                         data: {
