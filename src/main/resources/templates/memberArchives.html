@@ -357,13 +357,19 @@
                         <div class="layui-inline">
                             <label class="layui-form-label">保客主管</label>
                             <div class="layui-input-inline">
-                                <input autocomplete="off" class="layui-input" id="director" name="director" type="text">
+<!--                                <input autocomplete="off" class="layui-input" id="director" name="director" type="text">-->
+                                <select id="director"  name="director">
+                                    <option value="">请选择保客主管</option>
+                                </select>
                             </div>
                         </div>
                         <div class="layui-inline">
                             <label class="layui-form-label">保客专员</label>
                             <div class="layui-input-inline">
-                                <input autocomplete="off" class="layui-input" id="attache" name="attache" type="text">
+<!--                                <input autocomplete="off" class="layui-input" id="attache" name="attache" type="text">-->
+                                <select id="attache"   name="attache">
+                                    <option value="">请选择保客专员</option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -371,13 +377,19 @@
                         <div class="layui-inline">
                             <label class="layui-form-label">服务顾问</label>
                             <div class="layui-input-inline">
-                                <input autocomplete="off" class="layui-input" id="serviceConsultant" name="serviceConsultant" type="text">
+<!--                                <input autocomplete="off" class="layui-input" id="serviceConsultant" name="serviceConsultant" type="text">-->
+                                <select id="serviceConsultant"   name="serviceConsultant">
+                                    <option value="">请选择服务顾问</option>
+                                </select>
                             </div>
                         </div>
                         <div class="layui-inline">
                             <label class="layui-form-label">销售顾问</label>
                             <div class="layui-input-inline">
-                                <input autocomplete="off" class="layui-input" id="saleConsultant" name="saleConsultant" type="text">
+<!--                                <input autocomplete="off" class="layui-input" id="saleConsultant" name="saleConsultant" type="text">-->
+                                <select id="saleConsultant"  name="saleConsultant">
+                                    <option value="">请选择销售顾问</option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -539,6 +551,48 @@
                     ,trigger: 'click'
                 });
             });
+            //拉取职位
+            function  pullPostName(selector1,selector2,selector3,selector4,callback)
+            {
+                var selectE1 = $(selector1);
+                var selectE2 = $(selector2);
+                var selectE3 = $(selector3);
+                var selectE4 = $(selector4);
+                $.post({
+                    url: "service/Archives/getPostNameList",
+                    timeout: 1000,
+                    dataType: "json",
+                    success: function (res) {
+                         selectE1.empty();
+                         selectE2.empty();
+                         selectE3.empty();
+                         selectE4.empty();
+                        // for (var s of res) {
+                            if(s.post=="保客主管")
+                            selectE1.append("<option value='" + s.name + "'>" + s.name + "</option>");
+                            else if(s.post=="保客专员")
+                                selectE2.append("<option value='" + s.name + "'>" + s.name + "</option>");
+                            else if(s.post=="服务顾问")
+                                selectE3.append("<option value='" + s.name + "'>" + s.name + "</option>");
+                            else
+                                selectE4.append("<option value='" + s.name + "'>" + s.name + "</option>");
+                        // }
+                        callback();
+                        form.render(); //layui的form重新渲染
+                    },
+                    error: function () {
+                        selectE1.empty();
+                        selectE2.empty();
+                        selectE3.empty();
+                        selectE4.empty();
+                        selectE1.append("<option value=''>拉取失败</option>");
+                        selectE2.append("<option value=''>拉取失败</option>");
+                        selectE3.append("<option value=''>拉取失败</option>");
+                        selectE4.append("<option value=''>拉取失败</option>");
+                        // form.render();
+                    }
+                })
+            }
             function pullBrandName(selector, callback) {
                 var selectE = $(selector);
                 $.post({
@@ -746,6 +800,7 @@
                     });
                 });
             });
+            pullPostName("#director","#attache","#serviceConsultant","#saleConsultant",()=>{});
             pullAll(() => {})
             form.on('select(vehiclelabel)', function () {
                     pullCarSeriesgroupName("#vehiclestyle", $('#vehiclelabel').val(), () => {
@@ -790,7 +845,7 @@
                 {field: 'phone', width: 156, title: '电话号码'}, //单元格内容水平居中
                 {field: 'memberNumber', width: 160, title: '会员卡号'},
                 {field: 'level', width: 80, title: '会员级别'},
-                {field: 'detailedAddress', width: 302, title: '详细地址'},
+                {field: 'address', width: 302, title: '详细地址'},
                 {field: 'vin', width: 156, title: '车架号'},
                 {field: 'platenumber', width: 88, title: '车牌号'},
                 {field: 'vehiclelabel', width: 82, title: '品牌'},
@@ -833,6 +888,7 @@
                                 data[i].province = resp.province
                                 data[i].city = resp.city
                                 data[i].area = resp.area
+                                data[i].address=resp.address
                             } catch (e){}
                         }
                     })
@@ -871,6 +927,7 @@
                     },
                     success: function (res) {
                         activeUser = res
+                        // pullPostName("#director","#attache","#serviceConsultant","#saleConsultant",()=>{});
                         pullAll(() => { // 下拉框渲染完成后，再进行赋值操作
                             $('#insuranceCompany').val(res.vehicle.insuranceCompany);
                             $('#businessRisksbCompany').val(res.vehicle.businessRisksbCompany);
