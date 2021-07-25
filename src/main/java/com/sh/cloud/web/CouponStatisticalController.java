@@ -7,12 +7,12 @@ import com.sft.member.obtain.coupon.CouponService;
 import com.sft.member.obtain.statistics.StatisticsService;
 import com.sft.member.obtain.user.UserService;
 import com.sh.cloud.entity.GetRequestPacket;
-import com.sh.cloud.utils.ReturnStatisticalJson;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.sh.cloud.entity.ReturnStatisticalJson;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,12 +21,12 @@ import java.util.Map;
 @RestController
 @RequestMapping("service/couponStatistical")
 public class CouponStatisticalController {
-    @Autowired
+    @Resource
     StatisticsService statisticsService; // 统计相关接口
-    @Autowired
+    @Resource
     CouponService couponService; // 卡券相关接口
-    @Autowired
-    UserService userService; // 用户相关接口
+    @Resource
+    UserService shUserService; // 用户相关接口
 
     // 获取整个列表
     @RequestMapping("getCouponStatisticalList")
@@ -52,7 +52,7 @@ public class CouponStatisticalController {
         for (CouponCheck data : sourceDataList) {
             // data里有userId，通过userId新建User对象，然后调用接口函数传入刚刚新建的User对象，来获取一个具备完整User信息的对象。
             user.userId = data.userId;
-            user = userService.getUser(user);
+            user = shUserService.getUser(user);
             coupon.couponId = Integer.parseInt(data.couponId);
             coupon = couponService.getCoupon(coupon);
             couponCheck.couponId = data.couponId;

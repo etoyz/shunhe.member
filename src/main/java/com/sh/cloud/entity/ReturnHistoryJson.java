@@ -1,4 +1,4 @@
-package com.sh.cloud.utils;
+package com.sh.cloud.entity;
 
 
 /*
