@@ -5,7 +5,6 @@ import carinfo.bean.CarSeries;
 import carinfo.bean.CarSeriesGroup;
 import carinfo.service.CarDataQuery;
 import com.sft.member.bean.*;
-import com.sft.member.obtain.coupon.CouponService;
 import com.sft.member.obtain.member.MemberService;
 import com.sft.member.obtain.pay.PayService;
 import com.sft.member.obtain.user.PlatUserService;
@@ -32,23 +31,13 @@ public class ArchivesController {
     @Resource
     PayService payService;
     @Resource
-    CouponService couponService;
-    @Resource
     PlatUserService platUserService;
 
-    @RequestMapping("getPostNameList")
-    public List<PlatUser> getPostNameList(){
-        List<PlatUser> ret;
-        PlatUser User1=new PlatUser();
-        User1.post="保客主管";
-        ret=platUserService.getPlatUserListByPost(User1);
-        User1.post="保客专员";
-        ret.addAll(platUserService.getPlatUserListByPost(User1));
-        User1.post="服务顾问";
-        ret.addAll(platUserService.getPlatUserListByPost(User1));
-        User1.post="销售顾问";
-        ret.addAll(platUserService.getPlatUserListByPost(User1));
-        return ret;
+    @RequestMapping("getUserByPost")
+    public List<PlatUser> getUserByPost(@RequestParam String post) {
+        PlatUser user = new PlatUser();
+        user.post = post;
+        return platUserService.getPlatUserListByPost(user);
     }
 
     @RequestMapping("getUserCost")
