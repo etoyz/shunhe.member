@@ -3,14 +3,14 @@ package com.sh.cloud.web;
 import com.sft.member.bean.Coupon;
 import com.sft.member.bean.CouponCheck;
 import com.sft.member.bean.User;
+import com.sft.member.bean.UserCoupon;
 import com.sft.member.obtain.coupon.CouponService;
 import com.sft.member.obtain.statistics.StatisticsService;
 import com.sft.member.obtain.user.UserService;
 import com.sh.cloud.entity.GetRequestPacket;
 import com.sh.cloud.entity.ReturnStatisticalJson;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.sh.cloud.entity.UserCouponMetaInfo;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -77,6 +77,45 @@ public class CouponStatisticalController {
 
         ret.put("data", resJsonList);
         ret.put("count", statisticsService.getCouponStaticsCount(request.getUser(), request.getCouponCheck(), request.getGroupBy()));
+
+        return ret;
+    }
+
+    /**
+     * 获取某用户拥有的卡券
+     *
+     * @param userId 用户Id
+     * @return 用户拥有的卡券
+     */
+    @RequestMapping("getUserCoupon")
+    @ResponseBody
+    public Map<String, Object> getUserCoupon(@RequestParam String userId, @RequestParam int page, @RequestParam int limit) {
+        Map<String, Object> ret = new HashMap<>();
+        ret.put("code", 0);
+        ret.put("msg", "");
+
+        List<UserCouponMetaInfo> data = new ArrayList<>();
+        List<UserCoupon> srcData = couponService.getUserCouponList(userId, page, limit);
+        for (int i = 0; i < srcData.size(); i++) {
+            // 无法设置父类writeMethod, 不能用copyProperties
+            // BeanUtils.copyProperties(srcData.get(i), data.get(i));
+            // UserCoupon tuc =  srcDatum; // 向下转型
+            // data.add((UserCouponMetaInfo) tuc);
+            data.add(new UserCouponMetaInfo());
+            data.get(i).setUserCoupon(srcData.get(i));
+        }
+        User user = new User();
+        user.userId = userId;
+        for (UserCouponMetaInfo info : data) {
+            CouponCheck couponCheck = new CouponCheck();
+            couponCheck.couponId = info.getUserCoupon().couponId;
+            info.buyCount = statisticsService.getStoreValueCountByCoupon(user, couponCheck, 0);
+            info.setAvailableCount(statisticsService.getStoreValueCountByCoupon(user, couponCheck, 1));
+            info.setUsedCount(info.getBuyCount() - info.getAvailableCount());
+        }
+
+        ret.put("data", data);
+        ret.put("count", couponService.getUserCouponListCount(userId));
 
         return ret;
     }

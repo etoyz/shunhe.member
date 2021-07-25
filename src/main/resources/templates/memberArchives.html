@@ -1003,7 +1003,7 @@
                 // "会员信息表格"渲染
                 table.render({
                     elem: '#tableUserCoupons',
-                    url: 'service/Archives/getUserCoupon?userId=' + activeUser.userId,
+                    url: 'service/couponStatistical/getUserCoupon?userId=' + activeUser.userId,
                     page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                         layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
                         limit: 8,
@@ -1015,9 +1015,9 @@
                         {type: 'numbers'},
                         {field: 'couponName', width: 124, title: '卡券名称'},
                         {field: 'typeName', width: 82, title: '卡券类型'},
-                        {field: 'quantity', width: 80, title: '购买数量'},
-                        {field: 'usageQuantity', width: 80, title: '使用数量'}, //单元格内容水平居中
-                        {field: 'remainingQuantity', width: 80, title: '剩余数量'},
+                        {field: 'buyCount', width: 80, title: '购买数量'},
+                        {field: 'usedCount', width: 80, title: '使用数量'}, //单元格内容水平居中
+                        {field: 'availableCount', width: 80, title: '剩余数量'},
                         {field: 'createTime', width: 150, title: '发放日期'},
                         {field: 'startEffectiveTime', width: 150, title: '生效日期'},
                         {field: 'endEffectiveTime', width: 150, title: '失效日期'},
@@ -1025,16 +1025,23 @@
                     ]],
                     size: 'sm',
                     parseData: (res) => {
-                        console.log(res)
                         let data = res.data
+                        let i = 0
                         for(let d of data){
+                            d.userCoupon.buyCount = d.buyCount
+                            d.userCoupon.usedCount = d.usedCount
+                            d.userCoupon.availableCount = d.availableCount
+                            d = d.userCoupon
                             d.couponName = d.coupon.name
                             if(d.coupon.type === 0)
                                 d.typeName = "代金券"
                             else
                                 d.typeName = "储值"
                             d.consumeProjectName = d.consumeProject.name
+                            data[i] = d
+                            i++
                         }
+                        console.log(data)
                     },
                     done: function () {
                         showPopup()
