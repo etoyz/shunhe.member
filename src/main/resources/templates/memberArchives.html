@@ -557,7 +557,9 @@
                     dataType: "json",
                     success: function (res) {
                         selectE.empty();
-                        selectE.append("<option value='" + res.platUserId + "'>" + res.name + "</option>");
+                        for (var s of res) {
+                            selectE.append("<option value='" + s.platUserId + "'>" + s.name + "</option>")
+                        }
                         callback();
                         form.render(); //layui的form重新渲染
                     },
@@ -702,7 +704,7 @@
                 let cnt = 0;
                 function call() {
                     cnt++;
-                    if(cnt === 3) // 三次call，才执行callback
+                    if(cnt === 7) // 7次call，才执行callback
                         callback()
                 }
                 pullInsuranceCompany("#insuranceCompany", () => {
@@ -714,7 +716,18 @@
                 pullInsuranceTypeName("#insuranceTypeName", () => {
                     call()
                 })
-
+                pullUserByPost("#director", "保客主管" , () => {
+                    call()
+                });
+                pullUserByPost("#attache", "保客专员" , () => {
+                    call()
+                });
+                pullUserByPost("#serviceConsultant", "服务顾问" , () => {
+                    call()
+                });
+                pullUserByPost("#saleConsultant", "销售顾问" , () => {
+                    call()
+                });
             }
         }
 
@@ -774,10 +787,6 @@
                     });
                 });
             });
-            pullUserByPost("#director", "保客主管" , () => {});
-            pullUserByPost("#attache", "保客专员" , () => {});
-            pullUserByPost("#serviceConsultant", "服务顾问" , () => {});
-            pullUserByPost("#saleConsultant", "销售顾问" , () => {});
             pullAll(() => {})
             form.on('select(vehiclelabel)', function () {
                     pullCarSeriesgroupName("#vehiclestyle", $('#vehiclelabel').val(), () => {
@@ -910,6 +919,10 @@
                             if(res.vehicle.insuranceTypeName === "")
                                 res.vehicle.insuranceTypeName = null
                             insType.setValue(JSON.parse(res.vehicle.insuranceTypeName))
+                            $("#director").val(res.director)
+                            $("#saleConsultant").val(res.saleConsultant)
+                            $("#serviceConsultant").val(res.serviceConsultant)
+                            $("#attache").val(res.attache)
                             showPopup()
                         })
                         $('#customername').val(res.customername);
@@ -994,9 +1007,9 @@
                         {field: 'buyCount', width: 80, title: '购买数量'},
                         {field: 'usedCount', width: 80, title: '使用数量'}, //单元格内容水平居中
                         {field: 'availableCount', width: 80, title: '剩余数量'},
-                        {field: 'createTime', width: 150, title: '发放日期'},
                         {field: 'startEffectiveTime', width: 150, title: '生效日期'},
                         {field: 'endEffectiveTime', width: 150, title: '失效日期'},
+                        {field: 'createTime', width: 150, title: '发放日期'},
                         {field: 'consumeProjectName', width: 88, title: '项目名称'}
                     ]],
                     size: 'sm',
