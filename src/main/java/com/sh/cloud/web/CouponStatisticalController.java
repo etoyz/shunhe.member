@@ -89,13 +89,13 @@ public class CouponStatisticalController {
      */
     @RequestMapping("getUserCoupon")
     @ResponseBody
-    public Map<String, Object> getUserCoupon(@RequestParam String userId, @RequestParam int page, @RequestParam int limit) {
+    public Map<String, Object> getUserCoupon(@RequestParam String userId) {
         Map<String, Object> ret = new HashMap<>();
         ret.put("code", 0);
         ret.put("msg", "");
 
         List<UserCouponMetaInfo> data = new ArrayList<>();
-        List<UserCoupon> srcData = couponService.getUserCouponList(userId, page, limit);
+        List<UserCoupon> srcData = couponService.getUserCouponListByUser(userId);
         for (int i = 0; i < srcData.size(); i++) {
             // 无法设置父类writeMethod, 不能用copyProperties
             // BeanUtils.copyProperties(srcData.get(i), data.get(i));

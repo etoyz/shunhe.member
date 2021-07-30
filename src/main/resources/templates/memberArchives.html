@@ -993,24 +993,18 @@
                 table.render({
                     elem: '#tableUserCoupons',
                     url: 'service/couponStatistical/getUserCoupon?userId=' + activeUser.userId,
-                    page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
-                        layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
-                        limit: 8,
-                        groups: 3, //只显示 1 个连续页码
-                        first: false, //不显示首页
-                        last: false //不显示尾页
-                    },
+                    limit: Number.MAX_VALUE,
                     cols: [ [
                         {type: 'numbers'},
-                        {field: 'couponName', width: 124, title: '卡券名称'},
-                        {field: 'typeName', width: 82, title: '卡券类型'},
-                        {field: 'buyCount', width: 80, title: '购买数量'},
-                        {field: 'usedCount', width: 80, title: '使用数量'}, //单元格内容水平居中
-                        {field: 'availableCount', width: 80, title: '剩余数量'},
+                        {field: 'couponName', width: 145, title: '卡券名称'},
+                        {field: 'typeName', width: 80, title: '卡券类型'},
+                        {field: 'buyCount', width: 70, title: '购买数量'},
+                        {field: 'usedCount', width: 70, title: '使用数量'}, //单元格内容水平居中
+                        {field: 'availableCount', width: 70, title: '剩余数量'},
                         {field: 'startEffectiveTime', width: 150, title: '生效日期'},
                         {field: 'endEffectiveTime', width: 150, title: '失效日期'},
                         {field: 'createTime', width: 150, title: '发放日期'},
-                        {field: 'consumeProjectName', width: 88, title: '项目名称'}
+                        {field: 'consumeProjectName', width: 93, title: '项目名称'}
                     ]],
                     size: 'sm',
                     parseData: (res) => {
