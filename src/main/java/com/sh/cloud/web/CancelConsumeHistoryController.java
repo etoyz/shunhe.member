@@ -40,8 +40,7 @@ public class CancelConsumeHistoryController {
         ret.put("msg", "");
 
         // 源数据列表
-        // 因为需要拿到的是 用户的 单条的信息，所以groupBy总为false
-        List<CouponCheck> sourceDataList = statisticsService.getRollBackStatics(request.getUser(), request.getCouponCheck(), request.getPage(), request.getLimit(), false);;
+        List<CouponCheck> sourceDataList = statisticsService.getRollBackStatics(request.getUser(), request.getCouponCheck(), request.getPage(), request.getLimit(), false);
         // 返回时的列表
         List<ReturnHistoryJson> resJsonList = new ArrayList<>();
 
