@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Deprecated
 @RestController
 @RequestMapping("service/useCardHistory")
 public class UseCardHistoryController {
@@ -29,8 +30,6 @@ public class UseCardHistoryController {
     CouponService couponService; // 卡券相关接口
     @Resource
     UserService shUserService; // 用户相关接口
-    @Resource
-    PayService payService;
 
 
     // 获取整个列表
@@ -42,8 +41,8 @@ public class UseCardHistoryController {
         ret.put("msg", "");
 
         // 源数据列表
-        // 因为需要拿到的是 用户的 单条的信息，所以groupBy总为false
-        List<CouponCheck> sourceDataList = statisticsService.getCheckRecordStatics(request.getUser(), request.getCouponCheck(), request.getPage(), request.getLimit(), false);;
+        // 获取合并后的列表
+        List<CouponCheck> sourceDataList = statisticsService.getCheckRecordStatics(request.getUser(), request.getCouponCheck(), request.getPage(), request.getLimit(), true);;
         // 返回时的列表
         List<ReturnHistoryJson> resJsonList = new ArrayList<>();
 
@@ -101,25 +100,9 @@ public class UseCardHistoryController {
         ret.put("code", 0);
         ret.put("msg", "");
         List<CouponCheck> data;
-        if (request.getGroupBy()) {
-            data = payService.getUnCheckRecord(request.getUser(), couponCheck, request.getPage(), request.getLimit(), true);
-            for (CouponCheck c : data) {
-                couponCheck.groupId = c.groupId;
-                Float totalM = 0f;
-                Integer cnt = 0;
-                List<CouponCheck> t = payService.getUnCheckRecord(request.getUser(), couponCheck, request.getPage(), request.getLimit(), false);
-                for (CouponCheck ct : t) {
-                    totalM += Float.parseFloat(ct.totalMoney);
-                    cnt += Integer.parseInt(ct.count);
-                }
-                c.totalMoney = String.valueOf(totalM);
-                c.count = String.valueOf(cnt);
-            }
-        } else {
-            data = payService.getUnCheckRecord(request.getUser(), couponCheck, request.getPage(), request.getLimit(), false);
-        }
+        data = statisticsService.getCheckRecordStatics(request.getUser(), couponCheck, request.getPage(), request.getLimit(), false);
         ret.put("data", data);
-        ret.put("count", payService.getUnCheckRecordCount(request.getUser(), couponCheck, request.getGroupBy()));
+        ret.put("count", statisticsService.getCheckRecordStaticsCount(request.getUser(), couponCheck, false));
 
         return ret;
     }
