@@ -595,7 +595,7 @@
                     {field: 'phone', width: 156, title: '电话号码'}, //单元格内容水平居中
                     {field: 'memberNumber', width: 160, title: '会员卡号'},
                     {field: 'level', width: 80, title: '会员级别'},
-                    {field: 'detailedAddress', width: 302, title: '详细地址'},
+                    {field: 'address', width: 302, title: '详细地址'},
                     {field: 'vin', width: 156, title: '车架号'},
                     {field: 'platenumber', width: 88, title: '车牌号'},
                     {field: 'vehiclelabel', width: 82, title: '品牌'},
@@ -603,10 +603,11 @@
                     {field: 'vehiclebrand', width: 210, title: '车型'},
                     {field: 'province', width: 152, title: '省'},
                     {field: 'city', width: 152, title: '市'},
-                    {field: 'district', width: 152, title: '区'},
+                    {field: 'area', width: 152, title: '区'},
                     {field: 'userId', width: 210, title: 'id', hide: true},
-                    {field: 'operation', width: 70, title: '操作', toolbar: '#operation', fixed: 'right'}
-                ] ],
+                    {field: 'vehicleId', width: 210, title: 'vid',hide: true},
+                    {field: 'operation', width: 170, title: '操作', toolbar: '#operation', fixed: 'right'}
+                ]],
                 size: 'sm',
                 parseData: function (res) {
                     let data = res.data
@@ -615,17 +616,26 @@
                             url: "service/Archives/getUserInfo?userId=" + data[i].userId,
                             async: false,
                             success: function (resp) {
-                                try {
-                                    data[i].cGender = resp.cGender === 1 ? "男" : "女"
+                                try{
+                                    if(resp.cGender==1)
+                                        data[i].cGender="男"
+                                    else if(resp.cGender==2)
+                                        data[i].cGender="女"
+                                    else
+                                        data[i].cGender="未知"
                                     data[i].cBirthday = resp.cBirthday
                                     data[i].phone = resp.phone
+                                    data[i].cCard = resp.cCard
                                     data[i].customername = resp.customername
                                     data[i].level = resp.member.level
-                                    data[i].vin = resp.vehicle.vin
                                     data[i].platenumber = resp.vehicle.platenumber
                                     data[i].vehiclebrand = resp.vehicle.vehiclebrand
                                     data[i].vehiclelabel = resp.vehicle.vehiclelabel
                                     data[i].vehiclestyle = resp.vehicle.vehiclestyle
+                                    data[i].province = resp.province
+                                    data[i].city = resp.city
+                                    data[i].area = resp.area
+                                    data[i].address=resp.address
                                 } catch (e){}
                             }
                         })

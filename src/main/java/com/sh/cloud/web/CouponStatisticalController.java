@@ -115,7 +115,6 @@ public class CouponStatisticalController {
         }
 
         ret.put("data", data);
-        ret.put("count", couponService.getUserCouponListCount(userId));
 
         return ret;
     }
