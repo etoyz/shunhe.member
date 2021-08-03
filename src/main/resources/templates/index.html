@@ -255,12 +255,7 @@
             }
         })
         $("#logout").unbind("click").click(function () {
-            $.post({
-                url: "logout",
-                success: function (res) {
-                    location.href(res)
-                }
-            })
+            location.href = "/logout";
         })
         // 自定义各种表单验证规则
         form.verify({
