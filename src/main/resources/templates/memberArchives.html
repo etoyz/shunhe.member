@@ -911,6 +911,7 @@
                         userId: activeUser.userId
                     },
                     success: function (res) {
+                        res.vehicleId = activeUser.vehicleId
                         activeUser = res
                         pullAll(() => { // 下拉框渲染完成后，再进行赋值操作
                             $('#insuranceCompany').val(res.vehicle.insuranceCompany);
@@ -1007,22 +1008,24 @@
                     ]],
                     size: 'sm',
                     parseData: (res) => {
-                        let data = res.data
-                        let i = 0
-                        for(let d of data){
-                            d.userCoupon.buyCount = d.buyCount
-                            d.userCoupon.usedCount = d.usedCount
-                            d.userCoupon.availableCount = d.availableCount
-                            d = d.userCoupon
-                            d.couponName = d.coupon.name
-                            if(d.coupon.type === 0)
-                                d.typeName = "代金券"
-                            else
-                                d.typeName = "储值"
-                            d.consumeProjectName = d.consumeProject.name
-                            data[i] = d
-                            i++
-                        }
+                        try{
+                            let data = res.data
+                            let i = 0
+                            for(let d of data){
+                                d.userCoupon.buyCount = d.buyCount
+                                d.userCoupon.usedCount = d.usedCount
+                                d.userCoupon.availableCount = d.availableCount
+                                d = d.userCoupon
+                                d.couponName = d.coupon.name
+                                if(d.coupon.type === 0)
+                                    d.typeName = "代金券"
+                                else
+                                    d.typeName = "储值"
+                                // d.consumeProjectName = d.consumeProject.name
+                                data[i] = d
+                                i++
+                            }
+                        } catch (e) {}
                     },
                     done: function () {
                         showPopup()
@@ -1042,7 +1045,7 @@
                             userId: activeUser.userId
                         },
                         couponCheck: {},
-                        groupBy: false
+                        groupBy: true
                     },
                     contentType: "application/json",
                     height: 410,
@@ -1113,10 +1116,11 @@
                     var textvehiclelabel=$('#vehiclelabel option:selected').text();
                     var textvehiclestyle=$('#vehiclestyle option:selected').text();
                     var textvehiclebrand=$('#vehiclebrand option:selected').text();
+                    console.log(activeUser)
                     data.field.vehicle = {
                         platenumber: data.field.platenumber,
                         vin: data.field.vin,
-                        vehicleId:activeUser.vehicleId,
+                        vehicleId: activeUser.vehicleId,
                         vehiclelabel: textvehiclelabel,
                         vehiclebrand: textvehiclebrand,
                         vehiclestyle: textvehiclestyle,

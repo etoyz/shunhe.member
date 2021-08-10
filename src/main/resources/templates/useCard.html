@@ -83,16 +83,16 @@
                 </div>
             </div>
             <div class="layui-inline">
-                <label class="layui-form-label">车牌号</label>
-                <div class="layui-input-inline">
-                    <input autocomplete="off" class="layui-input" disabled id="licensePlate"
-                           type="text">
-                </div>
-            </div>
-            <div class="layui-inline">
                 <label class="layui-form-label">车架号</label>
                 <div class="layui-input-inline">
                     <input autocomplete="off" class="layui-input" disabled id="vin" name="vin"
+                           type="text" style="width: 158px">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">车牌号</label>
+                <div class="layui-input-inline">
+                    <input autocomplete="off" class="layui-input" disabled id="licensePlate"
                            type="text">
                 </div>
             </div>
@@ -261,13 +261,6 @@
                            type="text">
                 </div>
             </div>
-<!--            <div class="layui-inline">-->
-<!--                <label class="layui-form-label">操作类型</label>-->
-<!--                <div class="layui-input-inline">-->
-<!--                    <input autocomplete="off" class="layui-input" id="type" disabled name="type"-->
-<!--                           type="text">-->
-<!--                </div>-->
-<!--            </div>-->
         </div>
         <div class="layui-btn-container s-tabBottomButton">
             <span class="layui-btn layui-btn-warm" id="submitForReview">
@@ -588,7 +581,7 @@
                 defaultToolbar: ['filter', 'print', 'exports'],
                 cols: [ [
                     {type: 'checkbox'},
-                    {field: 'customername', width: 80, title: '客户名称'},
+                    {field: 'customername', width: 130, title: '客户名称'},
                     {field: 'cGender', width: 56, title: '性别'},
                     {field: 'cBirthday', width: 96, title: '生日'},
                     {field: 'cCard', width: 156, title: '证件号'}, //单元格内容水平居中
@@ -612,6 +605,8 @@
                 parseData: function (res) {
                     let data = res.data
                     for (let i = 0; i < data.length; i++) {
+                        data[i].vehicleId=data[i].vehicle.vehicleId
+                        data[i].vin = data[i].vehicle.vin
                         $.post({
                             url: "service/Archives/getUserInfo?userId=" + data[i].userId,
                             async: false,
