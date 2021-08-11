@@ -492,14 +492,13 @@
                     elem: '#speProj',
                     url: "service/practicalProject/getPracticalProjectListByConsumeProject?consumeProjectId=" + data.consumeProjectId,
                     cols: [ [
-                        // {type: 'checkbox'},
                         {field: 'name', width: 150, title: '项目名称'},
                         {field: 'couponName', width: 150, title: '对应卡券'},
                         {field: 'count', width: 150, title: '数量'},
                         {field: 'indateValue', width: 100, title: '有效天数'},
                         {field: 'startIntervalDateValue', width: 150, title: '多少天后开始'},
-                        {field: 'remark', width: 150, title: '备注'},
-                        {field: 'operation', width: 110, title: '操作', toolbar: '#operationSpe', fixed: 'right'}
+                        {field: 'remark', width: 700, title: '备注', align: "left"},
+                        {field: 'operation', width: 90, title: '操作', toolbar: '#operationSpe', fixed: 'right'}
                     ]],
                     size: 'sm',
                     parseData: function (res) {
