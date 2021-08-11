@@ -42,7 +42,7 @@ public class UseCardHistoryController {
 
         // 源数据列表
         // 获取合并后的列表
-        List<CouponCheck> sourceDataList = statisticsService.getCheckRecordStatics(request.getUser(), request.getCouponCheck(), request.getPage(), request.getLimit(), true);;
+        List<CouponCheck> sourceDataList = statisticsService.getCheckRecordStatics(request.getUser(), request.getCouponCheck(), request.getPage(), request.getLimit(), false);;
         // 返回时的列表
         List<ReturnHistoryJson> resJsonList = new ArrayList<>();
 
