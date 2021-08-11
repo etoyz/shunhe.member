@@ -139,7 +139,7 @@
                 url: 'service/couponStatistical/getCouponStatisticalList',
                 where: {
                     couponCheck: {
-                        time: $("#time").val()
+                        time: $("#time").val().replace(/ @ /, "@")
                     },
                     user: {
                         vehicle: {

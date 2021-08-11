@@ -146,7 +146,7 @@
                 url: 'service/cancelConsumeHistory/getCancelConsumeHistoryList',
                 where: {
                     couponCheck: {
-                        time: $("#time").val()
+                        time: $("#time").val().replace(/ @ /, "@")
                     },
                     user: {
                         vehicle: {
