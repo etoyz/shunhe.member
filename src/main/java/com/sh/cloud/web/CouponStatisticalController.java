@@ -98,24 +98,13 @@ public class CouponStatisticalController {
         List<UserCoupon> srcData = couponService.getUserCouponListByUser(userId);
         User tmpUser = new User();
         tmpUser.userId = userId;
-//        List<CouponCheck> srcData2 = statisticsService.getStoreValueStatics(tmpUser, new CouponCheck(), 1, Integer.MAX_VALUE, true);
-        List<CouponCheck> srcData2 = new ArrayList<>();
-        for (int i = 0; i < srcData2.size(); i++) {
-            data.add(new UserCouponMetaInfo());
-            data.get(i).setUserCoupon(new UserCoupon());
-            data.get(i).getUserCoupon().couponId = srcData2.get(i).couponId;
-            data.get(i).getUserCoupon().userId = srcData2.get(i).userId;
-            Coupon tmpCoupon = new Coupon();
-            tmpCoupon.couponId = Integer.parseInt(srcData2.get(i).couponId);
-            data.get(i).getUserCoupon().coupon = couponService.getCoupon(tmpCoupon);
-        }
-        for (int i = srcData2.size(); i < srcData.size() + srcData2.size(); i++) {
+        for (int i = 0; i < srcData.size(); i++) {
             // 无法设置父类writeMethod, 不能用copyProperties
             // BeanUtils.copyProperties(srcData.get(i), data.get(i));
             // UserCoupon tuc =  srcDatum; // 向下转型
             // data.add((UserCouponMetaInfo) tuc);
             data.add(new UserCouponMetaInfo());
-            data.get(i).setUserCoupon(srcData.get(i - srcData2.size()));
+            data.get(i).setUserCoupon(srcData.get(i));
             Coupon tmpCoupon = new Coupon();
             tmpCoupon.couponId = Integer.parseInt(data.get(i).getUserCoupon().couponId);
             data.get(i).getUserCoupon().coupon = couponService.getCoupon(tmpCoupon);
@@ -123,19 +112,10 @@ public class CouponStatisticalController {
         User user = new User();
         user.userId = userId;
         for (UserCouponMetaInfo info : data) {
-            CouponCheck couponCheck = new CouponCheck();
-            couponCheck.couponId = info.getUserCoupon().couponId;
-            if (info.getUserCoupon().coupon.type == 0) {
-                info.setBuyCount(statisticsService.getStoreValueCountByCoupon(user, couponCheck, 0));
-                info.setAvailableCount(statisticsService.getStoreValueCountByCoupon(user, couponCheck, 1));
-                info.setUsedCount(info.getBuyCount() - info.getAvailableCount());
-            } else {
-                info.setBuyCount(statisticsService.getStoreValueCountByMoney(user, couponCheck, 0));
-                info.setAvailableCount(statisticsService.getStoreValueCountByMoney(user, couponCheck, 1));
-                info.setUsedCount(info.getBuyCount() - info.getAvailableCount());
-            }
+            info.setBuyCount(couponService.getUserCouponCountByUser(userId, info.getUserCoupon().couponId, info.getUserCoupon().startEffectiveTime, info.getUserCoupon().endEffectiveTime, 0));
+            info.setAvailableCount(couponService.getUserCouponCountByUser(userId, info.getUserCoupon().couponId, info.getUserCoupon().startEffectiveTime, info.getUserCoupon().endEffectiveTime, 1));
+            info.setUsedCount(info.getBuyCount() - info.getAvailableCount());
         }
-
         ret.put("data", data);
 
         return ret;
