@@ -109,12 +109,20 @@ public class CouponStatisticalController {
             tmpCoupon.couponId = Integer.parseInt(data.get(i).getUserCoupon().couponId);
             data.get(i).getUserCoupon().coupon = couponService.getCoupon(tmpCoupon);
         }
-        User user = new User();
-        user.userId = userId;
         for (UserCouponMetaInfo info : data) {
-            info.setBuyCount(couponService.getUserCouponCountByUser(userId, info.getUserCoupon().couponId, info.getUserCoupon().startEffectiveTime, info.getUserCoupon().endEffectiveTime, 0));
-            info.setAvailableCount(couponService.getUserCouponCountByUser(userId, info.getUserCoupon().couponId, info.getUserCoupon().startEffectiveTime, info.getUserCoupon().endEffectiveTime, 1));
-            info.setUsedCount(info.getBuyCount() - info.getAvailableCount());
+            if (info.getUserCoupon().coupon.type == 0) {
+                info.setBuyCount(couponService.getUserCouponCountByUser(userId, info.getUserCoupon().couponId, info.getUserCoupon().startEffectiveTime, info.getUserCoupon().endEffectiveTime, 0));
+                info.setAvailableCount(couponService.getUserCouponCountByUser(userId, info.getUserCoupon().couponId, info.getUserCoupon().startEffectiveTime, info.getUserCoupon().endEffectiveTime, 1));
+                info.setUsedCount(info.getBuyCount() - info.getAvailableCount());
+            } else {
+                User user = new User();
+                user.userId = userId;
+                CouponCheck couponCheck = new CouponCheck();
+                couponCheck.couponId = info.getUserCoupon().couponId;
+                info.setBuyCount(statisticsService.getStoreValueCountByMoney(user, couponCheck, 0));
+                info.setBuyCount(statisticsService.getStoreValueCountByMoney(user, couponCheck, 1));
+                info.setUsedCount(info.getBuyCount() - info.getAvailableCount());
+            }
         }
         ret.put("data", data);
 
