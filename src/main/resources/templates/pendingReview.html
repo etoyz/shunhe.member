@@ -377,7 +377,7 @@
                     dataType: "json",
                     success: function (res) {
                         selectE2.empty()
-                        selectE2.append('<option value="-1">卡券下发</option>');
+                        selectE2.append('<option value="-1">卡券发放</option>');
                         selectE2.append('<option value="-2">储值</option>');
                         for (var s in res) {
                             selectE2.append("<option value='" + s + "'>" + res[s].coupon.name + "(剩余" + res[s].money + "元)" + "</option>");
@@ -547,7 +547,7 @@
                                                 data[i].count = parseInt(data[i].count)
                                                 data[i].totalMoney = parseFloat(data[i].totalMoney).toFixed(2)
                                                 if(data[i].payStyle === "-1") {
-                                                    data[i].payStyleName = "卡券下发";
+                                                    data[i].payStyleName = "卡券发放";
                                                 } else if(data[i].payStyle === "-2") {
                                                     data[i].payStyleName = "储值";
                                                 }

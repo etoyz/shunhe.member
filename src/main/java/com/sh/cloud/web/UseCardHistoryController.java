@@ -4,12 +4,10 @@ import com.sft.member.bean.Coupon;
 import com.sft.member.bean.CouponCheck;
 import com.sft.member.bean.User;
 import com.sft.member.obtain.coupon.CouponService;
-import com.sft.member.obtain.pay.PayService;
 import com.sft.member.obtain.statistics.StatisticsService;
 import com.sft.member.obtain.user.UserService;
 import com.sh.cloud.entity.GetRequestPacket;
 import com.sh.cloud.entity.ReturnHistoryJson;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -42,7 +40,8 @@ public class UseCardHistoryController {
 
         // 源数据列表
         // 获取合并后的列表
-        List<CouponCheck> sourceDataList = statisticsService.getCheckRecordStatics(request.getUser(), request.getCouponCheck(), request.getPage(), request.getLimit(), false);;
+        List<CouponCheck> sourceDataList = statisticsService.getCheckRecordStatics(request.getUser(), request.getCouponCheck(), request.getPage(), request.getLimit(), false);
+        ;
         // 返回时的列表
         List<ReturnHistoryJson> resJsonList = new ArrayList<>();
 
@@ -69,7 +68,11 @@ public class UseCardHistoryController {
             resJson.setPracticalProjectName(data.practicalProjectName);
             // 给的是支付ID，ID大于0代表卡券ID，通过卡券ID查出名字来就OK啦。
             coupon.couponId = Integer.parseInt(data.payStyle);
-            coupon = couponService.getCoupon(coupon);
+            if (coupon.couponId > 0)
+                coupon = couponService.getCoupon(coupon);
+            else {
+                coupon.name = coupon.couponId == -1 ? "卡券发放" : "储值";
+            }
             resJson.setPayStyleName(coupon.name);
             // 占位-工时费
             // 占位-材料费

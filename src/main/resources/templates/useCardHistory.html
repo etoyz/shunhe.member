@@ -372,7 +372,7 @@
                 dataType: "json",
                 success: function (res) {
                     selectE2.empty()
-                    selectE2.append('<option value="-1">卡券下发</option>');
+                    selectE2.append('<option value="-1">卡券发放</option>');
                     selectE2.append('<option value="-2">储值</option>');
                     for (var s in res) { // value = "couponId, couponType"
                         console.log(res[s])
@@ -498,7 +498,7 @@
                                         let data = res.data
                                         for (var i = 0; i < data.length; i++) {
                                             if (data[i].payStyle === "-1") {
-                                                data[i].payStyleName = "卡券下发";
+                                                data[i].payStyleName = "卡券发放";
                                                 data[i].num = parseInt(data[i].count).toFixed(0)
                                                 // data[i].totalMoney = data[i].count
                                             } else if (data[i].payStyle === "-2") {

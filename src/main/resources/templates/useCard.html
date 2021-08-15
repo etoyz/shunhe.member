@@ -379,7 +379,7 @@
                     dataType: "json",
                     success: function (res) {
                         selectE2.empty()
-                        selectE2.append('<option value="-1">卡券下发</option>');
+                        selectE2.append('<option value="-1">卡券发放</option>');
                         selectE2.append('<option value="-2">储值</option>');
                         for (var s in res) { // value = "couponId, couponType"
                             if(res[s].coupon.type === 1)
@@ -538,7 +538,7 @@
                 formData.payStyleName = $('#payStyle option:selected').text()
                 formData.practicalProjectId = $("#practicalProjectId").val()
                 // 初始校验
-                if($("#payStyle").val() !== "-1" && $("#payStyle").val() !== "-2"){ // 既不是卡券下发，也不是储值，则进行校验
+                if($("#payStyle").val() !== "-1" && $("#payStyle").val() !== "-2"){ // 既不是卡券发放，也不是储值，则进行校验
                     activePayStyle = $("#payStyle").val()
                     if(!isCalCntAvail) {
                         cntAvail = parseFloat($("#payStyle option:selected").text().match(/(?<=剩余 )([0-9.]+)(?!= [张元])/)[0])
