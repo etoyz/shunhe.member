@@ -548,7 +548,6 @@
 
                 table.on('tool(speProjTable)', function (obj) {
                     let data = obj.data
-                    console.log(data)
                     if (obj.event === "delete") {
                         layer.confirm("确定删除具体项目【" + data.name + "】?", function () {
                             $.post({
@@ -585,6 +584,7 @@
                         form.on('submit(confirmAddSpe)', function (formData) {
                             formData.field.practicalProjectId = data.practicalProjectId;
                             formData.field.consumeProjectId = data.consumeProjectId;
+                            formData.field.couponName = $("#speProjCoupon option:selected").text();
                             $.post({
                                 url: "service/practicalProject/editPracticalProject",
                                 data: JSON.stringify(formData.field),
