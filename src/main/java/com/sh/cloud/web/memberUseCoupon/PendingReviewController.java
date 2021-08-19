@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("service/review")
+@RequestMapping("service/useCoupon/review")
 public class PendingReviewController {
     @Resource
     PayService payService;

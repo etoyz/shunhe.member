@@ -365,7 +365,7 @@
         function pullPay(selector, userid, consumeProjectId, callback) {
             var selectE2 = $(selector);
             $.post({
-                url: "service/useCard/getEnablePayCoupon?userid=" + userid + "&consumeProjectId=" + consumeProjectId,
+                url: "service/useCoupon/useCoupon/getEnablePayCoupon?userid=" + userid + "&consumeProjectId=" + consumeProjectId,
                 timeout: 1000,
                 dataType: "json",
                 success: function (res) {

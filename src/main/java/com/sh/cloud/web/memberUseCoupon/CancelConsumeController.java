@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("service/cancelConsume")
+@RequestMapping("service/useCoupon/cancelConsume")
 public class CancelConsumeController {
     @Resource
     PayService payService;
