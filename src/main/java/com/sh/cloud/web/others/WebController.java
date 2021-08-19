@@ -8,83 +8,63 @@ public class WebController {
     // ----------- Main controller ------------
     @RequestMapping("/main")
     public String main() {
-        return "main";
+        return "others/main";
     }
     // ----------------------------------------
 
     // ------------- Menu: Member -------------
     @RequestMapping("/memberArchives")
     public String memberArchives() {
-        return "memberArchives";
+        return "member/memberArchives";
     }
     // ----------------------------------------
 
     // ----------- Menu: Use card -------------
     @RequestMapping("/useCard")
     public String useCard() {
-        return "useCard";
+        return "memberUseCoupon/useCard";
     }
 
     @RequestMapping("/cancelConsume")
     public String cancelConsume() {
-        return "cancelConsume";
+        return "memberUseCoupon/cancelConsume";
     }
 
     @RequestMapping("/pendingReview")
     public String pendingReview() {
-        return "pendingReview";
+        return "memberUseCoupon/pendingReview";
     }
     // ----------------------------------------
 
     // ------ Meun: Customize parameter -------
     @RequestMapping("/coupon")
     public String card() {
-        return "coupon";
+        return "parameters/coupon";
     }
 
     @RequestMapping("/consumeType")
     public String consumeType() {
-        return "consumeType";
+        return "parameters/consumeType";
     }
 
     @RequestMapping("/consumeItem")
     public String consumeItem() {
-        return "consumeProject";
+        return "parameters/consumeProject";
     }
-
-//    @RequestMapping("/brand")
-//    public String brand() {
-//        return "brand";
-//    }
-//
-//    @RequestMapping("/carSeries")
-//    public String carSeries() {
-//        return "carSeries";
-//    }
-//
-//    @RequestMapping("/model")
-//    public String model() {
-//        return "model";
-//    }
 
     @RequestMapping("/insuranceCompany")
     public String insuranceCompany() {
-        return "insuranceCompany";
+        return "parameters/insuranceCompany";
     }
 
     @RequestMapping("/insuranceType")
     public String insuranceType() {
-        return "insuranceType";
-    }
-
-    @RequestMapping("/typeOfInsurance")
-    public String typeOfInsurance() {
-        return "typeOfInsurance";
+        return "parameters/insuranceType";
     }
 
     @RequestMapping("/membershipLevel")
     public String membershipLevel() {
-        return "membershipLevel";
+        return "parameters/membershipLevel";
     }
     // ----------------------------------------
 
@@ -92,25 +72,25 @@ public class WebController {
     // 用卡历史
     @RequestMapping("/useCardHistory")
     public String useCardHistory() {
-        return "useCardHistory";
+        return "statistics/useCardHistory";
     }
 
     // 反结算历史
     @RequestMapping("/cancelConsumeHistory")
     public String cancelConsumeHistory() {
-        return "cancelConsumeHistory";
+        return "statistics/cancelConsumeHistory";
     }
 
     // 卡券统计
     @RequestMapping("/couponStatistical")
     public String couponStatistical() {
-        return "couponStatistical";
+        return "statistics/couponStatistical";
     }
 
     // 储值统计
     @RequestMapping("/balanceStatistical")
     public String depositStatistical() {
-        return "balanceStatistical";
+        return "statistics/balanceStatistical";
     }
 
 //    // 群发统计
@@ -129,14 +109,7 @@ public class WebController {
     // ------------- Menu: System management -------------
     @RequestMapping("/userManagement")
     public String userManagement() {
-        return "userManagement";
-    }
-    // ----------------------------------------
-
-    // ------------ For debugging ------------
-    @RequestMapping("/testPage")
-    public String testPage() {
-        return "testPage";
+        return "others/userManagement";
     }
     // ----------------------------------------
 }

@@ -16,7 +16,7 @@ import java.util.Map;
 public class HomeController {
     @RequestMapping({"/", "/index"})
     public String index() {
-        return "index";
+        return "others/index";
     }
 
     @RequestMapping("/login")
@@ -29,7 +29,7 @@ public class HomeController {
     @RequestMapping("/403")
     public String unauthorizedRole() {
         System.out.println("------没有权限-------");
-        return "403";
+        return "others/403";
     }
 
     @RequestMapping("/logout")
@@ -38,10 +38,6 @@ public class HomeController {
         return "redirect:" + ShiroCasConfiguration.logoutUrl;
     }
 
-    @RequestMapping("/vehicleManagement")
-    public String vehicleManagement() {
-        return "userweb/vehicleManagement";
-    }
 //    @RequestMapping("/index")
 //    public String indexManagement(){
 //        return "userweb/index";
