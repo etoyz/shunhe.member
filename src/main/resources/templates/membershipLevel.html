@@ -223,7 +223,7 @@
         let itemCnt;
         let tableIns = table.render({
             elem: '#card',
-            url: 'service/membershipLevel/getMemberList?query=',
+            url: 'service/parameters/membershipLevel/getMemberList?query=',
             height: 'full-100',
             page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                 layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
@@ -305,7 +305,7 @@
             if (layEvent === 'delete') {
                 layer.confirm("确认删除？", function () {
                     $.post({
-                        url: "/service/membershipLevel/deleteMember",
+                        url: "/service/parameters/membershipLevel/deleteMember",
                         data: {
                             id: activeCardid
                         },
@@ -367,7 +367,7 @@
                         score: data.field.score
                     }
                     $.post({
-                        url: "service/membershipLevel/editMember",
+                        url: "service/parameters/membershipLevel/editMember",
                         data: JSON.stringify(data.field),
                         contentType: "application/json",
                         success: function (res) {
@@ -420,7 +420,7 @@
                 score: data.field.score
             }
             $.post({
-                url: "/service/membershipLevel/addMember",
+                url: "/service/parameters/membershipLevel/addMember",
                 data: JSON.stringify(data.field),
                 contentType: "application/json",
                 success: function (res) {
@@ -436,7 +436,7 @@
 
         $("#queryBtn").unbind("click").click(function () {
             tableIns.reload({
-                url: 'service/membershipLevel/getMemberList?query=' + $("#cardNameInput").val(),
+                url: 'service/parameters/membershipLevel/getMemberList?query=' + $("#cardNameInput").val(),
                 page: {
                     curr: 1
                 },

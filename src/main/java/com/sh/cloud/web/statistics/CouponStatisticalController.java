@@ -1,4 +1,4 @@
-package com.sh.cloud.web;
+package com.sh.cloud.web.statistics;
 
 import com.sft.member.bean.Coupon;
 import com.sft.member.bean.CouponCheck;
@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("service/couponStatistical")
+@RequestMapping("service/statistics/couponStatistical")
 public class CouponStatisticalController {
     @Resource
     StatisticsService statisticsService; // 统计相关接口

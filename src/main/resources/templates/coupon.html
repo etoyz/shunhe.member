@@ -147,7 +147,7 @@
                 }
 
                 $.post({
-                    url: "service/coupon/getCouponTypes",
+                    url: "service/parameters/coupon/getCouponTypes",
                     timeout: 1000,
                     dataType: "json",
                     success: function (res) {
@@ -175,7 +175,7 @@
         let itemCnt;
         let couponTable = table.render({
             elem: '#coupon',
-            url: 'service/coupon/getCouponList?query=',
+            url: 'service/parameters/coupon/getCouponList?query=',
             toolbar: true, //仅开启工具栏，不显示左侧模板
             defaultToolbar: ['filter', 'print', 'exports'],
             height: 'full-100',
@@ -231,7 +231,7 @@
             height: 450,
             width: 500,
             page: false,
-            url: "service/consumeProject/getConsumeProjectNameList?query=&consumeTypeId=",
+            url: "service/parameters/consumeProject/getConsumeProjectNameList?query=&consumeTypeId=",
             cols: [ [
                 {type: 'checkbox', width: 70},
                 {field: 'name', width: 420, title: '消费项目'},
@@ -247,7 +247,7 @@
             if (layEvent === 'delete') { // 用卡
                 layer.confirm("确认删除卡券【" + activeLine.name + "】?", {icon: 3, title: '提示'}, function () {
                     $.post({
-                        url: "/service/coupon/deleteCoupon",
+                        url: "/service/parameters/coupon/deleteCoupon",
                         data: JSON.stringify(activeLine),
                         contentType: "application/json",
                         success: function (res) {
@@ -296,7 +296,7 @@
                         data.field.couponId = activeLine.couponId
                         delete data.field.type
                         $.post({
-                            url: "service/coupon/editCoupon",
+                            url: "service/parameters/coupon/editCoupon",
                             data: JSON.stringify(data.field),
                             contentType: "application/json",
                             success: function (res) {
@@ -321,7 +321,7 @@
                 projectsTable.reload({
                     done: function (resAll) {
                         $.post({
-                            url: "service/consumeProject/getConsumeProjectListByCoupon",
+                            url: "service/parameters/consumeProject/getConsumeProjectListByCoupon",
                             data: JSON.stringify(activeLine),
                             contentType: "application/json",
                             success: function (resRel) {
@@ -373,7 +373,7 @@
             form.on('submit(confirm)', function (data) {
                 function addAction() {
                     $.post({
-                        url: "/service/coupon/addCoupon",
+                        url: "/service/parameters/coupon/addCoupon",
                         data: JSON.stringify(data.field),
                         contentType: "application/json",
                         success: function (res) {
@@ -401,7 +401,7 @@
 
         $("#confirmRel").unbind("click").click(function () {
             $.post({
-                url: "service/coupon/relateConsumeProject",
+                url: "service/parameters/coupon/relateConsumeProject",
                 data: JSON.stringify({
                     "projects": table.checkStatus('relTable').data,
                     "coupon": activeLine
@@ -415,7 +415,7 @@
 
         $("#queryBtn").unbind("click").click(function () {
             couponTable.reload({
-                url: 'service/coupon/getCouponList?query=' + $("#couponNameInput").val(),
+                url: 'service/parameters/coupon/getCouponList?query=' + $("#couponNameInput").val(),
                 page: {
                     curr: 1
                 }

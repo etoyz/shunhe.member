@@ -1,4 +1,4 @@
-package com.sh.cloud.web;
+package com.sh.cloud.web.others;
 
 import com.sh.cloud.config.ShiroCasConfiguration;
 import com.sh.cloud.utils.UserUtils;

@@ -88,7 +88,7 @@
             });
             form.on('submit(confirmSub)', function (data) {
                 $.post({
-                    url: "service/consumeType/addConsumeType",
+                    url: "service/parameters/consumeType/addConsumeType",
                     data: JSON.stringify(data.field),
                     contentType: "application/json",
                     success: function (res) {
@@ -111,7 +111,7 @@
         let itemCnt;
         let tableTypes = table.render({
             elem: '#consumeTypes',
-            url: 'service/consumeType/getConsumeTypeList?query=',
+            url: 'service/parameters/consumeType/getConsumeTypeList?query=',
             page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                 layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
                 limit: 10,
@@ -169,7 +169,7 @@
                 form.on('submit(confirmSub)', function (formData) {
                     formData.field['consumeTypeId'] = data.consumeTypeId;
                     $.post({
-                        url: "service/consumeType/editConsumeType",
+                        url: "service/parameters/consumeType/editConsumeType",
                         data: JSON.stringify(formData.field),
                         contentType: "application/json",
                         success: function (res) {
@@ -185,7 +185,7 @@
             else if (layEvent === 'delete') {
                 layer.confirm('确认删除消费类型【' + data.name + '】？', {icon: 3, title: '提示'}, function () {
                     $.post({
-                        url: "service/consumeType/deleteConsumeType",
+                        url: "service/parameters/consumeType/deleteConsumeType",
                         data: {
                             id: data.consumeTypeId
                         },
@@ -225,7 +225,7 @@
 
         $("#queryBtn").unbind("click").click(function () {
             tableTypes.reload({
-                url: 'service/consumeType/getConsumeTypeList?query=' + $("#consumeTypeInput").val(),
+                url: 'service/parameters/consumeType/getConsumeTypeList?query=' + $("#consumeTypeInput").val(),
                 page: {
                     curr: 1
                 }

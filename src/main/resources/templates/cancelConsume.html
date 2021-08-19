@@ -162,7 +162,7 @@
                                 data[i].payStyleName = '储值'
                             else {
                                 $.post({
-                                    url: "service/coupon/getCoupon?couponId=" + data[i].payStyle,
+                                    url: "service/parameters/coupon/getCoupon?couponId=" + data[i].payStyle,
                                     timeout: 1000,
                                     async: false,
                                     dataType: "json",

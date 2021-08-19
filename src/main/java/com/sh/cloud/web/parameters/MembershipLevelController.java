@@ -1,4 +1,4 @@
-package com.sh.cloud.web;
+package com.sh.cloud.web.parameters;
 
 import com.sft.member.bean.Member;
 import com.sft.member.obtain.member.MemberService;
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("service/membershipLevel")
+@RequestMapping("service/parameters/membershipLevel")
 public class MembershipLevelController {
     @Resource
     MemberService memberService;

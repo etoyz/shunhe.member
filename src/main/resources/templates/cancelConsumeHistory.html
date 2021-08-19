@@ -95,7 +95,7 @@
              elem: '#tableMain'
             ,height: 'full-180'
             ,size: 'sm' //小尺寸的表格
-            ,url: 'service/cancelConsumeHistory/getCancelConsumeHistoryList' //数据接口
+            ,url: 'service/statistics/cancelConsumeHistory/getCancelConsumeHistoryList' //数据接口
             ,method: "post"
             ,contentType: "application/json"
             ,where: {
@@ -143,7 +143,7 @@
 
         $("#queryBtn").unbind("click").click(function () {
             tableIns.reload({
-                url: 'service/cancelConsumeHistory/getCancelConsumeHistoryList',
+                url: 'service/statistics/cancelConsumeHistory/getCancelConsumeHistoryList',
                 where: {
                     couponCheck: {
                         time: $("#time").val().replace(/ @ /, "@")

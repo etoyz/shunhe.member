@@ -305,7 +305,7 @@
             function pullConsumeTypes(selector, callback) {
                 var selectE = $(selector);
                 $.post({
-                    url: "service/consumeType/getConsumeTypeNameList",
+                    url: "service/parameters/consumeType/getConsumeTypeNameList",
                     timeout: 1000,
                     dataType: "json",
                     success: function (res) {
@@ -327,7 +327,7 @@
             function pullConsumeItems(selector, consumeTypeId, callback) {
                 var selectE2 = $(selector);
                 $.post({
-                    url: "service/consumeProject/getConsumeProjectNameList?query=&consumeTypeId=" + consumeTypeId ,
+                    url: "service/parameters/consumeProject/getConsumeProjectNameList?query=&consumeTypeId=" + consumeTypeId ,
                     timeout: 1000,
                     dataType: "json",
                     success: function (res) {
@@ -489,7 +489,7 @@
                     $("#num").val(parseFloat($("#num").val()).toFixed(0))
                     formData.count = $("#num").val()
                     $.post({
-                        url: "service/coupon/getCoupon?couponId=" + formData.couponId,
+                        url: "service/parameters/coupon/getCoupon?couponId=" + formData.couponId,
                         timeout: 1000,
                         async: false,
                         dataType: "json",
@@ -514,7 +514,7 @@
                         $("#num").val(parseFloat($("#num").val()).toFixed(0))
                         formData.count = $("#num").val()
                         $.post({
-                            url: "service/coupon/getCoupon?couponId=" + formData.payStyle.split(",")[0],
+                            url: "service/parameters/coupon/getCoupon?couponId=" + formData.payStyle.split(",")[0],
                             timeout: 1000,
                             async: false,
                             dataType: "json",

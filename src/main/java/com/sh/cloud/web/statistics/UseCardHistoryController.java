@@ -1,4 +1,4 @@
-package com.sh.cloud.web;
+package com.sh.cloud.web.statistics;
 
 import com.sft.member.bean.Coupon;
 import com.sft.member.bean.CouponCheck;
@@ -20,7 +20,7 @@ import java.util.Map;
 
 @Deprecated
 @RestController
-@RequestMapping("service/useCardHistory")
+@RequestMapping("service/statistics/useCardHistory")
 public class UseCardHistoryController {
     @Resource
     StatisticsService statisticsService; // 统计相关接口

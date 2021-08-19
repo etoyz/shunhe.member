@@ -98,7 +98,7 @@
             });
             form.on('submit(confirmSub)', function (formData) {
                 $.post({
-                    url: "service/insuranceCompany/addInsuranceCompany",
+                    url: "service/parameters/insuranceCompany/addInsuranceCompany",
                     data: JSON.stringify(formData.field),
                     contentType: "application/json",
                     success: function (res) {
@@ -127,7 +127,7 @@
         let itemCnt
         let tableIns = table.render({
             elem: '#insuranceCompanies',
-            url: 'service/insuranceCompany/getInsuranceCompanyList?query=',
+            url: 'service/parameters/insuranceCompany/getInsuranceCompanyList?query=',
             page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                 layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
                 limit: 10,
@@ -187,7 +187,7 @@
                 form.on('submit(confirmSub)', function (formData) {
                     formData.field['id'] = data.id;
                     $.post({
-                        url: "service/insuranceCompany/editInsuranceCompany",
+                        url: "service/parameters/insuranceCompany/editInsuranceCompany",
                         data: JSON.stringify(formData.field),
                         contentType: "application/json",
                         success: function (res) {
@@ -203,7 +203,7 @@
                 console.log(data)
                 layer.confirm('确认删除保险公司【' + data.name + '】？', {icon: 3, title: '提示'}, function (index) {
                     $.post({
-                        url: "service/insuranceCompany/deleteInsuranceCompany",
+                        url: "service/parameters/insuranceCompany/deleteInsuranceCompany",
                         data: {
                             id: data.id
                         },
@@ -243,7 +243,7 @@
 
         $("#queryBtn").unbind("click").click(function () {
             tableIns.reload({
-                url: 'service/insuranceCompany/getInsuranceCompanyList?query=' + $("#insuranceCompanyInput").val(),
+                url: 'service/parameters/insuranceCompany/getInsuranceCompanyList?query=' + $("#insuranceCompanyInput").val(),
                 page: {
                     curr: 1
                 }
