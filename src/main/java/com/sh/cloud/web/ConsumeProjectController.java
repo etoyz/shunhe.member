@@ -8,6 +8,7 @@ import com.sft.member.obtain.coupon.CouponService;
 import com.sh.cloud.entity.ConsumeProjectAndConsumeProjects;
 import com.sh.cloud.entity.CouponsAndConsumeProject;
 import com.sh.cloud.utils.PlatUserUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,6 +47,7 @@ public class ConsumeProjectController {
     }
 
     @RequestMapping("getConsumeProjectNameList")
+    @RequiresPermissions({"member:consumeItem:list"})
     @ResponseBody
     public Map<String, Object> getConsumeProjectNameList(@RequestParam String query, @RequestParam String consumeTypeId) {
         Map<String, Object> ret = new HashMap<>();

@@ -3,6 +3,7 @@ package com.sh.cloud.web;
 import com.sft.member.bean.InsuranceCompany;
 import com.sft.member.insurance.InsuranceCompanyService;
 import com.sh.cloud.utils.PlatUserUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,7 @@ public class InsuranceCompanyController {
     InsuranceCompanyService insuranceCompanyService;
 
     @RequestMapping("getInsuranceCompanyList")
+    @RequiresPermissions({"member:insuranceCompany:list"})
     @ResponseBody
     public Map<String, Object> getInsuranceCompanyList(@RequestParam String query, @RequestParam int page, @RequestParam int limit) {
         Map<String, Object> ret = new HashMap<>();

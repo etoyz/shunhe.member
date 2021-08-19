@@ -6,6 +6,7 @@ import com.sft.member.obtain.consume.ConsumeProjectService;
 import com.sft.member.obtain.coupon.CouponService;
 import com.sh.cloud.entity.CouponAndConsumeProjects;
 import com.sh.cloud.utils.PlatUserUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -67,6 +68,7 @@ public class CouponController {
     }
 
     @GetMapping("getCouponList")
+    @RequiresPermissions({"member:coupon:list"})
     public Map<String, Object> getCouponList(@RequestParam String query, @RequestParam int page, @RequestParam int limit) {
         Map<String, Object> ret = new HashMap<>();
         ret.put("code", 0);
