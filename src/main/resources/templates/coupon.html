@@ -231,7 +231,7 @@
             height: 450,
             width: 500,
             page: false,
-            url: "service/consumeProject/getConsumeProjectNameList",
+            url: "service/consumeProject/getConsumeProjectNameList?query=&consumeTypeId=",
             cols: [ [
                 {type: 'checkbox', width: 70},
                 {field: 'name', width: 420, title: '消费项目'},
@@ -319,7 +319,7 @@
             if (layEvent === 'relate') {
                 let loadMsg = layer.load(2)
                 projectsTable.reload({
-                    done: function (resAll, page, count) {
+                    done: function (resAll) {
                         $.post({
                             url: "service/consumeProject/getConsumeProjectListByCoupon",
                             data: JSON.stringify(activeLine),

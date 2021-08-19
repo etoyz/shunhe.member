@@ -35,6 +35,13 @@ public class ConsumeTypeController {
         return ret;
     }
 
+    @RequestMapping("getConsumeTypeNameList")
+    @ResponseBody
+    public List<ConsumeType> getConsumeTypeList() {
+        ConsumeType consumeType = new ConsumeType();
+        return consumeTypeService.getConsumeTypeList(consumeType, 1, Integer.MAX_VALUE);
+    }
+
     @RequestMapping("addConsumeType")
     @ResponseBody
     public String addConsumeType(@RequestBody ConsumeType consumeType) {

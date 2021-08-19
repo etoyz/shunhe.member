@@ -28,17 +28,17 @@ public class ConsumeProjectController {
 
     @RequestMapping("getConsumeProjectList")
     @ResponseBody
-    public Map<String, Object> getConsumeProjectList(@RequestParam String query, @RequestParam String consumeType, @RequestParam int page, @RequestParam int limit) {
+    public Map<String, Object> getConsumeProjectList(@RequestParam String query, @RequestParam String consumeTypeId, @RequestParam int page, @RequestParam int limit) {
         Map<String, Object> ret = new HashMap<>();
         ret.put("code", 0);
         ret.put("msg", "");
 
         ConsumeProject consumeProject = new ConsumeProject();
         consumeProject.name = query;
-        if (consumeType.equals(""))
+        if (consumeTypeId.equals(""))
             consumeProject.consumeTypeId = -1;
         else
-            consumeProject.consumeTypeId = Integer.parseInt(consumeType);
+            consumeProject.consumeTypeId = Integer.parseInt(consumeTypeId);
         List<ConsumeProject> dataByQuery = consumeProjectService.getConsumeProjectList(consumeProject, page, limit);
         ret.put("data", dataByQuery);
         ret.put("count", consumeProjectService.getConsumeProjectListCount(consumeProject));
@@ -47,17 +47,18 @@ public class ConsumeProjectController {
 
     @RequestMapping("getConsumeProjectNameList")
     @ResponseBody
-    public Map<String, Object> getConsumeProjectNameList() {
+    public Map<String, Object> getConsumeProjectNameList(@RequestParam String query, @RequestParam String consumeTypeId) {
         Map<String, Object> ret = new HashMap<>();
         ret.put("code", 0);
-        ret.put("msg", "");
 
         ConsumeProject consumeProject = new ConsumeProject();
-        consumeProject.name = "";
-        consumeProject.consumeTypeId = -1;
+        consumeProject.name = query;
+        if (consumeTypeId.equals(""))
+            consumeProject.consumeTypeId = -1;
+        else
+            consumeProject.consumeTypeId = Integer.parseInt(consumeTypeId);
         List<ConsumeProject> dataByQuery = consumeProjectService.getConsumeProjectList(consumeProject, 1, Integer.MAX_VALUE);
         ret.put("data", dataByQuery);
-        ret.put("count", consumeProjectService.getConsumeProjectListCount(consumeProject));
         return ret;
     }
 

@@ -336,11 +336,10 @@
             function pullConsumeTypes(selector, generateAllOption, callback) {
                 var selectE = $(selector);
                 $.post({
-                    url: "service/consumeType/getConsumeTypeList?query=&page=1&limit=2147483640",
+                    url: "service/consumeType/getConsumeTypeNameList",
                     timeout: 1000,
                     dataType: "json",
                     success: function (res) {
-                        res = res.data;
                         selectE.empty();
                         if (generateAllOption)
                             selectE.append("<option value='-1'>" + "全部" + "</option>");
@@ -363,7 +362,7 @@
         let itemCnt;
         let tableProj = table.render({
             elem: '#consumeProj',
-            url: 'service/consumeProject/getConsumeProjectList?query=&consumeType=',
+            url: 'service/consumeProject/getConsumeProjectList?query=&consumeTypeId=',
             page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                 layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
                 limit: 10,
@@ -673,7 +672,7 @@
                     height: 450,
                     width: 500,
                     page: false,
-                    url: "service/consumeProject/getConsumeProjectNameList",
+                    url: "service/consumeProject/getConsumeProjectNameList?query=&consumeTypeId=",
                     cols: [ [
                         {type: 'checkbox', width: 70},
                         {field: 'name', width: 420, title: '消费项目'},
