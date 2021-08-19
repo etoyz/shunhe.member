@@ -97,7 +97,7 @@
             });
             form.on('submit(confirmSub)', function (formData) {
                 $.post({
-                    url: "service/insuranceType/addInsuranceType",
+                    url: "service/parameters/insuranceType/addInsuranceType",
                     data: JSON.stringify(formData.field),
                     contentType: "application/json",
                     success: function (res) {
@@ -119,7 +119,7 @@
         let itemCnt;
         let tableIns = table.render({
             elem: '#insuranceCompanies',
-            url: 'service/insuranceType/getInsuranceTypeList?query=',
+            url: 'service/parameters/insuranceType/getInsuranceTypeList?query=',
             page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                 layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
                 limit: 15,
@@ -179,7 +179,7 @@
                 form.on('submit(confirmSub)', function (formData) {
                     formData.field['id'] = data.id;
                     $.post({
-                        url: "service/insuranceType/editInsuranceType",
+                        url: "service/parameters/insuranceType/editInsuranceType",
                         data: JSON.stringify(formData.field),
                         contentType: "application/json",
                         success: function (res) {
@@ -198,7 +198,7 @@
             else if (layEvent === 'delete') {
                 layer.confirm('确认删除险种【' + data.name + '】？', {icon: 3, title: '提示'}, function (index) {
                     $.post({
-                        url: "service/insuranceType/deleteInsuranceType",
+                        url: "service/parameters/insuranceType/deleteInsuranceType",
                         data: {
                             id: data.id
                         },
@@ -236,7 +236,7 @@
 
         $("#queryBtn").unbind("click").click(function () {
             tableIns.reload({
-                url: 'service/insuranceType/getInsuranceTypeList?query=' + $("#insuranceTypeInput").val(),
+                url: 'service/parameters/insuranceType/getInsuranceTypeList?query=' + $("#insuranceTypeInput").val(),
                 page: {
                     curr: 1
                 }

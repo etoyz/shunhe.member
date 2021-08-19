@@ -1,4 +1,4 @@
-package com.sh.cloud.web;
+package com.sh.cloud.web.parameters;
 
 import com.sft.member.bean.ConsumeType;
 import com.sft.member.obtain.consume.ConsumeTypeService;
@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("service/consumeType")
+@RequestMapping("service/parameters/consumeType")
 public class ConsumeTypeController {
     @Resource
     ConsumeTypeService consumeTypeService;

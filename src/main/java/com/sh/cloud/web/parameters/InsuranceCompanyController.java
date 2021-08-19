@@ -1,4 +1,4 @@
-package com.sh.cloud.web;
+package com.sh.cloud.web.parameters;
 
 import com.sft.member.bean.InsuranceCompany;
 import com.sft.member.insurance.InsuranceCompanyService;
@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("service/insuranceCompany")
+@RequestMapping("service/parameters/insuranceCompany")
 public class InsuranceCompanyController {
     @Resource
     InsuranceCompanyService insuranceCompanyService;

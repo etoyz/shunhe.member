@@ -1,4 +1,4 @@
-package com.sh.cloud.web;
+package com.sh.cloud.web.others;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -312,7 +312,7 @@
             function pullCoupon(selector, callback) {
                 var selectE = $(selector);
                 $.get({
-                    url: "service/coupon/getCouponNameList",
+                    url: "service/parameters/coupon/getCouponNameList",
                     timeout: 1000,
                     dataType: "json",
                     success: function (res) {
@@ -336,7 +336,7 @@
             function pullConsumeTypes(selector, generateAllOption, callback) {
                 var selectE = $(selector);
                 $.post({
-                    url: "service/consumeType/getConsumeTypeNameList",
+                    url: "service/parameters/consumeType/getConsumeTypeNameList",
                     timeout: 1000,
                     dataType: "json",
                     success: function (res) {
@@ -362,7 +362,7 @@
         let itemCnt;
         let tableProj = table.render({
             elem: '#consumeProj',
-            url: 'service/consumeProject/getConsumeProjectList?query=&consumeTypeId=',
+            url: 'service/parameters/consumeProject/getConsumeProjectList?query=&consumeTypeId=',
             page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                 layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
                 limit: 10,
@@ -433,7 +433,7 @@
                 form.on('submit(confirmAdd)', function (formData) {
                     formData.field.consumeProjectId = activeProject.consumeProjectId
                     $.post({
-                        url: "service/consumeProject/editConsumeProject",
+                        url: "service/parameters/consumeProject/editConsumeProject",
                         data: JSON.stringify(formData.field),
                         contentType: "application/json",
                         success: function (res) {
@@ -451,7 +451,7 @@
             else if (layEvent === 'delete') {
                 layer.confirm('确认删除消费项目【' + consumeProjectName + '】？', {icon: 3, title: '提示'}, function (index) {
                     $.post({
-                        url: "service/consumeProject/deleteConsumeProject",
+                        url: "service/parameters/consumeProject/deleteConsumeProject",
                         data: {
                             id: data.consumeProjectId
                         },
@@ -607,7 +607,7 @@
                     height: 450,
                     width: 500,
                     page: false,
-                    url: "service/coupon/getCouponNameList",
+                    url: "service/parameters/coupon/getCouponNameList",
                     cols: [ [
                         {type: 'checkbox', width: 70},
                         {field: 'name', width: 420, title: '消费卡券'},
@@ -616,7 +616,7 @@
                 relTable.reload({
                     done: function (resAll, page, count) {
                         $.post({
-                            url: "service/coupon/getCouponListByConsumeProject",
+                            url: "service/parameters/coupon/getCouponListByConsumeProject",
                             data: JSON.stringify(data),
                             contentType: "application/json",
                             success: function (resRel) {
@@ -649,7 +649,7 @@
                 })
                 $("#confirmRel").unbind("click").on("click", function () {
                     $.post({
-                        url: "service/consumeProject/relateCoupon",
+                        url: "service/parameters/consumeProject/relateCoupon",
                         data: JSON.stringify({
                             "coupons": table.checkStatus('relTable').data,
                             "consumeProjectId": data.consumeProjectId
@@ -672,7 +672,7 @@
                     height: 450,
                     width: 500,
                     page: false,
-                    url: "service/consumeProject/getConsumeProjectNameList?query=&consumeTypeId=",
+                    url: "service/parameters/consumeProject/getConsumeProjectNameList?query=&consumeTypeId=",
                     cols: [ [
                         {type: 'checkbox', width: 70},
                         {field: 'name', width: 420, title: '消费项目'},
@@ -681,7 +681,7 @@
                 relTable2.reload({
                     done: function (resAll, page, count) {
                         $.post({
-                            url: "service/consumeProject/getRelateConsumeProject",
+                            url: "service/parameters/consumeProject/getRelateConsumeProject",
                             data: JSON.stringify(data),
                             contentType: "application/json",
                             success: function (resRel) {
@@ -715,7 +715,7 @@
                 })
                 $("#confirmRel").unbind("click").on("click", function () {
                     $.post({
-                        url: "service/consumeProject/relateConsumeProject",
+                        url: "service/parameters/consumeProject/relateConsumeProject",
                         data: JSON.stringify({
                             "project": activeProject,
                             "projects": table.checkStatus('relTable').data
@@ -755,7 +755,7 @@
                 });
                 form.on('submit(confirmAdd)', function (formData) {
                     $.post({
-                        url: "service/consumeProject/addConsumeProject",
+                        url: "service/parameters/consumeProject/addConsumeProject",
                         data: JSON.stringify(formData.field),
                         contentType: "application/json",
                         success: function (res) {
@@ -771,7 +771,7 @@
             });
             $("#queryBtn").unbind("click").click(function () {
                 tableProj.reload({
-                    url: 'service/consumeProject/getConsumeProjectList?query=' + $("#consumeProjInput").val() + '&consumeType=' + $("#consumeTypeInput").val(),
+                    url: 'service/parameters/consumeProject/getConsumeProjectList?query=' + $("#consumeProjInput").val() + '&consumeType=' + $("#consumeTypeInput").val(),
                     page: {
                         curr: 1
                     }

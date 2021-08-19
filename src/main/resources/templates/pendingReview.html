@@ -303,7 +303,7 @@
             function pullConsumeTypes(selector, callback) {
                 var selectE = $(selector);
                 $.post({
-                    url: "service/consumeType/getConsumeTypeNameList",
+                    url: "service/parameters/consumeType/getConsumeTypeNameList",
                     timeout: 1000,
                     dataType: "json",
                     success: function (res) {
@@ -325,7 +325,7 @@
             function pullConsumeItems(selector, consumeTypeId, callback) {
                 var selectE2 = $(selector);
                 $.post({
-                    url: "service/consumeProject/getConsumeProjectNameList?query=&consumeTypeId=" + consumeTypeId ,
+                    url: "service/parameters/consumeProject/getConsumeProjectNameList?query=&consumeTypeId=" + consumeTypeId ,
                     timeout: 1000,
                     dataType: "json",
                     success: function (res) {
@@ -468,7 +468,7 @@
                                 }
                                 else {
                                     $.post({
-                                        url: "service/coupon/getCoupon?couponId=" + data[i].payStyle,
+                                        url: "service/parameters/coupon/getCoupon?couponId=" + data[i].payStyle,
                                         timeout: 1000,
                                         async: false,
                                         dataType: "json",
@@ -552,7 +552,7 @@
                                                 }
                                                 else {
                                                     $.post({
-                                                        url: "service/coupon/getCoupon?couponId=" + data[i].payStyle,
+                                                        url: "service/parameters/coupon/getCoupon?couponId=" + data[i].payStyle,
                                                         async: false,
                                                         success: function (res) {
                                                             data[i].payStyleName = res.name

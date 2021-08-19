@@ -1,4 +1,4 @@
-package com.sh.cloud.web;
+package com.sh.cloud.web.memberUseCoupon;
 
 import com.sft.member.bean.CouponCheck;
 import com.sft.member.bean.PracticalProject;

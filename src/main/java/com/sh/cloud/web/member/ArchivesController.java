@@ -1,4 +1,4 @@
-package com.sh.cloud.web;
+package com.sh.cloud.web.member;
 
 import carinfo.bean.CarInfo;
 import carinfo.bean.CarSeries;

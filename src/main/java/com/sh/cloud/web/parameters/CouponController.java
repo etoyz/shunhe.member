@@ -1,4 +1,4 @@
-package com.sh.cloud.web;
+package com.sh.cloud.web.parameters;
 
 import com.sft.member.bean.ConsumeProject;
 import com.sft.member.bean.Coupon;
@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("service/coupon")
+@RequestMapping("service/parameters/coupon")
 public class CouponController {
 
     @Resource

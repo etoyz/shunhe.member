@@ -1,4 +1,4 @@
-package com.sh.cloud.web;
+package com.sh.cloud.web.parameters;
 
 import com.sft.member.bean.ConsumeProject;
 import com.sft.member.bean.PlatUser;

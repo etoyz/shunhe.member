@@ -101,7 +101,7 @@
              elem: '#tableMain'
             ,height: 'full-180'
             ,size: 'sm' //小尺寸的表格
-            ,url: 'service/couponStatistical/getCouponStatisticalList' //数据接口
+            ,url: 'service/statistics/couponStatistical/getCouponStatisticalList' //数据接口
             ,method: "post"
             ,contentType: "application/json"
             ,where: {
@@ -136,7 +136,7 @@
 
         $("#queryBtn").unbind("click").click(function () {
             tableIns.reload({
-                url: 'service/couponStatistical/getCouponStatisticalList',
+                url: 'service/statistics/couponStatistical/getCouponStatisticalList',
                 where: {
                     couponCheck: {
                         time: $("#time").val().replace(/ @ /, "@")
