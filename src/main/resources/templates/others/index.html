@@ -47,7 +47,7 @@
             <div class="kit-side-fold"><i aria-hidden="true" class="fa fa-navicon"></i></div>
             <!-- 左侧导航区域（可配合layui已有的垂直导航）-->
             <ul class="layui-nav layui-nav-tree" kit-navbar lay-filter="kitNavbar">
-                <li class="layui-nav-item layui-nav-itemed">
+                <li shiro:hasPermission="member:memberinfo" class="layui-nav-item layui-nav-itemed">
                     <a class="" href="javascript:"><i aria-hidden="true" class="fa fa-plug"></i><span> 微会员</span></a>
                     <dl class="layui-nav-child">
                         <dd>
@@ -58,21 +58,21 @@
                         </dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item">
+                <li shiro:hasPermission="member:memberUseCoupon" class="layui-nav-item">
                     <a class="" href="javascript:"><i aria-hidden="true" class="fa fa-plug"></i><span> 微会员用卡</span></a>
                     <dl class="layui-nav-child">
-                        <dd>
+                        <dd shiro:hasPermission="member:memberUseCoupon:useCoupon">
                             <a data-options="{url:'useCard.html',icon:'&#xe658;',title:'用卡',id:'2'}" href="javascript:"
                                kit-target><i
                                     class="layui-icon">&#xe658;</i><span> 用卡</span></a>
                         </dd>
-                        <dd>
+                        <dd shiro:hasPermission="member:memberUseCoupon:cancelConsume">
                             <a data-options="{url:'cancelConsume.html',icon:'&#xe658;',title:'反结算',id:'3'}"
                                href="javascript:"
                                kit-target><i
                                     class="layui-icon">&#xe658;</i><span> 反结算</span></a>
                         </dd>
-                        <dd>
+                        <dd shiro:hasPermission="member:memberUseCoupon:review">
                             <a data-options="{url:'pendingReview.html',icon:'&#xe658;',title:'待审核',id:'4'}"
                                href="javascript:"
                                kit-target><i
@@ -80,39 +80,39 @@
                         </dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item">
+                <li shiro:hasPermission="member:customParameters" class="layui-nav-item">
                     <a class="" href="javascript:"><i aria-hidden="true" class="fa fa-plug"></i><span> 自定义参数</span></a>
                     <dl class="layui-nav-child">
-                        <dd shiro:hasPermission="member:coupon:list">
+                        <dd shiro:hasPermission="member:customParameters:coupon:list">
                             <a data-options="{url:'coupon.html',icon:'&#xe658;',title:'卡券',id:'5'}" href="javascript:"
                                kit-target><i
                                     class="layui-icon">&#xe658;</i><span> 卡券</span></a>
                         </dd>
-                        <dd shiro:hasPermission="member:consumeType:list">
+                        <dd shiro:hasPermission="member:customParameters:consumeType:list">
                             <a data-options="{url:'consumeType.html',icon:'&#xe658;',title:'消费类型',id:'6'}"
                                href="javascript:"
                                kit-target><i
                                     class="layui-icon">&#xe658;</i><span> 消费类型</span></a>
                         </dd>
-                        <dd shiro:hasPermission="member:consumeItem:list">
+                        <dd shiro:hasPermission="member:customParameters:consumeItem:list">
                             <a data-options="{url:'consumeItem.html',icon:'&#xe658;',title:'消费项目',id:'7'}"
                                href="javascript:"
                                kit-target><i
                                     class="layui-icon">&#xe658;</i><span> 消费项目</span></a>
                         </dd>
-                        <dd shiro:hasPermission="member:insuranceCompany:list">
+                        <dd shiro:hasPermission="member:customParameters:insuranceCompany:list">
                             <a data-options="{url:'insuranceCompany.html',icon:'&#xe658;',title:'保险公司',id:'11'}"
                                href="javascript:"
                                kit-target><i
                                     class="layui-icon">&#xe658;</i><span> 保险公司</span></a>
                         </dd>
-                        <dd shiro:hasPermission="member:insuranceType:list">
+                        <dd shiro:hasPermission="member:customParameters:insuranceType:list">
                             <a data-options="{url:'insuranceType.html',icon:'&#xe658;',title:'险种',id:'12'}"
                                href="javascript:"
                                kit-target><i
                                     class="layui-icon">&#xe658;</i><span> 险种</span></a>
                         </dd>
-                        <dd>
+                        <dd shiro:hasPermission="member:customParameters:memberLevel:List">
                             <a data-options="{url:'membershipLevel.html',icon:'&#xe658;',title:'会员级别',id:'13'}"
                                href="javascript:"
                                kit-target><i
@@ -120,7 +120,7 @@
                         </dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item">
+                <li class="layui-nav-item1" shiro:hasPermission="member:statistics">
                     <a class="" href="javascript:"><i aria-hidden="true" class="fa fa-plug"></i><span> 报表中心</span></a>
                     <dl class="layui-nav-child">
                         <dd>
