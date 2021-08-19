@@ -96,7 +96,7 @@
         // “表格”渲染
         var tableCancelConsume = table.render({
             elem: '#consumeList',
-            url: 'service/cancelConsume/getConsumeList',
+            url: 'service/useCoupon/cancelConsume/getConsumeList',
             method: "post",
             initSort: {
                 field: 'time' //排序字段，对应 cols 设定的各字段名
@@ -186,7 +186,7 @@
                 console.log(data)
                 layer.confirm('确认反结算客户【' + data.customername + '】的账单？', {icon: 3, title: '提示'}, function (index) {
                     $.post({
-                        url: "service/cancelConsume/rollBack",
+                        url: "service/useCoupon/cancelConsume/rollBack",
                         data: {
                             id: data.id
                         },
@@ -203,7 +203,7 @@
 
         $("#queryBtn").unbind("click").click(function () {
             tableCancelConsume.reload({
-                url: 'service/cancelConsume/getConsumeList',
+                url: 'service/useCoupon/cancelConsume/getConsumeList',
                 where: {
                     user: {
                         customername: $("#userName").val(),

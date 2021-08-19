@@ -1,7 +1,6 @@
 package com.sh.cloud.web.memberUseCoupon;
 
 import com.sft.member.bean.CouponCheck;
-import com.sft.member.bean.PracticalProject;
 import com.sft.member.bean.UserCoupon;
 import com.sft.member.obtain.consume.PracticalProjectService;
 import com.sft.member.obtain.pay.PayService;
@@ -15,7 +14,7 @@ import java.util.Hashtable;
 import java.util.List;
 
 @RestController
-@RequestMapping("service/useCard")
+@RequestMapping("service/useCoupon/useCoupon")
 public class UseCardController {
     @Resource
     PayService payService;

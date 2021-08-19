@@ -371,7 +371,7 @@
             function pullPay(selector, userid, consumeProjectId, callback) {
                 var selectE2 = $(selector);
                 $.post({
-                    url: "service/useCard/getEnablePayCoupon?userid=" + userid + "&consumeProjectId=" + consumeProjectId,
+                    url: "service/useCoupon/useCoupon/getEnablePayCoupon?userid=" + userid + "&consumeProjectId=" + consumeProjectId,
                     timeout: 1000,
                     dataType: "json",
                     success: function (res) {
@@ -401,7 +401,7 @@
                     field: 'time' //排序字段，对应 cols 设定的各字段名
                     ,type: 'desc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
                 },
-                url: 'service/review/getPendingReviewList',
+                url: 'service/useCoupon/review/getPendingReviewList',
                 method: "post",
                 where: {
                     user: {},
@@ -503,7 +503,7 @@
                                 pullPay("#payStyle", activeItem.userId, $("#consumeProjectId").val(), () => {
                                     table.render({
                                         elem: '#reviewDetailList',
-                                        url: "service/review/getPendingReviewList",
+                                        url: "service/useCoupon/review/getPendingReviewList",
                                         method: "post",
                                         contentType: "application/json",
                                         where: {
@@ -602,7 +602,7 @@
             $("#checkCoupon").unbind("click").click(function () {
                 layer.confirm("确认审核？", {icon: 3}, () => {
                     $.get({
-                        url: "service/review/checkCoupon?groupId=" + activeItem.groupId,
+                        url: "service/useCoupon/review/checkCoupon?groupId=" + activeItem.groupId,
                         success: function (res) {
                             if(res === "成功！")
                                 layer.alert(res, {icon: 1}, () => {layer.closeAll();tableReview.reload()})
@@ -616,7 +616,7 @@
             $("#reject").unbind("click").click(function () {
                 layer.confirm("确认驳回？", {icon: 3}, () => {
                     $.ajax({
-                        url: "service/review/cancelRecord?groupId=" + activeItem.groupId,
+                        url: "service/useCoupon/review/cancelRecord?groupId=" + activeItem.groupId,
                         success: function (res) {
                             if(res === "成功！")
                                 layer.alert(res, {icon: 1}, () => {layer.closeAll();tableReview.reload()})
@@ -629,7 +629,7 @@
 
             $("#queryBtn").unbind("click").click(function () {
                 tableReview.reload({
-                    url: 'service/review/getPendingReviewList',
+                    url: 'service/useCoupon/review/getPendingReviewList',
                     where: {
                         user: {
                             customername: $("#customerName").val(),
