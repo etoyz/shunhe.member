@@ -31,7 +31,7 @@
                         </div>
                         <div class="layui-inline s-layuiInline">
                             <button class="layui-btn layui-btn-warm" id="queryBtn">查询</button>
-                            <span class="layui-btn layui-btn-normal" id="add">新增会员</span>
+                            <span shiro:hasPermission="member:archives:add" class="layui-btn layui-btn-normal" id="add">新增会员</span>
                         </div>
                     </div>
                 </form>

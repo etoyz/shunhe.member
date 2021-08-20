@@ -33,7 +33,7 @@
                         </div>
                         <div class="layui-inline s-layuiInline">
                             <button class="layui-btn layui-btn-warm" id="queryBtn">查询</button>
-                            <button class="layui-btn layui-btn-normal" id="add">新增保险公司</button>
+                            <button shiro:hasPermission="member:customParameters:insuranceCompany:add" class="layui-btn layui-btn-normal" id="add">新增保险公司</button>
                         </div>
                     </div>
                 </form>

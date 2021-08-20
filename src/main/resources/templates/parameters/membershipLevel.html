@@ -33,7 +33,7 @@
                         </div>
                         <div class="layui-inline s-layuiInline">
                             <button class="layui-btn layui-btn-warm" id="queryBtn">查询</button>
-                            <button class="layui-btn layui-btn-normal" id="addBtn">添加卡片</button>
+                            <button shiro:hasPermission="member:customParameters:memberLevel:add" class="layui-btn layui-btn-normal" id="addBtn">添加卡片</button>
                         </div>
                     </div>
                 </form>
