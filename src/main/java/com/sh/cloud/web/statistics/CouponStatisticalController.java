@@ -10,6 +10,7 @@ import com.sft.member.obtain.user.UserService;
 import com.sh.cloud.entity.GetRequestPacket;
 import com.sh.cloud.entity.ReturnStatisticalJson;
 import com.sh.cloud.entity.UserCouponMetaInfo;
+import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +20,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@RequiresPermissions("member:statistics:coupon")
 @RestController
 @RequestMapping("service/statistics/couponStatistical")
 public class CouponStatisticalController {
@@ -31,6 +31,7 @@ public class CouponStatisticalController {
     UserService shUserService; // 用户相关接口
 
     // 获取整个列表
+    @RequiresPermissions("member:statistics:coupon")
     @RequestMapping("getCouponStatisticalList")
     public Map<String, Object> getCouponStatisticalList(@RequestBody GetRequestPacket request) {
         // 创建返回数据变量
@@ -89,6 +90,7 @@ public class CouponStatisticalController {
      * @param userId 用户Id
      * @return 用户拥有的卡券
      */
+    @RequiresPermissions(value = {"member:archives:more"}, logical = Logical.OR)
     @RequestMapping("getUserCoupon")
     public Map<String, Object> getUserCoupon(@RequestParam String userId) {
         Map<String, Object> ret = new HashMap<>();

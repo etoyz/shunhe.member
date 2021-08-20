@@ -14,14 +14,11 @@ import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
 
-@RequiresPermissions("member:memberUseCoupon:useCoupon")
 @RestController
 @RequestMapping("service/useCoupon/useCoupon")
 public class UseCardController {
     @Resource
     PayService payService;
-    @Resource
-    PracticalProjectService practicalProjectService;
 
     @RequestMapping("getEnablePayCoupon")
     public Hashtable<Integer, UserCoupon> getEnablePayCoupon(@RequestParam String userid, @RequestParam String consumeProjectId) {
@@ -48,6 +45,7 @@ public class UseCardController {
         return dstTable;
     }
 
+    @RequiresPermissions("member:memberUseCoupon:useCoupon")
     @RequestMapping("submitForReview")
     public String submitForReview(@RequestBody List<CouponCheck> list) {
         SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");

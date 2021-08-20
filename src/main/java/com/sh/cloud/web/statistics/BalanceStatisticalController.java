@@ -30,8 +30,6 @@ public class BalanceStatisticalController {
     @Resource
     UserService shUserService; // 用户相关接口
 
-
-
     // 获取整个列表
     @RequestMapping("getBalanceStatisticalList")
     public Map<String, Object> getBalanceStatisticalList(@RequestBody GetRequestPacket request) {
