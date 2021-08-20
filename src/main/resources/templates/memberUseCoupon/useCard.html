@@ -328,7 +328,7 @@
             function pullConsumeItems(selector, consumeTypeId, callback) {
                 var selectE2 = $(selector);
                 $.post({
-                    url: "service/parameters/consumeProject/getConsumeProjectNameList?query=&consumeTypeId=" + consumeTypeId ,
+                    url: "service/parameters/consumeItem/getConsumeProjectNameList?query=&consumeTypeId=" + consumeTypeId ,
                     timeout: 1000,
                     dataType: "json",
                     success: function (res) {

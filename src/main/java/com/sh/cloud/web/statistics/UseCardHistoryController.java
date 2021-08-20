@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 @RequiresPermissions("member:statistics:useCoupon")
-@Deprecated
+//@Deprecated
 @RestController
 @RequestMapping("service/statistics/useCouponHistory")
 public class UseCardHistoryController {

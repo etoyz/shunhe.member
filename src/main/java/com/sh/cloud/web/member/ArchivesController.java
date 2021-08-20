@@ -116,7 +116,7 @@ public class ArchivesController {
             return ret;
     }
 
-    @RequiresPermissions(value = {"member:archives:edit"}, logical = Logical.OR)
+    @RequiresPermissions(value = {"member:archives:more"}, logical = Logical.OR)
     @PostMapping(value = "editArchives")
     public User editArchives(@RequestBody User user) {
         User c;

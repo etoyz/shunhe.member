@@ -231,7 +231,7 @@
             height: 450,
             width: 500,
             page: false,
-            url: "service/parameters/consumeProject/getConsumeProjectNameList?query=&consumeTypeId=",
+            url: "service/parameters/consumeItem/getConsumeProjectNameList?query=&consumeTypeId=",
             cols: [ [
                 {type: 'checkbox', width: 70},
                 {field: 'name', width: 420, title: '消费项目'},
@@ -321,7 +321,7 @@
                 projectsTable.reload({
                     done: function (resAll) {
                         $.post({
-                            url: "service/parameters/consumeProject/getConsumeProjectListByCoupon",
+                            url: "service/parameters/consumeItem/getConsumeProjectListByCoupon",
                             data: JSON.stringify(activeLine),
                             contentType: "application/json",
                             success: function (resRel) {

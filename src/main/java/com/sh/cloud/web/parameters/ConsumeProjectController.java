@@ -3,13 +3,11 @@ package com.sh.cloud.web.parameters;
 import com.sft.member.bean.ConsumeProject;
 import com.sft.member.bean.Coupon;
 import com.sft.member.obtain.consume.ConsumeProjectService;
-import com.sft.member.obtain.consume.PracticalProjectService;
 import com.sft.member.obtain.coupon.CouponService;
 import com.sh.cloud.entity.ConsumeProjectAndConsumeProjects;
 import com.sh.cloud.entity.CouponsAndConsumeProject;
 import com.sh.cloud.utils.PlatUserUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -18,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("service/parameters/consumeProject")
+@RequestMapping("service/parameters/consumeItem")
 public class ConsumeProjectController {
     @Resource
     ConsumeProjectService consumeProjectService;
