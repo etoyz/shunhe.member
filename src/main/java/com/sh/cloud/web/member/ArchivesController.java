@@ -12,6 +12,7 @@ import com.sft.member.obtain.user.UserService;
 import com.sh.cloud.entity.GetPendingReviewListRequest;
 import com.sh.cloud.entity.GetUserListRequest;
 import com.sh.cloud.utils.PlatUserUtils;
+import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +21,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@RequiresPermissions("member:memberInfo")
 @RestController
 @RequestMapping("service/archives")
 public class ArchivesController {
@@ -35,6 +35,7 @@ public class ArchivesController {
     @Resource
     PlatUserService platUserService;
 
+    @RequiresPermissions(value = "{member:archives:more}", logical = Logical.OR)
     @RequestMapping("getUserByPost")
     public List<PlatUser> getUserByPost(@RequestParam String post) {
         PlatUser user = new PlatUser();
@@ -42,11 +43,13 @@ public class ArchivesController {
         return platUserService.getPlatUserListByPost(user);
     }
 
+    @RequiresPermissions(value = "{member:archives:more}", logical = Logical.OR)
     @RequestMapping("getUserCost")
     public UserCost getUserCost(@RequestParam String userid) {
         return payService.getUserCost(String.valueOf(userid));
     }
 
+    @RequiresPermissions(value = "{member:archives:add}", logical = Logical.OR)
     @PostMapping(value = "addArchives")
     public String addUser(@RequestBody User user) {
         String ret = shUserService.addUser(PlatUserUtils.getCurrentLoginPlatUser(), user);
@@ -56,6 +59,7 @@ public class ArchivesController {
             return ret;
     }
 
+    @RequiresPermissions(value = "{member:archives}", logical = Logical.OR)
     @GetMapping("getArchivesList")
     public Map<String, Object> getArchivesList(@RequestParam String query, @RequestParam int page, @RequestParam int limit) {
         Map<String, Object> ret = new HashMap<>();
@@ -72,6 +76,7 @@ public class ArchivesController {
         return ret;
     }
 
+    @RequiresPermissions(value = "{member:memberUseCoupon:useCoupon}", logical = Logical.OR)
     @RequestMapping("getUserList")
     public Map<String, Object> getUserList(@RequestBody GetUserListRequest request) {
         Map<String, Object> ret = new HashMap<>();
@@ -85,6 +90,7 @@ public class ArchivesController {
         return ret;
     }
 
+    @RequiresPermissions(value = "{member:archives:more}", logical = Logical.OR)
     @RequestMapping("getConsumptionHistories")
     public Map<String, Object> getConsumptionHistories(@RequestBody GetPendingReviewListRequest request) {
         CouponCheck couponCheck = request.getCouponCheck();
@@ -98,6 +104,7 @@ public class ArchivesController {
         return ret;
     }
 
+    @RequiresPermissions(value = "{member:archives:delete}", logical = Logical.OR)
     @PostMapping("deleteArchives")
     public String deleteArchives(@RequestParam String userId) {
         User c = new User();
@@ -109,6 +116,7 @@ public class ArchivesController {
             return ret;
     }
 
+    @RequiresPermissions(value = "{member:archives:edit}", logical = Logical.OR)
     @PostMapping(value = "editArchives")
     public User editArchives(@RequestBody User user) {
         User c;
@@ -116,6 +124,8 @@ public class ArchivesController {
         return c;
     }
 
+//    TODO: 用到该URL的页面较多，暂不设权限控制
+//    @RequiresPermissions(value = "{member:archives}", logical = Logical.OR)
     @PostMapping(value = "getUserInfo")
     public User requireUser(@RequestParam String userId) {
         User c = new User();
@@ -123,6 +133,7 @@ public class ArchivesController {
         return shUserService.getUser(c);
     }
 
+    @RequiresPermissions(value = "{member:archives:level}", logical = Logical.OR)
     @PostMapping(value = "getMemberNameList")
     public List<Member> getMemberNameList() {
         List<Member> ret = memberService.getMemberNameList();
@@ -149,6 +160,7 @@ public class ArchivesController {
         return ret;
     }
 
+    @RequiresPermissions(value = "{member:archives:level}", logical = Logical.OR)
     @PostMapping(value = "alertLevel")
     public String alertLevel(@RequestParam String userId, @RequestParam String id) {
         Member m = new Member();
