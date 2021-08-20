@@ -8,6 +8,7 @@ import com.sft.member.obtain.statistics.StatisticsService;
 import com.sft.member.obtain.user.UserService;
 import com.sh.cloud.entity.GetRequestPacket;
 import com.sh.cloud.entity.ReturnStatisticalJson;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@RequiresPermissions("member:statistics:balance")
 @RestController
 @RequestMapping("service/statistics/balanceStatistical")
 public class BalanceStatisticalController {

@@ -552,7 +552,7 @@
             {
                 var selectE = $(userSelector);
                 $.post({
-                    url: "service/Archives/getUserByPost?post=" + post,
+                    url: "service/archives/getUserByPost?post=" + post,
                     timeout: 1000,
                     dataType: "json",
                     success: function (res) {
@@ -572,7 +572,7 @@
             function pullBrandName(selector, callback) {
                 var selectE = $(selector);
                 $.post({
-                    url: "service/Archives/getBrandNameList",
+                    url: "service/archives/getBrandNameList",
                     timeout: 1000,
                     dataType: "json",
                     success: function (res) {
@@ -594,7 +594,7 @@
             function pullCarSeriesgroupName(selector,BrandId,callback) {
                 var selectE = $(selector);
                 $.post({
-                    url: "service/Archives/getCarSeriesgroupNameList?BrandId="+BrandId,
+                    url: "service/archives/getCarSeriesgroupNameList?BrandId="+BrandId,
                     timeout: 1000,
                     dataType: "json",
                     success: function (res) {
@@ -616,7 +616,7 @@
             function pullCarSeriesName(selector,groupid,callback) {
                 var selectE = $(selector);
                 $.post({
-                    url: "service/Archives/getAllCarSeriesNameList?GroupId="+groupid,
+                    url: "service/archives/getAllCarSeriesNameList?GroupId="+groupid,
                     timeout: 1000,
                     dataType: "json",
                     success: function (res) {
@@ -638,7 +638,7 @@
             function pullMemberlevel(selector, callback) {
                 var selectE = $(selector);
                 $.post({
-                    url: "service/Archives/getMemberNameList",
+                    url: "service/archives/getMemberNameList",
                     timeout: 1000,
                     dataType: "json",
                     success: function (res) {
@@ -769,7 +769,7 @@
                     insuranceNo: data.field.insuranceNo,
                 }
                 $.post({
-                    url: "/service/Archives/addArchives",
+                    url: "/service/archives/addArchives",
                     data: JSON.stringify(data.field),
                     contentType: "application/json",
                     success: function (res) {
@@ -809,7 +809,7 @@
         // “会员档案表格”渲染
         var tableUserList = table.render({
             elem: '#memberArchives',
-            url: 'service/Archives/getArchivesList?query=',
+            url: 'service/archives/getArchivesList?query=',
             height: 'full-100',
             page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                 layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
@@ -851,7 +851,7 @@
                     data[i].vehicleId=data[i].vehicle.vehicleId
                     data[i].vin = data[i].vehicle.vin
                     $.post({
-                        url: "service/Archives/getUserInfo?userId=" + data[i].userId,
+                        url: "service/archives/getUserInfo?userId=" + data[i].userId,
                         async: false,
                         success: function (resp) {
                             try{
@@ -906,7 +906,7 @@
                     }
                 }
                 $.post({
-                    url: "/service/Archives/getUserInfo",
+                    url: "/service/archives/getUserInfo",
                     data: {
                         userId: activeUser.userId
                     },
@@ -976,7 +976,7 @@
                     }
                 });
                 $.post({
-                    url: "service/Archives/getUserCost?userid=" + activeUser.userId,
+                    url: "service/archives/getUserCost?userid=" + activeUser.userId,
                     success: function (res){
                         $('#accumulativeScore').val(res.accumulativeScore);
                         $('#availableScore').val(res.availableScore);
@@ -1034,7 +1034,7 @@
                 // "消费历史表格"渲染
                 table.render({
                     elem: '#consumptionHistories',
-                    url: 'service/Archives/getConsumptionHistories',
+                    url: 'service/archives/getConsumptionHistories',
                     method: "post",
                     initSort: {
                         field: 'time' //排序字段，对应 cols 设定的各字段名
@@ -1142,7 +1142,7 @@
                     }
                     data.field.userId = activeUser.userId
                     $.post({
-                        url: "/service/Archives/editArchives",
+                        url: "/service/archives/editArchives",
                         data: JSON.stringify(data.field),
                         contentType: "application/json",
                         success: function (res) {
@@ -1191,7 +1191,7 @@
                     var newLevels=result[0];
                     //console.log(id);
                     $.post({
-                        url: "/service/Archives/alertLevel",
+                        url: "/service/archives/alertLevel",
                         data: {
                             userId: activeUser.userId,
                             id: id
@@ -1209,7 +1209,7 @@
             else if (layEvent === 'delete') { // 删除
                 layer.confirm('确定要删除客户【'+activeUser.customername+'】吗？', {icon: 3, title: '提示'}, function (index) {
                     $.post({
-                        url: "/service/Archives/deleteArchives",
+                        url: "/service/archives/deleteArchives",
                         data: {
                             userId: activeUser.userId
                         },
@@ -1232,7 +1232,7 @@
             // var tableConsumptionHistories = table.render({
             table.render({
                 elem: '#pointsHistories',
-                url: 'service/Archives/getPointsHistories',
+                url: 'service/archives/getPointsHistories',
                 method: "post",
                 where: {
                     user: {},
@@ -1268,7 +1268,7 @@
             // var tableConsumptionHistories = table.render({
             table.render({
                 elem: '#operationLogs',
-                url: 'service/Archives/getOperationLogs',
+                url: 'service/archives/getOperationLogs',
                 method: "post",
                 where: {
                     user: {},
@@ -1303,7 +1303,7 @@
 
         $("#queryBtn").unbind("click").click(function () {
             tableUserList.reload({
-                url: 'service/Archives/getArchivesList?query=' + $("#customerName1").val(),
+                url: 'service/archives/getArchivesList?query=' + $("#customerName1").val(),
                 page: {
                     curr: 1
                 },

@@ -12,6 +12,7 @@ import com.sft.member.obtain.user.UserService;
 import com.sh.cloud.entity.GetPendingReviewListRequest;
 import com.sh.cloud.entity.GetUserListRequest;
 import com.sh.cloud.utils.PlatUserUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -19,8 +20,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@RequiresPermissions("member:memberInfo")
 @RestController
-@RequestMapping("service/Archives")
+@RequestMapping("service/archives")
 public class ArchivesController {
     @Resource
     UserService shUserService;
@@ -71,7 +73,6 @@ public class ArchivesController {
     }
 
     @RequestMapping("getUserList")
-    @ResponseBody
     public Map<String, Object> getUserList(@RequestBody GetUserListRequest request) {
         Map<String, Object> ret = new HashMap<>();
         ret.put("code", 0);

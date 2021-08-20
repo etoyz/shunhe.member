@@ -112,7 +112,7 @@
                                kit-target><i
                                     class="layui-icon">&#xe658;</i><span> 险种</span></a>
                         </dd>
-                        <dd shiro:hasPermission="member:customParameters:memberLevel:List">
+                        <dd shiro:hasPermission="member:customParameters:memberLevel:list">
                             <a data-options="{url:'membershipLevel.html',icon:'&#xe658;',title:'会员级别',id:'13'}"
                                href="javascript:"
                                kit-target><i
@@ -120,27 +120,27 @@
                         </dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item1" shiro:hasPermission="member:statistics">
+                <li shiro:hasPermission="member:statistics" class="layui-nav-item">
                     <a class="" href="javascript:"><i aria-hidden="true" class="fa fa-plug"></i><span> 报表中心</span></a>
                     <dl class="layui-nav-child">
-                        <dd>
+                        <dd shiro:hasPermission="member:statistics:useCoupon">
                             <a data-options="{url:'useCardHistory.html',icon:'&#xe658;',title:'用卡历史',id:'23'}" href="javascript:"
                                kit-target><i
                                     class="layui-icon">&#xe658;</i><span> 用卡历史</span></a>
                         </dd>
-                        <dd>
+                        <dd shiro:hasPermission="member:statistics:rollback">
                             <a data-options="{url:'cancelConsumeHistory.html',icon:'&#xe658;',title:'反结算历史',id:'24'}"
                                href="javascript:"
                                kit-target><i
                                     class="layui-icon">&#xe658;</i><span> 反结算历史</span></a>
                         </dd>
-                        <dd>
+                        <dd shiro:hasPermission="member:statistics:coupon">
                             <a data-options="{url:'couponStatistical.html',icon:'&#xe658;',title:'卡券统计',id:'25'}"
                                href="javascript:"
                                kit-target><i
                                     class="layui-icon">&#xe658;</i><span> 卡券统计</span></a>
                         </dd>
-                        <dd>
+                        <dd shiro:hasPermission="member:statistics:balance">
                             <a data-options="{url:'balanceStatistical.html',icon:'&#xe658;',title:'储值统计',id:'26'}"
                                href="javascript:"
                                kit-target><i

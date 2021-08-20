@@ -4,6 +4,7 @@ import com.sft.member.bean.CouponCheck;
 import com.sft.member.obtain.pay.PayService;
 import com.sh.cloud.entity.GetPendingReviewListRequest;
 import com.sh.cloud.utils.PlatUserUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@RequiresPermissions("member:memberUseCoupon:review")
 @RestController
 @RequestMapping("service/useCoupon/review")
 public class PendingReviewController {

@@ -3,6 +3,7 @@ package com.sh.cloud.web.parameters;
 import com.sft.member.bean.Member;
 import com.sft.member.obtain.member.MemberService;
 import com.sh.cloud.utils.PlatUserUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -29,6 +30,7 @@ public class MembershipLevelController {
     }
 
     @GetMapping("getMemberList")
+    @RequiresPermissions("member:customParameters:memberLevel:list")
     public Map<String, Object> getMemberList(@RequestParam String query, @RequestParam int page, @RequestParam int limit) {
         Map<String, Object> ret3 = new HashMap<>();
         ret3.put("code", 0);

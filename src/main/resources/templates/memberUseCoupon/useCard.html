@@ -567,7 +567,7 @@
         {// “用卡表格”渲染
             var tableUserList = table.render({
                 elem: '#memberList',
-                url: 'service/Archives/getArchivesList?query=',
+                url: 'service/archives/getArchivesList?query=',
                 height: 'full-100',
                 page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                     layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
@@ -607,7 +607,7 @@
                         data[i].vehicleId=data[i].vehicle.vehicleId
                         data[i].vin = data[i].vehicle.vin
                         $.post({
-                            url: "service/Archives/getUserInfo?userId=" + data[i].userId,
+                            url: "service/archives/getUserInfo?userId=" + data[i].userId,
                             async: false,
                             success: function (resp) {
                                 try{
@@ -653,7 +653,7 @@
                     $('#useForm').trigger('reset');
                     cntAvail = 0;isCalCntAvail = false;
                     $.post({
-                        url: "service/Archives/getUserInfo",
+                        url: "service/archives/getUserInfo",
                         data: {
                             userId: data.userId
                         },
@@ -709,7 +709,7 @@
 
             $("#queryBtn").unbind("click").click(function () {
                 tableUserList.reload({
-                    url: 'service/Archives/getUserList',
+                    url: 'service/archives/getUserList',
                     method: "post",
                     contentType: "application/json",
                     where: {

@@ -22,7 +22,7 @@ public class ConsumeTypeController {
     ConsumeTypeService consumeTypeService;
 
     @RequestMapping("getConsumeTypeList")
-    @RequiresPermissions({"member:consumeType:list"})
+    @RequiresPermissions({"member:customParameters:consumeType:list"})
     @ResponseBody
     public Map<String, Object> getConsumeTypeList(@RequestParam String query, @RequestParam int page, @RequestParam int limit) {
         Map<String, Object> ret = new HashMap<>();

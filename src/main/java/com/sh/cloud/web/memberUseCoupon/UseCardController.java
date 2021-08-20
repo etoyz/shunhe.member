@@ -5,6 +5,7 @@ import com.sft.member.bean.UserCoupon;
 import com.sft.member.obtain.consume.PracticalProjectService;
 import com.sft.member.obtain.pay.PayService;
 import com.sh.cloud.utils.PlatUserUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -13,6 +14,7 @@ import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
 
+@RequiresPermissions("member:memberUseCoupon:useCoupon")
 @RestController
 @RequestMapping("service/useCoupon/useCoupon")
 public class UseCardController {
@@ -22,7 +24,6 @@ public class UseCardController {
     PracticalProjectService practicalProjectService;
 
     @RequestMapping("getEnablePayCoupon")
-    @ResponseBody
     public Hashtable<Integer, UserCoupon> getEnablePayCoupon(@RequestParam String userid, @RequestParam String consumeProjectId) {
         List<UserCoupon> srcList = payService.getEnablePayCoupon(userid, consumeProjectId);
         Hashtable<Integer, UserCoupon> dstTable = new Hashtable<>();
@@ -48,7 +49,6 @@ public class UseCardController {
     }
 
     @RequestMapping("submitForReview")
-    @ResponseBody
     public String submitForReview(@RequestBody List<CouponCheck> list) {
         SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
         String groupId = df.format(new Date());

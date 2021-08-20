@@ -22,7 +22,7 @@ public class InsuranceTypeController {
     InsuranceTypeService insuranceTypeService;
 
     @RequestMapping("getInsuranceTypeList")
-    @RequiresPermissions({"member:insuranceCompany:list"})
+    @RequiresPermissions({"member:customParameters:insuranceType:list"})
     @ResponseBody
     public Map<String, Object> getInsuranceTypeList(@RequestParam String query, @RequestParam int page, @RequestParam int limit) {
         Map<String, Object> ret = new HashMap<>();

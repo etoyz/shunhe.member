@@ -146,7 +146,7 @@
                 if (data) {
                     for (let i = 0; i < data.length; i++) {
                         $.post({
-                            url: "service/Archives/getUserInfo?userId=" + data[i].userId,
+                            url: "service/archives/getUserInfo?userId=" + data[i].userId,
                             async: false,
                             success: function (res) {
                                 data[i].customername = res.customername

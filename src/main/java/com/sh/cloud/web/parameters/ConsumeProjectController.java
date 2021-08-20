@@ -23,11 +23,10 @@ public class ConsumeProjectController {
     @Resource
     ConsumeProjectService consumeProjectService;
     @Resource
-    PracticalProjectService practicalProjectService;
-    @Resource
     CouponService couponService;
 
     @RequestMapping("getConsumeProjectList")
+    @RequiresPermissions({"member:customParameters:consumeItem:list"})
     @ResponseBody
     public Map<String, Object> getConsumeProjectList(@RequestParam String query, @RequestParam String consumeTypeId, @RequestParam int page, @RequestParam int limit) {
         Map<String, Object> ret = new HashMap<>();
@@ -47,7 +46,6 @@ public class ConsumeProjectController {
     }
 
     @RequestMapping("getConsumeProjectNameList")
-    @RequiresPermissions({"member:consumeItem:list"})
     @ResponseBody
     public Map<String, Object> getConsumeProjectNameList(@RequestParam String query, @RequestParam String consumeTypeId) {
         Map<String, Object> ret = new HashMap<>();

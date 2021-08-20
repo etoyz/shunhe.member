@@ -8,6 +8,7 @@ import com.sft.member.obtain.statistics.StatisticsService;
 import com.sft.member.obtain.user.UserService;
 import com.sh.cloud.entity.GetRequestPacket;
 import com.sh.cloud.entity.ReturnHistoryJson;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@RequiresPermissions("member:statistics:rollback")
 @RestController
 @RequestMapping("service/statistics/cancelConsumeHistory")
 public class CancelConsumeHistoryController {
@@ -27,8 +29,6 @@ public class CancelConsumeHistoryController {
     CouponService couponService; // 卡券相关接口
     @Resource
     UserService shUserService; // 用户相关接口
-
-
 
     // 获取整个列表
     @RequestMapping("getCancelConsumeHistoryList")
@@ -88,8 +88,4 @@ public class CancelConsumeHistoryController {
         ret.put("count", statisticsService.getRollBackStaticsCount(request.getUser(), request.getCouponCheck(), request.getGroupBy()));
         return ret;
     }
-
-
-
-
 }

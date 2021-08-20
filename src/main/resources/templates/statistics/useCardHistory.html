@@ -395,7 +395,7 @@
             elem: '#tableMain'
             ,height: 'full-180'
             ,size: 'sm' //小尺寸的表格
-            ,url: 'service/statistics/useCardHistory/getUseCardHistoryList' //数据接口
+            ,url: 'service/statistics/useCouponHistory/getUseCouponHistoryList' //数据接口
             ,method: "post"
             ,contentType: "application/json"
             ,where: {
@@ -455,7 +455,7 @@
                             pullPay("#payStyle", activeItem.userId, $("#consumeProjectId").val(), () => {
                                 tableMain.render({
                                     elem: '#showBillTable',
-                                    url: "service/statistics/useCardHistory/getShowBillList",
+                                    url: "service/statistics/useCouponHistory/getShowBillList",
                                     method: "post",
                                     contentType: "application/json",
                                     where: {
@@ -558,7 +558,7 @@
         // 监听查询按钮
         $("#queryBtn").unbind("click").click(function () {
             tableIns.reload({
-                url: 'service/statistics/useCardHistory/getUseCardHistoryList',
+                url: 'service/statistics/useCouponHistory/getUseCouponHistoryList',
                 where: {
                     user: {
                         customername: $("#customername").val(),

@@ -8,6 +8,7 @@ import com.sft.member.obtain.statistics.StatisticsService;
 import com.sft.member.obtain.user.UserService;
 import com.sh.cloud.entity.GetRequestPacket;
 import com.sh.cloud.entity.ReturnHistoryJson;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,9 +19,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@RequiresPermissions("member:statistics:useCoupon")
 @Deprecated
 @RestController
-@RequestMapping("service/statistics/useCardHistory")
+@RequestMapping("service/statistics/useCouponHistory")
 public class UseCardHistoryController {
     @Resource
     StatisticsService statisticsService; // 统计相关接口
@@ -31,7 +33,7 @@ public class UseCardHistoryController {
 
 
     // 获取整个列表
-    @RequestMapping("getUseCardHistoryList")
+    @RequestMapping("getUseCouponHistoryList")
     public Map<String, Object> getUseCardHistoryList(@RequestBody GetRequestPacket request) {
         // 创建返回数据变量
         Map<String, Object> ret = new HashMap();
