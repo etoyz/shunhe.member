@@ -5,25 +5,21 @@ import com.sft.member.obtain.consume.ConsumeTypeService;
 import com.sh.cloud.utils.PlatUserUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Controller
+@RestController
 @RequestMapping("service/parameters/consumeType")
 public class ConsumeTypeController {
     @Resource
     ConsumeTypeService consumeTypeService;
 
-    @RequestMapping("getConsumeTypeList")
     @RequiresPermissions({"member:customParameters:consumeType:list"})
-    @ResponseBody
+    @RequestMapping("getConsumeTypeList")
     public Map<String, Object> getConsumeTypeList(@RequestParam String query, @RequestParam int page, @RequestParam int limit) {
         Map<String, Object> ret = new HashMap<>();
         ret.put("code", 0);
@@ -38,20 +34,19 @@ public class ConsumeTypeController {
     }
 
     @RequestMapping("getConsumeTypeNameList")
-    @ResponseBody
     public List<ConsumeType> getConsumeTypeList() {
         ConsumeType consumeType = new ConsumeType();
         return consumeTypeService.getConsumeTypeList(consumeType, 1, Integer.MAX_VALUE);
     }
 
+    @RequiresPermissions({"member:customParameters:consumeType:add"})
     @RequestMapping("addConsumeType")
-    @ResponseBody
     public String addConsumeType(@RequestBody ConsumeType consumeType) {
         return consumeTypeService.addConsumeType(PlatUserUtils.getCurrentLoginPlatUser(), consumeType);
     }
 
+    @RequiresPermissions({"member:customParameters:consumeType:delete"})
     @RequestMapping("deleteConsumeType")
-    @ResponseBody
     public String deleteConsumeType(@RequestParam String id) {
         ConsumeType consumeType = new ConsumeType();
         consumeType.consumeTypeId = Integer.parseInt(id);
@@ -61,17 +56,9 @@ public class ConsumeTypeController {
             return "删除失败！";
     }
 
+    @RequiresPermissions({"member:customParameters:consumeType:edit"})
     @RequestMapping("editConsumeType")
-    @ResponseBody
     public ConsumeType editConsumeType(@RequestBody ConsumeType consumeType) {
         return consumeTypeService.editConsumeType(PlatUserUtils.getCurrentLoginPlatUser(), consumeType);
-    }
-
-    @RequestMapping("getConsumeType")
-    @ResponseBody
-    public ConsumeType getConsumeType(@RequestParam int consumeTypeId) {
-        ConsumeType consumeType = new ConsumeType();
-        consumeType.consumeTypeId = consumeTypeId;
-        return consumeTypeService.getConsumeType(consumeType);
     }
 }

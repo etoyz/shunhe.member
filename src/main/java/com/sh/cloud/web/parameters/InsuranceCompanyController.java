@@ -5,25 +5,21 @@ import com.sft.member.insurance.InsuranceCompanyService;
 import com.sh.cloud.utils.PlatUserUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Controller
+@RestController
 @RequestMapping("service/parameters/insuranceCompany")
 public class InsuranceCompanyController {
     @Resource
     InsuranceCompanyService insuranceCompanyService;
 
-    @RequestMapping("getInsuranceCompanyList")
     @RequiresPermissions({"member:customParameters:insuranceCompany:list"})
-    @ResponseBody
+    @RequestMapping("getInsuranceCompanyList")
     public Map<String, Object> getInsuranceCompanyList(@RequestParam String query, @RequestParam int page, @RequestParam int limit) {
         Map<String, Object> ret = new HashMap<>();
         ret.put("code", 0);
@@ -38,19 +34,12 @@ public class InsuranceCompanyController {
     }
 
     @RequestMapping("getInsuranceCompanyNameList")
-    @ResponseBody
     public List<InsuranceCompany> getInsuranceCompanyNameList() {
         return insuranceCompanyService.getInsuranceCompanyList(new InsuranceCompany(), 1, Integer.MAX_VALUE);
     }
 
-    @RequestMapping("getInsuranceCompany")
-    @ResponseBody
-    public InsuranceCompany getInsuranceCompany(@RequestBody InsuranceCompany insuranceCompany) {
-        return insuranceCompanyService.getInsuranceCompany(insuranceCompany);
-    }
-
+    @RequiresPermissions({"member:customParameters:insuranceCompany:add"})
     @RequestMapping("addInsuranceCompany")
-    @ResponseBody
     public String addInsuranceCompany(@RequestBody InsuranceCompany insuranceCompany) {
         String ret = insuranceCompanyService.addInsuranceCompany(PlatUserUtils.getCurrentLoginPlatUser(), insuranceCompany);
         if(ret == null)
@@ -59,15 +48,15 @@ public class InsuranceCompanyController {
             return ret;
     }
 
+    @RequiresPermissions({"member:customParameters:insuranceCompany:edit"})
     @RequestMapping("editInsuranceCompany")
-    @ResponseBody
     public String editInsuranceCompany(@RequestBody InsuranceCompany insuranceCompany) {
         insuranceCompanyService.editInsuranceCompany(PlatUserUtils.getCurrentLoginPlatUser(), insuranceCompany);
         return "成功！";
     }
 
+    @RequiresPermissions({"member:customParameters:insuranceCompany:delete"})
     @RequestMapping("deleteInsuranceCompany")
-    @ResponseBody
     public String deleteInsuranceCompany(@RequestParam String id) {
         InsuranceCompany insuranceCompany = new InsuranceCompany();
         insuranceCompany.id = id;

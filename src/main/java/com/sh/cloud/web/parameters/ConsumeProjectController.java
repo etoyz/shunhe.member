@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Controller
+@RestController
 @RequestMapping("service/parameters/consumeProject")
 public class ConsumeProjectController {
     @Resource
@@ -25,9 +25,8 @@ public class ConsumeProjectController {
     @Resource
     CouponService couponService;
 
-    @RequestMapping("getConsumeProjectList")
     @RequiresPermissions({"member:customParameters:consumeItem:list"})
-    @ResponseBody
+    @RequestMapping("getConsumeProjectList")
     public Map<String, Object> getConsumeProjectList(@RequestParam String query, @RequestParam String consumeTypeId, @RequestParam int page, @RequestParam int limit) {
         Map<String, Object> ret = new HashMap<>();
         ret.put("code", 0);
@@ -46,7 +45,6 @@ public class ConsumeProjectController {
     }
 
     @RequestMapping("getConsumeProjectNameList")
-    @ResponseBody
     public Map<String, Object> getConsumeProjectNameList(@RequestParam String query, @RequestParam String consumeTypeId) {
         Map<String, Object> ret = new HashMap<>();
         ret.put("code", 0);
@@ -62,21 +60,21 @@ public class ConsumeProjectController {
         return ret;
     }
 
+    @RequiresPermissions({"member:customParameters:consumeItem:add"})
     @PostMapping("addConsumeProject")
-    @ResponseBody
     public String addConsumeProject(@RequestBody ConsumeProject project) {
         return consumeProjectService.addConsumeProject(PlatUserUtils.getCurrentLoginPlatUser(), project);
     }
 
+    @RequiresPermissions({"member:customParameters:consumeItem:edit"})
     @PostMapping("editConsumeProject")
-    @ResponseBody
     public String editConsumeProject(@RequestBody ConsumeProject project) {
         consumeProjectService.editConsumeProject(PlatUserUtils.getCurrentLoginPlatUser(), project);
         return "成功！";
     }
 
+    @RequiresPermissions({"member:customParameters:consumeItem:relCoupon"})
     @PostMapping("relateCoupon")
-    @ResponseBody
     public String relateCoupon(@RequestBody CouponsAndConsumeProject couponsAndConsumeProject) {
         ConsumeProject project = new ConsumeProject();
         project.consumeProjectId = couponsAndConsumeProject.getConsumeProjectId();
@@ -84,8 +82,8 @@ public class ConsumeProjectController {
         return "成功！";
     }
 
+    @RequiresPermissions({"member:customParameters:consumeItem:delete"})
     @PostMapping("deleteConsumeProject")
-    @ResponseBody
     public String deleteConsumeProject(@RequestParam String id) {
         ConsumeProject consumeProject = new ConsumeProject();
         consumeProject.consumeProjectId = Integer.parseInt(id);
@@ -95,20 +93,20 @@ public class ConsumeProjectController {
             return "删除失败！";
     }
 
+    @RequiresPermissions({"member:customParameters:coupon:relItem"})
     @RequestMapping("getConsumeProjectListByCoupon")
-    @ResponseBody
     public List<ConsumeProject> getConsumeProjectListByCoupon(@RequestBody Coupon coupon) {
         return consumeProjectService.getConsumeProjectByCoupon(coupon);
     }
 
+    @RequiresPermissions({"member:customParameters:consumeItem:relItem"})
     @RequestMapping("getRelateConsumeProject")
-    @ResponseBody
     public List<ConsumeProject> getRelateConsumeProject(@RequestBody ConsumeProject project) {
         return consumeProjectService.getRelateConsumeProject(project);
     }
 
+    @RequiresPermissions({"member:customParameters:consumeItem:relItem"})
     @RequestMapping("relateConsumeProject")
-    @ResponseBody
     public String relateConsumeProject(@RequestBody ConsumeProjectAndConsumeProjects consumeProjectAndConsumeProjects) {
         String ret = consumeProjectService.setRelateConsumeProject(PlatUserUtils.getCurrentLoginPlatUser(), consumeProjectAndConsumeProjects.getProject(), consumeProjectAndConsumeProjects.getProjects());
         if (ret == null)

@@ -18,12 +18,12 @@ import java.util.Map;
 @RestController
 @RequestMapping("service/parameters/coupon")
 public class CouponController {
-
     @Resource
     CouponService couponService;
     @Resource
     ConsumeProjectService projectService;
 
+    @RequiresPermissions({"member:customParameters:coupon:delete"})
     @PostMapping("deleteCoupon")
     public String deleteCoupon(@RequestBody Coupon coupon) {
         if (couponService.deleteCoupon(PlatUserUtils.getCurrentLoginPlatUser(), coupon))
@@ -32,6 +32,7 @@ public class CouponController {
             return "删除失败！";
     }
 
+    @RequiresPermissions({"member:customParameters:coupon:add"})
     @PostMapping(value = "addCoupon")
     public String addCoupon(@RequestBody Coupon coupon) {
         String ret = couponService.addCoupon(PlatUserUtils.getCurrentLoginPlatUser(), coupon);
@@ -55,20 +56,22 @@ public class CouponController {
         return res;
     }
 
+    @RequiresPermissions({"member:customParameters:coupon:edit"})
     @PostMapping("editCoupon")
     public String editCoupon(@RequestBody Coupon coupon) {
         couponService.editCoupon(PlatUserUtils.getCurrentLoginPlatUser(), coupon);
         return "修改成功！";
     }
 
+    @RequiresPermissions({"member:customParameters:coupon:relItem"})
     @PostMapping("relateConsumeProject")
     public String relateConsumeItem(@RequestBody CouponAndConsumeProjects couponAndConsumeProjects) {
         projectService.setConsumeProjectByCoupon(PlatUserUtils.getCurrentLoginPlatUser(), couponAndConsumeProjects.getCoupon(), couponAndConsumeProjects.getProjects());
         return "关联成功！";
     }
 
-    @GetMapping("getCouponList")
     @RequiresPermissions({"member:customParameters:coupon:list"})
+    @GetMapping("getCouponList")
     public Map<String, Object> getCouponList(@RequestParam String query, @RequestParam int page, @RequestParam int limit) {
         Map<String, Object> ret = new HashMap<>();
         ret.put("code", 0);
@@ -96,8 +99,8 @@ public class CouponController {
         return ret;
     }
 
+    @RequiresPermissions({"member:customParameters:consumeItem:relCoupon"})
     @RequestMapping("getCouponListByConsumeProject")
-    @ResponseBody
     public List<Coupon> getConsumeProjectListByCoupon(@RequestBody ConsumeProject project) {
         return couponService.getCouponListByConsumeProject(project);
     }

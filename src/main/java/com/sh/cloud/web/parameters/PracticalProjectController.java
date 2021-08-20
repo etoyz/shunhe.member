@@ -5,6 +5,7 @@ import com.sft.member.bean.PlatUser;
 import com.sft.member.bean.PracticalProject;
 import com.sft.member.obtain.consume.PracticalProjectService;
 import com.sh.cloud.utils.PlatUserUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
