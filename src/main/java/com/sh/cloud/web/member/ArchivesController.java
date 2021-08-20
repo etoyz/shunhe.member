@@ -98,36 +98,6 @@ public class ArchivesController {
         return ret;
     }
 
-    // 获取"开票历史"表格数据
-    @RequestMapping("getBillingHistories")
-    public Map<String, Object> getBillingHistories(@RequestBody GetPendingReviewListRequest request) {
-        // 木有接口哇┭┮﹏┭┮
-
-        Map<String, Object> ret = new HashMap();
-
-        return ret;
-    }
-
-    // 获取"积分历史"表格数据
-    @RequestMapping("getPointsHistories")
-    public Map<String, Object> getPointsHistories(@RequestBody GetPendingReviewListRequest request) {
-        // 木有接口哇┭┮﹏┭┮
-
-        Map<String, Object> ret = new HashMap();
-
-        return ret;
-    }
-
-    // 获取"操作日志"表格数据
-    @RequestMapping("getOperationLogs")
-    public Map<String, Object> getOperationLogs(@RequestBody GetPendingReviewListRequest request) {
-        // 木有接口哇┭┮﹏┭┮
-
-        Map<String, Object> ret = new HashMap();
-
-        return ret;
-    }
-
     @PostMapping("deleteArchives")
     public String deleteArchives(@RequestParam String userId) {
         User c = new User();
