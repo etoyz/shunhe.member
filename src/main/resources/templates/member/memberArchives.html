@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="zh_CN">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro" >
 <head>
     <meta charset="utf-8">
     <title>会员档案</title>
@@ -37,11 +38,11 @@
             </div>
             <!-- 展示表格 -->
             <div class="s-commonTable">
-                <table class="layui-hide" id="memberArchives" lay-filter="memberArchivesTable"></table>
+                <table shiro:hasPermission="member:archives" class="layui-hide" id="memberArchives" lay-filter="memberArchivesTable"></table>
                 <script id="operation" type="text/html">
-                    <a class="layui-btn layui-btn-xs" lay-event="edit">修改</a>
-                    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
-                    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="grade">会员级别</a>
+                    <a shiro:hasPermission="member:archives:more" class="layui-btn layui-btn-xs" lay-event="edit">修改</a>
+                    <a shiro:hasPermission="member:archives:delete" class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
+                    <a shiro:hasPermission="member:archives:level" class="layui-btn layui-btn-normal layui-btn-xs" lay-event="grade">会员级别</a>
                 </script>
             </div>
         </div>
@@ -57,8 +58,6 @@
                 <li>车辆信息</li>
                 <li class="editMod">会员信息</li>
                 <li class="editMod">消费历史</li>
-<!--                <li class="editMod">积分历史</li>-->
-<!--                <li class="editMod">操作日志</li>-->
             </ul>
             <div class="layui-tab-content" style="height: 100px;">
                 <div class="layui-tab-item layui-show">

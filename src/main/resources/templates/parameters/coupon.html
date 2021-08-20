@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="zh_CN"
->
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro" >
 <head>
     <meta charset="utf-8">
     <title>卡券</title>
@@ -38,11 +38,11 @@
 
             <!-- 展示表格 -->
             <div class="s-commonTable">
-                <table class="layui-hide" id="coupon" lay-filter="couponTable"></table>
+                <table shiro:hasPermission="member:customParameters:coupon:list" class="layui-hide" id="coupon" lay-filter="couponTable"></table>
                 <script id="operation" type="text/html">
-                    <a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="modify">修改</a>
-                    <a class="layui-btn layui-btn-xs" lay-event="relate">关联消费项目</a>
-                    <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delete">删除</a>
+                    <a shiro:hasPermission="member:customParameters:coupon:edit" class="layui-btn layui-btn-xs layui-btn-warm" lay-event="modify">修改</a>
+                    <a shiro:hasPermission="member:customParameters:coupon:relItem" class="layui-btn layui-btn-xs" lay-event="relate">关联消费项目</a>
+                    <a shiro:hasPermission="member:customParameters:coupon:delete" class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delete">删除</a>
                 </script>
             </div>
         </div>

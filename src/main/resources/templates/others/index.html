@@ -47,7 +47,7 @@
             <div class="kit-side-fold"><i aria-hidden="true" class="fa fa-navicon"></i></div>
             <!-- 左侧导航区域（可配合layui已有的垂直导航）-->
             <ul class="layui-nav layui-nav-tree" kit-navbar lay-filter="kitNavbar">
-                <li shiro:hasPermission="member:memberinfo" class="layui-nav-item layui-nav-itemed">
+                <li shiro:hasPermission="member:archives" class="layui-nav-item layui-nav-itemed">
                     <a class="" href="javascript:"><i aria-hidden="true" class="fa fa-plug"></i><span> 微会员</span></a>
                     <dl class="layui-nav-child">
                         <dd>
@@ -160,7 +160,7 @@
 <!--                        </dd>-->
                     </dl>
                 </li>
-                <li class="layui-nav-item">
+                <li shiro:hasPermission="member:management" class="layui-nav-item">
                     <a class="" href="javascript:"><i aria-hidden="true" class="fa fa-plug"></i><span> 系统管理</span></a>
                     <dl class="layui-nav-child">
                         <dd>

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="zh_CN"
->
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro" >
 <head>
     <meta charset="utf-8">
     <title>会员级别</title>
@@ -41,10 +41,10 @@
 
             <!-- 展示表格 -->
             <div class="s-commonTable">
-                <table class="layui-hide" id="card" lay-filter="cardTabel"></table>
+                <table shiro:hasPermission="member:customParameters:memberLevel:list" class="layui-hide" id="card" lay-filter="cardTabel"></table>
                 <script id="operation" type="text/html">
-                    <a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="modify">修改</a>
-                    <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delete">删除</a>
+                    <a shiro:hasPermission="member:customParameters:memberLevel:edit" class="layui-btn layui-btn-xs layui-btn-warm" lay-event="modify">修改</a>
+                    <a shiro:hasPermission="member:customParameters:memberLevel:delete" class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delete">删除</a>
                 </script>
             </div>
         </div>

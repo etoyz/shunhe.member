@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="zh_CN"
-      xmlns="http://www.w3.org/1999/html">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro" >
 
 <head>
     <meta charset="utf-8">
@@ -47,13 +47,13 @@
             </div>
             <!-- 展示表格 -->
             <div class="s-commonTable">
-                <table class="layui-hide" id="consumeProj" lay-filter="consumeTypeTable"></table>
+                <table shiro:hasPermission="member:customParameters:consumeItem:list" class="layui-hide" id="consumeProj" lay-filter="consumeTypeTable"></table>
                 <script id="operation" type="text/html">
-                    <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="edit">修改</a>
-                    <a class="layui-btn layui-btn-xs" lay-event="rel">关联消费卡券</a>
-                    <a class="layui-btn layui-btn-xs" lay-event="rel2">关联消费项目</a>
-                    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="spe">具体项目</a>
-                    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
+                    <a shiro:hasPermission="member:customParameters:consumeItem:edit" class="layui-btn layui-btn-warm layui-btn-xs" lay-event="edit">修改</a>
+                    <a shiro:hasPermission="member:customParameters:consumeItem:relCoupon" class="layui-btn layui-btn-xs" lay-event="rel">关联消费卡券</a>
+                    <a shiro:hasPermission="member:customParameters:consumeItem:relItem" class="layui-btn layui-btn-xs" lay-event="rel2">关联消费项目</a>
+                    <a shiro:hasPermission="member:customParameters:consumeItem:speItem" class="layui-btn layui-btn-normal layui-btn-xs" lay-event="spe">具体项目</a>
+                    <a shiro:hasPermission="member:customParameters:consumeItem:delete" class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
                 </script>
             </div>
         </div>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="zh_CN">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro" >
 
 <head>
     <meta charset="utf-8">
@@ -39,10 +40,10 @@
             </div>
             <!-- 展示表格 -->
             <div class="s-commonTable">
-                <table class="layui-hide" id="consumeTypes" lay-filter="consumeTypeTable"></table>
+                <table shiro:hasPermission="member:customParameters:consumeType:list" class="layui-hide" id="consumeTypes" lay-filter="consumeTypeTable"></table>
                 <script id="operation" type="text/html">
-                    <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="edit">修改</a>
-                    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
+                    <a shiro:hasPermission="member:customParameters:consumeType:edit" class="layui-btn layui-btn-warm layui-btn-xs" lay-event="edit">修改</a>
+                    <a shiro:hasPermission="member:customParameters:consumeType:delete" class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
                 </script>
             </div>
         </div>

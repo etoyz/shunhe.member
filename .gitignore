@@ -5,6 +5,7 @@ target/
 !**/src/test/**/target/
 logs
 **/src/main/webapp/WEB-INF/classes/
+~*
 
 ### STS ###
 .apt_generated
