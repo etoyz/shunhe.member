@@ -47,7 +47,7 @@
             <div class="kit-side-fold"><i aria-hidden="true" class="fa fa-navicon"></i></div>
             <!-- 左侧导航区域（可配合layui已有的垂直导航）-->
             <ul class="layui-nav layui-nav-tree" kit-navbar lay-filter="kitNavbar">
-                <li shiro:hasPermission="member:archives" class="layui-nav-item layui-nav-itemed">
+                <li shiro:hasPermission="member:archivesRoot" class="layui-nav-item layui-nav-itemed">
                     <a class="" href="javascript:"><i aria-hidden="true" class="fa fa-plug"></i><span> 微会员</span></a>
                     <dl class="layui-nav-child">
                         <dd>
@@ -58,7 +58,7 @@
                         </dd>
                     </dl>
                 </li>
-                <li shiro:hasPermission="member:memberUseCoupon" class="layui-nav-item">
+                <li shiro:hasPermission="member:memberUseCouponRoot" class="layui-nav-item">
                     <a class="" href="javascript:"><i aria-hidden="true" class="fa fa-plug"></i><span> 微会员用卡</span></a>
                     <dl class="layui-nav-child">
                         <dd shiro:hasPermission="member:memberUseCoupon:useCoupon">
@@ -80,7 +80,7 @@
                         </dd>
                     </dl>
                 </li>
-                <li shiro:hasPermission="member:customParameters" class="layui-nav-item">
+                <li shiro:hasPermission="member:customParametersRoot" class="layui-nav-item">
                     <a class="" href="javascript:"><i aria-hidden="true" class="fa fa-plug"></i><span> 自定义参数</span></a>
                     <dl class="layui-nav-child">
                         <dd shiro:hasPermission="member:customParameters:coupon:list">
@@ -120,7 +120,7 @@
                         </dd>
                     </dl>
                 </li>
-                <li shiro:hasPermission="member:statistics" class="layui-nav-item">
+                <li shiro:hasPermission="member:statisticsRoot" class="layui-nav-item">
                     <a class="" href="javascript:"><i aria-hidden="true" class="fa fa-plug"></i><span> 报表中心</span></a>
                     <dl class="layui-nav-child">
                         <dd shiro:hasPermission="member:statistics:useCoupon">

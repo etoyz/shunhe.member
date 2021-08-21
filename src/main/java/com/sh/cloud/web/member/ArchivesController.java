@@ -59,7 +59,7 @@ public class ArchivesController {
             return ret;
     }
 
-    @RequiresPermissions(value = {"member:archives"}, logical = Logical.OR)
+    @RequiresPermissions(value = {"member:archivesRoot"}, logical = Logical.OR)
     @GetMapping("getArchivesList")
     public Map<String, Object> getArchivesList(@RequestParam String query, @RequestParam int page, @RequestParam int limit) {
         Map<String, Object> ret = new HashMap<>();

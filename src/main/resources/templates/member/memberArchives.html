@@ -38,7 +38,7 @@
             </div>
             <!-- 展示表格 -->
             <div class="s-commonTable">
-                <table shiro:hasPermission="member:archives" class="layui-hide" id="memberArchives" lay-filter="memberArchivesTable"></table>
+                <table shiro:hasPermission="member:archivesRoot" class="layui-hide" id="memberArchives" lay-filter="memberArchivesTable"></table>
                 <script id="operation" type="text/html">
                     <a shiro:hasPermission="member:archives:more" class="layui-btn layui-btn-xs" lay-event="edit">修改</a>
                     <a shiro:hasPermission="member:archives:delete" class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
