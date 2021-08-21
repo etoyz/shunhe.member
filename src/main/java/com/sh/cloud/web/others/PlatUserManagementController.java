@@ -12,7 +12,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@RequiresPermissions("member:management")
 @RestController
 @RequestMapping("service/platUserManage")
 public class PlatUserManagementController {
@@ -20,6 +19,7 @@ public class PlatUserManagementController {
     @Resource
     PlatUserService platUserService;
 
+    @RequiresPermissions("member:management")
     @RequestMapping("getUserList")
     public Map<String, Object> getUserList(@RequestParam String query, @RequestParam int page, @RequestParam int limit) {
         Map<String, Object> ret = new HashMap<>();
@@ -36,18 +36,21 @@ public class PlatUserManagementController {
         return ret;
     }
 
+    @RequiresPermissions("member:management")
     @RequestMapping("addUser")
     public String addUser(@RequestBody PlatUser user) {
         platUserService.addUser(PlatUserUtils.getCurrentLoginPlatUser(), user);
         return "成功！";
     }
 
+    @RequiresPermissions("member:management")
     @RequestMapping("editUser")
     public String editUser(@RequestBody PlatUser user) {
         platUserService.editPlatUser(PlatUserUtils.getCurrentLoginPlatUser(), user);
         return "修改成功！";
     }
 
+    @RequiresPermissions("member:management")
     @RequestMapping("resetPassword")
     public String resetPassword(@RequestParam String platUserId, @RequestParam String passwd) {
         PlatUser user = new PlatUser();
