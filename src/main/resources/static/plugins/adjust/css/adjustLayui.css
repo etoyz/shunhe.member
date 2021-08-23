@@ -309,7 +309,7 @@ h4 {
 }
 
 /* layui-layer */
-.layui-layer {
-    max-height: 100%;
-    overflow: auto;
-}
+/*.layui-layer {*/
+/*    max-height: 100%;*/
+/*    overflow: auto;*/
+/*}*/

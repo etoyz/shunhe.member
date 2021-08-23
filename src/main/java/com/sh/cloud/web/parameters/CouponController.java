@@ -53,7 +53,7 @@ public class CouponController {
         return rs.toString();
     }
 
-    @Deprecated
+//    @Deprecated
     @PostMapping("getCouponTypes")
     public Map<String, Object> getCouponTypes() {
         //获取后台给的卡券类型
@@ -62,6 +62,7 @@ public class CouponController {
         List<String> li = new ArrayList<>();
         li.add("代金券");
         li.add("储值");
+        li.add("消费券");
         res.put("types", li);
 //        Thread.sleep(900);
         return res;
