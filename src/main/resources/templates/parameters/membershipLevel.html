@@ -314,7 +314,6 @@
                             if (res == "修改成功") {
                                 // console.log("非空成功！");
                                 layuiAlert("删除成功！", () => {
-                                    obj.del()
                                     itemCnt--
                                     if(itemCnt === 0) { //当前页的Item为0
                                         let nextPage;
@@ -327,7 +326,7 @@
                                                 curr: nextPage
                                             },
                                         })
-                                    }
+                                    } else tableIns.reload()
                                 })
                             }
                             else {

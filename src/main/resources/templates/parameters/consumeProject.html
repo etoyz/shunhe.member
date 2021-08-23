@@ -457,7 +457,6 @@
                             if("删除成功！" === res)
                                 layer.alert(res, {icon: 1}, (index) => {
                                     layer.close(index)
-                                    obj.del()
                                     itemCnt--
                                     if(itemCnt === 0) { //当前页的Item为0
                                         let nextPage;
@@ -470,7 +469,7 @@
                                                 curr: nextPage
                                             },
                                         })
-                                    }
+                                    } else tableProj.reload()
                                 })
                             else
                                 layer.alert("失败", {icon: 2});

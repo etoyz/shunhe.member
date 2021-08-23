@@ -253,7 +253,6 @@
                         success: function (res) {
                             if ("删除成功！" === res) {
                                 layer.alert(res, {icon: 1}, () => {
-                                    obj.del()
                                     itemCnt--
                                     if (itemCnt === 0) { //当前页的Item为0
                                         let nextPage;
@@ -266,6 +265,8 @@
                                                 curr: nextPage
                                             },
                                         })
+                                    } else {
+                                        couponTable.reload()
                                     }
                                     layer.closeAll()
                                 })

@@ -194,7 +194,6 @@
                             if ("删除成功！" === res) {
                                 layer.alert(res, {icon: 1}, () => {
                                     layer.closeAll()
-                                    obj.del()
                                     itemCnt--
                                     if (itemCnt === 0) { //当前页的Item为0
                                         let nextPage;
@@ -207,7 +206,7 @@
                                                 curr: nextPage
                                             },
                                         })
-                                    }
+                                    } else tableTypes.reload()
                                 })
                             } else
                                 layer.alert(res, {icon: 2}, () => {
