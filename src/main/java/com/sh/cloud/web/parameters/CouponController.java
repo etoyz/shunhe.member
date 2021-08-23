@@ -35,8 +35,8 @@ public class CouponController {
     @RequiresPermissions({"member:customParameters:coupon:add"})
     @PostMapping(value = "addCoupon")
     public String addCoupon(@RequestBody Coupon coupon) {
-        SimpleDateFormat df = new SimpleDateFormat("yyMMdd");
-        coupon.couponId = Integer.parseInt(df.format(new Date()) + getRandom(4));
+//        SimpleDateFormat df = new SimpleDateFormat("yyMMdd");
+//        coupon.couponId = Integer.parseInt(df.format(new Date()) + getRandom(4));
         String ret = couponService.addCoupon(PlatUserUtils.getCurrentLoginPlatUser(), coupon);
         if (ret == null || ret.equals(""))
             return "添加成功";
