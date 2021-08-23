@@ -123,7 +123,7 @@ public class CouponStatisticalController {
                 CouponCheck couponCheck = new CouponCheck();
                 couponCheck.couponId = info.getUserCoupon().couponId;
                 info.setBuyCount(statisticsService.getStoreValueCountByMoney(user, couponCheck, 0));
-                info.setBuyCount(statisticsService.getStoreValueCountByMoney(user, couponCheck, 1));
+                info.setAvailableCount(statisticsService.getStoreValueCountByMoney(user, couponCheck, 1));
                 info.setUsedCount(info.getBuyCount() - info.getAvailableCount());
             }
         }

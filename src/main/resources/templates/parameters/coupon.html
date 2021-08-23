@@ -40,7 +40,7 @@
             <div class="s-commonTable">
                 <table shiro:hasPermission="member:customParameters:coupon:list" class="layui-hide" id="coupon" lay-filter="couponTable"></table>
                 <script id="operation" type="text/html">
-                    <a shiro:hasPermission="member:customParameters:coupon:edit" class="layui-btn layui-btn-xs layui-btn-warm" lay-event="modify">修改</a>
+                    <a shiro:hasPermission="member:customParameters:coupon:edit" class="layui-btn layui-btn-xs layui-btn-warm" lay-event="edit">修改</a>
                     <a shiro:hasPermission="member:customParameters:coupon:relItem" class="layui-btn layui-btn-xs" lay-event="relate">关联消费项目</a>
                     <a shiro:hasPermission="member:customParameters:coupon:delete" class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delete">删除</a>
                 </script>
@@ -92,11 +92,11 @@
                                lay-verify="number" value="0" name="costPrice" type="text">
                     </div>
                 </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">顺序号</label>
+                <div class="layui-inline editMod">
+                    <label class="layui-form-label">编号</label>
                     <div class="layui-input-inline">
-                        <input autocomplete="off" class="layui-input" id="orderID"
-                               name="orderID" type="text">
+                        <input autocomplete="off" class="layui-input"
+                               disabled id="couponId" type="text">
                     </div>
                 </div>
             </div>
@@ -276,8 +276,9 @@
                     });
                 })
             }
-            if (layEvent === 'modify') {
+            if (layEvent === 'edit') {
                 $("#couponType").attr("disabled", true)
+                $(".editMod").show()
                 layer.open({
                     type: 1,
                     title: '修改卡券信息',
@@ -285,12 +286,12 @@
                     area: ['1022px', '225px']
                 });
                 pullCouponTypes("#couponType", function () {
-                    //拉取卡券列表成功后，执行此回调函数填充原数据以供修改
                     $('#couponType').val(activeLine.type);
-                    $('#couponName').val(activeLine.name);
-                    $('#price').val(activeLine.unitPrice);
-                    $('#costPrice').val(activeLine.costPrice);
                 })
+                $('#couponName').val(activeLine.name);
+                $('#price').val(activeLine.unitPrice);
+                $('#costPrice').val(activeLine.costPrice);
+                $('#couponId').val(activeLine.couponId);
                 form.on('submit(confirm)', function (data) {
                     function editAction() {
                         data.field.couponId = activeLine.couponId
@@ -357,6 +358,7 @@
 
         $("#addBtn").unbind("click").click(function () {
             $("#couponType").attr("disabled", false)
+            $(".editMod").hide()
             $("#couponName").val("")
             $("#remark").val("")
             $("#price").val(0)

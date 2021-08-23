@@ -6,14 +6,14 @@ import com.sft.member.obtain.consume.ConsumeProjectService;
 import com.sft.member.obtain.coupon.CouponService;
 import com.sh.cloud.entity.CouponAndConsumeProjects;
 import com.sh.cloud.utils.PlatUserUtils;
+import io.swagger.models.auth.In;
+import org.apache.commons.lang.RandomStringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @RestController
 @RequestMapping("service/parameters/coupon")
@@ -35,11 +35,22 @@ public class CouponController {
     @RequiresPermissions({"member:customParameters:coupon:add"})
     @PostMapping(value = "addCoupon")
     public String addCoupon(@RequestBody Coupon coupon) {
+        SimpleDateFormat df = new SimpleDateFormat("yyMMdd");
+        coupon.couponId = Integer.parseInt(df.format(new Date()) + getRandom(4));
         String ret = couponService.addCoupon(PlatUserUtils.getCurrentLoginPlatUser(), coupon);
         if (ret == null || ret.equals(""))
             return "添加成功";
         else
             return ret;
+    }
+
+    public static String getRandom(int len) {
+        Random r = new Random();
+        StringBuilder rs = new StringBuilder();
+        for (int i = 0; i < len; i++) {
+            rs.append(r.nextInt(10));
+        }
+        return rs.toString();
     }
 
     @Deprecated

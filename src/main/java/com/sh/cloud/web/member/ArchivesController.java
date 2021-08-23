@@ -35,7 +35,7 @@ public class ArchivesController {
     @Resource
     PlatUserService platUserService;
 
-    @RequiresPermissions(value = {"member:archives:more"}, logical = Logical.OR)
+    @RequiresPermissions(value = {"member:archives:more", "member:archives:add"}, logical = Logical.OR)
     @RequestMapping("getUserByPost")
     public List<PlatUser> getUserByPost(@RequestParam String post) {
         PlatUser user = new PlatUser();
