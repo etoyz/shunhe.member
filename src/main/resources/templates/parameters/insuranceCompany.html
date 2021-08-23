@@ -212,20 +212,7 @@
                             if (res === "删除成功！")
                                 layer.alert(res, {icon: 1}, () => {
                                     layer.closeAll()
-                                    obj.del()
-                                    itemCnt--
-                                    if (itemCnt === 0) { //当前页的Item为0
-                                        let nextPage;
-                                        if (tableIns.config.page.curr === 1) //当前为第一页，则删除后还是第一页
-                                            nextPage = tableIns.config.page.curr;
-                                        else //删除后是前一页
-                                            nextPage = tableIns.config.page.curr - 1;
-                                        tableIns.reload({
-                                            page: {
-                                                curr: nextPage
-                                            },
-                                        })
-                                    }
+                                    tableIns.reload()
                                 })
                             else
                                 layer.alert(res, {icon: 2}, () => {
