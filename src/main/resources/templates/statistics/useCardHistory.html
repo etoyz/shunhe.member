@@ -326,6 +326,7 @@
                 dataType: "json",
                 success: function (res) {
                     selectE2.empty();
+                    res = res.data
                     for (var s of res) {
                         selectE2.append("<option value='" + s.consumeProjectId + "'>" + s.name + "</option>");
                     }
