@@ -188,7 +188,7 @@
             },
             cols: [ [
                 {field: 'name', width: '8%', title: '卡券名称'},
-                {field: 'type', width: '8%', title: '卡券类型'},
+                {field: 'typeName', width: '8%', title: '卡券类型'},
                 {field: 'unitPrice', width: '6%', title: '单价'},
                 {field: 'costPrice', width: '7%', title: '成本价'},
                 {field: 'remark', width: '6%', title: '备注'},
@@ -204,7 +204,12 @@
                 let data = res.data
                 itemCnt = data.length
                 for (let i = 0; i < data.length; i++) {
-                    data[i].type = data[i].type === 1 ? "储值" : "代金券"
+                    if(data[i].type === 1)
+                        data[i].typeName = "储值";
+                    else if(data[i].type === 0)
+                        data[i].typeName = "代金券";
+                    else
+                        data[i].typeName = "消费券";
                     $.post({
                         url: "service/platUserManage/getUserInfo?platUserId=" + data[i].createId,
                         async: false,
@@ -242,7 +247,6 @@
         var activeLine
         table.on('tool(couponTable)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
             activeLine = obj.data; //获得当前行数据
-            activeLine.type = activeLine.type === "储值" ? 1 : 0;
             var layEvent = obj.event;
             if (layEvent === 'delete') { // 用卡
                 layer.confirm("确认删除卡券【" + activeLine.name + "】?", {icon: 3, title: '提示'}, function () {
@@ -411,7 +415,9 @@
                 }),
                 contentType: "application/json",
                 success: function (res) {
-                    layer.alert(res)
+                    layer.alert(res, {icon: 1}, ()=>{
+                        layer.closeAll()
+                    })
                 }
             })
         })
