@@ -1,9 +1,14 @@
 package com.sh.cloud.web.memberUseCoupon;
 
 import com.sft.member.bean.CouponCheck;
+import com.sft.member.bean.Log;
+import com.sft.member.bean.User;
+import com.sft.member.obtain.log.LogService;
 import com.sft.member.obtain.pay.PayService;
+import com.sft.member.obtain.user.UserService;
 import com.sh.cloud.entity.GetPendingReviewListRequest;
 import com.sh.cloud.utils.PlatUserUtils;
+import com.sh.cloud.utils.TimeUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +26,10 @@ import java.util.Map;
 public class PendingReviewController {
     @Resource
     PayService payService;
+    @Resource
+    LogService logService;
+    @Resource
+    UserService shUserService;
 
     @RequestMapping("getPendingReviewList")
     public Map<String, Object> getPendingReviewList(@RequestBody GetPendingReviewListRequest request) {
@@ -53,11 +62,19 @@ public class PendingReviewController {
     }
 
     @RequestMapping("checkCoupon")
-    public String checkCoupon(@RequestParam String groupId) {
+    public String checkCoupon(@RequestParam String groupId, @RequestParam String userId) {
         String ret = payService.checkCoupon(PlatUserUtils.getCurrentLoginPlatUser(), groupId);
-        if (ret.equals(""))
+        if (ret.equals("")) {
+            Log log = new Log();
+            User user = new User();
+            user.userId = userId;
+            user = shUserService.getUser(user);
+            log.content = "审核消费单 客户名称：" + user.customername + "、会员卡号：" + user.memberNumber + "、消费单：" + groupId;
+            log.createId = PlatUserUtils.getCurrentLoginPlatUser().platUserId;
+            log.time = TimeUtils.getCurrentTime();
+            logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(), log);
             return "成功！";
-        else
+        } else
             return ret;
     }
 

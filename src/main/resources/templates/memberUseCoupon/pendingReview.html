@@ -603,7 +603,7 @@
             $("#checkCoupon").unbind("click").click(function () {
                 layer.confirm("确认审核？", {icon: 3}, () => {
                     $.get({
-                        url: "service/useCoupon/review/checkCoupon?groupId=" + activeItem.groupId,
+                        url: "service/useCoupon/review/checkCoupon?groupId=" + activeItem.groupId + "&userId=" + activeItem.userId,
                         success: function (res) {
                             if(res === "成功！")
                                 layer.alert(res, {icon: 1}, () => {layer.closeAll();tableReview.reload()})
