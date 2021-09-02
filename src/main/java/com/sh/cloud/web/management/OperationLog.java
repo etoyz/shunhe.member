@@ -26,7 +26,7 @@ public class OperationLog {
         Map<String, Object> ret = new HashMap<>();
         ret.put("code", 0);
         ret.put("msg", "");
-        List<Log> data = logService.getLogList(request.getStartTime(), request.getEndTime(), request.getContent(), request.getPage(), request.getPageSize());
+        List<Log> data = logService.getLogList(request.getStartTime(), request.getEndTime(), request.getContent(), request.getPage(), request.getLimit());
         ret.put("data", data);
         ret.put("count", logService.getLogListCount(request.getStartTime(), request.getEndTime(), request.getContent()));
         return ret;

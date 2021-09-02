@@ -14,5 +14,5 @@ public class GetLogListRequest {
 
     int page;
 
-    int pageSize;
+    int limit;
 }
