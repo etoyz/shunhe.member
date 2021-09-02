@@ -493,7 +493,7 @@
                         {field: 'count', width: 150, title: '数量'},
                         {field: 'indateValue', width: 100, title: '有效天数'},
                         {field: 'startIntervalDateValue', width: 150, title: '多少天后开始'},
-                        {field: 'remark', width: 400, title: '备注', align: "left"},
+                        {field: 'remark', width: 550, title: '备注', align: "left"},
                         {field: 'operation', width: 110, title: '操作', toolbar: '#operationSpe', fixed: 'right'}
                     ]],
                     // size: 'sm',
@@ -768,7 +768,7 @@
             });
             $("#queryBtn").unbind("click").click(function () {
                 tableProj.reload({
-                    url: 'service/parameters/consumeItem/getConsumeProjectList?query=' + $("#consumeProjInput").val() + '&consumeType=' + $("#consumeTypeInput").val(),
+                    url: 'service/parameters/consumeItem/getConsumeProjectList?query=' + $("#consumeProjInput").val() + '&consumeTypeId=' + $("#consumeTypeInput").val(),
                     page: {
                         curr: 1
                     }

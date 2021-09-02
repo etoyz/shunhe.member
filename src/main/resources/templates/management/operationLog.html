@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro" >
+<head>
+    <meta charset="utf-8">
+    <title>系统日志</title>
+    <meta content="webkit" name="renderer">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
+    <link href="plugins/layui/css/layui.css" media="all" rel="stylesheet">
+    <link href="plugins/font-awesome/css/font-awesome.min.css" media="all" rel="stylesheet">
+    <link href="plugins/adjust/css/adjustLayui.css" media="all" rel="stylesheet">
+    <link href="css/table.css" media="all" rel="stylesheet">
+    <link href="css/form.css" media="all" rel="stylesheet">
+    <link href="css/common.css" media="all" rel="stylesheet">
+</head>
+
+<body>
+<div class="layui-fluid main">
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="s-headerSearch">
+                <form action="" autocomplete="off" class="layui-form">
+                    <div class="layui-form-item">
+                        <div class="layui-inline s-layuiInline">
+                            <label class="layui-form-label">操作日期：</label>
+                            <div class="layui-input-inline">
+                                <input class="layui-input" id="time" name="time" placeholder="请选择操作日期范围" type="text">
+                            </div>
+                        </div>
+                        <div class="layui-inline s-layuiInline">
+                            <label class="layui-form-label">操作内容：</label>
+                            <div class="layui-input-inline">
+                                <input autocomplete="off" class="layui-input" id="content" name="content" placeholder="请输入操作内容"
+                                       type="text">
+                            </div>
+                        </div>
+                        <div class="layui-inline s-layuiInline">
+                            <button class="layui-btn layui-btn-warm" id="queryBtn">查询</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="s-commonTable">
+                <table class="layui-hide" id="tableLog" lay-filter="tableLog"></table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="plugins/layui/layui.js"></script>
+<script>
+    layui.use(['form', 'table', 'laydate'], function() {
+        // tableMain表格
+        var $ = layui.jquery,
+            table = layui.table,
+            laydate = layui.laydate;
+        laydate.render({
+            elem: '#time'
+            , type: 'date'
+            , range: '@'
+            , format: 'yyyy-MM-dd'
+        });
+
+        // 表格渲染
+        var tableLog = table.render({
+             elem: '#tableLog'
+            ,height: 'full-180'
+            ,size: 'sm' //小尺寸的表格
+            ,url: 'service/management/log/getLogList' //数据接口
+            ,method: "post"
+            ,contentType: "application/json"
+            ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                    layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
+                    limit: 15,
+                    groups: 3, //只显示 1 个连续页码
+                    first: false, //不显示首页
+                    last: false //不显示尾页
+                }
+            ,toolbar: true //仅开启工具栏，不显示左侧模板
+            ,defaultToolbar: ['filter', 'print', 'exports'] //头部工具栏右侧图标
+            ,cols: [ [ //表头，两个中括号之间一定要加空格不然会出错，有冲突
+                {field: 'time', title: '操作时间', width:150, sort: true}
+                ,{field: 'content', title: '操作内容', width:200, sort: true}
+                ,{field: 'ip', title: '操作IP', width:200, sort: true}
+                ,{field: 'pc', title: '操作PC', width:150, sort: true}
+                ,{field: 'createId', title: '操作员', width: 150, sort: true}
+            ] ]
+        });
+
+        $("#queryBtn").unbind("click").click(function () {
+            tableLog.reload({
+                where: {
+                    startTime: $("#time").val().replace(/ @ [0-9-]+/, ""),
+                    endTime: $("#time").val().replace(/[0-9-]+ @ /, ""),
+                    content: $("#content").val()
+                },
+                page: {
+                    curr: 1
+                }
+            })
+            return false;
+        })
+    });
+</script>
+</body>
+</html>

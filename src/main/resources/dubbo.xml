@@ -52,4 +52,6 @@
                      interface="com.sft.member.obtain.statistics.StatisticsService" async="false"/>
     <dubbo:reference id="scoreService"
                      interface="com.sft.member.obtain.score.ScoreService" async="false"/>
+    <dubbo:reference id="logService"
+                     interface="com.sft.member.obtain.log.LogService" async="false"/>
 </beans>

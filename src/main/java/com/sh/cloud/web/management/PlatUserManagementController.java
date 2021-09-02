@@ -1,4 +1,4 @@
-package com.sh.cloud.web.others;
+package com.sh.cloud.web.management;
 
 import com.sft.member.bean.PlatUser;
 import com.sft.member.obtain.user.PlatUserService;

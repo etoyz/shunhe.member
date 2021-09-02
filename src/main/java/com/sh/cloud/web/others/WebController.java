@@ -109,7 +109,12 @@ public class WebController {
     // ------------- Menu: System management -------------
     @RequestMapping("/userManagement")
     public String userManagement() {
-        return "others/userManagement";
+        return "management/userManagement";
+    }
+
+    @RequestMapping("/operationLog")
+    public String operationLog() {
+        return "management/operationLog";
     }
     // ----------------------------------------
 }
