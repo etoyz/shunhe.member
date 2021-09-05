@@ -58,6 +58,7 @@
                 <li>车辆信息</li>
                 <li class="editMod">会员信息</li>
                 <li class="editMod">消费历史</li>
+                <li class="editMod">操作日志</li>
             </ul>
             <div class="layui-tab-content" style="height: 100px;">
                 <div class="layui-tab-item layui-show">
@@ -473,12 +474,7 @@
                 </div>
                 <div class="layui-tab-item">
                     <div class="s-commonTable">
-                        <table class="layui-hide" id="pointsHistories" lay-filter="pointsHistoriesTabel"></table>
-                    </div>
-                </div>
-                <div class="layui-tab-item">
-                    <div class="s-commonTable">
-                        <table class="layui-hide" id="operationLogs" lay-filter="operationLogsTabel"></table>
+                        <table class="layui-hide" id="operationLogs" lay-filter="operationLogsTable"></table>
                     </div>
                 </div>
                 <div class="s-tabBottomButton">
@@ -1107,6 +1103,30 @@
                             }
                         }
                     },
+                    done: function () {
+                        showPopup()
+                    }
+                });
+                // "操作日志表格"渲染
+                table.render({
+                    elem: '#operationLogs',
+                    url: 'service/management/log/getUserLogList?userId=' + activeUser.userId,
+                    height: 410,
+                    page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                        layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
+                        limit: 10,
+                        groups: 3, //只显示 1 个连续页码
+                        first: false, //不显示首页
+                        last: false //不显示尾页
+                    },
+                    cols: [ [
+                        {field: 'time', title: '操作时间', width:150, sort: true}
+                        ,{field: 'content', title: '操作内容', width:200, sort: true}
+                        ,{field: 'ip', title: '操作IP', width:200, sort: true}
+                        ,{field: 'pc', title: '操作PC', width:150, sort: true}
+                        ,{field: 'createId', title: '操作员', width: 150, sort: true}
+                    ] ],
+                    size: 'sm',
                     done: function () {
                         showPopup()
                     }
