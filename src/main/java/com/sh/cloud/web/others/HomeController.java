@@ -20,11 +20,6 @@ import java.util.Map;
 @Controller
 @Log4j2
 public class HomeController {
-    @Resource
-    LogService logService;
-    @Resource
-    PlatUserService platUserService;
-
     @RequestMapping({"/", "/index"})
     public String index() {
         return "others/index";
@@ -32,9 +27,6 @@ public class HomeController {
 
     @RequestMapping("/login")
     public String login(HttpServletRequest request, Map<String, Object> map, Model model) throws Exception {
-        PlatUser user = platUserService.getPlatUser(PlatUserUtils.getCurrentLoginPlatUser());
-        logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
-                LogUtils.newLogInstance("新增用户 用户名：" + user.name));
         return "redirect:" + ShiroCasConfiguration.loginUrl;
     }
 

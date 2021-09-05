@@ -8,7 +8,12 @@ import com.dubbo.user.service.PermissionService;
 import com.dubbo.user.service.RoleService;
 import com.dubbo.user.service.UserService;
 import com.dubbo.user.util.GsonUtil;
+import com.sft.member.bean.PlatUser;
+import com.sft.member.obtain.log.LogService;
+import com.sft.member.obtain.user.PlatUserService;
 import com.sh.cloud.entity.MongoUser;
+import com.sh.cloud.utils.LogUtils;
+import com.sh.cloud.utils.PlatUserUtils;
 import com.sh.cloud.utils.UtilValidate;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -42,6 +47,10 @@ public class MyShiroCasRealm extends CasRealm {
     private RoleService roleService;
     @Resource
     private PermissionService permissionService;
+    @Resource
+    LogService logService;
+    @Resource
+    PlatUserService platUserService;
 //    @Autowired
 //    private MongoUserService service;
 
@@ -186,6 +195,9 @@ public class MyShiroCasRealm extends CasRealm {
             //添加权限
 //            simpleAuthorInfo.addStringPermission("admin:manage");
 //            logger.info("已为用户[mike]赋予了[admin]角色和[admin:manage]权限");
+            PlatUser user = platUserService.getPlatUser(PlatUserUtils.getCurrentLoginPlatUser());
+            logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
+                    LogUtils.newLogInstance("用户登入 用户名：" + user.name));
             return info;
         }
         // 返回null的话，就会导致任何用户访问被拦截的请求时，都会自动跳转到unauthorizedUrl指定的地址
