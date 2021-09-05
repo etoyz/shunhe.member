@@ -5,12 +5,14 @@ import carinfo.bean.CarSeries;
 import carinfo.bean.CarSeriesGroup;
 import carinfo.service.CarDataQuery;
 import com.sft.member.bean.*;
+import com.sft.member.obtain.log.LogService;
 import com.sft.member.obtain.member.MemberService;
 import com.sft.member.obtain.pay.PayService;
 import com.sft.member.obtain.user.PlatUserService;
 import com.sft.member.obtain.user.UserService;
 import com.sh.cloud.entity.GetPendingReviewListRequest;
 import com.sh.cloud.entity.GetUserListRequest;
+import com.sh.cloud.utils.LogUtils;
 import com.sh.cloud.utils.PlatUserUtils;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -34,6 +36,8 @@ public class ArchivesController {
     PayService payService;
     @Resource
     PlatUserService platUserService;
+    @Resource
+    LogService logService;
 
     @RequiresPermissions(value = {"member:archives:more", "member:archives:add"}, logical = Logical.OR)
     @RequestMapping("getUserByPost")
@@ -53,14 +57,17 @@ public class ArchivesController {
     @PostMapping(value = "addArchives")
     public String addUser(@RequestBody User user) {
         String ret = shUserService.addUser(PlatUserUtils.getCurrentLoginPlatUser(), user);
-        if (ret == null || ret.equals(""))
+        if (ret == null || ret.equals("")) {
+            logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
+                    LogUtils.newLogInstance("新增会员 客户名称：" + user.customername + "、会员卡号：" + user.memberNumber));
             return "成功！";
-        else
+        } else
             return ret;
     }
 
     @RequiresPermissions(value = {"member:archivesRoot"}, logical = Logical.OR)
     @GetMapping("getArchivesList")
+    @Deprecated
     public Map<String, Object> getArchivesList(@RequestParam String query, @RequestParam int page, @RequestParam int limit) {
         Map<String, Object> ret = new HashMap<>();
         ret.put("code", 0);
@@ -107,12 +114,15 @@ public class ArchivesController {
     @RequiresPermissions(value = {"member:archives:delete"}, logical = Logical.OR)
     @PostMapping("deleteArchives")
     public String deleteArchives(@RequestParam String userId) {
-        User c = new User();
-        c.userId = userId;
-        String ret = shUserService.deleteUser(PlatUserUtils.getCurrentLoginPlatUser(), c);
-        if (ret == null || ret.equals(""))
+        User user = new User();
+        user.userId = userId;
+        String ret = shUserService.deleteUser(PlatUserUtils.getCurrentLoginPlatUser(), user);
+        if (ret == null || ret.equals("")) {
+            user = shUserService.getUser(user);
+            logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
+                    LogUtils.newLogInstance("删除会员 客户名称：" + user.customername + "、会员卡号：" + user.memberNumber));
             return "删除成功！";
-        else
+        } else
             return ret;
     }
 
@@ -121,10 +131,12 @@ public class ArchivesController {
     public User editArchives(@RequestBody User user) {
         User c;
         c = shUserService.editUser(PlatUserUtils.getCurrentLoginPlatUser(), user);
+        logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
+                LogUtils.newLogInstance("编辑会员 会员卡号：" + user.memberNumber));
         return c;
     }
 
-//    TODO: 用到该URL的页面较多，暂不设权限控制
+    //    TODO: 用到该URL的页面较多，暂不设权限控制
 //    @RequiresPermissions(value = {"member:archives"}, logical = Logical.OR)
     @PostMapping(value = "getUserInfo")
     public User requireUser(@RequestParam String userId) {
@@ -170,8 +182,12 @@ public class ArchivesController {
         c.userId = userId;
         c.member = m;
         String ret = shUserService.alertLevel(PlatUserUtils.getCurrentLoginPlatUser(), c);
-        if (ret == null || ret.equals(""))
+        if (ret == null || ret.equals("")) {
+            c = shUserService.getUser(c);
+            logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
+                    LogUtils.newLogInstance("修改会员级别 客户名称：" + c.customername + "、会员卡号：" + c.memberNumber));
             return "添加成功";
+        }
         else
             return ret;
     }

@@ -756,7 +756,7 @@
                         data: JSON.stringify(formData.field),
                         contentType: "application/json",
                         success: function (res) {
-                            if(res === "")
+                            if(res === "成功！")
                                 layer.alert("成功！", {icon: 1},() => { layer.closeAll();tableProj.reload() })
                             else
                                 layer.alert(res, {icon: 2})

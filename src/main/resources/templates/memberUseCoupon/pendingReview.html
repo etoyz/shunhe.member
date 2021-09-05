@@ -617,7 +617,7 @@
             $("#reject").unbind("click").click(function () {
                 layer.confirm("确认驳回？", {icon: 3}, () => {
                     $.ajax({
-                        url: "service/useCoupon/review/cancelRecord?groupId=" + activeItem.groupId,
+                        url: "service/useCoupon/review/cancelRecord?groupId=" + activeItem.groupId + "&userId=" + activeItem.userId,
                         success: function (res) {
                             if(res === "成功！")
                                 layer.alert(res, {icon: 1}, () => {layer.closeAll();tableReview.reload()})

@@ -1,8 +1,10 @@
 package com.sh.cloud.web.memberUseCoupon;
 
 import com.sft.member.bean.CouponCheck;
+import com.sft.member.obtain.log.LogService;
 import com.sft.member.obtain.pay.PayService;
 import com.sh.cloud.entity.GetRequestPacket;
+import com.sh.cloud.utils.LogUtils;
 import com.sh.cloud.utils.PlatUserUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,6 +23,8 @@ import java.util.Map;
 public class CancelConsumeController {
     @Resource
     PayService payService;
+    @Resource
+    LogService logService;
 
     // 获取整个列表
     @RequestMapping("getConsumeList")
@@ -56,9 +60,11 @@ public class CancelConsumeController {
     @RequestMapping("rollBack")
     public String rollBack(@RequestParam String id) {
         String ret = payService.rollBack(PlatUserUtils.getCurrentLoginPlatUser(), id);
-        if (ret.equals(""))
+        if (ret.equals("")) {
+            logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
+                    LogUtils.newLogInstance("反结算账单 账单ID：" + id));
             return "成功！";
-        else
+        } else
             return ret;
     }
 }

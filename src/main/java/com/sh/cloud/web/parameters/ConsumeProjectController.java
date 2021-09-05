@@ -4,8 +4,10 @@ import com.sft.member.bean.ConsumeProject;
 import com.sft.member.bean.Coupon;
 import com.sft.member.obtain.consume.ConsumeProjectService;
 import com.sft.member.obtain.coupon.CouponService;
+import com.sft.member.obtain.log.LogService;
 import com.sh.cloud.entity.ConsumeProjectAndConsumeProjects;
 import com.sh.cloud.entity.CouponsAndConsumeProject;
+import com.sh.cloud.utils.LogUtils;
 import com.sh.cloud.utils.PlatUserUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +24,8 @@ public class ConsumeProjectController {
     ConsumeProjectService consumeProjectService;
     @Resource
     CouponService couponService;
+    @Resource
+    LogService logService;
 
     @RequiresPermissions({"member:customParameters:consumeItem:list"})
     @RequestMapping("getConsumeProjectList")
@@ -61,12 +65,20 @@ public class ConsumeProjectController {
     @RequiresPermissions({"member:customParameters:consumeItem:add"})
     @PostMapping("addConsumeProject")
     public String addConsumeProject(@RequestBody ConsumeProject project) {
-        return consumeProjectService.addConsumeProject(PlatUserUtils.getCurrentLoginPlatUser(), project);
+        String ret = consumeProjectService.addConsumeProject(PlatUserUtils.getCurrentLoginPlatUser(), project);
+        if (ret == null) {
+            logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
+                    LogUtils.newLogInstance("新增消费项目 消费项目名：" + project.name));
+            return "成功！";
+        } else
+            return ret;
     }
 
     @RequiresPermissions({"member:customParameters:consumeItem:edit"})
     @PostMapping("editConsumeProject")
     public String editConsumeProject(@RequestBody ConsumeProject project) {
+        logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
+                LogUtils.newLogInstance("编辑消费项目 消费项目ID：" + project.consumeProjectId));
         consumeProjectService.editConsumeProject(PlatUserUtils.getCurrentLoginPlatUser(), project);
         return "成功！";
     }
@@ -77,6 +89,8 @@ public class ConsumeProjectController {
         ConsumeProject project = new ConsumeProject();
         project.consumeProjectId = couponsAndConsumeProject.getConsumeProjectId();
         couponService.updateCouponListByConsumeProject(PlatUserUtils.getCurrentLoginPlatUser(), project, couponsAndConsumeProject.getCoupons());
+        logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
+                LogUtils.newLogInstance("更新消费项目关联的消费卡券 消费项目ID：" + project.consumeProjectId));
         return "成功！";
     }
 
@@ -85,9 +99,11 @@ public class ConsumeProjectController {
     public String deleteConsumeProject(@RequestParam String id) {
         ConsumeProject consumeProject = new ConsumeProject();
         consumeProject.consumeProjectId = Integer.parseInt(id);
-        if (consumeProjectService.deleteConsumeProject(PlatUserUtils.getCurrentLoginPlatUser(), consumeProject))
+        if (consumeProjectService.deleteConsumeProject(PlatUserUtils.getCurrentLoginPlatUser(), consumeProject)) {
+            logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
+                    LogUtils.newLogInstance("删除消费项目 消费项目ID：" + id));
             return "删除成功！";
-        else
+        } else
             return "删除失败！";
     }
 
@@ -107,9 +123,11 @@ public class ConsumeProjectController {
     @RequestMapping("relateConsumeProject")
     public String relateConsumeProject(@RequestBody ConsumeProjectAndConsumeProjects consumeProjectAndConsumeProjects) {
         String ret = consumeProjectService.setRelateConsumeProject(PlatUserUtils.getCurrentLoginPlatUser(), consumeProjectAndConsumeProjects.getProject(), consumeProjectAndConsumeProjects.getProjects());
-        if (ret == null)
+        if (ret == null) {
+            logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
+                    LogUtils.newLogInstance("更新消费项目关联的消费项目 消费项目ID：" + consumeProjectAndConsumeProjects.getProject().consumeProjectId));
             return "成功！";
-        else
+        } else
             return ret;
     }
 }

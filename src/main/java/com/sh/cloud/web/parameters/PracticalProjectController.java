@@ -1,11 +1,11 @@
 package com.sh.cloud.web.parameters;
 
 import com.sft.member.bean.ConsumeProject;
-import com.sft.member.bean.PlatUser;
 import com.sft.member.bean.PracticalProject;
 import com.sft.member.obtain.consume.PracticalProjectService;
+import com.sft.member.obtain.log.LogService;
+import com.sh.cloud.utils.LogUtils;
 import com.sh.cloud.utils.PlatUserUtils;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,6 +22,8 @@ import java.util.Map;
 public class PracticalProjectController {
     @Resource
     PracticalProjectService practicalProjectService;
+    @Resource
+    LogService logService;
 
     @RequestMapping("getPracticalProjectListByConsumeProject")
     public Map<String, Object> getPracticalProjectListByConsumeProject(@RequestParam String consumeProjectId) {
@@ -42,23 +44,29 @@ public class PracticalProjectController {
     @RequestMapping("addPracticalProject")
     public String addPracticalProject(@RequestBody PracticalProject project) {
         String ret = practicalProjectService.addPracticalProject(PlatUserUtils.getCurrentLoginPlatUser(), project);
-        if(ret == null)
+        if (ret == null) {
+            logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
+                    LogUtils.newLogInstance("新增具体项目 具体项目名称：" + project.name + "消费项目ID：" + project.consumeProjectId));
             return "成功！";
-        else
+        } else
             return ret;
     }
 
     @RequestMapping("editPracticalProject")
     public String editPracticalProject(@RequestBody PracticalProject project) {
         practicalProjectService.editPracticalProject(PlatUserUtils.getCurrentLoginPlatUser(), project);
+        logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
+                LogUtils.newLogInstance("编辑具体项目 具体项目ID：" + project.practicalProjectId));
         return "修改成功！";
     }
 
     @RequestMapping("deletePracticalProject")
     public String deletePracticalProject(@RequestBody PracticalProject project) {
-        if (practicalProjectService.deletePracticalProject(PlatUserUtils.getCurrentLoginPlatUser(), project))
+        if (practicalProjectService.deletePracticalProject(PlatUserUtils.getCurrentLoginPlatUser(), project)) {
+            logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
+                    LogUtils.newLogInstance("删除具体项目 具体项目ID：" + project.practicalProjectId));
             return "成功！";
-        else
+        } else
             return "失败！";
 
     }

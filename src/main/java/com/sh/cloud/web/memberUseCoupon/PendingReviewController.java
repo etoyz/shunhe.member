@@ -1,7 +1,6 @@
 package com.sh.cloud.web.memberUseCoupon;
 
 import com.sft.member.bean.CouponCheck;
-import com.sft.member.bean.Log;
 import com.sft.member.bean.User;
 import com.sft.member.obtain.log.LogService;
 import com.sft.member.obtain.pay.PayService;
@@ -75,11 +74,15 @@ public class PendingReviewController {
     }
 
     @RequestMapping("cancelRecord")
-    public String cancelRecord(@RequestParam String groupId) {
+    public String cancelRecord(@RequestParam String groupId, @RequestParam String userId) {
         String ret = payService.cancelRecord(PlatUserUtils.getCurrentLoginPlatUser(), groupId);
-        if (ret == null)
+        if (ret == null) {
+            User user = new User();
+            user.userId = userId;
+            user = shUserService.getUser(user);
+            logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(), LogUtils.newLogInstance("驳回消费单 客户名称：" + user.customername + "、会员卡号：" + user.memberNumber + "、消费单：" + groupId));
             return "成功！";
-        else
+        } else
             return ret;
     }
 }

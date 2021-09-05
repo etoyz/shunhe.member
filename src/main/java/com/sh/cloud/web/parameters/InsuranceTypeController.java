@@ -2,10 +2,14 @@ package com.sh.cloud.web.parameters;
 
 import com.sft.member.bean.InsuranceType;
 import com.sft.member.insurance.InsuranceTypeService;
+import com.sft.member.obtain.log.LogService;
+import com.sh.cloud.utils.LogUtils;
 import com.sh.cloud.utils.PlatUserUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -17,6 +21,8 @@ import java.util.Map;
 public class InsuranceTypeController {
     @Resource
     InsuranceTypeService insuranceTypeService;
+    @Resource
+    LogService logService;
 
     @RequiresPermissions({"member:customParameters:insuranceType:list"})
     @RequestMapping("getInsuranceTypeList")
@@ -42,9 +48,11 @@ public class InsuranceTypeController {
     @RequestMapping("addInsuranceType")
     public String addInsuranceType(@RequestBody InsuranceType insuranceType) {
         String ret = insuranceTypeService.addInsuranceType(PlatUserUtils.getCurrentLoginPlatUser(), insuranceType);
-        if(ret == null)
+        if (ret == null) {
+            logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
+                    LogUtils.newLogInstance("新增险种 险种名称：" + insuranceType.name));
             return "成功！";
-        else
+        } else
             return ret;
     }
 
@@ -52,6 +60,8 @@ public class InsuranceTypeController {
     @RequestMapping("editInsuranceType")
     public String editInsuranceType(@RequestBody InsuranceType insuranceType) {
         insuranceTypeService.editInsuranceType(PlatUserUtils.getCurrentLoginPlatUser(), insuranceType);
+        logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
+                LogUtils.newLogInstance("编辑险种 险种ID：" + insuranceType.id));
         return "成功！";
     }
 
@@ -60,9 +70,11 @@ public class InsuranceTypeController {
     public String deleteInsuranceType(@RequestParam String id) {
         InsuranceType insuranceType = new InsuranceType();
         insuranceType.id = id;
-        if (insuranceTypeService.deleteInsuranceType(PlatUserUtils.getCurrentLoginPlatUser(), insuranceType) == null)
+        if (insuranceTypeService.deleteInsuranceType(PlatUserUtils.getCurrentLoginPlatUser(), insuranceType) == null) {
+            logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
+                    LogUtils.newLogInstance("删除险种 险种ID：" + insuranceType.id));
             return "删除成功！";
-        else
+        } else
             return "删除失败！";
     }
 }

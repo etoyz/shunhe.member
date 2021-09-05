@@ -2,10 +2,14 @@ package com.sh.cloud.web.parameters;
 
 import com.sft.member.bean.ConsumeType;
 import com.sft.member.obtain.consume.ConsumeTypeService;
+import com.sft.member.obtain.log.LogService;
+import com.sh.cloud.utils.LogUtils;
 import com.sh.cloud.utils.PlatUserUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -17,6 +21,8 @@ import java.util.Map;
 public class ConsumeTypeController {
     @Resource
     ConsumeTypeService consumeTypeService;
+    @Resource
+    LogService logService;
 
     @RequiresPermissions({"member:customParameters:consumeType:list"})
     @RequestMapping("getConsumeTypeList")
@@ -42,6 +48,8 @@ public class ConsumeTypeController {
     @RequiresPermissions({"member:customParameters:consumeType:add"})
     @RequestMapping("addConsumeType")
     public String addConsumeType(@RequestBody ConsumeType consumeType) {
+        logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
+                LogUtils.newLogInstance("新增消费类型 消费类型名：" + consumeType.name));
         return consumeTypeService.addConsumeType(PlatUserUtils.getCurrentLoginPlatUser(), consumeType);
     }
 
@@ -50,15 +58,19 @@ public class ConsumeTypeController {
     public String deleteConsumeType(@RequestParam String id) {
         ConsumeType consumeType = new ConsumeType();
         consumeType.consumeTypeId = Integer.parseInt(id);
-        if (consumeTypeService.deleteConsumeType(PlatUserUtils.getCurrentLoginPlatUser(), consumeType))
+        if (consumeTypeService.deleteConsumeType(PlatUserUtils.getCurrentLoginPlatUser(), consumeType)) {
+            logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
+                    LogUtils.newLogInstance("删除消费类型 消费类型ID：" + id));
             return "删除成功！";
-        else
+        } else
             return "删除失败！";
     }
 
     @RequiresPermissions({"member:customParameters:consumeType:edit"})
     @RequestMapping("editConsumeType")
     public ConsumeType editConsumeType(@RequestBody ConsumeType consumeType) {
+        logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
+                LogUtils.newLogInstance("编辑消费类型 消费类型ID：" + consumeType.consumeTypeId));
         return consumeTypeService.editConsumeType(PlatUserUtils.getCurrentLoginPlatUser(), consumeType);
     }
 }

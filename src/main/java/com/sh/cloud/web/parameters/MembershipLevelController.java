@@ -1,7 +1,9 @@
 package com.sh.cloud.web.parameters;
 
 import com.sft.member.bean.Member;
+import com.sft.member.obtain.log.LogService;
 import com.sft.member.obtain.member.MemberService;
+import com.sh.cloud.utils.LogUtils;
 import com.sh.cloud.utils.PlatUserUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +18,8 @@ import java.util.Map;
 public class MembershipLevelController {
     @Resource
     MemberService memberService;
+    @Resource
+    LogService logService;
 
     @RequiresPermissions("member:customParameters:memberLevel:delete")
     @PostMapping("deleteMember")
@@ -23,10 +27,12 @@ public class MembershipLevelController {
         //此处获取他们给的原始数据，然后处理业务逻辑，然后返回结果
         Member c = new Member();
         c.id = id;
-        String ret=memberService.deleteMember(PlatUserUtils.getCurrentLoginPlatUser(), c);
-        if (ret == null || ret.equals(""))
+        String ret = memberService.deleteMember(PlatUserUtils.getCurrentLoginPlatUser(), c);
+        if (ret == null || ret.equals("")) {
+            logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
+                    LogUtils.newLogInstance("删除会员级别 会员级别ID：" + id));
             return "修改成功";
-        else
+        } else
             return "修改失败";
     }
 
@@ -52,9 +58,11 @@ public class MembershipLevelController {
         // 通过他们的接口将map数据插入后端
         String ret = memberService.addMember(PlatUserUtils.getCurrentLoginPlatUser(), member);
 //        System.out.println("exists");
-        if (ret == null || ret.equals(""))
+        if (ret == null || ret.equals("")) {
+            logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
+                    LogUtils.newLogInstance("新增会员级别 会员级别名称：" + member.name));
             return "添加成功";
-        else
+        } else
             return ret;
     }
 
@@ -63,6 +71,8 @@ public class MembershipLevelController {
     public Member editMember(@RequestBody Member member) {
         Member m;
         m = memberService.editMember(PlatUserUtils.getCurrentLoginPlatUser(), member);
+        logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
+                LogUtils.newLogInstance("编辑会员级别 会员级别ID：" + member.id));
         return m;
     }
 }

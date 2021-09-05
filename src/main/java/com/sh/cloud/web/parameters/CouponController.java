@@ -4,16 +4,18 @@ import com.sft.member.bean.ConsumeProject;
 import com.sft.member.bean.Coupon;
 import com.sft.member.obtain.consume.ConsumeProjectService;
 import com.sft.member.obtain.coupon.CouponService;
+import com.sft.member.obtain.log.LogService;
 import com.sh.cloud.entity.CouponAndConsumeProjects;
+import com.sh.cloud.utils.LogUtils;
 import com.sh.cloud.utils.PlatUserUtils;
-import io.swagger.models.auth.In;
-import org.apache.commons.lang.RandomStringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("service/parameters/coupon")
@@ -22,13 +24,17 @@ public class CouponController {
     CouponService couponService;
     @Resource
     ConsumeProjectService projectService;
+    @Resource
+    LogService logService;
 
     @RequiresPermissions({"member:customParameters:coupon:delete"})
     @PostMapping("deleteCoupon")
     public String deleteCoupon(@RequestBody Coupon coupon) {
-        if (couponService.deleteCoupon(PlatUserUtils.getCurrentLoginPlatUser(), coupon))
+        if (couponService.deleteCoupon(PlatUserUtils.getCurrentLoginPlatUser(), coupon)) {
+            logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
+                    LogUtils.newLogInstance("删除卡券 卡券ID：" + coupon.couponId));
             return "删除成功！";
-        else
+        } else
             return "删除失败！";
     }
 
@@ -38,22 +44,15 @@ public class CouponController {
 //        SimpleDateFormat df = new SimpleDateFormat("yyMMdd");
 //        coupon.couponId = Integer.parseInt(df.format(new Date()) + getRandom(4));
         String ret = couponService.addCoupon(PlatUserUtils.getCurrentLoginPlatUser(), coupon);
-        if (ret == null || ret.equals(""))
+        if (ret == null || ret.equals("")) {
+            logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
+                    LogUtils.newLogInstance("新增卡券 卡券名称：" + coupon.name));
             return "添加成功";
-        else
+        } else
             return ret;
     }
 
-    public static String getRandom(int len) {
-        Random r = new Random();
-        StringBuilder rs = new StringBuilder();
-        for (int i = 0; i < len; i++) {
-            rs.append(r.nextInt(10));
-        }
-        return rs.toString();
-    }
-
-//    @Deprecated
+    //    @Deprecated
     @PostMapping("getCouponTypes")
     public Map<String, Object> getCouponTypes() {
         //获取后台给的卡券类型
@@ -72,6 +71,8 @@ public class CouponController {
     @PostMapping("editCoupon")
     public String editCoupon(@RequestBody Coupon coupon) {
         couponService.editCoupon(PlatUserUtils.getCurrentLoginPlatUser(), coupon);
+        logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
+                LogUtils.newLogInstance("编辑卡券 卡券ID：" + coupon.couponId));
         return "修改成功！";
     }
 
@@ -79,6 +80,8 @@ public class CouponController {
     @PostMapping("relateConsumeProject")
     public String relateConsumeItem(@RequestBody CouponAndConsumeProjects couponAndConsumeProjects) {
         projectService.setConsumeProjectByCoupon(PlatUserUtils.getCurrentLoginPlatUser(), couponAndConsumeProjects.getCoupon(), couponAndConsumeProjects.getProjects());
+        logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
+                LogUtils.newLogInstance("更新卡券关联的消费项目 卡券ID：" + couponAndConsumeProjects.getCoupon().couponId));
         return "关联成功！";
     }
 
