@@ -38,22 +38,22 @@ public class PendingReviewController {
         ret.put("code", 0);
         ret.put("msg", "");
         List<CouponCheck> data;
-        if (request.getGroupBy()) {
-            data = payService.getUnCheckRecord(request.getUser(), couponCheck, request.getPage(), request.getLimit(), true);
-            for (CouponCheck c : data) {
-                Float totalM = 0f;
-                Integer cnt = 0;
-                List<CouponCheck> t = payService.getUnCheckRecord(request.getUser(), c, request.getPage(), request.getLimit(), false);
-                for (CouponCheck ct : t) {
-                    totalM += Float.parseFloat(ct.totalMoney);
-                    cnt += Integer.parseInt(ct.count);
-                }
-                c.totalMoney = String.valueOf(totalM);
-                c.count = String.valueOf(cnt);
-            }
-        } else {
-            data = payService.getUnCheckRecord(request.getUser(), couponCheck, request.getPage(), request.getLimit(), false);
-        }
+//        if (request.getGroupBy()) {
+//            data = payService.getUnCheckRecord(request.getUser(), couponCheck, request.getPage(), request.getLimit(), true);
+//            for (CouponCheck c : data) {
+//                Float totalM = 0f;
+//                Integer cnt = 0;
+//                List<CouponCheck> t = payService.getUnCheckRecord(request.getUser(), c, request.getPage(), request.getLimit(), false);
+//                for (CouponCheck ct : t) {
+//                    totalM += Float.parseFloat(ct.totalMoney);
+//                    cnt += Integer.parseInt(ct.count);
+//                }
+//                c.totalMoney = String.valueOf(totalM);
+//                c.count = String.valueOf(cnt);
+//            }
+//        } else {
+            data = payService.getUnCheckRecord(request.getUser(), couponCheck, request.getPage(), request.getLimit(), request.getGroupBy());
+//        }
         ret.put("data", data);
         ret.put("count", payService.getUnCheckRecordCount(request.getUser(), couponCheck, request.getGroupBy()));
 
