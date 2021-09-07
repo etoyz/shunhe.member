@@ -68,7 +68,7 @@ public class ConsumeProjectController {
         String ret = consumeProjectService.addConsumeProject(PlatUserUtils.getCurrentLoginPlatUser(), project);
         if (ret == null) {
             logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
-                    LogUtils.newLogInstance("新增消费项目 消费项目名：" + project.name));
+                    LogUtils.newLogInstance("新增消费项目 消费项目名:" + project.name));
             return "成功！";
         } else
             return ret;
@@ -78,7 +78,7 @@ public class ConsumeProjectController {
     @PostMapping("editConsumeProject")
     public String editConsumeProject(@RequestBody ConsumeProject project) {
         logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
-                LogUtils.newLogInstance("编辑消费项目 消费项目ID：" + project.consumeProjectId));
+                LogUtils.newLogInstance("编辑消费项目 消费项目ID:" + project.consumeProjectId));
         consumeProjectService.editConsumeProject(PlatUserUtils.getCurrentLoginPlatUser(), project);
         return "成功！";
     }
@@ -90,7 +90,7 @@ public class ConsumeProjectController {
         project.consumeProjectId = couponsAndConsumeProject.getConsumeProjectId();
         couponService.updateCouponListByConsumeProject(PlatUserUtils.getCurrentLoginPlatUser(), project, couponsAndConsumeProject.getCoupons());
         logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
-                LogUtils.newLogInstance("更新消费项目关联的消费卡券 消费项目ID：" + project.consumeProjectId));
+                LogUtils.newLogInstance("更新消费项目关联的消费卡券 消费项目ID:" + project.consumeProjectId));
         return "成功！";
     }
 
@@ -101,7 +101,7 @@ public class ConsumeProjectController {
         consumeProject.consumeProjectId = Integer.parseInt(id);
         if (consumeProjectService.deleteConsumeProject(PlatUserUtils.getCurrentLoginPlatUser(), consumeProject)) {
             logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
-                    LogUtils.newLogInstance("删除消费项目 消费项目ID：" + id));
+                    LogUtils.newLogInstance("删除消费项目 消费项目ID:" + id));
             return "删除成功！";
         } else
             return "删除失败！";
@@ -125,7 +125,7 @@ public class ConsumeProjectController {
         String ret = consumeProjectService.setRelateConsumeProject(PlatUserUtils.getCurrentLoginPlatUser(), consumeProjectAndConsumeProjects.getProject(), consumeProjectAndConsumeProjects.getProjects());
         if (ret == null) {
             logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
-                    LogUtils.newLogInstance("更新消费项目关联的消费项目 消费项目ID：" + consumeProjectAndConsumeProjects.getProject().consumeProjectId));
+                    LogUtils.newLogInstance("更新消费项目关联的消费项目 消费项目ID:" + consumeProjectAndConsumeProjects.getProject().consumeProjectId));
             return "成功！";
         } else
             return ret;

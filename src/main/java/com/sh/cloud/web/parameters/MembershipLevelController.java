@@ -30,7 +30,7 @@ public class MembershipLevelController {
         String ret = memberService.deleteMember(PlatUserUtils.getCurrentLoginPlatUser(), c);
         if (ret == null || ret.equals("")) {
             logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
-                    LogUtils.newLogInstance("删除会员级别 会员级别ID：" + id));
+                    LogUtils.newLogInstance("删除会员级别 会员级别ID:" + id));
             return "修改成功";
         } else
             return "修改失败";
@@ -60,7 +60,7 @@ public class MembershipLevelController {
 //        System.out.println("exists");
         if (ret == null || ret.equals("")) {
             logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
-                    LogUtils.newLogInstance("新增会员级别 会员级别名称：" + member.name));
+                    LogUtils.newLogInstance("新增会员级别 会员级别名称:" + member.name));
             return "添加成功";
         } else
             return ret;
@@ -72,7 +72,7 @@ public class MembershipLevelController {
         Member m;
         m = memberService.editMember(PlatUserUtils.getCurrentLoginPlatUser(), member);
         logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
-                LogUtils.newLogInstance("编辑会员级别 会员级别ID：" + member.id));
+                LogUtils.newLogInstance("编辑会员级别 会员级别ID:" + member.id));
         return m;
     }
 }

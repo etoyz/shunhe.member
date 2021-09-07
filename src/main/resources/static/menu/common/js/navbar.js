@@ -86,7 +86,7 @@ layui.define(['layer', 'laytpl', 'element'], function (exports) {
                         try {
                             data = new Function('return ' + options)();
                         } catch (e) {
-                            layui.hint().error('Navbar 组件a[data-options]配置项存在语法错误：' + options)
+                            layui.hint().error('Navbar 组件a[data-options]配置项存在语法错误:' + options)
                         }
                     } else {
                         data = {

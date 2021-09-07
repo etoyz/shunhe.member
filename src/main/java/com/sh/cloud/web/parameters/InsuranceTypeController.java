@@ -50,7 +50,7 @@ public class InsuranceTypeController {
         String ret = insuranceTypeService.addInsuranceType(PlatUserUtils.getCurrentLoginPlatUser(), insuranceType);
         if (ret == null) {
             logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
-                    LogUtils.newLogInstance("新增险种 险种名称：" + insuranceType.name));
+                    LogUtils.newLogInstance("新增险种 险种名称:" + insuranceType.name));
             return "成功！";
         } else
             return ret;
@@ -61,7 +61,7 @@ public class InsuranceTypeController {
     public String editInsuranceType(@RequestBody InsuranceType insuranceType) {
         insuranceTypeService.editInsuranceType(PlatUserUtils.getCurrentLoginPlatUser(), insuranceType);
         logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
-                LogUtils.newLogInstance("编辑险种 险种ID：" + insuranceType.id));
+                LogUtils.newLogInstance("编辑险种 险种ID:" + insuranceType.id));
         return "成功！";
     }
 
@@ -72,7 +72,7 @@ public class InsuranceTypeController {
         insuranceType.id = id;
         if (insuranceTypeService.deleteInsuranceType(PlatUserUtils.getCurrentLoginPlatUser(), insuranceType) == null) {
             logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
-                    LogUtils.newLogInstance("删除险种 险种ID：" + insuranceType.id));
+                    LogUtils.newLogInstance("删除险种 险种ID:" + insuranceType.id));
             return "删除成功！";
         } else
             return "删除失败！";

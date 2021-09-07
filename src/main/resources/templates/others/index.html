@@ -255,7 +255,7 @@
         form.verify({
 
             // 既支持上述函数式的方式，也支持下述数组的形式
-            // 数组的两个值分别代表：[正则匹配、匹配不符时的提示文字]
+            // 数组的两个值分别代表:[正则匹配、匹配不符时的提示文字]
             // 密码验证
             pass: [
                 /^[\S]{6,12}$/,
@@ -263,9 +263,9 @@
             ],
 
             // 确认密码验证
-            repass: function (value, item) { //value：表单的值、item：表单的DOM对象
+            repass: function (value, item) { //value:表单的值、item:表单的DOM对象
                 var passwordValue = $('input[name=password]').val();
-                // 判断条件也可为：!new RegExp(passwordValue).test(value)
+                // 判断条件也可为:!new RegExp(passwordValue).test(value)
                 if (value != passwordValue) {
                     return '两次输入的密码不一致!';
                 }
@@ -277,7 +277,7 @@
             var index = layer.open({
                 type: 1,
                 title: '修改密码',
-                content: $('#changePasswordWin'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                content: $('#changePasswordWin'), //这里content是一个DOM，注意:最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
                 area: '300px'
             });
             form.on('submit(save)', function (data) {

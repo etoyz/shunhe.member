@@ -344,13 +344,13 @@ public class ShiroCasConfiguration {
         /////////////////////// 下面这些规则配置最好配置到配置文件中 ///////////////////////
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<String, String>();
 
-        // authc：该过滤器下的页面必须登录后才能访问，它是Shiro内置的一个拦截器org.apache.shiro.web.filter.authc.FormAuthenticationFilter
+        // authc:该过滤器下的页面必须登录后才能访问，它是Shiro内置的一个拦截器org.apache.shiro.web.filter.authc.FormAuthenticationFilter
         // anon: 可以理解为不拦截
         // user: 登录了就不拦截
         // roles["admin"] 用户拥有admin角色
         // perms["permission1"] 用户拥有permission1权限
         // filter顺序按照定义顺序匹配，匹配到就验证，验证完毕结束。
-        // url匹配通配符支持：? * **,分别表示匹配1个，匹配0-n个（不含子路径），匹配下级所有路径
+        // url匹配通配符支持:? * **,分别表示匹配1个，匹配0-n个（不含子路径），匹配下级所有路径
 
         //1.shiro集成cas后，首先添加该规则
         filterChainDefinitionMap.put(casFilterUrlPattern, "casFilter");

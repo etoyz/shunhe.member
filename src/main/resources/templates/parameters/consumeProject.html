@@ -363,7 +363,7 @@
         let tableProj = table.render({
             elem: '#consumeProj',
             url: 'service/parameters/consumeItem/getConsumeProjectList?query=&consumeTypeId=',
-            page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+            page: { //支持传入 laypage 组件的所有参数（某些参数除外，如:jump/elem） - 详见文档
                 layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
                 limit: 10,
                 groups: 3, //只显示 1 个连续页码
@@ -633,7 +633,7 @@
                                 layer.open({
                                     type: 1,
                                     title: '关联消费卡券',
-                                    content: $('#relWindow'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                                    content: $('#relWindow'), //这里content是一个DOM，注意:最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
                                     area: ['530px', '620px']
                                 });
                                 layer.close(loadMsg)
@@ -699,7 +699,7 @@
                                 var relWindow = layer.open({
                                     type: 1,
                                     title: '关联消费项目',
-                                    content: $('#relWindow'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                                    content: $('#relWindow'), //这里content是一个DOM，注意:最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
                                     area: ['530px', '620px']
                                 });
                                 layer.close(loadMsg)

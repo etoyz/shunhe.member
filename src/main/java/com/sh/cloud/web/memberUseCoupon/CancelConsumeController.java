@@ -62,7 +62,7 @@ public class CancelConsumeController {
         String ret = payService.rollBack(PlatUserUtils.getCurrentLoginPlatUser(), id);
         if (ret.equals("")) {
             logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
-                    LogUtils.newLogInstance("反结算账单 账单ID：" + id));
+                    LogUtils.newLogInstance("反结算账单 账单ID:" + id));
             return "成功！";
         } else
             return ret;

@@ -32,7 +32,7 @@ public class CouponController {
     public String deleteCoupon(@RequestBody Coupon coupon) {
         if (couponService.deleteCoupon(PlatUserUtils.getCurrentLoginPlatUser(), coupon)) {
             logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
-                    LogUtils.newLogInstance("删除卡券 卡券ID：" + coupon.couponId));
+                    LogUtils.newLogInstance("删除卡券 卡券ID:" + coupon.couponId));
             return "删除成功！";
         } else
             return "删除失败！";
@@ -46,7 +46,7 @@ public class CouponController {
         String ret = couponService.addCoupon(PlatUserUtils.getCurrentLoginPlatUser(), coupon);
         if (ret == null || ret.equals("")) {
             logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
-                    LogUtils.newLogInstance("新增卡券 卡券名称：" + coupon.name));
+                    LogUtils.newLogInstance("新增卡券 卡券名称:" + coupon.name));
             return "添加成功";
         } else
             return ret;
@@ -72,7 +72,7 @@ public class CouponController {
     public String editCoupon(@RequestBody Coupon coupon) {
         couponService.editCoupon(PlatUserUtils.getCurrentLoginPlatUser(), coupon);
         logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
-                LogUtils.newLogInstance("编辑卡券 卡券ID：" + coupon.couponId));
+                LogUtils.newLogInstance("编辑卡券 卡券ID:" + coupon.couponId));
         return "修改成功！";
     }
 
@@ -81,7 +81,7 @@ public class CouponController {
     public String relateConsumeItem(@RequestBody CouponAndConsumeProjects couponAndConsumeProjects) {
         projectService.setConsumeProjectByCoupon(PlatUserUtils.getCurrentLoginPlatUser(), couponAndConsumeProjects.getCoupon(), couponAndConsumeProjects.getProjects());
         logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
-                LogUtils.newLogInstance("更新卡券关联的消费项目 卡券ID：" + couponAndConsumeProjects.getCoupon().couponId));
+                LogUtils.newLogInstance("更新卡券关联的消费项目 卡券ID:" + couponAndConsumeProjects.getCoupon().couponId));
         return "关联成功！";
     }
 

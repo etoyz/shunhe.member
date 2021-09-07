@@ -23,13 +23,13 @@
                 <form action="" autocomplete="off" class="layui-form">
                     <div class="layui-form-item">
                         <div class="layui-inline s-layuiInline">
-                            <label class="layui-form-label">操作日期：</label>
+                            <label class="layui-form-label">操作日期:</label>
                             <div class="layui-input-inline">
                                 <input class="layui-input" id="time" name="time" placeholder="请选择操作日期范围" type="text">
                             </div>
                         </div>
                         <div class="layui-inline s-layuiInline">
-                            <label class="layui-form-label">操作内容：</label>
+                            <label class="layui-form-label">操作内容:</label>
                             <div class="layui-input-inline">
                                 <input autocomplete="off" class="layui-input" id="content" name="content"
                                        placeholder="请输入操作内容"
@@ -71,7 +71,7 @@
             , url: 'service/management/log/getLogList' //数据接口
             , method: "post"
             , contentType: "application/json"
-            , page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+            , page: { //支持传入 laypage 组件的所有参数（某些参数除外，如:jump/elem） - 详见文档
                 layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
                 limit: 15,
                 groups: 3, //只显示 1 个连续页码

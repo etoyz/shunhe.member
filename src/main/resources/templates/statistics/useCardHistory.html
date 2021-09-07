@@ -23,13 +23,13 @@
                 <form action="" autocomplete="off" class="layui-form">
                     <div class="layui-form-item">
                         <div class="layui-inline s-layuiInline">
-                            <label class="layui-form-label">消费日期：</label>
+                            <label class="layui-form-label">消费日期:</label>
                             <div class="layui-input-inline">
                                 <input class="layui-input" id="time" name="time" placeholder="请选择消费日期范围" type="text">
                             </div>
                         </div>
                         <div class="layui-inline s-layuiInline">
-                            <label class="layui-form-label">车牌号：</label>
+                            <label class="layui-form-label">车牌号:</label>
                             <div class="layui-input-inline">
                                 <input autocomplete="off" class="layui-input" id="platenumber" name="platenumber"
                                        placeholder="请输入车牌号"
@@ -37,14 +37,14 @@
                             </div>
                         </div>
                         <div class="layui-inline s-layuiInline">
-                            <label class="layui-form-label">车架号：</label>
+                            <label class="layui-form-label">车架号:</label>
                             <div class="layui-input-inline">
                                 <input autocomplete="off" class="layui-input" id="vin" name="vin" placeholder="请输入车架号"
                                        type="text">
                             </div>
                         </div>
                         <div class="layui-inline s-layuiInline">
-                            <label class="layui-form-label">客户名称：</label>
+                            <label class="layui-form-label">客户名称:</label>
                             <div class="layui-input-inline">
                                 <input autocomplete="off" class="layui-input" id="customername" name="customername"
                                        placeholder="请输入客户名称"
@@ -52,7 +52,7 @@
                             </div>
                         </div>
                         <div class="layui-inline s-layuiInline">
-                            <label class="layui-form-label">会员卡号：</label>
+                            <label class="layui-form-label">会员卡号:</label>
                             <div class="layui-input-inline">
                                 <input autocomplete="off" class="layui-input" id="memberNumber" name="memberNumber"
                                        placeholder="请输入会员卡号"
@@ -407,7 +407,7 @@
                 },
                 groupBy: false
             }
-            ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+            ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如:jump/elem） - 详见文档
                 layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
                 limit: 15,
                 //,curr: 5 //设定初始在第 5 页
@@ -446,7 +446,7 @@
 
         //监听“会员档案表格”工具条
         var activeItem;
-        tableMain.on('tool(tableMain)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+        tableMain.on('tool(tableMain)', function (obj) { //注:tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
             activeItem = obj.data; //获得当前行数据
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
             if (layEvent === 'showBill') {
@@ -468,7 +468,7 @@
                                         groupBy: false
                                     },
                                     height: 288,
-                                    page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                                    page: { //支持传入 laypage 组件的所有参数（某些参数除外，如:jump/elem） - 详见文档
                                         layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
                                         limit: 10,
                                         groups: 3, //只显示 1 个连续页码
@@ -524,7 +524,7 @@
                                         var index1 = layer.open({
                                             type: 1,
                                             title: '显示原单',
-                                            content: $('#showBillWindow'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                                            content: $('#showBillWindow'), //这里content是一个DOM，注意:最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
                                             area: ['100%', '100%']
                                         });
                                         layer.close(loadMsg)

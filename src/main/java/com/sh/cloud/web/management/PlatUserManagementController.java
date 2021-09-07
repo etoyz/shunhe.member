@@ -47,7 +47,7 @@ public class PlatUserManagementController {
         String ret = platUserService.addUser(PlatUserUtils.getCurrentLoginPlatUser(), user);
         if (ret == null) {
             logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
-                    LogUtils.newLogInstance("新增用户 用户名：" + user.name));
+                    LogUtils.newLogInstance("新增用户 用户名:" + user.name));
             return "成功！";
         } else
             return ret;
@@ -58,7 +58,7 @@ public class PlatUserManagementController {
     public String editUser(@RequestBody PlatUser user) {
         platUserService.editPlatUser(PlatUserUtils.getCurrentLoginPlatUser(), user);
         logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
-                LogUtils.newLogInstance("编辑用户 用户ID：" + user.platUserId));
+                LogUtils.newLogInstance("编辑用户 用户ID:" + user.platUserId));
         return "修改成功！";
     }
 
@@ -70,7 +70,7 @@ public class PlatUserManagementController {
         String ret = platUserService.resetPassword(PlatUserUtils.getCurrentLoginPlatUser(), user, passwd);
         if (ret == null) {
             logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
-                    LogUtils.newLogInstance("重置用户密码 用户ID：" + user.platUserId));
+                    LogUtils.newLogInstance("重置用户密码 用户ID:" + user.platUserId));
             return "成功";
         } else
             return ret;

@@ -40,7 +40,7 @@ public class MongoUser {
     @ApiModelProperty(value = "父id")
     private String pid;
 
-    @ApiModelProperty(value = "性别：1男2女0保密")
+    @ApiModelProperty(value = "性别:1男2女0保密")
     private int gender = 0;
 
     @ApiModelProperty(value = "电话")

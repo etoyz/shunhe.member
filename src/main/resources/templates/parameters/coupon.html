@@ -245,7 +245,7 @@
 
         //监听“卡券表格”工具条
         var activeLine
-        table.on('tool(couponTable)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+        table.on('tool(couponTable)', function (obj) { //注:tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
             activeLine = obj.data; //获得当前行数据
             var layEvent = obj.event;
             if (layEvent === 'delete') { // 用卡
@@ -287,7 +287,7 @@
                 layer.open({
                     type: 1,
                     title: '修改卡券信息',
-                    content: $('#popUp'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                    content: $('#popUp'), //这里content是一个DOM，注意:最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
                     area: ['1022px', '225px']
                 });
                 pullCouponTypes("#couponType", function () {
@@ -347,7 +347,7 @@
                                 layer.open({
                                     type: 1,
                                     title: '关联消费项目',
-                                    content: $('#relWindow'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                                    content: $('#relWindow'), //这里content是一个DOM，注意:最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
                                     area: ['530px', '620px']
                                 });
                                 layer.close(loadMsg)
@@ -373,7 +373,7 @@
                 layer.open({
                     type: 1,
                     title: '新增卡券',
-                    content: $('#popUp'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                    content: $('#popUp'), //这里content是一个DOM，注意:最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
                     area: ['1022px', '225px']
                 });
             })

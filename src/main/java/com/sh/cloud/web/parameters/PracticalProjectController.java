@@ -46,7 +46,7 @@ public class PracticalProjectController {
         String ret = practicalProjectService.addPracticalProject(PlatUserUtils.getCurrentLoginPlatUser(), project);
         if (ret == null) {
             logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
-                    LogUtils.newLogInstance("新增具体项目 具体项目名称：" + project.name + "消费项目ID：" + project.consumeProjectId));
+                    LogUtils.newLogInstance("新增具体项目 具体项目名称:" + project.name + "消费项目ID:" + project.consumeProjectId));
             return "成功！";
         } else
             return ret;
@@ -56,7 +56,7 @@ public class PracticalProjectController {
     public String editPracticalProject(@RequestBody PracticalProject project) {
         practicalProjectService.editPracticalProject(PlatUserUtils.getCurrentLoginPlatUser(), project);
         logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
-                LogUtils.newLogInstance("编辑具体项目 具体项目ID：" + project.practicalProjectId));
+                LogUtils.newLogInstance("编辑具体项目 具体项目ID:" + project.practicalProjectId));
         return "修改成功！";
     }
 
@@ -64,7 +64,7 @@ public class PracticalProjectController {
     public String deletePracticalProject(@RequestBody PracticalProject project) {
         if (practicalProjectService.deletePracticalProject(PlatUserUtils.getCurrentLoginPlatUser(), project)) {
             logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
-                    LogUtils.newLogInstance("删除具体项目 具体项目ID：" + project.practicalProjectId));
+                    LogUtils.newLogInstance("删除具体项目 具体项目ID:" + project.practicalProjectId));
             return "成功！";
         } else
             return "失败！";

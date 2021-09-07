@@ -737,7 +737,7 @@
             var index = layer.open({
                 type: 1,
                 title: '新增会员信息',
-                content: $('#memberPopup'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                content: $('#memberPopup'), //这里content是一个DOM，注意:最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
                 area: ['1100px', '650px']
             });
             form.on('submit(confirmAdd)', function (data) {
@@ -806,7 +806,7 @@
             elem: '#memberArchives',
             url: 'service/archives/getArchivesList?query=',
             height: 'full-100',
-            page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+            page: { //支持传入 laypage 组件的所有参数（某些参数除外，如:jump/elem） - 详见文档
                 layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
                 limit: 15,
                 //,curr: 5 //设定初始在第 5 页
@@ -880,7 +880,7 @@
 
         //监听“会员档案表格”工具条
         var activeUser;
-        table.on('tool(memberArchivesTable)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+        table.on('tool(memberArchivesTable)', function (obj) { //注:tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
             activeUser = obj.data; //获得当前行数据
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
             if (layEvent === 'edit') {
@@ -895,7 +895,7 @@
                         layer.open({
                             type: 1,
                             title: '修改会员信息',
-                            content: $('#memberPopup'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                            content: $('#memberPopup'), //这里content是一个DOM，注意:最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
                             area: ['1100px', '700px']
                         });
                     }
@@ -1044,7 +1044,7 @@
                     },
                     contentType: "application/json",
                     height: 410,
-                    page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                    page: { //支持传入 laypage 组件的所有参数（某些参数除外，如:jump/elem） - 详见文档
                         layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
                         limit: 10,
                         groups: 3, //只显示 1 个连续页码
@@ -1112,7 +1112,7 @@
                     elem: '#operationLogs',
                     url: 'service/management/log/getUserLogList?userId=' + activeUser.userId,
                     height: 410,
-                    page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                    page: { //支持传入 laypage 组件的所有参数（某些参数除外，如:jump/elem） - 详见文档
                         layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
                         limit: 10,
                         groups: 3, //只显示 1 个连续页码
@@ -1188,7 +1188,7 @@
                 var index2 = layer.open({
                     type: 1,
                     title: '会员级别',
-                    content: $('#grade'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                    content: $('#grade'), //这里content是一个DOM，注意:最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
                     area: ['350px', '400px']
                 });
                 $('#cancel').on('click', function () {

@@ -50,7 +50,7 @@ public class InsuranceCompanyController {
         String ret = insuranceCompanyService.addInsuranceCompany(PlatUserUtils.getCurrentLoginPlatUser(), insuranceCompany);
         if (ret == null) {
             logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
-                    LogUtils.newLogInstance("新增保险公司 保险公司名称：" + insuranceCompany.name));
+                    LogUtils.newLogInstance("新增保险公司 保险公司名称:" + insuranceCompany.name));
             return "成功！";
         } else
             return ret;
@@ -61,7 +61,7 @@ public class InsuranceCompanyController {
     public String editInsuranceCompany(@RequestBody InsuranceCompany insuranceCompany) {
         insuranceCompanyService.editInsuranceCompany(PlatUserUtils.getCurrentLoginPlatUser(), insuranceCompany);
         logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
-                LogUtils.newLogInstance("编辑保险公司 保险公司ID：" + insuranceCompany.id));
+                LogUtils.newLogInstance("编辑保险公司 保险公司ID:" + insuranceCompany.id));
         return "成功！";
     }
 
@@ -72,7 +72,7 @@ public class InsuranceCompanyController {
         insuranceCompany.id = id;
         if (insuranceCompanyService.deleteInsuranceCompany(PlatUserUtils.getCurrentLoginPlatUser(), insuranceCompany) == null) {
             logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
-                    LogUtils.newLogInstance("删除保险公司 保险公司ID：" + insuranceCompany.id));
+                    LogUtils.newLogInstance("删除保险公司 保险公司ID:" + insuranceCompany.id));
             return "删除成功！";
         } else
             return "删除失败！";

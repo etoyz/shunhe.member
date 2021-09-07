@@ -64,7 +64,7 @@ public class UseCardController {
             return "失败！";
         else {
             logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
-                    LogUtils.newLogInstance("提交审核 消费单：" + list.get(0).groupId));
+                    LogUtils.newLogInstance("提交审核 消费单:" + list.get(0).groupId));
             return "成功！";
         }
     }

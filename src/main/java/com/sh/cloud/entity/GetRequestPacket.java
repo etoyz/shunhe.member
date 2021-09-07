@@ -7,8 +7,8 @@ import lombok.Setter;
 
 /*
  *
- * 现适用用于：CancelConsumeController、UseCardHistoryController、CancelConsumeHistoryController、CouponStatisticalController、BalanceStatisticalController。
- * 也可用于：PendingReviewController、ArchivesController等。
+ * 现适用用于:CancelConsumeController、UseCardHistoryController、CancelConsumeHistoryController、CouponStatisticalController、BalanceStatisticalController。
+ * 也可用于:PendingReviewController、ArchivesController等。
  *
  *
  * */

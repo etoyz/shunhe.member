@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--日志级别以及优先级排序: OFF > FATAL > ERROR > WARN > INFO > DEBUG > TRACE > ALL -->
 <!--Configuration后面的status，这个用于设置log4j2自身内部的信息输出，可以不设置，当设置成trace时，你会看到log4j2内部各种详细输出-->
-<!--monitorInterval：Log4j能够自动检测修改配置 文件和重新配置本身，设置间隔秒数-->
+<!--monitorInterval:Log4j能够自动检测修改配置 文件和重新配置本身，设置间隔秒数-->
 <Configuration status="WARN" monitorInterval="30">
     <!--全局属性-->
     <Properties>
@@ -101,7 +101,7 @@
         <!--&lt;!&ndash;设置log4j2的自身log级别为warn&ndash;&gt;-->
         <!--&lt;!&ndash;日志级别以及优先级排序: OFF > FATAL > ERROR > WARN > INFO > DEBUG > TRACE > ALL &ndash;&gt;-->
         <!--&lt;!&ndash;Configuration后面的status，这个用于设置log4j2自身内部的信息输出，可以不设置， 当设置成trace时，你会看到log4j2内部各种详细输出&ndash;&gt;-->
-        <!--&lt;!&ndash;monitorInterval：Log4j能够自动检测修改配置 文件和重新配置本身，设置间隔秒数&ndash;&gt;-->
+        <!--&lt;!&ndash;monitorInterval:Log4j能够自动检测修改配置 文件和重新配置本身，设置间隔秒数&ndash;&gt;-->
         <!--<configuration status="warn" monitorInterval="30">-->
         <!--&lt;!&ndash;定义通用属性，下面可以使用${name}引用}&ndash;&gt;-->
         <!--<Properties>-->

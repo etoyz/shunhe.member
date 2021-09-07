@@ -59,7 +59,10 @@ public class ArchivesController {
         String ret = shUserService.addUser(PlatUserUtils.getCurrentLoginPlatUser(), user);
         if (ret == null || ret.equals("")) {
             logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
-                    LogUtils.newLogInstance("新增会员 客户名称：" + user.customername + "、会员卡号：" + user.memberNumber));
+                    LogUtils.newLogInstance("新增会员 客户名称:" + user.customername
+                            + "、车架号:" + user.vehicle.vin
+                            + "、车牌号:" + user.vehicle.platenumber
+                    ));
             return "成功！";
         } else
             return ret;
@@ -116,11 +119,15 @@ public class ArchivesController {
     public String deleteArchives(@RequestParam String userId) {
         User user = new User();
         user.userId = userId;
+        user = shUserService.getUser(user);
         String ret = shUserService.deleteUser(PlatUserUtils.getCurrentLoginPlatUser(), user);
         if (ret == null || ret.equals("")) {
-            user = shUserService.getUser(user);
             logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
-                    LogUtils.newLogInstance("删除会员 客户名称：" + user.customername + "、会员卡号：" + user.memberNumber));
+                    LogUtils.newLogInstance("删除会员 客户名称:" + user.customername
+                            + "、会员卡号:" + user.memberNumber
+                            + "、车架号:" + user.vehicle.vin
+                            + "、车牌号:" + user.vehicle.platenumber
+                    ));
             return "删除成功！";
         } else
             return ret;
@@ -132,7 +139,7 @@ public class ArchivesController {
         User c;
         c = shUserService.editUser(PlatUserUtils.getCurrentLoginPlatUser(), user);
         logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
-                LogUtils.newLogInstance("编辑会员 会员卡号：" + user.memberNumber));
+                LogUtils.newLogInstance("编辑会员 会员卡号:" + user.memberNumber));
         return c;
     }
 
@@ -185,10 +192,13 @@ public class ArchivesController {
         if (ret == null || ret.equals("")) {
             c = shUserService.getUser(c);
             logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
-                    LogUtils.newLogInstance("修改会员级别 客户名称：" + c.customername + "、会员卡号：" + c.memberNumber));
+                    LogUtils.newLogInstance("修改会员级别 客户名称:" + c.customername
+                            + "、会员卡号:" + c.memberNumber
+                            + "、车架号:" + c.vehicle.vin
+                            + "、车牌号:" + c.vehicle.platenumber
+                    ));
             return "添加成功";
-        }
-        else
+        } else
             return ret;
     }
 }

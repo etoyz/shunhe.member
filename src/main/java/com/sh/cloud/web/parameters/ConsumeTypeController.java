@@ -49,7 +49,7 @@ public class ConsumeTypeController {
     @RequestMapping("addConsumeType")
     public String addConsumeType(@RequestBody ConsumeType consumeType) {
         logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
-                LogUtils.newLogInstance("新增消费类型 消费类型名：" + consumeType.name));
+                LogUtils.newLogInstance("新增消费类型 消费类型名:" + consumeType.name));
         return consumeTypeService.addConsumeType(PlatUserUtils.getCurrentLoginPlatUser(), consumeType);
     }
 
@@ -60,7 +60,7 @@ public class ConsumeTypeController {
         consumeType.consumeTypeId = Integer.parseInt(id);
         if (consumeTypeService.deleteConsumeType(PlatUserUtils.getCurrentLoginPlatUser(), consumeType)) {
             logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
-                    LogUtils.newLogInstance("删除消费类型 消费类型ID：" + id));
+                    LogUtils.newLogInstance("删除消费类型 消费类型ID:" + id));
             return "删除成功！";
         } else
             return "删除失败！";
@@ -70,7 +70,7 @@ public class ConsumeTypeController {
     @RequestMapping("editConsumeType")
     public ConsumeType editConsumeType(@RequestBody ConsumeType consumeType) {
         logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
-                LogUtils.newLogInstance("编辑消费类型 消费类型ID：" + consumeType.consumeTypeId));
+                LogUtils.newLogInstance("编辑消费类型 消费类型ID:" + consumeType.consumeTypeId));
         return consumeTypeService.editConsumeType(PlatUserUtils.getCurrentLoginPlatUser(), consumeType);
     }
 }
