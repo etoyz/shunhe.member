@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro" >
+<html
+>
 <head>
     <meta charset="utf-8">
     <title>系统日志</title>
@@ -31,7 +31,8 @@
                         <div class="layui-inline s-layuiInline">
                             <label class="layui-form-label">操作内容：</label>
                             <div class="layui-input-inline">
-                                <input autocomplete="off" class="layui-input" id="content" name="content" placeholder="请输入操作内容"
+                                <input autocomplete="off" class="layui-input" id="content" name="content"
+                                       placeholder="请输入操作内容"
                                        type="text">
                             </div>
                         </div>
@@ -50,7 +51,7 @@
 
 <script src="plugins/layui/layui.js"></script>
 <script>
-    layui.use(['form', 'table', 'laydate'], function() {
+    layui.use(['form', 'table', 'laydate'], function () {
         // tableMain表格
         var $ = layui.jquery,
             table = layui.table,
@@ -64,28 +65,36 @@
 
         // 表格渲染
         var tableLog = table.render({
-             elem: '#tableLog'
-            ,height: 'full-180'
-            ,size: 'sm' //小尺寸的表格
-            ,url: 'service/management/log/getLogList' //数据接口
-            ,method: "post"
-            ,contentType: "application/json"
-            ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
-                    layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
-                    limit: 15,
-                    groups: 3, //只显示 1 个连续页码
-                    first: false, //不显示首页
-                    last: false //不显示尾页
-                }
-            ,toolbar: true //仅开启工具栏，不显示左侧模板
-            ,defaultToolbar: ['filter', 'print', 'exports'] //头部工具栏右侧图标
-            ,cols: [ [ //表头，两个中括号之间一定要加空格不然会出错，有冲突
-                {field: 'time', title: '操作时间', width:150, sort: true}
-                ,{field: 'content', title: '操作内容', width:600}
-                ,{field: 'ip', title: '操作IP', width:200}
-                ,{field: 'pc', title: '操作PC', width:150}
-                ,{field: 'createId', title: '操作员', width: 150}
-            ] ]
+            elem: '#tableLog'
+            , height: 'full-180'
+            , size: 'sm' //小尺寸的表格
+            , url: 'service/management/log/getLogList' //数据接口
+            , method: "post"
+            , contentType: "application/json"
+            , page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                layout: ['prev', 'page', 'next', 'skip', 'count'], //自定义分页布局
+                limit: 15,
+                groups: 3, //只显示 1 个连续页码
+                first: false, //不显示首页
+                last: false //不显示尾页
+            }
+            , toolbar: true //仅开启工具栏，不显示左侧模板
+            , defaultToolbar: ['filter', 'print', 'exports'] //头部工具栏右侧图标
+            , cols: [ [ //表头，两个中括号之间一定要加空格不然会出错，有冲突
+                {field: 'time', title: '操作时间', width: 160, sort: true}
+                , {field: 'content', title: '操作内容', width: 700}
+                , {field: 'createName', title: '操作员', width: 200}
+            ]]
+            , parseData: (res) => {
+                for (let i = 0; i < res.data.length; i++)
+                    $.post({
+                        url: "service/platUserManage/getUserInfo?platUserId=" + res.data[i].createId,
+                        async: false,
+                        success: function (resp) {
+                            res.data[i].createName = resp.name
+                        }
+                    })
+            }
         });
 
         $("#queryBtn").unbind("click").click(function () {
