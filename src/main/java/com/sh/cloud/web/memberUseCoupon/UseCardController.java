@@ -1,9 +1,11 @@
 package com.sh.cloud.web.memberUseCoupon;
 
 import com.sft.member.bean.CouponCheck;
+import com.sft.member.bean.User;
 import com.sft.member.bean.UserCoupon;
 import com.sft.member.obtain.log.LogService;
 import com.sft.member.obtain.pay.PayService;
+import com.sft.member.obtain.user.UserService;
 import com.sh.cloud.utils.LogUtils;
 import com.sh.cloud.utils.PlatUserUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -25,6 +27,8 @@ public class UseCardController {
     PayService payService;
     @Resource
     LogService logService;
+    @Resource
+    UserService shUserService;
 
     @RequestMapping("getEnablePayCoupon")
     public Hashtable<Integer, UserCoupon> getEnablePayCoupon(@RequestParam String userid, @RequestParam String consumeProjectId) {
@@ -63,8 +67,14 @@ public class UseCardController {
         if (payService.addUnCheckRecord(PlatUserUtils.getCurrentLoginPlatUser(), list) == null)
             return "失败！";
         else {
+            User user = new User();
+            user.userId = list.get(0).userId;
+            user = shUserService.getUser(user);
             logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
-                    LogUtils.newLogInstance("提交审核 消费单:" + list.get(0).groupId));
+                    LogUtils.newLogInstance("创建消费单 客户名称:" + user.customername
+                            + "、会员卡号:" + user.memberNumber
+                            + "、消费单:" + list.get(0).groupId
+                    ));
             return "成功！";
         }
     }

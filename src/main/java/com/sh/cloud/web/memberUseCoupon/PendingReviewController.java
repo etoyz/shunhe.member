@@ -67,7 +67,11 @@ public class PendingReviewController {
             User user = new User();
             user.userId = userId;
             user = shUserService.getUser(user);
-            logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(), LogUtils.newLogInstance("审核消费单 客户名称:" + user.customername + "、会员卡号:" + user.memberNumber + "、消费单:" + groupId));
+            logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
+                    LogUtils.newLogInstance("审核消费单 客户名称:" + user.customername
+                            + "、会员卡号:" + user.memberNumber
+                            + "、消费单:" + groupId
+                    ));
             return "成功！";
         } else
             return ret;
@@ -80,7 +84,10 @@ public class PendingReviewController {
             User user = new User();
             user.userId = userId;
             user = shUserService.getUser(user);
-            logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(), LogUtils.newLogInstance("驳回消费单 客户名称:" + user.customername + "、会员卡号:" + user.memberNumber + "、消费单:" + groupId));
+            logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
+                    LogUtils.newLogInstance("驳回消费单 客户名称:" + user.customername
+                            + "、会员卡号:" + user.memberNumber
+                            + "、消费单:" + groupId));
             return "成功！";
         } else
             return ret;
