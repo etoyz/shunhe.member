@@ -59,7 +59,7 @@ public class ArchivesController {
         String ret = shUserService.addUser(PlatUserUtils.getCurrentLoginPlatUser(), user);
         if (ret == null || ret.equals("")) {
             logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
-                    LogUtils.newLogInstance("新增会员 客户名称:" + user.customername
+                    LogUtils.newLogInstance("新增客户档案 客户名称:" + user.customername
                             + "、车架号:" + user.vehicle.vin
                             + "、车牌号:" + user.vehicle.platenumber
                     ));
@@ -123,7 +123,7 @@ public class ArchivesController {
         String ret = shUserService.deleteUser(PlatUserUtils.getCurrentLoginPlatUser(), user);
         if (ret == null || ret.equals("")) {
             logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
-                    LogUtils.newLogInstance("删除会员 客户名称:" + user.customername
+                    LogUtils.newLogInstance("删除客户档案 客户名称:" + user.customername
                             + "、会员卡号:" + user.memberNumber
                             + "、车架号:" + user.vehicle.vin
                             + "、车牌号:" + user.vehicle.platenumber
@@ -139,7 +139,7 @@ public class ArchivesController {
         User c;
         c = shUserService.editUser(PlatUserUtils.getCurrentLoginPlatUser(), user);
         logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
-                LogUtils.newLogInstance("编辑会员 会员卡号:" + user.memberNumber));
+                LogUtils.newLogInstance("编辑客户档案 会员卡号:" + user.memberNumber));
         return c;
     }
 
