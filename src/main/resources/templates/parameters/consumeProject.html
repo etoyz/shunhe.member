@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro" >
+<html
+        xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 
 <head>
     <meta charset="utf-8">
@@ -217,6 +217,7 @@
             </script>
             <div class="s-tabBottomButton">
                 <span class="layui-btn layui-btn-normal" id="addSpeProj">新增具体项目</span>
+                <span class="layui-btn layui-btn-warm" id="cancelSpeProj">取消</span>
             </div>
         </div>
     </div>
@@ -482,12 +483,13 @@
                     type: 1,
                     title: '具体项目',
                     content: $('#speWindow'),
-                    area: '900px',
+                    area: ['900px', '500px'],
                 });
                 var tableSpe = table.render({
                     elem: '#speProj',
                     url: "service/practicalProject/getPracticalProjectListByConsumeProject?consumeProjectId=" + data.consumeProjectId,
                     cols: [ [
+                        {field: 'id', width: 80, title: 'ID',  fixed: 'left', type: 'numbers' },
                         {field: 'name', width: 150, title: '项目名称'},
                         {field: 'couponName', width: 150, title: '对应卡券'},
                         {field: 'count', width: 150, title: '数量'},
@@ -540,6 +542,10 @@
                     $('#cancelAddSpe').on('click', function () {
                         layer.close(addSpeWind);
                     });
+                })
+
+                $('#cancelSpeProj').unbind("click").click(function () {
+                    layer.closeAll()
                 })
 
                 table.on('tool(speProjTable)', function (obj) {
