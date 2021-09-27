@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro" >
+<html
+        xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <meta charset="utf-8">
     <title>卡券</title>
@@ -155,10 +155,8 @@
                             errorAction();
                         } else {
                             selectE.empty();
-                            let count = 0;
-                            for (let s of res.types) {
-                                selectE.append("<option value='" + count + "'>" + s + "</option>");
-                                count += 1;
+                            for (let id in res.types) {
+                                selectE.append("<option value='" + id + "'>" + res.types[id] + "</option>");
                             }
                             callback();
                             form.render();
@@ -189,6 +187,7 @@
             cols: [ [
                 {field: 'name', width: '8%', title: '卡券名称'},
                 {field: 'typeName', width: '8%', title: '卡券类型'},
+                {field: 'couponType', hide: true},
                 {field: 'unitPrice', width: '6%', title: '单价'},
                 {field: 'costPrice', width: '7%', title: '成本价'},
                 {field: 'remark', width: '6%', title: '备注'},
@@ -204,12 +203,13 @@
                 let data = res.data
                 itemCnt = data.length
                 for (let i = 0; i < data.length; i++) {
-                    if(data[i].type === 1)
-                        data[i].typeName = "储值";
-                    else if(data[i].type === 0)
-                        data[i].typeName = "代金券";
-                    else
-                        data[i].typeName = "消费券";
+                    $.post({
+                        url: "service/parameters/coupon/getCouponTypes",
+                        async: false,
+                        success: (resp) => {
+                            data[i].typeName = resp.types[data[i].type];
+                        }
+                    })
                     $.post({
                         url: "service/platUserManage/getUserInfo?platUserId=" + data[i].createId,
                         async: false,
@@ -282,7 +282,7 @@
                 })
             }
             if (layEvent === 'edit') {
-                $("#couponType").attr("disabled", true)
+                $("#couponType").attr("disabled", false)
                 $(".editMod").show()
                 layer.open({
                     type: 1,
@@ -297,22 +297,26 @@
                 $('#price').val(activeLine.unitPrice);
                 $('#costPrice').val(activeLine.costPrice);
                 $('#couponId').val(activeLine.couponId);
+                $('#couponType').val(activeLine.couponType);
                 form.on('submit(confirm)', function (data) {
                     function editAction() {
                         data.field.couponId = activeLine.couponId
-                        delete data.field.type
                         $.post({
                             url: "service/parameters/coupon/editCoupon",
                             data: JSON.stringify(data.field),
                             contentType: "application/json",
-                            success: function (res) {
-                                if (res === "修改成功！")
-                                    layer.alert("修改成功！", {icon: 1}, () => {
-                                        obj.update(data.field);
-                                        layer.closeAll()
+                            success: function (couponRes) {
+                                layer.alert("修改成功！", {icon: 1}, () => {
+                                    $.post({
+                                        url: "service/parameters/coupon/getCouponTypes",
+                                        async: false,
+                                        success: (resp) => {
+                                            couponRes.typeName = resp.types[couponRes.type];
+                                        }
                                     })
-                                else
-                                    layer.alert("修改失败！", {icon: 2})
+                                    obj.update(couponRes);
+                                    layer.closeAll()
+                                })
                             }
                         })
                     }

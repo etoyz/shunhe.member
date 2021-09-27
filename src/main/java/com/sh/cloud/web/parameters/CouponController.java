@@ -12,7 +12,6 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,22 +57,22 @@ public class CouponController {
         //获取后台给的卡券类型
         Map<String, Object> res = new HashMap<>();
         res.put("status", "ok");
-        List<String> li = new ArrayList<>();
-        li.add("代金券");
-        li.add("储值");
-        li.add("消费券");
-        res.put("types", li);
+        Map<Integer, String> types = new HashMap<>();
+        types.put(0, "代金券");
+        types.put(1, "储值");
+        types.put(2, "消费券");
+        res.put("types", types);
 //        Thread.sleep(900);
         return res;
     }
 
     @RequiresPermissions({"member:customParameters:coupon:edit"})
     @PostMapping("editCoupon")
-    public String editCoupon(@RequestBody Coupon coupon) {
-        couponService.editCoupon(PlatUserUtils.getCurrentLoginPlatUser(), coupon);
+    public Coupon editCoupon(@RequestBody Coupon coupon) {
+        Coupon couponRes = couponService.editCoupon(PlatUserUtils.getCurrentLoginPlatUser(), coupon);
         logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
                 LogUtils.newLogInstance("编辑卡券 卡券ID:" + coupon.couponId));
-        return "修改成功！";
+        return couponRes;
     }
 
     @RequiresPermissions({"member:customParameters:coupon:relItem"})
