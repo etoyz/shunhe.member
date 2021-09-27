@@ -419,7 +419,7 @@
                     type: 1,
                     title: '修改消费项目',
                     content: $('#addWindow'),
-                    area: ['1020px', '700px']
+                    area: '1020px'
                 });
                 pullConsumeTypes("#consumeTypeInputAdd", false, () => {
                     $("#consumeProjectName").val(data.name);
@@ -521,7 +521,7 @@
                         type: 1,
                         title: '新增具体项目',
                         content: $('#addSpeWindow'),
-                        area: ['400px', '500px'],
+                        area: '400px',
                     });
                     form.on('submit(confirmAddSpe)', function (formData) {
                         formData.field.consumeProjectId = data.consumeProjectId;
@@ -572,7 +572,7 @@
                             type: 1,
                             title: '修改具体项目',
                             content: $('#addSpeWindow'),
-                            area: ['400px', '500px'],
+                            area: '400px'
                         });
                         $('#cancelAddSpe').on('click', function () {
                             layer.close(addSpeWind);
@@ -634,7 +634,7 @@
                                     type: 1,
                                     title: '关联消费卡券',
                                     content: $('#relWindow'), //这里content是一个DOM，注意:最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
-                                    area: ['530px', '620px']
+                                    area: '530px'
                                 });
                                 layer.close(loadMsg)
                             },
@@ -700,7 +700,7 @@
                                     type: 1,
                                     title: '关联消费项目',
                                     content: $('#relWindow'), //这里content是一个DOM，注意:最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
-                                    area: ['530px', '620px']
+                                    area: '530px'
                                 });
                                 layer.close(loadMsg)
                             },
