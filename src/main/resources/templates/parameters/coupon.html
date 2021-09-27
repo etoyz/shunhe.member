@@ -187,7 +187,6 @@
             cols: [ [
                 {field: 'name', width: '8%', title: '卡券名称'},
                 {field: 'typeName', width: '8%', title: '卡券类型'},
-                {field: 'couponType', hide: true},
                 {field: 'unitPrice', width: '6%', title: '单价'},
                 {field: 'costPrice', width: '7%', title: '成本价'},
                 {field: 'remark', width: '6%', title: '备注'},
@@ -195,7 +194,6 @@
                 {field: 'createTime', width: '14%', title: '创建时间'},
                 {field: 'lastEditName', width: '7%', title: '最后编辑人'},
                 {field: 'lastEditTime', width: '14%', title: '最后编辑时间'},
-                {field: 'couponId', hide: true},
                 {field: 'operation', width: '200', title: '操作', toolbar: '#operation', fixed: 'right'}
             ]],
             size: 'sm',
@@ -297,7 +295,7 @@
                 $('#price').val(activeLine.unitPrice);
                 $('#costPrice').val(activeLine.costPrice);
                 $('#couponId').val(activeLine.couponId);
-                $('#couponType').val(activeLine.couponType);
+                $('#remark').val(activeLine.remark);
                 form.on('submit(confirm)', function (data) {
                     function editAction() {
                         data.field.couponId = activeLine.couponId
