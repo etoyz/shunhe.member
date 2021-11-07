@@ -62,6 +62,10 @@ public class ArchivesController {
                     LogUtils.newLogInstance("新增客户档案 客户名称:" + user.customername
                             + "、车架号:" + user.vehicle.vin
                             + "、车牌号:" + user.vehicle.platenumber
+                            + "、手机号:" + user.phone
+                            + "、品牌:" + user.vehicle.vehiclelabel
+                            + "、车系:" + user.vehicle.vehiclestyle
+                            + "、车型:" + user.vehicle.vehiclebrand
                     ));
             return "成功！";
         } else
