@@ -14,14 +14,22 @@ import com.sh.cloud.entity.GetPendingReviewListRequest;
 import com.sh.cloud.entity.GetUserListRequest;
 import com.sh.cloud.utils.LogUtils;
 import com.sh.cloud.utils.PlatUserUtils;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.*;
 
 @RestController
 @RequestMapping("service/archives")
@@ -70,6 +78,68 @@ public class ArchivesController {
             return "成功！";
         } else
             return ret;
+    }
+
+    /**
+     * @return the count of successful import
+     */
+    @RequiresPermissions(value = {"member:archives:add"}, logical = Logical.OR)
+    @PostMapping(value = "addArchivesBatch", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public int addUserBatch(@RequestParam("file") MultipartFile file) {
+        int cnt = 0;
+        try {
+            Workbook workbook = new XSSFWorkbook(file.getInputStream());
+            Sheet sheet = workbook.getSheetAt(0);
+            Iterator<Row> itr = sheet.iterator();
+            List<String> fields = new ArrayList<>();
+            Row row1 = itr.next();
+            Iterator<Cell> cellIterator1 = row1.cellIterator();
+            while (cellIterator1.hasNext()) {
+                Cell cell = cellIterator1.next();
+                fields.add(cell.getStringCellValue());
+            }
+            List<User> userList = new ArrayList<>();
+            while (itr.hasNext()) {
+                Row row = itr.next();
+                Iterator<Cell> cellIterator = row.cellIterator();
+                User user = new User();
+                user.member = new Member();
+                user.vehicle = new Vehicle();
+                int i = 0;
+                while (cellIterator.hasNext()) {
+                    Cell cell = cellIterator.next();
+                    if (fields.get(i).equals("客户姓名"))
+                        user.member.name = cell.getStringCellValue();
+                    else if (fields.get(i).equals("手机号"))
+                        user.phone = String.format("%.0f", cell.getNumericCellValue());
+                    else if (fields.get(i).equals("车架号"))
+                        user.vehicle.vin = String.format("%.0f", cell.getNumericCellValue());
+                    else if (fields.get(i).equals("车牌号"))
+                        user.vehicle.platenumber = String.format("%.0f", cell.getNumericCellValue());
+                    else
+                        break;
+                    i++;
+                }
+                userList.add(user);
+            }
+
+            for (User user : userList) {
+                String ret = shUserService.addUser(PlatUserUtils.getCurrentLoginPlatUser(), user);
+                if (ret == null || ret.equals("")) {
+                    logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
+                            LogUtils.newLogInstance("导入客户档案 客户名称:" + user.customername
+                                    + "、车架号:" + user.vehicle.vin
+                                    + "、车牌号:" + user.vehicle.platenumber
+                                    + "、手机号:" + user.phone
+                            ));
+                    cnt++;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return cnt;
+        }
+        return cnt;
     }
 
     @RequiresPermissions(value = {"member:archivesRoot"}, logical = Logical.OR)

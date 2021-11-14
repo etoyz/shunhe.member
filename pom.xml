@@ -30,9 +30,25 @@
             <name>Team Nexus Repository</name>
             <url>http://222.135.141.236:8081/nexus/content/groups/public/</url>
         </repository>
+        <!--   center repo add by yz     -->
+        <repository>
+            <id>nexus</id>
+            <name>Center Repository</name>
+            <url>https://repo1.maven.org/maven2/</url>
+        </repository>
     </repositories>
 
     <dependencies>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>5.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>5.0.0</version>
+        </dependency>
         <dependency>
             <groupId>net.sourceforge.nekohtml</groupId>
             <artifactId>nekohtml</artifactId>
