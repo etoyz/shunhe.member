@@ -109,7 +109,7 @@ public class ArchivesController {
                 while (cellIterator.hasNext()) {
                     Cell cell = cellIterator.next();
                     if (fields.get(i).equals("客户姓名"))
-                        user.member.name = cell.getStringCellValue();
+                        user.customername = cell.getStringCellValue();
                     else if (fields.get(i).equals("手机号"))
                         user.phone = String.format("%.0f", cell.getNumericCellValue());
                     else if (fields.get(i).equals("车架号"))
