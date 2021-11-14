@@ -32,7 +32,7 @@
         </repository>
         <!--   center repo add by yz     -->
         <repository>
-            <id>nexus</id>
+            <id>central</id>
             <name>Center Repository</name>
             <url>https://repo1.maven.org/maven2/</url>
         </repository>
