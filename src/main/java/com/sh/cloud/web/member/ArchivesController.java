@@ -123,6 +123,7 @@ public class ArchivesController {
                 userList.add(user);
             }
 
+            // TODO
             for (User user : userList) {
                 String ret = shUserService.addUser(PlatUserUtils.getCurrentLoginPlatUser(), user);
                 if (ret == null || ret.equals("")) {
