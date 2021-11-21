@@ -34,6 +34,7 @@
                             <span shiro:hasPermission="member:archives:add" class="layui-btn layui-btn-normal" id="add">新增会员</span>
                         </div>
                         <div class="layui-inline s-layuiInline" style="float: right">
+                            <a shiro:hasPermission="member:archives:add" class="layui-btn" href="assets/会员档案导入模板.xlsx">下载导入模板</a>
                             <span shiro:hasPermission="member:archives:add" class="layui-btn" id="addBatch">批量导入</span>
                         </div>
                     </div>
@@ -866,7 +867,7 @@
             },
             toolbar: true, //仅开启工具栏，不显示左侧模板
             defaultToolbar: ['filter', 'print', 'exports'],
-            cols: [[
+            cols: [ [
                 {type: 'checkbox'},
                 {field: 'customername', width: 80, title: '客户名称'},
                 {field: 'cGender', width: 56, title: '性别'},
@@ -887,7 +888,7 @@
                 {field: 'userId', width: 210, title: 'id', hide: true},
                 {field: 'vehicleId', width: 210, title: 'vid', hide: true},
                 {field: 'operation', width: 170, title: '操作', toolbar: '#operation', fixed: 'right'}
-            ] ],
+            ]],
             size: 'sm',
             parseData: function (res) {
                 let data = res.data
@@ -1041,7 +1042,7 @@
                     elem: '#tableUserCoupons',
                     url: 'service/statistics/couponStatistical/getUserCoupon?userId=' + activeUser.userId,
                     limit: Number.MAX_VALUE,
-                    cols: [[
+                    cols: [ [
                         {type: 'numbers'},
                         {field: 'couponName', width: 145, title: '卡券名称'},
                         {field: 'typeName', width: 80, title: '卡券类型'},
@@ -1052,7 +1053,7 @@
                         {field: 'endEffectiveTime', width: 150, title: '失效日期'},
                         {field: 'createTime', width: 150, title: '发放日期'},
                         {field: 'consumeProjectName', width: 93, title: '项目名称'}
-                    ] ],
+                    ]],
                     size: 'sm',
                     parseData: (res) => {
                         try {
@@ -1104,7 +1105,7 @@
                         first: false, //不显示首页
                         last: false //不显示尾页
                     },
-                    cols: [[
+                    cols: [ [
                         {field: 'time', width: 150, title: '消费日期'},
                         {field: 'customername', width: 100, title: '客户名称'},
                         {field: 'memberNumber', width: 160, title: '会员卡号'}, //单元格内容水平居中
@@ -1124,7 +1125,7 @@
                         {field: 'invoiceNum', width: 100, title: '开票金额'},
                         {field: 'remark', width: 100, title: '项目备注'},
                         {field: 'id', hide: true},
-                    ] ],
+                    ]],
                     size: 'sm',
                     parseData: function (resp) {
                         let data = resp.data;
@@ -1172,13 +1173,13 @@
                         first: false, //不显示首页
                         last: false //不显示尾页
                     },
-                    cols: [[
+                    cols: [ [
                         {field: 'time', title: '操作时间', width: 150, sort: true}
                         , {field: 'content', title: '操作内容', width: 200, sort: true}
                         , {field: 'ip', title: '操作IP', width: 200, sort: true}
                         , {field: 'pc', title: '操作PC', width: 150, sort: true}
                         , {field: 'createId', title: '操作员', width: 150, sort: true}
-                    ] ],
+                    ]],
                     size: 'sm',
                     done: function () {
                         showPopup()

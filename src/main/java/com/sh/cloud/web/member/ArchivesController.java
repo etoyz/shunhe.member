@@ -113,9 +113,9 @@ public class ArchivesController {
                     else if (fields.get(i).equals("手机号"))
                         user.phone = String.format("%.0f", cell.getNumericCellValue());
                     else if (fields.get(i).equals("车架号"))
-                        user.vehicle.vin = String.format("%.0f", cell.getNumericCellValue());
+                        user.vehicle.vin = cell.getStringCellValue();
                     else if (fields.get(i).equals("车牌号"))
-                        user.vehicle.platenumber = String.format("%.0f", cell.getNumericCellValue());
+                        user.vehicle.platenumber = cell.getStringCellValue();
                     else
                         break;
                     i++;
@@ -123,9 +123,8 @@ public class ArchivesController {
                 userList.add(user);
             }
 
-            // TODO
             for (User user : userList) {
-                String ret = shUserService.addUser(PlatUserUtils.getCurrentLoginPlatUser(), user);
+                String ret = shUserService.addInputUser(PlatUserUtils.getCurrentLoginPlatUser(), user);
                 if (ret == null || ret.equals("")) {
                     logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
                             LogUtils.newLogInstance("导入客户档案 客户名称:" + user.customername
@@ -134,10 +133,15 @@ public class ArchivesController {
                                     + "、手机号:" + user.phone
                             ));
                     cnt++;
+                } else {
+                    logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
+                            LogUtils.newLogInstance("导入客户档案异常：" + ret));
                 }
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
+            logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
+                    LogUtils.newLogInstance("导入文件解析异常：" + e.getMessage()));
             return cnt;
         }
         return cnt;
