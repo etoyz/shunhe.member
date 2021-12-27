@@ -867,7 +867,7 @@
             },
             toolbar: true, //仅开启工具栏，不显示左侧模板
             defaultToolbar: ['filter', 'print', 'exports'],
-            cols: [ [
+            cols: [[
                 {type: 'checkbox'},
                 {field: 'customername', width: 80, title: '客户名称'},
                 {field: 'cGender', width: 56, title: '性别'},
@@ -1042,7 +1042,7 @@
                     elem: '#tableUserCoupons',
                     url: 'service/statistics/couponStatistical/getUserCoupon?userId=' + activeUser.userId,
                     limit: Number.MAX_VALUE,
-                    cols: [ [
+                    cols: [[
                         {type: 'numbers'},
                         {field: 'couponName', width: 145, title: '卡券名称'},
                         {field: 'typeName', width: 80, title: '卡券类型'},
@@ -1083,18 +1083,11 @@
                 // "消费历史表格"渲染
                 table.render({
                     elem: '#consumptionHistories',
-                    url: 'service/archives/getConsumptionHistories',
+                    url: 'service/archives/getConsumptionHistories?userid=' + activeUser.userId,
                     method: "post",
                     initSort: {
                         field: 'time' //排序字段，对应 cols 设定的各字段名
                         , type: 'desc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
-                    },
-                    where: {
-                        user: {
-                            userId: activeUser.userId
-                        },
-                        couponCheck: {},
-                        groupBy: false
                     },
                     contentType: "application/json",
                     height: 410,
@@ -1105,7 +1098,7 @@
                         first: false, //不显示首页
                         last: false //不显示尾页
                     },
-                    cols: [ [
+                    cols: [[
                         {field: 'time', width: 150, title: '消费日期'},
                         {field: 'customername', width: 100, title: '客户名称'},
                         {field: 'memberNumber', width: 160, title: '会员卡号'}, //单元格内容水平居中
@@ -1173,7 +1166,7 @@
                         first: false, //不显示首页
                         last: false //不显示尾页
                     },
-                    cols: [ [
+                    cols: [[
                         {field: 'time', title: '操作时间', width: 150, sort: true}
                         , {field: 'content', title: '操作内容', width: 200, sort: true}
                         , {field: 'ip', title: '操作IP', width: 200, sort: true}

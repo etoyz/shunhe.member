@@ -21,6 +21,12 @@ public class OperationLog {
     @Resource
     LogService logService;
 
+    /**
+     * 根据查询参数获取操作日志列表
+     * @param request 查询参数（起止日期、日志内容）
+     * @return 查询到的操作日志列表
+     */
+    @RequiresPermissions("member:management")
     @RequestMapping("getLogList")
     public Map<String, Object> getLogList(@RequestBody GetLogListRequest request) {
         Map<String, Object> ret = new HashMap<>();
@@ -32,6 +38,11 @@ public class OperationLog {
         return ret;
     }
 
+    /**
+     * 获取某用户的操作日志列表
+     * @param userId 用户id
+     * @return 查询到的操作日志列表
+     */
     @RequestMapping("getUserLogList")
     public Map<String, Object> getUserLogList(@RequestParam String userId, @RequestParam int page, @RequestParam int limit) {
         Map<String, Object> ret = new HashMap<>();

@@ -30,6 +30,12 @@ public class UseCardController {
     @Resource
     UserService shUserService;
 
+    /**
+     * 获取某客户在某消费项目下可用的卡券列表
+     * @param userid 客户id
+     * @param consumeProjectId 消费项目id
+     * @return 可用的卡券列表
+     */
     @RequestMapping("getEnablePayCoupon")
     public Hashtable<Integer, UserCoupon> getEnablePayCoupon(@RequestParam String userid, @RequestParam String consumeProjectId) {
         List<UserCoupon> srcList = payService.getEnablePayCoupon(userid, consumeProjectId);
@@ -55,6 +61,11 @@ public class UseCardController {
         return dstTable;
     }
 
+    /**
+     * 提交审核
+     * @param list 消费单列表
+     * @return "失败！"|"成功！"
+     */
     @RequiresPermissions("member:memberUseCoupon:useCoupon")
     @RequestMapping("submitForReview")
     public String submitForReview(@RequestBody List<CouponCheck> list) {

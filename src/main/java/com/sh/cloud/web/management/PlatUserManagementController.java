@@ -24,6 +24,11 @@ public class PlatUserManagementController {
     @Resource
     LogService logService;
 
+    /**
+     * 根据关键字查询用户列表
+     * @param query 关键字
+     * @return 查询到的用户列表
+     */
     @RequiresPermissions("member:management")
     @RequestMapping("getUserList")
     public Map<String, Object> getUserList(@RequestParam String query, @RequestParam int page, @RequestParam int limit) {
@@ -41,6 +46,11 @@ public class PlatUserManagementController {
         return ret;
     }
 
+    /**
+     * 新增用户
+     * @param user 用户信息
+     * @return "成功！"|错误信息
+     */
     @RequiresPermissions("member:management")
     @RequestMapping("addUser")
     public String addUser(@RequestBody PlatUser user) {
@@ -53,6 +63,11 @@ public class PlatUserManagementController {
             return ret;
     }
 
+    /**
+     * 编辑用户信息
+     * @param user 新的用户信息
+     * @return "修改成功！"
+     */
     @RequiresPermissions("member:management")
     @RequestMapping("editUser")
     public String editUser(@RequestBody PlatUser user) {
@@ -62,6 +77,12 @@ public class PlatUserManagementController {
         return "修改成功！";
     }
 
+    /**
+     * 重置用户登录密码
+     * @param platUserId 用户id
+     * @param passwd 新密码
+     * @return "成功"|错误信息
+     */
     @RequiresPermissions("member:management")
     @RequestMapping("resetPassword")
     public String resetPassword(@RequestParam String platUserId, @RequestParam String passwd) {
@@ -76,6 +97,11 @@ public class PlatUserManagementController {
             return ret;
     }
 
+    /**
+     * 获取某用户具体信息
+     * @param platUserId 用户id
+     * @return ""
+     */
     @RequestMapping("getUserInfo")
     public PlatUser getUserInfo(@RequestParam String platUserId) {
         PlatUser user = new PlatUser();
@@ -83,6 +109,10 @@ public class PlatUserManagementController {
         return platUserService.getPlatUser(user);
     }
 
+    /**
+     * 获取当前登录的用户的具体信息
+     * @return 当前登录的用户的具体信息
+     */
     @RequestMapping("getCurrentLoginUser")
     public PlatUser getCurrentLoginUser() {
         return platUserService.getPlatUser(PlatUserUtils.getCurrentLoginPlatUser());

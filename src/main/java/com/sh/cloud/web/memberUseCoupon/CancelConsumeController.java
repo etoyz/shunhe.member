@@ -26,7 +26,11 @@ public class CancelConsumeController {
     @Resource
     LogService logService;
 
-    // 获取整个列表
+    /**
+     * 获取反结算列表
+     * @param request 查询参数
+     * @return 查询到的反结算列表
+     */
     @RequestMapping("getConsumeList")
     public Map<String, Object> getConsumeList(@RequestBody GetRequestPacket request) {
         CouponCheck couponCheck = request.getCouponCheck();
@@ -57,6 +61,11 @@ public class CancelConsumeController {
         return ret;
     }
 
+    /**
+     * 反结算某消费单
+     * @param id 消费单id
+     * @return "成功！"|错误信息
+     */
     @RequestMapping("rollBack")
     public String rollBack(@RequestParam String id) {
         String ret = payService.rollBack(PlatUserUtils.getCurrentLoginPlatUser(), id);

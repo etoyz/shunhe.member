@@ -30,6 +30,11 @@ public class PendingReviewController {
     @Resource
     UserService shUserService;
 
+    /**
+     * 获取待审核列表
+     * @param request 查询参数
+     * @return 查询到的待审核列表
+     */
     @RequestMapping("getPendingReviewList")
     public Map<String, Object> getPendingReviewList(@RequestBody GetPendingReviewListRequest request) {
         CouponCheck couponCheck = request.getCouponCheck();
@@ -60,6 +65,12 @@ public class PendingReviewController {
         return ret;
     }
 
+    /**
+     * 审核通过某消费单
+     * @param groupId 消费单的groupId
+     * @param userId 客户id
+     * @return "成功！"|错误信息
+     */
     @RequestMapping("checkCoupon")
     public String checkCoupon(@RequestParam String groupId, @RequestParam String userId) {
         String ret = payService.checkCoupon(PlatUserUtils.getCurrentLoginPlatUser(), groupId);
@@ -77,6 +88,12 @@ public class PendingReviewController {
             return ret;
     }
 
+    /**
+     * 驳回某消费单
+     * @param groupId 消费单的groupId
+     * @param userId 客户id
+     * @return "成功！"|错误信息
+     */
     @RequestMapping("cancelRecord")
     public String cancelRecord(@RequestParam String groupId, @RequestParam String userId) {
         String ret = payService.cancelRecord(PlatUserUtils.getCurrentLoginPlatUser(), groupId);

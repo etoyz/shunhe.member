@@ -3,6 +3,9 @@ package com.sh.cloud.web.others;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+/**
+ * URL路由
+ */
 @Controller
 public class WebController {
     // ----------- Main controller ------------
