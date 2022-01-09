@@ -27,6 +27,12 @@ public class ConsumeProjectController {
     @Resource
     LogService logService;
 
+    /**
+     * 获取某消费类型下的消费项目列表
+     * @param query 查询参数（按名称查询）
+     * @param consumeTypeId 消费类型ID
+     * @return 消费项目列表
+     */
     @RequiresPermissions({"member:customParameters:consumeItem:list"})
     @RequestMapping("getConsumeProjectList")
     public Map<String, Object> getConsumeProjectList(@RequestParam String query, @RequestParam String consumeTypeId, @RequestParam int page, @RequestParam int limit) {
@@ -46,13 +52,17 @@ public class ConsumeProjectController {
         return ret;
     }
 
+    /**
+     * 获取某消费类型下的消费项目名称的列表，用于下拉列表、关联弹窗
+     * @param consumeTypeId 消费类型ID
+     * @return 消费项目名称的列表
+     */
     @RequestMapping("getConsumeProjectNameList")
-    public Map<String, Object> getConsumeProjectNameList(@RequestParam String query, @RequestParam String consumeTypeId) {
+    public Map<String, Object> getConsumeProjectNameList(@RequestParam String consumeTypeId) {
         Map<String, Object> ret = new HashMap<>();
         ret.put("code", 0);
 
         ConsumeProject consumeProject = new ConsumeProject();
-        consumeProject.name = query;
         if (consumeTypeId.equals(""))
             consumeProject.consumeTypeId = -1;
         else
@@ -62,6 +72,11 @@ public class ConsumeProjectController {
         return ret;
     }
 
+    /**
+     * 新增消费项目
+     * @param project 消费项目信息
+     * @return "成功！"|错误信息
+     */
     @RequiresPermissions({"member:customParameters:consumeItem:add"})
     @PostMapping("addConsumeProject")
     public String addConsumeProject(@RequestBody ConsumeProject project) {
@@ -74,6 +89,11 @@ public class ConsumeProjectController {
             return ret;
     }
 
+    /**
+     * 编辑消费项目
+     * @param project 新的消费项目信息
+     * @return "成功！"
+     */
     @RequiresPermissions({"member:customParameters:consumeItem:edit"})
     @PostMapping("editConsumeProject")
     public String editConsumeProject(@RequestBody ConsumeProject project) {
@@ -83,6 +103,11 @@ public class ConsumeProjectController {
         return "成功！";
     }
 
+    /**
+     * 将某消费项目与多个卡券关联
+     * @param couponsAndConsumeProject 需要被关联的某消费项目和卡券列表
+     * @return "成功！"
+     */
     @RequiresPermissions({"member:customParameters:consumeItem:relCoupon"})
     @PostMapping("relateCoupon")
     public String relateCoupon(@RequestBody CouponsAndConsumeProject couponsAndConsumeProject) {
@@ -94,6 +119,11 @@ public class ConsumeProjectController {
         return "成功！";
     }
 
+    /**
+     * 删除消费项目
+     * @param id 消费项目ID
+     * @return "删除失败！"|"删除失败！"
+     */
     @RequiresPermissions({"member:customParameters:consumeItem:delete"})
     @PostMapping("deleteConsumeProject")
     public String deleteConsumeProject(@RequestParam String id) {
@@ -107,18 +137,33 @@ public class ConsumeProjectController {
             return "删除失败！";
     }
 
+    /**
+     * 根据卡券查询关联的消费项目
+     * @param coupon 卡券信息
+     * @return 关联的消费项目列表
+     */
     @RequiresPermissions({"member:customParameters:coupon:relItem"})
     @RequestMapping("getConsumeProjectListByCoupon")
     public List<ConsumeProject> getConsumeProjectListByCoupon(@RequestBody Coupon coupon) {
         return consumeProjectService.getConsumeProjectByCoupon(coupon);
     }
 
+    /**
+     * 获取关联的消费项目
+     * @param project 某消费项目
+     * @return 被某消费项目关联的消费项目列表
+     */
     @RequiresPermissions({"member:customParameters:consumeItem:relItem"})
     @RequestMapping("getRelateConsumeProject")
     public List<ConsumeProject> getRelateConsumeProject(@RequestBody ConsumeProject project) {
         return consumeProjectService.getRelateConsumeProject(project);
     }
 
+    /**
+     * 将某消费项目与多个消费项目关联
+     * @param consumeProjectAndConsumeProjects 某消费项目与被关联的消费项目列表
+     * @return "成功！"|失败原因
+     */
     @RequiresPermissions({"member:customParameters:consumeItem:relItem"})
     @RequestMapping("relateConsumeProject")
     public String relateConsumeProject(@RequestBody ConsumeProjectAndConsumeProjects consumeProjectAndConsumeProjects) {

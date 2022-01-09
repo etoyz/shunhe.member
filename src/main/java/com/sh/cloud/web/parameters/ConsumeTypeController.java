@@ -24,6 +24,11 @@ public class ConsumeTypeController {
     @Resource
     LogService logService;
 
+    /**
+     * 根据关键字查询消费类型列表
+     * @param query 关键字（按名称查询）
+     * @return 消费类型列表
+     */
     @RequiresPermissions({"member:customParameters:consumeType:list"})
     @RequestMapping("getConsumeTypeList")
     public Map<String, Object> getConsumeTypeList(@RequestParam String query, @RequestParam int page, @RequestParam int limit) {
@@ -39,6 +44,10 @@ public class ConsumeTypeController {
         return ret;
     }
 
+    /**
+     * 获取全部消费类型列表
+     * @return
+     */
     @RequestMapping("getConsumeTypeNameList")
     public List<ConsumeType> getConsumeTypeList() {
         ConsumeType consumeType = new ConsumeType();

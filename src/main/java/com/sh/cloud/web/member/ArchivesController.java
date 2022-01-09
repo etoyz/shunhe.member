@@ -60,7 +60,7 @@ public class ArchivesController {
     /**
      * 获取某客户卡券和积分的统计信息
      * @param userid 客户id
-     * @return
+     * @return 各统计信息
      */
     @RequiresPermissions(value = {"member:archives:more"}, logical = Logical.OR)
     @RequestMapping("getUserCost")
