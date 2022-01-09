@@ -30,7 +30,12 @@ public class CouponStatisticalController {
     @Resource
     UserService shUserService; // 用户相关接口
 
-    // 获取整个列表
+    /**
+     * 获取卡券统计列表
+     * @author fqh
+     * @param request 查询参数
+     * @return 卡券统计列表
+     */
     @RequiresPermissions("member:statistics:coupon")
     @RequestMapping("getCouponStatisticalList")
     public Map<String, Object> getCouponStatisticalList(@RequestBody GetRequestPacket request) {
@@ -86,7 +91,6 @@ public class CouponStatisticalController {
 
     /**
      * 获取某用户拥有的卡券
-     *
      * @param userId 用户Id
      * @return 用户拥有的卡券
      */

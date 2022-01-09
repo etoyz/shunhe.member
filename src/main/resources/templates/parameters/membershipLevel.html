@@ -310,10 +310,8 @@
                             id: activeCardid
                         },
                         success: function (res) {
-                            // console.log(res);
-                            if (res == "修改成功") {
-                                // console.log("非空成功！");
-                                layuiAlert("删除成功！", () => {
+                            if (res === "删除成功！") {
+                                layer.alert(res, {icon: 1},() => {
                                     itemCnt--
                                     if(itemCnt === 0) { //当前页的Item为0
                                         let nextPage;
@@ -330,15 +328,8 @@
                                 })
                             }
                             else {
-                                // console.log("为空失败！");
-                                layuiAlert("删除失败！", () => {
-                                    // obj.reload(data);
-                                })
+                                layer.alert("删除失败！", {icon: 2})
                             }
-
-
-
-
                         }
                     });
                 })

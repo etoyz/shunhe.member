@@ -30,7 +30,12 @@ public class CancelConsumeHistoryController {
     @Resource
     UserService shUserService; // 用户相关接口
 
-    // 获取整个列表
+    /**
+     * 获取反结算列表
+     * @author fqh
+     * @param request 查询参数
+     * @return 反结算列表
+     */
     @RequestMapping("getCancelConsumeHistoryList")
     public Map<String, Object> getCancelConsumeHistoryList(@RequestBody GetRequestPacket request) {
         // 创建返回数据变量

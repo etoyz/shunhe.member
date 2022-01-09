@@ -32,7 +32,12 @@ public class UseCardHistoryController {
     UserService shUserService; // 用户相关接口
 
 
-    // 获取整个列表
+    /**
+     * 获取用卡历史列表
+     * @author fqh
+     * @param request 查询参数
+     * @return 用卡历史列表
+     */
     @RequestMapping("getUseCouponHistoryList")
     public Map<String, Object> getUseCardHistoryList(@RequestBody GetRequestPacket request) {
         // 创建返回数据变量
@@ -96,7 +101,12 @@ public class UseCardHistoryController {
         return ret;
     }
 
-    // 获取原单列表
+    /**
+     * 获取愿单
+     * @author fqh
+     * @param request 查询参数
+     * @return 愿单
+     */
     @RequestMapping("getShowBillList")
     public Map<String, Object> getShowBillList(@RequestBody GetRequestPacket request) {
         CouponCheck couponCheck = request.getCouponCheck();

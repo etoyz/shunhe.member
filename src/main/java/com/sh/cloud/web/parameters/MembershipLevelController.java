@@ -21,6 +21,11 @@ public class MembershipLevelController {
     @Resource
     LogService logService;
 
+    /**
+     * 删除会员信息
+     * @param id 会员ID
+     * @return "删除成功！"|"删除失败！"
+     */
     @RequiresPermissions("member:customParameters:memberLevel:delete")
     @PostMapping("deleteMember")
     public String deleteCard(@RequestParam String id) {
@@ -31,27 +36,37 @@ public class MembershipLevelController {
         if (ret == null || ret.equals("")) {
             logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
                     LogUtils.newLogInstance("删除会员级别 会员级别ID:" + id));
-            return "修改成功";
+            return "删除成功！";
         } else
-            return "修改失败";
+            return "删除失败！";
     }
 
+    /**
+     * 根据查询参数获取会员级别列表
+     * @param query 查询参数（按名称查询）
+     * @return 会员级别列表
+     */
     @RequiresPermissions("member:customParameters:memberLevel:list")
     @GetMapping("getMemberList")
     public Map<String, Object> getMemberList(@RequestParam String query, @RequestParam int page, @RequestParam int limit) {
-        Map<String, Object> ret3 = new HashMap<>();
-        ret3.put("code", 0);
-        ret3.put("msg", "");
+        Map<String, Object> ret = new HashMap<>();
+        ret.put("code", 0);
+        ret.put("msg", "");
 
         Member c = new Member();
         c.name = query;
         List<Member> data = memberService.getMemberList(c, page, limit);
-        ret3.put("count", memberService.getMemberListCount(c));
-        ret3.put("data", data);
+        ret.put("count", memberService.getMemberListCount(c));
+        ret.put("data", data);
 
-        return ret3;
+        return ret;
     }
 
+    /**
+     * 新增会员
+     * @param member 新增的会员信息
+     * @return "添加成功"|失败原因
+     */
     @RequiresPermissions("member:customParameters:memberLevel:add")
     @PostMapping("addMember")
     public String addMember(@RequestBody Member member) {
@@ -66,6 +81,11 @@ public class MembershipLevelController {
             return ret;
     }
 
+    /**
+     * 编辑会员信息
+     * @param member 新的会员信息
+     * @return 编辑后的新的会员信息
+     */
     @RequiresPermissions("member:customParameters:memberLevel:edit")
     @PostMapping("editMember")
     public Member editMember(@RequestBody Member member) {

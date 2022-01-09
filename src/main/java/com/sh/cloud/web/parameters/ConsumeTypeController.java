@@ -45,8 +45,8 @@ public class ConsumeTypeController {
     }
 
     /**
-     * 获取全部消费类型列表
-     * @return
+     * 获取全部消费类型的名称
+     * @return 全部消费类型的名称
      */
     @RequestMapping("getConsumeTypeNameList")
     public List<ConsumeType> getConsumeTypeList() {
@@ -54,6 +54,11 @@ public class ConsumeTypeController {
         return consumeTypeService.getConsumeTypeList(consumeType, 1, Integer.MAX_VALUE);
     }
 
+    /**
+     * 新增消费类型
+     * @param consumeType 消费类型信息
+     * @return 是否新增成功
+     */
     @RequiresPermissions({"member:customParameters:consumeType:add"})
     @RequestMapping("addConsumeType")
     public String addConsumeType(@RequestBody ConsumeType consumeType) {
@@ -62,6 +67,11 @@ public class ConsumeTypeController {
         return consumeTypeService.addConsumeType(PlatUserUtils.getCurrentLoginPlatUser(), consumeType);
     }
 
+    /**
+     * 删除某消费类型
+     * @param id 消费类型ID
+     * @return "删除成功！"|"删除失败！"
+     */
     @RequiresPermissions({"member:customParameters:consumeType:delete"})
     @RequestMapping("deleteConsumeType")
     public String deleteConsumeType(@RequestParam String id) {
@@ -75,6 +85,11 @@ public class ConsumeTypeController {
             return "删除失败！";
     }
 
+    /**
+     * 编辑某消费类型
+     * @param consumeType 新的消费类型信息
+     * @return 编辑后的新的消费类型信息
+     */
     @RequiresPermissions({"member:customParameters:consumeType:edit"})
     @RequestMapping("editConsumeType")
     public ConsumeType editConsumeType(@RequestBody ConsumeType consumeType) {
