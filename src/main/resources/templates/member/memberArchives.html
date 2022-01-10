@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<html
+        xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <meta charset="utf-8">
     <title>会员档案</title>
@@ -22,10 +22,34 @@
                 <form action="" autocomplete="off" class="layui-form">
                     <div class="layui-form-item">
                         <div class="layui-inline s-layuiInline">
+                            <label class="layui-form-label">车牌号</label>
+                            <div class="layui-input-inline">
+                                <input autocomplete="off" class="layui-input" id="plate1" name="plate1"
+                                       placeholder="请输入车牌号"
+                                       type="text">
+                            </div>
+                        </div>
+                        <div class="layui-inline s-layuiInline">
+                            <label class="layui-form-label">车架号</label>
+                            <div class="layui-input-inline">
+                                <input autocomplete="off" class="layui-input" id="vin1" name="vin1"
+                                       placeholder="请输入车架号"
+                                       type="text">
+                            </div>
+                        </div>
+                        <div class="layui-inline s-layuiInline">
                             <label class="layui-form-label">客户名称</label>
                             <div class="layui-input-inline">
                                 <input autocomplete="off" class="layui-input" id="customerName1" name="customerName1"
                                        placeholder="请输入客户名称"
+                                       type="text">
+                            </div>
+                        </div>
+                        <div class="layui-inline s-layuiInline">
+                            <label class="layui-form-label">会员卡号</label>
+                            <div class="layui-input-inline">
+                                <input autocomplete="off" class="layui-input" id="memberNumber1" name="memberNumber1"
+                                       placeholder="请输入会员卡号"
                                        type="text">
                             </div>
                         </div>
@@ -847,7 +871,7 @@
             accept: 'file', //允许上传的文件类型,
             exts: "xlsx|xls",
             done: function (res) {
-                if(res.errorMsg === undefined) res.errorMsg = ""
+                if (res.errorMsg === undefined) res.errorMsg = ""
                 layer.alert("成功导入了" + res.cnt + "条数据！<br>" + res.errorMsg)
             }
         })
@@ -1309,11 +1333,22 @@
 
         $("#queryBtn").unbind("click").click(function () {
             tableUserList.reload({
-                url: 'service/archives/getArchivesList?query=' + $("#customerName1").val(),
+                url: 'service/archives/getUserList',
+                method: "post",
+                contentType: "application/json",
+                where: {
+                    user: {
+                        customername: $("#customerName1").val(),
+                        memberNumber: $("#memberNumber1").val(),
+                        vehicle: {
+                            vin: $("#vin1").val(),
+                            platenumber: $("#plate1").val()
+                        }
+                    }
+                },
                 page: {
                     curr: 1
-                },
-                size: 'sm',
+                }
             })
             return false;
         })
