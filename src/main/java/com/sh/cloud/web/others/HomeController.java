@@ -1,18 +1,12 @@
 package com.sh.cloud.web.others;
 
-import com.sft.member.bean.PlatUser;
-import com.sft.member.obtain.log.LogService;
-import com.sft.member.obtain.user.PlatUserService;
 import com.sh.cloud.config.ShiroCasConfiguration;
-import com.sh.cloud.utils.LogUtils;
-import com.sh.cloud.utils.PlatUserUtils;
 import com.sh.cloud.utils.UserUtils;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 

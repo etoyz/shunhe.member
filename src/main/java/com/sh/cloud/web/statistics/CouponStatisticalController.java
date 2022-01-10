@@ -12,7 +12,10 @@ import com.sh.cloud.entity.ReturnStatisticalJson;
 import com.sh.cloud.entity.UserCouponMetaInfo;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -32,9 +35,10 @@ public class CouponStatisticalController {
 
     /**
      * 获取卡券统计列表
-     * @author fqh
+     *
      * @param request 查询参数
      * @return 卡券统计列表
+     * @author fqh
      */
     @RequiresPermissions("member:statistics:coupon")
     @RequestMapping("getCouponStatisticalList")
@@ -91,6 +95,7 @@ public class CouponStatisticalController {
 
     /**
      * 获取某用户拥有的卡券
+     *
      * @param userId 用户Id
      * @return 用户拥有的卡券
      */

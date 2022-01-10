@@ -27,6 +27,7 @@ public class PracticalProjectController {
 
     /**
      * 根据某消费项目获取具体项目列表
+     *
      * @param consumeProjectId 某消费项目ID
      * @return 具体项目列表
      */
@@ -48,6 +49,7 @@ public class PracticalProjectController {
 
     /**
      * 新增具体项目
+     *
      * @param project 具体项目信息
      * @return "成功！"|失败原因
      */
@@ -64,6 +66,7 @@ public class PracticalProjectController {
 
     /**
      * 编辑具体项目
+     *
      * @param project 新的具体项目信息
      * @return "修改成功！"
      */
@@ -77,6 +80,7 @@ public class PracticalProjectController {
 
     /**
      * 删除某具体项目
+     *
      * @param project 具体项目信息（只设置ID）
      * @return "成功！"|"失败！"
      */
@@ -93,6 +97,7 @@ public class PracticalProjectController {
 
     /**
      * 获取某具体项目的具体信息
+     *
      * @param practicalProjectId 具体项目ID
      * @return 该具体项目的具体信息
      */

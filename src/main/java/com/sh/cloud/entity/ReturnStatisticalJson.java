@@ -2,10 +2,10 @@ package com.sh.cloud.entity;
 
 
 /*
-*
-* User Coupon CouponCheck 相关，用于CouponStatisticalController、BalanceStatisticalController。
-*
-* */
+ *
+ * User Coupon CouponCheck 相关，用于CouponStatisticalController、BalanceStatisticalController。
+ *
+ * */
 
 
 public class ReturnStatisticalJson {

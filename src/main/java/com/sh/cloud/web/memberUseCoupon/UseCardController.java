@@ -32,7 +32,8 @@ public class UseCardController {
 
     /**
      * 获取某客户在某消费项目下可用的卡券列表
-     * @param userid 客户id
+     *
+     * @param userid           客户id
      * @param consumeProjectId 消费项目id
      * @return 可用的卡券列表
      */
@@ -63,6 +64,7 @@ public class UseCardController {
 
     /**
      * 提交审核
+     *
      * @param list 消费单列表
      * @return "失败！"|"成功！"
      */

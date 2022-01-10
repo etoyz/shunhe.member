@@ -26,6 +26,7 @@ public class PlatUserManagementController {
 
     /**
      * 根据关键字查询用户列表
+     *
      * @param query 关键字
      * @return 查询到的用户列表
      */
@@ -48,6 +49,7 @@ public class PlatUserManagementController {
 
     /**
      * 新增用户
+     *
      * @param user 用户信息
      * @return "成功！"|错误信息
      */
@@ -65,6 +67,7 @@ public class PlatUserManagementController {
 
     /**
      * 编辑用户信息
+     *
      * @param user 新的用户信息
      * @return "修改成功！"
      */
@@ -79,8 +82,9 @@ public class PlatUserManagementController {
 
     /**
      * 重置用户登录密码
+     *
      * @param platUserId 用户id
-     * @param passwd 新密码
+     * @param passwd     新密码
      * @return "成功"|错误信息
      */
     @RequiresPermissions("member:management")
@@ -99,6 +103,7 @@ public class PlatUserManagementController {
 
     /**
      * 获取某用户具体信息
+     *
      * @param platUserId 用户id
      * @return ""
      */
@@ -111,6 +116,7 @@ public class PlatUserManagementController {
 
     /**
      * 获取当前登录的用户的具体信息
+     *
      * @return 当前登录的用户的具体信息
      */
     @RequestMapping("getCurrentLoginUser")

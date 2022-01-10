@@ -32,6 +32,7 @@ public class PendingReviewController {
 
     /**
      * 获取待审核列表
+     *
      * @param request 查询参数
      * @return 查询到的待审核列表
      */
@@ -57,7 +58,7 @@ public class PendingReviewController {
 //                c.count = String.valueOf(cnt);
 //            }
 //        } else {
-            data = payService.getUnCheckRecord(request.getUser(), couponCheck, request.getPage(), request.getLimit(), request.getGroupBy());
+        data = payService.getUnCheckRecord(request.getUser(), couponCheck, request.getPage(), request.getLimit(), request.getGroupBy());
 //        }
         ret.put("data", data);
         ret.put("count", payService.getUnCheckRecordCount(request.getUser(), couponCheck, request.getGroupBy()));
@@ -67,8 +68,9 @@ public class PendingReviewController {
 
     /**
      * 审核通过某消费单
+     *
      * @param groupId 消费单的groupId
-     * @param userId 客户id
+     * @param userId  客户id
      * @return "成功！"|错误信息
      */
     @RequestMapping("checkCoupon")
@@ -90,8 +92,9 @@ public class PendingReviewController {
 
     /**
      * 驳回某消费单
+     *
      * @param groupId 消费单的groupId
-     * @param userId 客户id
+     * @param userId  客户id
      * @return "成功！"|错误信息
      */
     @RequestMapping("cancelRecord")

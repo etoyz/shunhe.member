@@ -10,7 +10,6 @@ import com.sft.member.obtain.member.MemberService;
 import com.sft.member.obtain.pay.PayService;
 import com.sft.member.obtain.user.PlatUserService;
 import com.sft.member.obtain.user.UserService;
-import com.sh.cloud.entity.GetPendingReviewListRequest;
 import com.sh.cloud.entity.GetUserListRequest;
 import com.sh.cloud.utils.LogUtils;
 import com.sh.cloud.utils.PlatUserUtils;

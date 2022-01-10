@@ -32,9 +32,10 @@ public class BalanceStatisticalController {
 
     /**
      * 获取储值统计列表
-     * @author fqh
+     *
      * @param request 请求参数
      * @return 储值统计列表
+     * @author fqh
      */
     @RequestMapping("getBalanceStatisticalList")
     public Map<String, Object> getBalanceStatisticalList(@RequestBody GetRequestPacket request) {
@@ -45,7 +46,8 @@ public class BalanceStatisticalController {
 
         // 源数据列表
         // 因为储值统计需要拿到的是 用户的 单条的信息，所以groupBy总为false
-        List<CouponCheck> sourceDataList = statisticsService.getStoreValueStatics(request.getUser(), request.getCouponCheck(), request.getPage(), request.getLimit(), false);;
+        List<CouponCheck> sourceDataList = statisticsService.getStoreValueStatics(request.getUser(), request.getCouponCheck(), request.getPage(), request.getLimit(), false);
+        ;
         // 返回时的列表
         List<ReturnStatisticalJson> resJsonList = new ArrayList<>();
 

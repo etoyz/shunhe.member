@@ -26,6 +26,7 @@ public class InsuranceCompanyController {
 
     /**
      * 根据查询参数获取保险公司列表
+     *
      * @param query 查询参数（按名称查询）
      * @return 保险公司列表
      */
@@ -46,6 +47,7 @@ public class InsuranceCompanyController {
 
     /**
      * 获取全部保险公司的名称（用于下拉框）
+     *
      * @return 全部保险公司的名称的列表
      */
     @RequestMapping("getInsuranceCompanyNameList")
@@ -55,6 +57,7 @@ public class InsuranceCompanyController {
 
     /**
      * 新增保险公司
+     *
      * @param insuranceCompany 保险公司信息
      * @return "成功！"|失败原因
      */
@@ -72,6 +75,7 @@ public class InsuranceCompanyController {
 
     /**
      * 编辑保险公司信息
+     *
      * @param insuranceCompany 新的保险公司信息
      * @return "成功！"
      */
@@ -86,6 +90,7 @@ public class InsuranceCompanyController {
 
     /**
      * 删除保险公司
+     *
      * @param id 保险公司ID
      * @return "删除成功！"|"删除失败！"
      */

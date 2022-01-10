@@ -29,7 +29,8 @@ public class ConsumeProjectController {
 
     /**
      * 获取某消费类型下的消费项目列表
-     * @param query 查询参数（按名称查询）
+     *
+     * @param query         查询参数（按名称查询）
      * @param consumeTypeId 消费类型ID
      * @return 消费项目列表
      */
@@ -54,6 +55,7 @@ public class ConsumeProjectController {
 
     /**
      * 获取某消费类型下的消费项目名称的列表，用于下拉列表、关联弹窗
+     *
      * @param consumeTypeId 消费类型ID
      * @return 消费项目名称的列表
      */
@@ -74,6 +76,7 @@ public class ConsumeProjectController {
 
     /**
      * 新增消费项目
+     *
      * @param project 消费项目信息
      * @return "成功！"|错误信息
      */
@@ -91,6 +94,7 @@ public class ConsumeProjectController {
 
     /**
      * 编辑消费项目
+     *
      * @param project 新的消费项目信息
      * @return "成功！"
      */
@@ -105,6 +109,7 @@ public class ConsumeProjectController {
 
     /**
      * 将某消费项目与多个卡券关联
+     *
      * @param couponsAndConsumeProject 需要被关联的某消费项目和卡券列表
      * @return "成功！"
      */
@@ -121,6 +126,7 @@ public class ConsumeProjectController {
 
     /**
      * 删除消费项目
+     *
      * @param id 消费项目ID
      * @return "删除失败！"|"删除失败！"
      */
@@ -139,6 +145,7 @@ public class ConsumeProjectController {
 
     /**
      * 根据卡券查询关联的消费项目
+     *
      * @param coupon 卡券信息
      * @return 关联的消费项目列表
      */
@@ -150,6 +157,7 @@ public class ConsumeProjectController {
 
     /**
      * 获取关联的消费项目
+     *
      * @param project 某消费项目
      * @return 被某消费项目关联的消费项目列表
      */
@@ -161,6 +169,7 @@ public class ConsumeProjectController {
 
     /**
      * 将某消费项目与多个消费项目关联
+     *
      * @param consumeProjectAndConsumeProjects 某消费项目与被关联的消费项目列表
      * @return "成功！"|失败原因
      */

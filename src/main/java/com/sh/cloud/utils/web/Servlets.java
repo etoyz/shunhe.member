@@ -22,6 +22,7 @@ import java.util.Map.Entry;
 
 /**
  * Http与Servlet工具类.
+ *
  * @author calvin/thinkgem
  * @version 2014-8-19
  */
@@ -73,7 +74,7 @@ public class Servlets {
 
     /**
      * 根据浏览器If-Modified-Since Header, 计算文件是否已被修改.
-     *
+     * <p>
      * 如果无修改, checkIfModify返回false ,设置304 not modify status.
      *
      * @param lastModified 内容的最后修改时间.
@@ -90,7 +91,7 @@ public class Servlets {
 
     /**
      * 根据浏览器 If-None-Match Header, 计算Etag是否已无效.
-     *
+     * <p>
      * 如果Etag有效, checkIfNoneMatch返回false, 设置304 not modify status.
      *
      * @param etag 内容的ETag.
@@ -138,7 +139,7 @@ public class Servlets {
 
     /**
      * 取得带相同前缀的Request Parameters, copy from spring WebUtils.
-     *
+     * <p>
      * 返回的结果的Parameter名已去除前缀.
      */
     @SuppressWarnings("rawtypes")
@@ -170,7 +171,6 @@ public class Servlets {
 
     /**
      * 组合Parameters生成Query String的Parameter部分,并在paramter name上加上prefix.
-     *
      */
     public static String encodeParameterStringWithPrefix(Map<String, Object> params, String prefix) {
         StringBuilder queryStringBuilder = new StringBuilder();
@@ -200,6 +200,7 @@ public class Servlets {
 
     /**
      * 是否是Ajax异步请求
+     *
      * @param request
      */
     public static boolean isAjaxRequest(HttpServletRequest request) {
@@ -214,6 +215,7 @@ public class Servlets {
 
     /**
      * 获取当前请求对象
+     *
      * @return
      */
     public static HttpServletRequest getRequest() {
@@ -226,6 +228,7 @@ public class Servlets {
 
     /**
      * 判断访问URI是否是静态文件请求
+     *
      * @throws Exception
      */
     public static boolean isStaticFile(String uri) {

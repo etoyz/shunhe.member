@@ -23,6 +23,7 @@ public class MembershipLevelController {
 
     /**
      * 删除会员信息
+     *
      * @param id 会员ID
      * @return "删除成功！"|"删除失败！"
      */
@@ -43,6 +44,7 @@ public class MembershipLevelController {
 
     /**
      * 根据查询参数获取会员级别列表
+     *
      * @param query 查询参数（按名称查询）
      * @return 会员级别列表
      */
@@ -64,6 +66,7 @@ public class MembershipLevelController {
 
     /**
      * 新增会员
+     *
      * @param member 新增的会员信息
      * @return "添加成功"|失败原因
      */
@@ -83,6 +86,7 @@ public class MembershipLevelController {
 
     /**
      * 编辑会员信息
+     *
      * @param member 新的会员信息
      * @return 编辑后的新的会员信息
      */

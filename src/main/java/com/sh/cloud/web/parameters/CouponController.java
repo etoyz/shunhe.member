@@ -28,6 +28,7 @@ public class CouponController {
 
     /**
      * 删除卡券
+     *
      * @param coupon 卡券信息（只需要设置ID）
      * @return "删除成功！"|"删除失败！"
      */
@@ -44,6 +45,7 @@ public class CouponController {
 
     /**
      * 新增卡券
+     *
      * @param coupon 卡券信息
      * @return "添加成功"|失败原因
      */
@@ -61,6 +63,7 @@ public class CouponController {
 
     /**
      * 获取卡券类型
+     *
      * @return 卡券类型列表
      */
     @PostMapping("getCouponTypes")
@@ -78,6 +81,7 @@ public class CouponController {
 
     /**
      * 编辑卡券信息
+     *
      * @param coupon 新的卡券信息
      * @return 编辑后的新的卡券信息
      */
@@ -92,6 +96,7 @@ public class CouponController {
 
     /**
      * 将某卡券与多个消费项目关联起来
+     *
      * @param couponAndConsumeProjects 某卡券与消费项目列表
      * @return "关联成功！"
      */
@@ -106,6 +111,7 @@ public class CouponController {
 
     /**
      * 根据查询参数获取卡券列表
+     *
      * @param query 查询参数（按名称查询）
      * @return 卡券列表
      */
@@ -128,6 +134,7 @@ public class CouponController {
 
     /**
      * 获取全部卡券的名称
+     *
      * @return 全部卡券的名称的列表
      */
     @GetMapping("getCouponNameList")
@@ -144,6 +151,7 @@ public class CouponController {
 
     /**
      * 获取与某个消费项目关联的卡券的列表
+     *
      * @param project 消费项目
      * @return 卡券列表
      */
@@ -155,6 +163,7 @@ public class CouponController {
 
     /**
      * 获取卡券具体信息
+     *
      * @param couponId 卡券ID
      * @return 卡券具体信息
      */

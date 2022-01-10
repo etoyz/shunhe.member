@@ -23,6 +23,7 @@ public class OperationLog {
 
     /**
      * 根据查询参数获取操作日志列表
+     *
      * @param request 查询参数（起止日期、日志内容）
      * @return 查询到的操作日志列表
      */
@@ -40,6 +41,7 @@ public class OperationLog {
 
     /**
      * 获取某用户的操作日志列表
+     *
      * @param userId 用户id
      * @return 查询到的操作日志列表
      */

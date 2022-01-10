@@ -26,6 +26,7 @@ public class ConsumeTypeController {
 
     /**
      * 根据关键字查询消费类型列表
+     *
      * @param query 关键字（按名称查询）
      * @return 消费类型列表
      */
@@ -46,6 +47,7 @@ public class ConsumeTypeController {
 
     /**
      * 获取全部消费类型的名称
+     *
      * @return 全部消费类型的名称
      */
     @RequestMapping("getConsumeTypeNameList")
@@ -56,6 +58,7 @@ public class ConsumeTypeController {
 
     /**
      * 新增消费类型
+     *
      * @param consumeType 消费类型信息
      * @return 是否新增成功
      */
@@ -69,6 +72,7 @@ public class ConsumeTypeController {
 
     /**
      * 删除某消费类型
+     *
      * @param id 消费类型ID
      * @return "删除成功！"|"删除失败！"
      */
@@ -87,6 +91,7 @@ public class ConsumeTypeController {
 
     /**
      * 编辑某消费类型
+     *
      * @param consumeType 新的消费类型信息
      * @return 编辑后的新的消费类型信息
      */

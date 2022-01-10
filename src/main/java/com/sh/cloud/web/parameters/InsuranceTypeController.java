@@ -26,6 +26,7 @@ public class InsuranceTypeController {
 
     /**
      * 根据查询参数获取险种列表
+     *
      * @param query 查询参数（按名称查询）
      * @return 险种列表
      */
@@ -46,6 +47,7 @@ public class InsuranceTypeController {
 
     /**
      * 获取全部的险种名称
+     *
      * @return 全部的险种名称的列表
      */
     @RequestMapping("getInsuranceTypeNameList")
@@ -55,6 +57,7 @@ public class InsuranceTypeController {
 
     /**
      * 新增险种
+     *
      * @param insuranceType 险种信息
      * @return "成功！"|失败原因
      */
@@ -72,6 +75,7 @@ public class InsuranceTypeController {
 
     /**
      * 编辑险种
+     *
      * @param insuranceType 新的险种信息
      * @return "成功！"
      */
@@ -86,6 +90,7 @@ public class InsuranceTypeController {
 
     /**
      * 删除险种
+     *
      * @param id 险种ID
      * @return "删除成功！"|"删除失败！"
      */

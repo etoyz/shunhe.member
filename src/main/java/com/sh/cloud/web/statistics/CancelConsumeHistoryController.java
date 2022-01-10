@@ -32,9 +32,10 @@ public class CancelConsumeHistoryController {
 
     /**
      * 获取反结算列表
-     * @author fqh
+     *
      * @param request 查询参数
      * @return 反结算列表
+     * @author fqh
      */
     @RequestMapping("getCancelConsumeHistoryList")
     public Map<String, Object> getCancelConsumeHistoryList(@RequestBody GetRequestPacket request) {

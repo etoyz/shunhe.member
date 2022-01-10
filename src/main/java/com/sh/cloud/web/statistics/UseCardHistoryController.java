@@ -34,9 +34,10 @@ public class UseCardHistoryController {
 
     /**
      * 获取用卡历史列表
-     * @author fqh
+     *
      * @param request 查询参数
      * @return 用卡历史列表
+     * @author fqh
      */
     @RequestMapping("getUseCouponHistoryList")
     public Map<String, Object> getUseCardHistoryList(@RequestBody GetRequestPacket request) {
@@ -103,9 +104,10 @@ public class UseCardHistoryController {
 
     /**
      * 获取愿单
-     * @author fqh
+     *
      * @param request 查询参数
      * @return 愿单
+     * @author fqh
      */
     @RequestMapping("getShowBillList")
     public Map<String, Object> getShowBillList(@RequestBody GetRequestPacket request) {
