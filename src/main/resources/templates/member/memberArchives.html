@@ -847,7 +847,8 @@
             accept: 'file', //允许上传的文件类型,
             exts: "xlsx|xls",
             done: function (res) {
-                layer.alert("成功导入了" + res + "条数据！")
+                if(res.errorMsg === undefined) res.errorMsg = ""
+                layer.alert("成功导入了" + res.cnt + "条数据！<br>" + res.errorMsg)
             }
         })
 
@@ -888,7 +889,7 @@
                 {field: 'userId', width: 210, title: 'id', hide: true},
                 {field: 'vehicleId', width: 210, title: 'vid', hide: true},
                 {field: 'operation', width: 170, title: '操作', toolbar: '#operation', fixed: 'right'}
-            ]],
+            ] ],
             size: 'sm',
             parseData: function (res) {
                 let data = res.data
@@ -1053,7 +1054,7 @@
                         {field: 'endEffectiveTime', width: 150, title: '失效日期'},
                         {field: 'createTime', width: 150, title: '发放日期'},
                         {field: 'consumeProjectName', width: 93, title: '项目名称'}
-                    ]],
+                    ] ],
                     size: 'sm',
                     parseData: (res) => {
                         try {
@@ -1118,7 +1119,7 @@
                         {field: 'invoiceNum', width: 100, title: '开票金额'},
                         {field: 'remark', width: 100, title: '项目备注'},
                         {field: 'id', hide: true},
-                    ]],
+                    ] ],
                     size: 'sm',
                     parseData: function (resp) {
                         let data = resp.data;
@@ -1172,7 +1173,7 @@
                         , {field: 'ip', title: '操作IP', width: 200, sort: true}
                         , {field: 'pc', title: '操作PC', width: 150, sort: true}
                         , {field: 'createId', title: '操作员', width: 150, sort: true}
-                    ]],
+                    ] ],
                     size: 'sm',
                     done: function () {
                         showPopup()

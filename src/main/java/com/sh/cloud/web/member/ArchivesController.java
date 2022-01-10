@@ -14,6 +14,7 @@ import com.sh.cloud.entity.GetPendingReviewListRequest;
 import com.sh.cloud.entity.GetUserListRequest;
 import com.sh.cloud.utils.LogUtils;
 import com.sh.cloud.utils.PlatUserUtils;
+import net.sf.json.JSONObject;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -46,6 +47,7 @@ public class ArchivesController {
 
     /**
      * 通过职务获取用户列表
+     *
      * @param post 保客主管|保客专员|服务顾问|销售顾问
      * @return 获取到的用户列表
      */
@@ -59,6 +61,7 @@ public class ArchivesController {
 
     /**
      * 获取某客户卡券和积分的统计信息
+     *
      * @param userid 客户id
      * @return 各统计信息
      */
@@ -70,6 +73,7 @@ public class ArchivesController {
 
     /**
      * 新增客户档案
+     *
      * @param user 客户具体信息
      * @return "成功！"|错误信息
      */
@@ -94,13 +98,17 @@ public class ArchivesController {
 
     /**
      * 通过Excel文件批量导入用户
+     *
      * @param file Excel文件
-     * @return 成功导入的用户个数
+     * @return 导入的详细信息，包括错误提示
      */
     @RequiresPermissions(value = {"member:archives:add"}, logical = Logical.OR)
     @PostMapping(value = "addArchivesBatch", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public int addUserBatch(@RequestParam("file") MultipartFile file) {
-        int cnt = 0;
+    public JSONObject addUserBatch(@RequestParam("file") MultipartFile file) {
+        JSONObject resp = new JSONObject();
+        resp.put("cnt", 0);
+        StringBuilder errorMsg = new StringBuilder("错误信息：\n");
+        boolean isErrorOccur = false;
         try {
             Workbook workbook = new XSSFWorkbook(file.getInputStream());
             Sheet sheet = workbook.getSheetAt(0);
@@ -146,23 +154,30 @@ public class ArchivesController {
                                     + "、车牌号:" + user.vehicle.platenumber
                                     + "、手机号:" + user.phone
                             ));
-                    cnt++;
+                    resp.put("cnt", resp.getInt("cnt") + 1);
                 } else {
+                    isErrorOccur = true;
                     logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
                             LogUtils.newLogInstance("导入客户档案异常：" + ret));
+                    errorMsg.append("\t导入客户档案异常：").append(ret).append("\n");
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
             logService.addLog(PlatUserUtils.getCurrentLoginPlatUser(),
                     LogUtils.newLogInstance("导入文件解析异常：" + e.getMessage()));
-            return cnt;
+            errorMsg.append("\t导入文件解析异常：").append(e.getMessage()).append("\n");
+            resp.put("errorMsg", errorMsg);
+            return resp;
         }
-        return cnt;
+        if (isErrorOccur)
+            resp.put("errorMsg", errorMsg.toString());
+        return resp;
     }
 
     /**
      * (已弃用) 通过客户名称查询客户列表
+     *
      * @param query 客户名称
      * @return 查询到的客户列表
      */
@@ -186,6 +201,7 @@ public class ArchivesController {
 
     /**
      * 通过查询参数查询客户列表
+     *
      * @param request 查询参数（客户名称、车牌号、车架号、会员卡号等）
      * @return 查询到的客户列表
      */
@@ -205,20 +221,21 @@ public class ArchivesController {
 
     /**
      * 获取某客户消费历史（调用的待审核列表的接口，已经审核通过的消费单视为消费历史）
+     *
      * @param userid 客户id
      * @return 获取到的消费历史
      */
     @RequiresPermissions(value = {"member:archives:more"}, logical = Logical.OR)
     @RequestMapping("getConsumptionHistories")
     public Map<String, Object> getConsumptionHistories(@RequestParam String userid, @RequestParam int page, @RequestParam int limit) {
-        User user= new User();
+        User user = new User();
         user.userId = userid;
         CouponCheck couponCheck = new CouponCheck();
         couponCheck.type = "1";
         Map<String, Object> ret = new HashMap();
         ret.put("code", 0);
         ret.put("msg", "");
-        ret.put("data", payService.getUnCheckRecord(user, couponCheck, page, limit,false));
+        ret.put("data", payService.getUnCheckRecord(user, couponCheck, page, limit, false));
         ret.put("count", payService.getUnCheckRecordCount(user, couponCheck, false));
 
         return ret;
@@ -226,6 +243,7 @@ public class ArchivesController {
 
     /**
      * 删除某客户信息
+     *
      * @param userId 客户id
      * @return "删除成功！"|错误信息
      */
@@ -250,6 +268,7 @@ public class ArchivesController {
 
     /**
      * 编辑客户信息
+     *
      * @param user 新的客户信息
      * @return 编辑操作后，新的客户信息
      */
@@ -268,6 +287,7 @@ public class ArchivesController {
 
     /**
      * 获取某客户具体信息
+     *
      * @param userId 客户id
      * @return 具体客户信息
      */
@@ -280,6 +300,7 @@ public class ArchivesController {
 
     /**
      * 获取会员级别列表
+     *
      * @return 会员级别列表
      */
     @RequiresPermissions(value = {"member:archives:level"}, logical = Logical.OR)
@@ -291,6 +312,7 @@ public class ArchivesController {
 
     /**
      * 获取车品牌列表
+     *
      * @return 车品牌列表
      */
     @PostMapping(value = "getBrandNameList")
@@ -303,6 +325,7 @@ public class ArchivesController {
 
     /**
      * 根据车品牌获取车型列表
+     *
      * @param BrandId 车匹配id
      * @return 车系列表
      */
@@ -314,6 +337,7 @@ public class ArchivesController {
 
     /**
      * 根据车系获取车型列表
+     *
      * @param GroupId 车系id
      * @return 车系列表
      */
@@ -325,8 +349,9 @@ public class ArchivesController {
 
     /**
      * 修改会员级别
+     *
      * @param userId 会员id
-     * @param id 新的会员级别id
+     * @param id     新的会员级别id
      * @return "添加成功"|错误信息
      */
     @RequiresPermissions(value = {"member:archives:level"}, logical = Logical.OR)
