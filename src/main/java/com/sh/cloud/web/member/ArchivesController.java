@@ -186,7 +186,7 @@ public class ArchivesController {
      */
     @GetMapping("downloadTemplateXlsx")
     public ResponseEntity downloadTemplateXlsx() {
-        Path path = Paths.get("src\\main\\resources\\static\\assets\\会员档案导入模板.xlsx");
+        Path path = Paths.get("src/main/resources/static/assets/会员档案导入模板.xlsx");
         UrlResource resource = null;
         try {
             resource = new UrlResource(path.toUri());
