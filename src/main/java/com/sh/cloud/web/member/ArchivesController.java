@@ -180,6 +180,10 @@ public class ArchivesController {
         return resp;
     }
 
+    /**
+     * 下载模板文件
+     * @return 模板文件，MIME格式是 application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+     */
     @GetMapping("downloadTemplateXlsx")
     public ResponseEntity downloadTemplateXlsx() {
         Path path = Paths.get("src\\main\\resources\\static\\assets\\会员档案导入模板.xlsx");
